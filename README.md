@@ -42,3 +42,35 @@ If a newer fact of the same type appears, such as `我住在上海` followed lat
 - Add richer evaluation workflows to compare retrieval behavior, overwrite decisions, and lifecycle-aware memory usage across different scenarios.
 - Adapt the same memory architecture to livestream commerce knowledge, such as product facts, promotional updates, and operational information that changes over time.
 - Explore higher-level profile synthesis built on top of structured memory, while keeping retrieval traceable and update policies explicit.
+
+## Repository Structure
+
+- `api/main.py` – core FastAPI application, memory logic, retrieval control, and debug routes.
+- `api/` – API-related code and service entry point.
+- `docker-compose.yml` – local multi-service setup for the API, Ollama, and Qdrant.
+- `README.md` – project overview, evolution, and usage notes.
+
+## Running the Project
+
+This project is designed to run locally with Docker Compose.
+
+```bash
+docker compose up -d
+```
+
+The local setup includes:
+- **FastAPI** for the API layer
+- **Ollama** for local LLM inference and embeddings
+- **Qdrant** for vector storage and structured memory retrieval
+
+You can verify that the API is running with:
+
+```bash
+curl http://127.0.0.1:8000/health
+```
+
+If you modify the API code and want to reload the service, use:
+
+```bash
+docker compose restart api
+```
