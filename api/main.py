@@ -1,4 +1,4 @@
-# version test 2026-03-08
+# version test
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 import httpx
@@ -1498,6 +1498,7 @@ async def chat_kb(req: ChatKBReq):
         "model": OLLAMA_MODEL,
         "reply": data.get("message", {}).get("content", ""),
         "sources": sources,
+        "refusal": False,
         "retrieval": {
             "query": req.message,
             "top_k": top_k,
@@ -1559,6 +1560,7 @@ async def chat_livestream_kb(req: ChatLivestreamKBReq):
     )
 
     result = await chat_kb(delegated_req)
+    result["refusal"] = False
     result["routed_fact_type"] = routed_fact_type
     result["routing"] = {
         "candidate_fact_types": sorted(LIVESTREAM_FACT_TYPES),
