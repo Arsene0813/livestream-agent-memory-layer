@@ -17,6 +17,7 @@ Currently, the project includes:
 - product-level memory separation through lightweight `product_ref` extraction
 - lifecycle metadata such as timestamps, freshness windows, active-state flags, and reuse metadata
 - non-fact filtering so greetings and lightweight chat do not enter memory
+- a hybrid memory path in which chat-vector recall is still used for conversational retrieval, while structured facts are extracted and written into the typed knowledge layer when applicable
 - automatic routing across five livestream fact types:
   - product price
   - promotions
@@ -25,6 +26,7 @@ Currently, the project includes:
   - product features
 - traceable retrieval outputs and inspectable fallback behavior
 - a small evaluation setup for routing and fallback behavior in the current livestream knowledge layer
+- A legacy strict-threshold chat-memory endpoint is still kept for comparison and debugging, but it is not the primary interaction path of the current memory layer.
 
 ## Why This Project
 
@@ -104,7 +106,9 @@ The system can separate facts across products instead of forcing all livestream 
 
 ### 5. Livestream commerce query routing
 
-For livestream commerce queries, the system can route the question to the most relevant fact type instead of requiring the caller to specify it manually.
+For livestream commerce queries, the system does not rely on a separate intent classifier. Instead, it performs semantic retrieval over eligible knowledge candidates, applies fact-type-specific validity checks and routing thresholds, and uses the highest-scoring eligible fact type as the routed type.
+
+In other words, livestream fact-type routing is implemented through retrieval-time score competition rather than a standalone classification step.
 
 Current examples include:
 
