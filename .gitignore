@@ -19,3 +19,7 @@ tmp/
 # OS / editor
 .DS_Store
 .vscode/
+
+api/main.py.bak
+api/main.py.bak.policy
+api/main.py.pass_feature_and_price

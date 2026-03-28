@@ -7,6 +7,7 @@ import time
 import uuid
 import json
 import asyncio
+import re
 
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://ollama:11434")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5:14b")
@@ -31,12 +32,152 @@ LIVESTREAM_FACT_TYPES = {
     "product_feature",
 }
 
-def get_livestream_score_threshold(fact_type: str | None) -> float:
-    if fact_type == "product_feature":
-        return 0.60
-    return 0.65
+FACT_POLICIES = {
+    "pet_name": {
+        "scope": "session",
+        "slot": "pet_name",
+        "single_value": False,
+        "freshness_days": 30,
+        "routing_threshold": None,
+        "entity_kind": "self",
+    },
+    "location": {
+        "scope": "session",
+        "slot": "location",
+        "single_value": True,
+        "freshness_days": 30,
+        "routing_threshold": None,
+        "entity_kind": "self",
+    },
+    "preference": {
+        "scope": "session",
+        "slot": "preference",
+        "single_value": False,
+        "freshness_days": 30,
+        "routing_threshold": None,
+        "entity_kind": "self",
+    },
+    "identity": {
+        "scope": "session",
+        "slot": "identity",
+        "single_value": True,
+        "freshness_days": 30,
+        "routing_threshold": None,
+        "entity_kind": "self",
+    },
+    "relationship": {
+        "scope": "session",
+        "slot": "relationship",
+        "single_value": False,
+        "freshness_days": 30,
+        "routing_threshold": None,
+        "entity_kind": "self",
+    },
+    "product_price": {
+        "scope": "catalog",
+        "slot": "price",
+        "single_value": True,
+        "freshness_days": 7,
+        "routing_threshold": 0.65,
+        "entity_kind": "default_product",
+    },
+    "promo": {
+        "scope": "catalog",
+        "slot": "promo",
+        "single_value": True,
+        "freshness_days": 1,
+        "routing_threshold": 0.65,
+        "entity_kind": "default_product",
+    },
+    "stock_status": {
+        "scope": "catalog",
+        "slot": "stock_status",
+        "single_value": True,
+        "freshness_days": 3,
+        "routing_threshold": 0.65,
+        "entity_kind": "default_product",
+    },
+    "shipping_policy": {
+        "scope": "catalog",
+        "slot": "shipping_policy",
+        "single_value": True,
+        "freshness_days": 30,
+        "routing_threshold": 0.65,
+        "entity_kind": "default_product",
+    },
+    "product_feature": {
+        "scope": "catalog",
+        "slot": "feature",
+        "single_value": False,
+        "freshness_days": 30,
+        "routing_threshold": 0.60,
+        "entity_kind": "default_product",
+    },
+}
 
+REQUIRED_POLICY_KEYS = {
+    "scope",
+    "slot",
+    "single_value",
+    "freshness_days",
+    "routing_threshold",
+    "entity_kind",
+}
+
+def validate_fact_policies():
+    for fact_type, policy in FACT_POLICIES.items():
+        missing = REQUIRED_POLICY_KEYS - set(policy.keys())
+        if missing:
+            raise RuntimeError(
+                f"FACT_POLICIES[{fact_type}] missing keys: {sorted(missing)}"
+            )
+
+def normalize_fact_type(fact_type: str | None) -> str | None:
+    if fact_type is None:
+        return None
+
+    t = str(fact_type).strip()
+    if not t:
+        return None
+
+    return t
+
+def get_fact_policy(fact_type: str | None) -> dict | None:
+    fact_type = normalize_fact_type(fact_type)
+    if fact_type is None:
+        return None
+    return FACT_POLICIES.get(fact_type)
+
+def get_fact_policy_value(
+    fact_type: str | None,
+    key: str,
+    default=None,
+):
+    policy = get_fact_policy(fact_type)
+    if not policy:
+        return default
+    return policy.get(key, default)
+
+
+def get_fact_freshness_days(fact_type: str | None) -> int:
+    return int(get_fact_policy_value(fact_type, "freshness_days", 30))
+
+
+def get_fact_entity_kind(fact_type: str | None) -> str:
+    return str(get_fact_policy_value(fact_type, "entity_kind", "self"))
+
+
+def get_livestream_score_threshold(fact_type: str | None) -> float:
+    return float(get_fact_policy_value(fact_type, "routing_threshold", 0.65))
+
+validate_fact_policies()
 app = FastAPI(title="Agent API", version="0.1.0")
+
+def require_session_id(session_id: str | None) -> str:
+    sid = (session_id or "").strip()
+    if not sid:
+        raise HTTPException(status_code=400, detail="session_id is required")
+    return sid
 
 class ChatReq(BaseModel):
     message: str = Field(..., min_length=1, max_length=4000)
@@ -121,24 +262,6 @@ async def qdrant_scroll_chat(session_id: str, limit: int = 20):
         )
         r.raise_for_status()
         return r.json().get("result", {}).get("points", [])
-async def qdrant_delete_chat_facts_by_session_and_type(session_id: str, fact_type: str):
-    body = {
-        "filter": {
-            "must": [
-                {"key": "session_id", "match": {"value": session_id}},
-                {"key": "role", "match": {"value": "user"}},
-                {"key": "fact_type", "match": {"value": fact_type}},
-            ]
-        }
-    }
-
-    async with httpx.AsyncClient(timeout=60) as client:
-        r = await client.post(
-            f"{QDRANT_BASE_URL}/collections/{QDRANT_CHAT_COLLECTION}/points/delete",
-            json=body,
-        )
-        r.raise_for_status()
-        return r.json()
 
 async def get_last_user_message(session_id: str):
     points = await qdrant_scroll_chat(session_id, limit=50)
@@ -153,6 +276,28 @@ async def get_last_user_message(session_id: str):
 
     user_points.sort(key=lambda x: x.get("ts") or "")
     return user_points[-1].get("text")
+
+def is_obviously_non_fact_message(text: str) -> bool:
+    t = (text or "").strip().lower()
+    if not t:
+        return True
+
+    exact_blocklist = {
+        "你好", "您好", "哈喽", "嗨", "hi", "hello", "hey",
+        "在吗", "在不在", "收到", "好的", "好", "嗯", "嗯嗯",
+        "谢谢", "感谢", "多谢", "ok", "okay", "好的谢谢",
+    }
+
+    if t in exact_blocklist:
+        return True
+
+    short_patterns = [
+        "你好啊", "您好啊", "谢谢啦", "收到啦",
+    ]
+    if t in short_patterns:
+        return True
+
+    return False
 
 def should_store_user_memory(text: str) -> bool:
     t = (text or "").strip()
@@ -174,43 +319,34 @@ def should_store_user_memory(text: str) -> bool:
 
     return True
 
-async def should_store_user_memory_llm(text: str) -> bool:
+
+def extract_product_ref_by_rules(text: str) -> str | None:
     t = (text or "").strip()
     if not t:
-        return False
+        return None
 
-    prompt = (
-        "You are a memory gate for a long-term memory assistant.\n"
-        "Decide whether the following message contains information worth storing as memory.\n\n"
-        "Store durable personal facts, preferences, identity, stable relationships, and operationally meaningful domain facts.\n"
-        "For livestream or commerce-related messages, store facts such as product prices, promotions, stock status, shipping policies, and product features.\n"
-        "Do NOT store questions, vague statements, or temporary requests unless they clearly contain a stable or actionable fact.\n\n"
-        f"User message: {t}\n\n"
-        "Answer YES or NO."
-    )
+    patterns = [
+        r"^([A-Za-z0-9\u4e00-\u9fa5\-_]+)的?(?:价格|售价|定价|特点|卖点)",
+        r"^([A-Za-z0-9\u4e00-\u9fa5\-_]+)(?:目前)?(?:现货|有货|缺货|无货|售罄|预售)",
+        r"^([A-Za-z0-9\u4e00-\u9fa5\-_]+)(?:支持|可)(?:次日达|当日达|包邮|免邮)",
+        r"^([A-Za-z0-9\u4e00-\u9fa5\-_]+)主打",
+    ]
 
-    payload = {
-        "model": OLLAMA_MODEL,
-        "stream": False,
-        "messages": [
-            {"role": "user", "content": prompt}
-        ]
-    }
+    for pat in patterns:
+        m = re.search(pat, t)
+        if m:
+            product_ref = m.group(1).strip()
+            if product_ref and product_ref not in {"这款产品", "该产品", "本产品", "这个产品"}:
+                return product_ref
 
-    async with httpx.AsyncClient(timeout=120) as client:
-        r = await client.post(f"{OLLAMA_BASE_URL}/api/chat", json=payload)
-        r.raise_for_status()
-        data = r.json()
-
-    answer = data.get("message", {}).get("content", "").strip().upper()
-    return answer.startswith("YES")
+    return None
 
 def build_extract_fact_prompt(text: str) -> str:
     t = (text or "").strip()
 
     return (
-        "You are an information extraction system.\n"
-        "Extract one stable or operationally meaningful fact from the following message if possible.\n"
+        "You are a memory extraction system for a long-term assistant.\n"
+        "Decide whether the message contains a storable fact. If yes, extract exactly one fact as JSON. If not, answer NONE.\n"
         "Valid fact types include: preference, identity, relationship, location, pet_name, "
         "product_price, promo, stock_status, shipping_policy, product_feature.\n"
         "Only extract if the message clearly contains a fact that should be stored as memory.\n"
@@ -229,14 +365,120 @@ def build_extract_fact_prompt(text: str) -> str:
         'Output: {"type":"product_feature","value":"高透氧","source_text":"这款产品主打高透氧"}\n'
         "If no suitable fact is present, answer exactly: NONE\n\n"
         "Return JSON only, with this schema:\n"
-        '{"type":"...", "value":"...", "source_text":"..."}\n\n'
+        '{"type":"...", "value":"...", "source_text":"...", "product_ref": null}\n\n'
         f"User message: {t}"
+        'User message: A款价格是99元\n'
+        'Output: {"type":"product_price","value":"99元","source_text":"A款价格是99元","product_ref":"A款"}\n'
+        'User message: 你好\n'
+        'Output: NONE\n'
     )
+
+def extract_structured_fact_by_rules(text: str) -> dict | None:
+    t = (text or "").strip()
+    if not t:
+        return None
+
+    product_ref = extract_product_ref_by_rules(t)
+
+    # 1) product_price
+    m = re.search(r"(?:价格|售价|定价)(?:是|为)?\s*([0-9]+(?:\.[0-9]+)?\s*(?:元|块|¥|人民币)?)", t)
+    if m:
+        value = m.group(1).strip()
+        return {
+            "type": "product_price",
+            "value": value,
+            "source_text": t,
+            "product_ref": product_ref,
+        }
+
+    # 2) promo
+    promo_patterns = [
+        r"(满[0-9]+减[0-9]+)",
+        r"([0-9]+件[0-9]+折)",
+        r"([0-9]+折)",
+        r"(买一送一)",
+        r"(第二件半价)",
+    ]
+    for pat in promo_patterns:
+        m = re.search(pat, t)
+        if m:
+            return {
+                "type": "promo",
+                "value": m.group(1).strip(),
+                "source_text": t,
+                "product_ref": product_ref,
+            }
+
+    # 3) stock_status
+    stock_patterns = [
+        (r"(现货)", "现货"),
+        (r"(有货)", "有货"),
+        (r"(缺货)", "缺货"),
+        (r"(无货)", "无货"),
+        (r"(售罄)", "售罄"),
+        (r"(预售)", "预售"),
+    ]
+    for pat, normalized in stock_patterns:
+        if re.search(pat, t):
+            return {
+                "type": "stock_status",
+                "value": normalized,
+                "source_text": t,
+                "product_ref": product_ref,
+            }
+
+    # 4) shipping_policy
+    shipping_patterns = [
+        (r"(次日达)", "次日达"),
+        (r"(当日达)", "当日达"),
+        (r"(包邮)", "包邮"),
+        (r"(免邮)", "免邮"),
+        (r"([0-9]+天内发货)", None),
+        (r"(48小时内发货)", "48小时内发货"),
+    ]
+    for pat, normalized in shipping_patterns:
+        m = re.search(pat, t)
+        if m:
+            return {
+                "type": "shipping_policy",
+                "value": normalized or m.group(1).strip(),
+                "source_text": t,
+                "product_ref": product_ref,
+            }
+
+    # 5) product_feature
+    feature_patterns = [
+        r"主打([\u4e00-\u9fa5A-Za-z0-9\-]+)",
+        r"特点是([\u4e00-\u9fa5A-Za-z0-9\-]+)",
+        r"卖点是([\u4e00-\u9fa5A-Za-z0-9\-]+)",
+        r"具有([\u4e00-\u9fa5A-Za-z0-9\-]+)性",
+    ]
+    for pat in feature_patterns:
+        m = re.search(pat, t)
+        if m:
+            value = m.group(1).strip()
+            if value:
+                return {
+                    "type": "product_feature",
+                    "value": value,
+                    "source_text": t,
+                    "product_ref": product_ref,
+                }
+
+    return None
+
 
 async def extract_structured_fact(text: str):
     t = (text or "").strip()
     if not t:
         return None
+
+    if is_obviously_non_fact_message(t):
+        return None
+
+    rule_fact = extract_structured_fact_by_rules(t)
+    if rule_fact is not None:
+        return rule_fact
 
     prompt = build_extract_fact_prompt(t)
 
@@ -269,6 +511,17 @@ async def extract_structured_fact(text: str):
     fact["type"] = normalize_fact_type(str(fact.get("type")).strip())
     fact["value"] = str(fact.get("value")).strip()
     fact["source_text"] = str(fact.get("source_text")).strip()
+
+    if fact["type"] not in FACT_POLICIES:
+        return None
+
+    product_ref = fact.get("product_ref")
+    if product_ref is not None:
+        product_ref = str(product_ref).strip()
+        fact["product_ref"] = product_ref if product_ref else None
+    else:
+        fact["product_ref"] = None
+
 
     if not fact["type"] or not fact["value"] or not fact["source_text"]:
         return None
@@ -319,27 +572,48 @@ def is_fact_fresh(source_ts: str | None, freshness_days: int | None) -> bool:
     except Exception:
         return False
 
-def normalize_fact_type(fact_type: str | None) -> str | None:
-    if fact_type is None:
-        return None
+def should_supersede_existing_fact(fact_type: str | None) -> bool:
+    return bool(get_fact_policy_value(fact_type, "single_value", False))
 
-    t = fact_type.strip().lower()
-    t = t.replace(" ", "_")
 
-    mapping = {
-        "pet_name": "pet_name",
-        "location": "location",
-        "preference": "preference",
-        "identity": "identity",
-        "relationship": "relationship",
-        "product_price": "product_price",
-        "promo": "promo",
-        "stock_status": "stock_status",
-        "shipping_policy": "shipping_policy",
-        "product_feature": "product_feature",
+def infer_fact_scope(fact_type: str | None) -> str:
+    return str(get_fact_policy_value(fact_type, "scope", "session"))
+
+
+def infer_fact_slot(fact_type: str | None) -> str | None:
+    slot = get_fact_policy_value(fact_type, "slot", None)
+    return str(slot) if slot is not None else None
+
+
+def infer_entity_id(session_id: str, fact: dict) -> str:
+    fact_type = normalize_fact_type(fact.get("type"))
+    entity_kind = get_fact_entity_kind(fact_type)
+
+    if entity_kind == "default_product":
+        product_ref = fact.get("product_ref")
+        if product_ref:
+            return f"{session_id}::product::{product_ref}"
+        return f"{session_id}::default_product"
+
+    return f"{session_id}::self"
+
+
+def get_payload_slot(payload: dict) -> str | None:
+    slot = payload.get("slot")
+    if slot:
+        return str(slot).strip()
+    return infer_fact_slot(payload.get("type"))
+
+
+def get_payload_entity_id(session_id: str, payload: dict) -> str | None:
+    entity_id = payload.get("entity_id")
+    if entity_id:
+        return str(entity_id).strip()
+
+    legacy_fact = {
+        "type": payload.get("type"),
     }
-
-    return mapping.get(t, t)
+    return infer_entity_id(session_id, legacy_fact)
 
 async def kb_delete_facts_by_session_and_type(session_id: str, fact_type: str):
     now_ts = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
@@ -366,11 +640,84 @@ async def kb_delete_facts_by_session_and_type(session_id: str, fact_type: str):
         r.raise_for_status()
         return r.json()
 
+async def kb_delete_facts_by_session_entity_slot(
+    session_id: str,
+    entity_id: str,
+    slot: str,
+):
+    if not session_id or not entity_id or not slot:
+        return {"matched": 0, "updated": 0, "ids": []}
+
+    scroll_body = {
+        "limit": 200,
+        "with_payload": True,
+        "with_vector": False,
+        "filter": {
+            "must": [
+                {"key": "session_id", "match": {"value": session_id}},
+                {"key": "is_active", "match": {"value": True}},
+            ]
+        },
+    }
+
+    async with httpx.AsyncClient(timeout=60) as client:
+        r = await client.post(
+            f"{QDRANT_BASE_URL}/collections/{QDRANT_KB_COLLECTION}/points/scroll",
+            json=scroll_body,
+        )
+        r.raise_for_status()
+        data = r.json()
+
+    points = data.get("result", {}).get("points", [])
+    matched_ids = []
+
+    for pt in points:
+        pid = pt.get("id")
+        payload = pt.get("payload") or {}
+
+        old_slot = get_payload_slot(payload)
+        old_entity_id = get_payload_entity_id(session_id, payload)
+
+        if old_slot == slot and old_entity_id == entity_id:
+            matched_ids.append(pid)
+
+    if not matched_ids:
+        return {"matched": 0, "updated": 0, "ids": []}
+
+    now_ts = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+
+    async with httpx.AsyncClient(timeout=60) as client:
+        for pid in matched_ids:
+            r = await client.put(
+                f"{QDRANT_BASE_URL}/collections/{QDRANT_KB_COLLECTION}/points/payload",
+                json={
+                    "payload": {
+                        "is_active": False,
+                        "deactivated_ts": now_ts,
+                    },
+                    "points": [pid],
+                },
+            )
+            r.raise_for_status()
+
+    return {
+        "matched": len(matched_ids),
+        "updated": len(matched_ids),
+        "ids": matched_ids,
+    }
+
 async def kb_upsert_fact(session_id: str, fact: dict, vector: list[float] | None = None):
     fact["type"] = normalize_fact_type(fact.get("type"))
-    if fact.get("type") is not None:
-        await kb_delete_facts_by_session_and_type(session_id, fact["type"])
+    fact["scope"] = infer_fact_scope(fact.get("type"))
+    fact["slot"] = infer_fact_slot(fact.get("type"))
+    fact["entity_id"] = infer_entity_id(session_id, fact)
 
+    if should_supersede_existing_fact(fact.get("type")):
+        await kb_delete_facts_by_session_entity_slot(
+            session_id=session_id,
+            entity_id=fact["entity_id"],
+            slot=fact["slot"],
+        )
 
     fact_text = json.dumps(fact, ensure_ascii=False)
     embed_text = fact.get("source_text") or fact_text
@@ -384,15 +731,7 @@ async def kb_upsert_fact(session_id: str, fact: dict, vector: list[float] | None
     now_ts = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
     fact_type = fact.get("type")
-
-    if fact_type == "promo":
-        freshness_days = 1
-    elif fact_type == "stock_status":
-        freshness_days = 3
-    elif fact_type == "product_price":
-        freshness_days = 7
-    else:
-        freshness_days = 30
+    freshness_days = get_fact_freshness_days(fact_type)
 
     body = {
         "points": [
@@ -403,6 +742,10 @@ async def kb_upsert_fact(session_id: str, fact: dict, vector: list[float] | None
                     "kind": "structured_fact",
                     "session_id": session_id,
                     "type": fact.get("type"),
+                    "scope": fact.get("scope"),
+                    "slot": fact.get("slot"),
+                    "entity_id": fact.get("entity_id"),
+                    "product_ref": fact.get("product_ref"),
                     "value": fact.get("value"),
                     "source_text": fact.get("source_text"),
                     "text": fact_text,
@@ -457,16 +800,22 @@ async def store_user_memory_if_needed(
     if not (message.strip() and should_store_user_memory(message)):
         return {
             "memory_llm_ok": memory_llm_ok,
+            "fact_ready": fact_extracted,
             "fact_extracted": fact_extracted,
             "kb_upsert_ok": kb_upsert_ok,
             "kb_upsert_error": kb_upsert_error,
             "skipped_reason": skipped_reason,
         }
 
-    memory_llm_ok = await should_store_user_memory_llm(message)
-    if not memory_llm_ok:
+    fact = current_fact
+    if fact is not None:
+        fact_extracted = True
+        memory_llm_ok = True
+    else:
+        memory_llm_ok = False
         return {
             "memory_llm_ok": memory_llm_ok,
+            "fact_ready": fact_extracted,
             "fact_extracted": fact_extracted,
             "kb_upsert_ok": kb_upsert_ok,
             "kb_upsert_error": kb_upsert_error,
@@ -478,18 +827,16 @@ async def store_user_memory_if_needed(
         skipped_reason = "duplicate_message"
         return {
             "memory_llm_ok": memory_llm_ok,
+            "fact_ready": fact_extracted,
             "fact_extracted": fact_extracted,
             "kb_upsert_ok": kb_upsert_ok,
             "kb_upsert_error": kb_upsert_error,
             "skipped_reason": skipped_reason,
         }
 
-    fact = current_fact
     if fact is not None:
         fact_extracted = True
         fact_type = normalize_fact_type(fact.get("type"))
-        if fact_type is not None:
-            await qdrant_delete_chat_facts_by_session_and_type(session_id, fact_type)
 
         await qdrant_upsert_chat(
             session_id,
@@ -500,7 +847,7 @@ async def store_user_memory_if_needed(
         )
 
         try:
-            await kb_upsert_fact(session_id, fact, qvec)
+            await kb_upsert_fact(session_id, fact)
             kb_upsert_ok = True
         except Exception as e:
             kb_upsert_error = str(e)
@@ -509,6 +856,7 @@ async def store_user_memory_if_needed(
 
     return {
         "memory_llm_ok": memory_llm_ok,
+        "fact_ready": fact_extracted,
         "fact_extracted": fact_extracted,
         "kb_upsert_ok": kb_upsert_ok,
         "kb_upsert_error": kb_upsert_error,
@@ -552,7 +900,7 @@ async def test():
 
 @app.post("/chat_mem")
 async def chat_mem(req: ChatReq):
-    session_id = req.session_id or "demo"
+    session_id = require_session_id(req.session_id)
     current_fact = None
     current_fact_type = None
 
@@ -581,7 +929,8 @@ async def chat_mem(req: ChatReq):
             current_fact = await extract_structured_fact(req.message)
             if current_fact is not None:
                 current_fact_type = normalize_fact_type(current_fact.get("type"))
-        except Exception:
+        except Exception as e:
+            print("extract_structured_fact failed:", repr(e))
             current_fact = None
             current_fact_type = None
 
@@ -590,9 +939,13 @@ async def chat_mem(req: ChatReq):
         for h in candidate_hits:
             p = h.get("payload") or {}
             old_fact_type = normalize_fact_type(p.get("fact_type"))
-            if old_fact_type == current_fact_type:
+
+            # 旧消息如果带了 fact_type，而且和当前类型不一致，就丢掉
+            if old_fact_type is not None and old_fact_type != current_fact_type:
                 continue
+
             filtered_candidates.append(h)
+
         candidate_hits = filtered_candidates
 
     # ---- Dynamic gating (research-y) ----
@@ -620,10 +973,12 @@ async def chat_mem(req: ChatReq):
 
     if current_fact_type is not None and len(candidate_hits) == 0:
         memory_allowed = True
+
+    has_current_fact = current_fact is not None
     # ------------------------------------
 
-    # 3) 如果不允许用记忆：只写入一次 user（可选，但推荐），然后直接拒绝
-    if not memory_allowed:
+    # 3) 只有在“既不能安全使用历史记忆，又没有当前可写入事实”时，才 hard refusal
+    if (not memory_allowed) and (not has_current_fact):
         memres = await store_user_memory_if_needed(
             session_id=session_id,
             message=req.message,
@@ -631,14 +986,35 @@ async def chat_mem(req: ChatReq):
             current_fact=current_fact,
         )
 
+        system_text = req.system or "你是一个有长期记忆的助手。"
+
+        payload = {
+            "model": OLLAMA_MODEL,
+            "stream": False,
+            "messages": [
+                {"role": "system", "content": system_text},
+                {"role": "user", "content": req.message},
+            ],
+        }
+        if req.temperature is not None:
+            payload["options"] = {"temperature": req.temperature}
+
+        async with httpx.AsyncClient(timeout=120) as client:
+            r = await client.post(f"{OLLAMA_BASE_URL}/api/chat", json=payload)
+            r.raise_for_status()
+            data = r.json()
+
+        reply = data.get("message", {}).get("content", "")
+
         return {
             "session_id": session_id,
             "model": OLLAMA_MODEL,
-            "reply": "...",
-            "refusal": True,
+            "reply": reply,
+            "refusal": False,
             "sources": [],
             "fact_debug": {
                 "memory_llm_ok": memres["memory_llm_ok"],
+                "fact_ready": memres["fact_ready"],
                 "extracted": memres["fact_extracted"],
                 "kb_upsert_ok": memres["kb_upsert_ok"],
                 "kb_upsert_error": memres["kb_upsert_error"],
@@ -652,7 +1028,7 @@ async def chat_mem(req: ChatReq):
                 "top1_score": top1_score,
                 "top2_score": top2_score,
                 "score_threshold": score_th,
-                "dynamic_threshold": dynamic_th,
+                "dynamic_threshold": score_th,
                 "th_ok": th_ok,
                 "gap_ok": gap_ok,
                 "hit_count_raw": len(hits),
@@ -681,6 +1057,13 @@ async def chat_mem(req: ChatReq):
         if role != "user":
             continue
         if not should_store_user_memory(txt):
+            continue
+
+        if txt.strip() == req.message.strip():
+            continue
+
+        hit_fact_type = normalize_fact_type(p.get("fact_type"))
+        if current_fact_type is not None and hit_fact_type is not None and hit_fact_type != current_fact_type:
             continue
 
         cite_no += 1
@@ -744,6 +1127,7 @@ async def chat_mem(req: ChatReq):
         "refusal": False,
         "fact_debug": {
             "memory_llm_ok": memres["memory_llm_ok"],
+            "fact_ready": memres["fact_ready"],
             "extracted": memres["fact_extracted"],
             "kb_upsert_ok": memres["kb_upsert_ok"],
             "kb_upsert_error": memres["kb_upsert_error"],
@@ -774,7 +1158,7 @@ async def chat_mem_strict(req: ChatReq):
     Kept for comparison/debugging with the old fixed-threshold retrieval behavior.
     New development should happen in /chat_mem.
     """
-    session_id = req.session_id or "demo"
+    session_id = require_session_id(req.session_id)
 
     # NOTE:
     # This endpoint intentionally preserves the older fixed-threshold behavior.
@@ -932,7 +1316,7 @@ async def debug_chat_mem_trace(req: ChatReq):
     if not DEBUG_ROUTES_ENABLED:
         raise HTTPException(status_code=404, detail="Not found")
 
-    session_id = req.session_id or "demo"
+    session_id = require_session_id(req.session_id)
 
     qvec = await ollama_embed(req.message)
     hits = await qdrant_search_chat(session_id, qvec, CHAT_TOP_K)
@@ -961,6 +1345,7 @@ async def debug_chat_mem_trace(req: ChatReq):
 
     current_fact = None
     current_fact_type = None
+
     if should_store_user_memory(req.message):
         try:
             current_fact = await extract_structured_fact(req.message)
@@ -970,36 +1355,48 @@ async def debug_chat_mem_trace(req: ChatReq):
             current_fact = None
             current_fact_type = None
 
-    filtered_candidates = candidate_hits
-    if current_fact_type is not None:
         filtered_candidates = []
+
         for h in candidate_hits:
+            txt = (h.get("text") or "").strip()
             old_fact_type = normalize_fact_type(h.get("fact_type"))
-            if old_fact_type == current_fact_type:
+
+            # 1) 过滤掉和当前输入完全相同的 self-hit
+            if txt == req.message.strip():
                 continue
+
+            # 2) 如果当前抽到了 fact 类型，就过滤掉类型不一致的历史消息
+            if current_fact_type is not None and old_fact_type is not None and old_fact_type != current_fact_type:
+                continue
+
             filtered_candidates.append(h)
 
-    top1 = filtered_candidates[0].get("score") if len(filtered_candidates) >= 1 else None
-    top2 = filtered_candidates[1].get("score") if len(filtered_candidates) >= 2 else None
+    final_top1_score = filtered_candidates[0].get("score") if len(filtered_candidates) >= 1 else None
+    final_top2_score = filtered_candidates[1].get("score") if len(filtered_candidates) >= 2 else None
 
     score_th = CHAT_BASE_THRESHOLD
-    gap_ok = False
-    th_ok = False
 
-    if top1 is not None:
-        th_ok = top1 >= CHAT_BASE_THRESHOLD
+    final_th_ok = (
+        final_top1_score is not None and final_top1_score >= score_th
+    )
 
-        if top2 is None:
-            gap_ok = True
-        elif top1 >= 0.92:
-            gap_ok = True
+    final_gap_ok = False
+    if final_top1_score is not None:
+        if final_top2_score is None:
+            final_gap_ok = True
+        elif final_top1_score >= 0.92:
+            final_gap_ok = True
         else:
-            gap_ok = (top1 - top2) >= CHAT_GAP_THRESHOLD
+            final_gap_ok = (final_top1_score - final_top2_score) >= CHAT_GAP_THRESHOLD
 
-    memory_allowed = bool(th_ok and gap_ok)
+    final_memory_allowed = bool(final_th_ok and final_gap_ok)
+    memory_allowed_reason = "retrieval_passed" if final_memory_allowed else "none"
 
+    # 和 /chat_mem 主逻辑保持一致：
+    # 当前有 fact，但过滤后没有历史候选，也允许继续
     if current_fact_type is not None and len(filtered_candidates) == 0:
-        memory_allowed = True
+        final_memory_allowed = True
+        memory_allowed_reason = "current_fact_without_history"
 
     return {
         "session_id": session_id,
@@ -1014,17 +1411,17 @@ async def debug_chat_mem_trace(req: ChatReq):
             "hit_count_raw": len(hits),
             "hit_count_candidates": len(candidate_hits),
             "hit_count_after_type_filter": len(filtered_candidates),
-            "top1_score": top1,
-            "top2_score": top2,
+            "top1_score": final_top1_score,
+            "top2_score": final_top2_score,
             "score_threshold": score_th,
-            "th_ok": th_ok,
-            "gap_ok": gap_ok,
-            "memory_allowed": memory_allowed,
+            "th_ok": final_th_ok,
+            "gap_ok": final_gap_ok,
+            "memory_allowed": final_memory_allowed,
+            "memory_allowed_reason": memory_allowed_reason,
         },
         "candidate_hits": candidate_hits,
         "filtered_candidates": filtered_candidates,
     }
-
 
 @app.post("/debug/extract_fact")
 async def debug_extract_fact(req: DebugExtractFactReq):
@@ -1123,54 +1520,116 @@ async def debug_fact_overwrite_trace(req: DebugFactOverwriteReq):
     if not DEBUG_ROUTES_ENABLED:
         raise HTTPException(status_code=404, detail="Not found")
 
+    session_id = require_session_id(req.session_id)
+
     should_store = should_store_user_memory(req.message)
 
     current_fact = None
     current_fact_type = None
+    current_scope = None
+    current_slot = None
+    current_entity_id = None
+    current_should_supersede = False
+
     if should_store:
         try:
             current_fact = await extract_structured_fact(req.message)
             if current_fact is not None:
-                current_fact_type = normalize_fact_type(current_fact.get("type"))
-        except Exception:
+                current_fact["type"] = normalize_fact_type(current_fact.get("type"))
+                current_fact["scope"] = infer_fact_scope(current_fact.get("type"))
+                current_fact["slot"] = infer_fact_slot(current_fact.get("type"))
+                current_fact["entity_id"] = infer_entity_id(session_id, current_fact)
+
+                current_fact_type = current_fact.get("type")
+                current_scope = current_fact.get("scope")
+                current_slot = current_fact.get("slot")
+                current_entity_id = current_fact.get("entity_id")
+                current_should_supersede = should_supersede_existing_fact(current_fact_type)
+        except Exception as e:
             current_fact = None
             current_fact_type = None
+            current_scope = None
+            current_slot = None
+            current_entity_id = None
+            current_should_supersede = False
 
-    existing_same_type_facts = []
-    if current_fact_type is not None:
-        hits = await kb_search(req.message, KB_TOP_K, req.session_id)
+    trace_items = []
 
-        for h in hits:
-            payload = h.get("payload") or {}
-            fact_type = normalize_fact_type(payload.get("type"))
+    # 不再用 kb_search，因为那是语义检索 + top_k，不适合做覆盖追踪
+    scroll_body = {
+        "limit": 200,
+        "with_payload": True,
+        "with_vector": False,
+        "filter": {
+            "must": [
+                {"key": "session_id", "match": {"value": session_id}},
+                {"key": "is_active", "match": {"value": True}},
+            ]
+        },
+    }
 
-            if fact_type != current_fact_type:
-                continue
+    async with httpx.AsyncClient(timeout=60) as client:
+        r = await client.post(
+            f"{QDRANT_BASE_URL}/collections/{QDRANT_KB_COLLECTION}/points/scroll",
+            json=scroll_body,
+        )
+        r.raise_for_status()
+        data = r.json()
 
-            if payload.get("is_active") is False:
-                continue
+    points = data.get("result", {}).get("points", [])
 
-            existing_same_type_facts.append({
-                "point_id": h.get("id"),
-                "score": h.get("score"),
-                "type": fact_type,
-                "value": payload.get("value"),
-                "source_text": payload.get("source_text"),
-                "source_ts": payload.get("source_ts"),
-                "last_seen_ts": payload.get("last_seen_ts"),
-                "freshness_days": payload.get("freshness_days"),
-                "is_active": payload.get("is_active"),
-                "text": payload.get("text"),
-            })
+    for pt in points:
+        payload = pt.get("payload") or {}
+
+        existing_type = normalize_fact_type(payload.get("type"))
+        existing_scope = payload.get("scope")
+        existing_slot = get_payload_slot(payload)
+        existing_entity_id = get_payload_entity_id(session_id, payload)
+        existing_is_active = payload.get("is_active", True)
+
+        same_type = (existing_type == current_fact_type)
+        same_scope = (existing_scope == current_scope)
+        same_slot = (existing_slot == current_slot)
+        same_entity_id = (existing_entity_id == current_entity_id)
+
+        would_supersede = bool(
+            current_should_supersede
+            and existing_is_active
+            and same_entity_id
+            and same_slot
+        )
+
+        trace_items.append({
+            "point_id": pt.get("id"),
+            "type": existing_type,
+            "scope": existing_scope,
+            "slot": existing_slot,
+            "entity_id": existing_entity_id,
+            "value": payload.get("value"),
+            "source_text": payload.get("source_text"),
+            "source_ts": payload.get("source_ts"),
+            "last_seen_ts": payload.get("last_seen_ts"),
+            "freshness_days": payload.get("freshness_days"),
+            "is_active": existing_is_active,
+            "text": payload.get("text"),
+            "same_type": same_type,
+            "same_scope": same_scope,
+            "same_slot": same_slot,
+            "same_entity_id": same_entity_id,
+            "would_supersede": would_supersede,
+        })
 
     return {
-        "session_id": req.session_id,
+        "session_id": session_id,
         "message": req.message,
-        "should_store_by_rule": should_store,
+        "should_store": should_store,
         "current_fact": current_fact,
         "current_fact_type": current_fact_type,
-        "existing_same_type_facts": existing_same_type_facts,
-        "overwrite_target_count": len(existing_same_type_facts),
+        "current_scope": current_scope,
+        "current_slot": current_slot,
+        "current_entity_id": current_entity_id,
+        "current_should_supersede": current_should_supersede,
+        "trace": trace_items,
     }
 
 class ChatKBReq(BaseModel):
@@ -1192,7 +1651,14 @@ class KBUpsertReq(BaseModel):
     text: str = Field(..., min_length=1, max_length=4000)
     id: str | None = Field(default=None, max_length=128)
 
-async def kb_search(query: str, top_k: int, session_id: str | None = None):
+async def kb_search(
+    query: str,
+    top_k: int,
+    session_id: str | None = None,
+    only_active: bool = False,
+    fact_type: str | None = None,
+):
+
     # 1. 生成 embedding
     qvec = await ollama_embed(query)
 
@@ -1203,12 +1669,26 @@ async def kb_search(query: str, top_k: int, session_id: str | None = None):
         "with_payload": True
     }
 
+    must_filters = []
+
     if session_id is not None:
-        body["filter"] = {
-            "must": [
-                {"key": "session_id", "match": {"value": session_id}}
-            ]
-        }
+        must_filters.append(
+            {"key": "session_id", "match": {"value": session_id}}
+        )
+
+    if only_active:
+        must_filters.append(
+            {"key": "is_active", "match": {"value": True}}
+        )
+
+    normalized_type = normalize_fact_type(fact_type)
+    if normalized_type is not None:
+        must_filters.append(
+            {"key": "type", "match": {"value": normalized_type}}
+        )
+
+    if must_filters:
+        body["filter"] = {"must": must_filters}
 
     async with httpx.AsyncClient(timeout=60) as client:
         r = await client.post(
@@ -1248,7 +1728,13 @@ async def select_best_livestream_fact(
     score_threshold: float | None = None,
 ):
     best = None
-    hits = await kb_search(message, top_k, session_id)
+
+    hits = await kb_search(
+        query=message,
+        top_k=top_k,
+        session_id=session_id,
+        only_active=True,
+    )
 
     for h in hits:
         payload = h.get("payload") or {}
@@ -1297,10 +1783,17 @@ async def debug_kb_search(req: DebugKBSearchReq):
     if not DEBUG_ROUTES_ENABLED:
         raise HTTPException(status_code=404, detail="Not found")
 
+    session_id = require_session_id(req.session_id)
     top_k = req.top_k or KB_TOP_K
     wanted_type = normalize_fact_type(req.fact_type)
 
-    hits = await kb_search(req.query, top_k, req.session_id)
+    hits = await kb_search(
+        query=req.query,
+        top_k=top_k,
+        session_id=session_id,
+        only_active=True,
+        fact_type=wanted_type,
+    )
 
     out = []
     for h in hits:
@@ -1315,6 +1808,9 @@ async def debug_kb_search(req: DebugKBSearchReq):
             "point_id": h.get("id"),
             "kind": payload.get("kind"),
             "type": fact_type,
+            "scope": payload.get("scope"),
+            "slot": payload.get("slot"),
+            "entity_id": payload.get("entity_id"),
             "value": payload.get("value"),
             "source_text": payload.get("source_text"),
             "source_ts": payload.get("source_ts"),
@@ -1326,7 +1822,7 @@ async def debug_kb_search(req: DebugKBSearchReq):
         })
 
     return {
-        "session_id": req.session_id,
+        "session_id": session_id,
         "query": req.query,
         "top_k": top_k,
         "fact_type": wanted_type,
@@ -1335,6 +1831,7 @@ async def debug_kb_search(req: DebugKBSearchReq):
 
 @app.post("/chat_kb")
 async def chat_kb(req: ChatKBReq):
+    session_id = require_session_id(req.session_id)
     top_k = req.top_k if req.top_k else KB_TOP_K
     wanted_type = normalize_fact_type(req.fact_type)
 
@@ -1345,7 +1842,14 @@ async def chat_kb(req: ChatKBReq):
     else:
         score_th = KB_SCORE_THRESHOLD
 
-    hits = await kb_search(req.message, top_k, req.session_id)
+    hits = await kb_search(
+        query=req.message,
+        top_k=top_k,
+        session_id=session_id,
+        only_active=True,
+        fact_type=wanted_type,
+    )
+
     raw_hit_count = len(hits)
 
     contexts = []
@@ -1441,15 +1945,18 @@ async def chat_kb(req: ChatKBReq):
             "point_id": point_id,
             "score": score,
             "collection": QDRANT_KB_COLLECTION,
-            "kind": kind,
-            "type": fact_type,
-            "value": fact_value,
-            "source_text": source_text,
-            "source_ts": source_ts,
-            "last_seen_ts": last_seen_ts,
-            "freshness_days": freshness_days,
-            "is_active": is_active,
-            "text": txt
+            "kind": payload.get("kind"),
+            "type": payload.get("type"),
+            "scope": payload.get("scope"),
+            "slot": payload.get("slot"),
+            "entity_id": payload.get("entity_id"),
+            "value": payload.get("value"),
+            "source_text": payload.get("source_text"),
+            "source_ts": payload.get("source_ts"),
+            "last_seen_ts": payload.get("last_seen_ts"),
+            "freshness_days": payload.get("freshness_days"),
+            "is_active": payload.get("is_active"),
+            "text": payload.get("text"),
         })
 
     filtered_hit_count = len(sources)
@@ -1474,8 +1981,11 @@ async def chat_kb(req: ChatKBReq):
             }
         }
 
+    base_system = req.system or "你是一个检索增强助手。"
+
     system_prompt = (
-        "你是一个检索增强助手。请基于知识库回答问题，并在使用知识时用 [编号] 标注引用。\n\n"
+        f"{base_system}\n"
+        "请基于知识库回答问题，并在使用知识时用 [编号] 标注引用。\n\n"
         f"【知识库】\n{context_block}\n\n"
         "【用户问题】"
     )
@@ -1504,7 +2014,7 @@ async def chat_kb(req: ChatKBReq):
             "top_k": top_k,
             "score_threshold": score_th,
             "fact_type": wanted_type,
-            "session_id": req.session_id,
+            "session_id": session_id,
             "hit_count_raw": raw_hit_count,
             "hit_count_filtered": filtered_hit_count,
             "filtered_out": filtered_out,
@@ -1514,11 +2024,12 @@ async def chat_kb(req: ChatKBReq):
 
 @app.post("/chat_livestream_kb")
 async def chat_livestream_kb(req: ChatLivestreamKBReq):
+    session_id = require_session_id(req.session_id)
     top_k = req.top_k if req.top_k else KB_TOP_K
 
     best = await select_best_livestream_fact(
         message=req.message,
-        session_id=req.session_id,
+        session_id=session_id,
         top_k=top_k,
         score_threshold=req.score_threshold,
     )
@@ -1550,7 +2061,7 @@ async def chat_livestream_kb(req: ChatLivestreamKBReq):
     selected_hit = best.get("hit") or {}
 
     delegated_req = ChatKBReq(
-        session_id=req.session_id,
+        session_id=session_id,
         message=req.message,
         system=req.system,
         temperature=req.temperature,
@@ -1560,7 +2071,6 @@ async def chat_livestream_kb(req: ChatLivestreamKBReq):
     )
 
     result = await chat_kb(delegated_req)
-    result["refusal"] = False
     result["routed_fact_type"] = routed_fact_type
     result["routing"] = {
         "candidate_fact_types": sorted(LIVESTREAM_FACT_TYPES),
