@@ -24,6 +24,7 @@ Currently, the project includes:
   - stock status
   - shipping policy
   - product features
+- a broader policy registry that also includes additional session-scoped fact types used by extraction beyond the livestream commerce categories emphasized in this README
 - traceable retrieval outputs and inspectable fallback behavior
 - a small evaluation setup for routing and fallback behavior in the current livestream knowledge layer
 - A legacy strict-threshold chat-memory endpoint is still kept for comparison and debugging, but it is not the primary interaction path of the current memory layer.
@@ -84,6 +85,7 @@ Currently, the system can:
 - filter non-fact messages such as greetings from entering memory
 - return traceable supporting memory items instead of relying on hidden recall
 - refuse or fall back safely when no sufficiently reliable structured memory is available
+- hard refusal mainly applies to KB-oriented endpoints; in `/chat_mem`, the system may still generate a reply without memory support when no reliable stored memory is available
 - support a small evaluation setup covering routing and fallback behavior in the current livestream knowledge layer
 
 ## Example Workflows
@@ -106,7 +108,13 @@ The system can separate facts across products instead of forcing all livestream 
 
 ### 5. Livestream commerce query routing
 
+<<<<<<< HEAD
 For livestream commerce queries, the system does not rely on a separate intent classifier. Instead, it performs semantic retrieval over eligible knowledge candidates, applies fact-type-specific validity checks and routing thresholds, and uses the highest-scoring eligible fact type as the routed type.
+=======
+<<<<<<< HEAD
+For livestream commerce queries, the system does not rely on a separate intent classifier. Instead, it performs semantic retrieval over eligible knowledge candidates, applies fact-type-specific validity checks and routing thresholds, and uses the highest-scoring eligible fact type as the routed type.
+=======
+For livestream commerce queries, the system does not rely on a separate intent classifier. Instead, it performs semantic retrieval over eligible knowledge candidates, applies fact-type-specific validity checks and routing thresholds, and uses the highest-scoring eligible fact type among the top-k retrieval candidates as the routed type.
 
 In other words, livestream fact-type routing is implemented through retrieval-time score competition rather than a standalone classification step.
 
