@@ -227,7 +227,7 @@ This demo does not support:
 
 ## Future Work
 
-Demo 1 has already led into the current Demo 2 comparability path. The next step is to make comparability rules more testable and expand the same field contract to more store-period records.
+Demo 1 has already led into the current Demo 2 same-period diagnostic path. The next step is to make comparability rules more testable and expand the same field contract to more store-period records.
 
 Future expansion should check whether stores can be compared by:
 

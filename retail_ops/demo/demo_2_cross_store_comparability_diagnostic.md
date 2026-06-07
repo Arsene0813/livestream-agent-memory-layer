@@ -1,5 +1,16 @@
 # Demo 2: Same-Period B-F Store Diagnostic
 
+## What a Reviewer Should Conclude from Demo 2
+
+Demo 2 supports same-period diagnostic reading across selected Stores B-F for March 2026.
+
+It supports reading visibility-entry structure, activity involvement, activity-cost intensity, transaction conversion, refund pressure, invalid-order pressure, and selected top-SKU concentration under one reporting window and one field contract.
+
+It does not approve pairwise strategy transfer, global store ranking, market-area classification, or promotion-setting transfer.
+
+The future pairwise comparability gate remains separate from Demo 2.
+
+
 ## Naming Note
 
 This file keeps the historical `cross_store_comparability` path wording for reference stability. In the current implementation, Demo 2 means same-period B-F diagnostic evidence and interpretation guardrails, not a completed pairwise comparability gate.
@@ -108,13 +119,13 @@ A guardrail-sensitivity check is included for this reason: in the current B-F sa
 
 ## What This Demo Supports
 
-This demo supports cautious same-period diagnostic comparison.
+This demo supports same-period diagnostic reading.
 
 It keeps activity involvement, refund pressure, invalid-order pressure, and SKU concentration attached to metric interpretation, while search-entry structure remains visible through the dedicated search-entry fields.
 
 ## Current Interpretation Boundary
 
-Demo 2 supports cautious same-period diagnostic comparison, but it should not be used for three stronger decisions:
+Demo 2 supports same-period diagnostic reading, but it should not be used for three stronger decisions:
 
 1. ranking stores as best or worst;
 2. transferring subsidy, pricing, SKU, ranking, or fulfillment actions from one store to another;
