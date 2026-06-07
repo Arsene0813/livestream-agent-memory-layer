@@ -230,6 +230,29 @@ The following examples describe intended future gate behavior. They are not curr
 | C | E | Transfer promotion strategy | `insufficient_evidence` | Current Demo 2 has activity involvement and cost-ratio evidence, but not campaign mechanism, activity calendar, competitor reaction, or repeated-window stability. |
 | B | F | Compare market-area performance | `insufficient_evidence` | `region_type` is weak context only. Market-area classification needs broader store data and supporting local-consumption and competition evidence. |
 
+## Concrete Future Gate Example
+
+This section is a contract example only. It describes intended future behavior.
+It is not a current Demo 2 output and does not change the canonical field
+definitions in `retail_ops/data/DATA_DICTIONARY.md`.
+
+The future gate should answer a narrow comparison question, not produce a
+global store ranking.
+
+| Future gate item | Example content |
+|---|---|
+| Reference record | Store B, March 2026 |
+| Candidate record | Store F, March 2026 |
+| Operating question | Can search-entry structure be compared between these records? |
+| Evidence checked | Same reporting window, transaction order volume, transaction amount, store type, activity involvement, activity cost intensity, search exposure, search average rank, search entry users, search-entry rate, search-entry share, refund pressure, invalid-order pressure, top-SKU concentration, weak region context, and repeated-window availability. |
+| Possible decision | Comparable with limits. |
+| Why limited | Same-period search-entry evidence may support a cautious diagnostic comparison, but current evidence is not enough to approve promotion transfer, pricing strategy, market-area classification, or general store ranking. |
+
+A different operating question would require a different gate decision. For
+example, the same two records might be usable for search-entry diagnosis but
+still insufficient for deciding whether one store's subsidy strategy should be
+transferred to another store.
+
 ## Implementation Boundary
 
 This document freezes the future contract without claiming that a pairwise gate has been implemented.
