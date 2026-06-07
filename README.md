@@ -286,6 +286,15 @@ Future pairwise comparability-gate wording must follow `retail_ops/COMPARABILITY
 
 The current retail implementation is a local evidence-bounded prototype. Demo 1 covers Store A month-over-month analysis, and Demo 2 covers selected Stores B-F under the same March 2026 reporting window. Demo 2 is a diagnostic evidence layer under one field contract before future pairwise comparability rules are added.
 
+| Area | Current status | Boundary |
+| --- | --- | --- |
+| Backend data | Selected Meituan backend evidence is manually structured into source files. | Not production Meituan backend ingestion. |
+| Demo 2 | Same-period B-F diagnostic evidence. | Not a peer-selection rule, store ranking, or strategy-transfer approval. |
+| Retrieval behavior | File-backed facts and offline retrieval inspections are available. | Retrieval score alone is not treated as sufficient evidence for operating conclusions. |
+| `region_type` | Weak region or market-context evidence. | Not a mature market-area classification, store-stage label, or hard peer-grouping rule. |
+| Top-SKU evidence | Lightweight product-mix evidence from selected top-SKU rows. | Not full product-category sales share. |
+| Future comparability gate | Design contract is documented in `retail_ops/COMPARABILITY_GATE_V0.md`. | Not implemented in the current prototype. |
+
 The next development step is to add more repeated store-period evidence and test whether the current diagnostic guardrails remain stable across more stores, months, activity conditions, and market contexts. Future pairwise comparison should be question-specific: a store pair may be comparable for search-entry structure but not comparable for promotion transfer, pricing pressure, SKU strategy, refund interpretation, or fulfillment interpretation.
 
 ## Structured Reasoning Scaffold: Factor-Aware Grounded Review
