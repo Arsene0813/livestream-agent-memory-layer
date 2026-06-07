@@ -44,7 +44,22 @@ This path shows the movement from metric definitions, to single-store diagnostic
 
 ## Current Demos
 
-### Demo 1: Store A Month-over-Month Diagnostic
+### Retail Review Path
+
+For retail review, use the same order as the root README.
+
+| Step | File | What to check |
+|---|---|---|
+| 1 | `../PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Why the project exists and where the current implementation stops. |
+| 2 | `data/DATA_DICTIONARY.md` | Backend metric meanings, canonical field names, and interpretation boundaries. |
+| 3 | `demo/demo_1_store_a_month_over_month_diagnostic.md` | Store A month-over-month diagnostic evidence. |
+| 4 | `demo/demo_2_cross_store_comparability_diagnostic.md` | Same-period B-F diagnostic reading and current comparison limits. |
+| 5 | `EXPERIMENT_RESULTS.md` | Implemented checks, pass conditions, and failure boundaries. |
+| 6 | `COMPARABILITY_GATE_V0.md` | Future pairwise comparability-gate design. |
+
+This file is the retail entry point. It should not duplicate every metric boundary from the dictionary; it should point reviewers to the canonical source and show how the current retail evidence path is organized.
+
+## Demo 1: Store A Month-over-Month Diagnostic
 
 Store A is analyzed across February, March, and April 2026, using natural calendar-month windows:
 
