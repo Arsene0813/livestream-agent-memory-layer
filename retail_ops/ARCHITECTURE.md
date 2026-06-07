@@ -56,6 +56,16 @@ The Demo 2 endpoint is intentionally file-backed at this stage. Its purpose is t
 
 The retrieval-threshold calibration is a separate offline inspection over the file-backed evidence corpus. It should not be read as the runtime selection logic of `/chat_retail_ops_demo2_kb`.
 
+## Responsibility Split
+
+| Layer | Responsibility | Must not do |
+|---|---|---|
+| Data dictionary | Preserve backend metric meanings and canonical field names. | Invent new meanings for existing fields. |
+| SQL diagnostics | Compute store-period diagnostic evidence under the documented field contract. | Decide transferable operating strategy or assign fixed store-stage labels. |
+| Generated memory facts | Store evidence, source fields, observed values, calculation notes, confidence labels, and limitations. | Replace raw backend definitions or create undocumented fields. |
+| Boundary checks | Prevent unsupported answers about entity scope, period scope, metric meanings, and comparison limits. | Prove causal business effects or general operating correctness. |
+| Future comparability gate | Decide whether two store-period records can be compared for one selected operating question. | Produce a universal store ranking or global comparability score. |
+
 ## Layer Contract
 
 | Layer | Input | Output | Boundary |
