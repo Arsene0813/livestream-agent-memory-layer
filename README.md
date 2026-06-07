@@ -198,6 +198,8 @@ For retail field names and metric meanings, `retail_ops/data/DATA_DICTIONARY.md`
 
 The evaluations are intentionally narrow scenario-based behavior checks. They do not prove business correctness, causal effects, or general model performance. Their value is checking whether the current prototype preserves metric definitions, source boundaries, entity/period scope, and comparison limits when limited retail evidence is retrieved.
 
+Demo 2 guardrail sensitivity is also inspected. In the current B-F sample, all five store rows have `comparison_limit_notes` that change under at least one plus or minus 5 percentage-point threshold scenario. This means the current threshold notes should be read as diagnostic warnings, not stable peer-selection rules, strategy-transfer approvals, or optimized business cutoffs.
+
 | Check | Scope | Result |
 | --- | --- | --- |
 | Livestream memory evaluation | Fact retrieval, overwrite behavior, entity separation, fallback/refusal, non-fact filtering. | Current implemented cases pass. |
