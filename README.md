@@ -36,18 +36,18 @@ The single source of truth for retail field names and metric meanings is:
 
 Retail Demo 2 is the current same-period diagnostic stage. It structures selected Stores B-F records under a shared March 2026 reporting window, the `DATA_DICTIONARY.md` field contract, and diagnostic guardrails before any future pairwise comparability gate is attempted.
 
-A future pairwise comparability gate would judge whether two store-period records can be compared for a specific operating question.
+A future pairwise comparability gate would judge whether two store-period records can be compared for a specific operating question. Naming note: existing Demo 2 paths keep `cross_store_comparability` for reference stability. In the current implementation, this means same-period diagnostic evidence and interpretation guardrails, not a completed pairwise comparability gate.
 
-Naming note: existing Demo 2 paths keep `cross_store_comparability` for reference stability. In the current implementation, this means same-period diagnostic evidence and interpretation guardrails, not a completed pairwise comparability gate.
-
-| Layer | Implemented role | Current boundary |
+| Area | Current implementation | Current boundary |
 | --- | --- | --- |
 | Livestream memory layer | Typed product facts, overwrite control, soft deactivation, active-state retrieval, fallback/refusal, scenario evaluation. | Local prototype for lifecycle-aware memory behavior. |
-| Retail metric dictionary | Meituan-style backend metric definitions and naming boundaries. | Manual normalization of selected backend exports. |
+| Data dictionary | Preserves Meituan-style backend metric meanings and canonical field names. | Manual normalization of selected backend evidence; field meanings follow `retail_ops/data/DATA_DICTIONARY.md`. |
 | Retail Demo 1 | Store A month-over-month diagnostic across February, March, and April 2026. | Multi-metric interpretation rather than single-cause monthly explanation. |
-| Retail Demo 2 | Same-period B-F diagnostic with scope and limitation checks. | Same-period diagnostic evidence before pairwise comparability gating. |
-| Retail memory facts | Generated facts with observed values, source fields, source paths, confidence, and limitations. | File-backed evidence records for the implemented demos. |
-| Evaluation | Scenario-based checks for supported answers, unsupported-scope refusal, and metric-boundary preservation. | Project-specific behavior checks tied to the current evidence path. |
+| Retail Demo 2 | Same-period B-F diagnostic for March 2026. | Same-period diagnostic evidence before pairwise comparability gating; not peer selection, store ranking, or strategy-transfer approval. |
+| SQL diagnostics | Derives limited diagnostic fields such as search-entry structure, activity involvement, refund pressure, invalid-order pressure, and top-SKU concentration. | Diagnostic structuring only; current derived fields are not optimized business cutoffs or final decision rules. |
+| Memory facts | Converts diagnostic outputs into source-bounded facts with observed values, source fields, source paths, confidence labels, and limitations. | File-backed evidence records for the implemented demos; not a replacement for raw backend evidence. |
+| Answer-boundary checks | Tests whether answers stay within entity, period, metric-definition, source, and interpretation boundaries. | Scenario-based checks tied to the current evidence path; not broad LLM robustness tests. |
+| RAC scaffold | Provides deterministic factor expansion, evidence routing, critique, fact checking, evidence-coverage update, and grounded report generation over local project evidence. | Deterministic local-evidence scaffold; not live backend ingestion, autonomous cognition, or operating-decision automation. |
 
 ## Key Design Principles
 
@@ -64,9 +64,6 @@ This prototype emphasizes:
 
 For an admissions or project reviewer, read in this order:
 
-0. `retail_ops/REVIEWER_GUIDE.md`  
-   Fast map of the implemented scope, current boundaries, and recommended review path.
-
 1. `PROJECT_SUMMARY_FOR_ADMISSIONS.md`  
    Short explanation of the real business problem, implemented scope, and future direction.
 
@@ -79,8 +76,7 @@ For an admissions or project reviewer, read in this order:
 For technical audit, check:
 
 1. `retail_ops/ARCHITECTURE.md`  
-   How backend metrics move through the dictionary, SQL diagnostics,
-   generated memory facts, and boundary checks.
+   How backend metrics move through the dictionary, SQL diagnostics, generated memory facts, and boundary checks.
 
 2. `retail_ops/LINEAGE.md`  
    Source-to-SQL-to-memory lineage and interpretation limits.
@@ -89,8 +85,7 @@ For technical audit, check:
    Current analytical experiment map, pass conditions, and failure modes.
 
 4. `retail_ops/EXPERIMENT_REVIEW_MAP.md`  
-   Reviewer-readable map connecting each current check to the business/data-science
-   question it answers.
+   Reviewer-readable map connecting each current check to the business/data-science question it answers.
 
 5. `retail_ops/EXPERIMENT_RESULTS.md`  
    Implemented checks and validation outcomes.
@@ -289,20 +284,9 @@ Future pairwise comparability-gate wording must follow `retail_ops/COMPARABILITY
 
 ## Current Boundary and Next Development
 
-The current retail implementation is a local evidence-bounded prototype. Demo 1 covers Store A month-over-month analysis, and Retail Demo 2 covers selected Stores B-F under the same March 2026 reporting window. Demo 2 is a diagnostic evidence layer under one field contract before future pairwise comparability rules are added.
+The current retail implementation is a local evidence-bounded prototype. Demo 1 covers Store A month-over-month analysis, and Demo 2 covers selected Stores B-F under the same March 2026 reporting window. Demo 2 is a diagnostic evidence layer under one field contract before future pairwise comparability rules are added.
 
-| Area | Current status | Boundary |
-|---|---|---|
-| Backend data | Selected Meituan backend evidence is manually structured into source files. | Not production Meituan backend ingestion. |
-| Demo 2 | Same-period B-F diagnostic evidence. | Not a peer-selection rule, store ranking, or strategy-transfer approval. |
-| Retrieval behavior | File-backed facts and offline retrieval inspections are available. | Retrieval score alone is not treated as sufficient evidence for operating conclusions. |
-| `region_type` | Weak region or market-context evidence. | Not a mature market-area classification, store-stage label, or hard peer-grouping rule. |
-| Top-SKU evidence | Lightweight product-mix evidence from selected top-SKU rows. | Not full product-category sales share. |
-| Future comparability gate | Design contract is documented in `retail_ops/COMPARABILITY_GATE_V0.md`. | Not implemented in the current prototype. |
-
-The next development step is to add more repeated store-period evidence and test whether the current diagnostic guardrails remain stable across more stores, months, activity conditions, and market contexts.
-
-Future pairwise comparison should be question-specific: a store pair may be comparable for search-entry structure but not comparable for promotion transfer, pricing pressure, SKU strategy, refund interpretation, or fulfillment interpretation.
+The next development step is to add more repeated store-period evidence and test whether the current diagnostic guardrails remain stable across more stores, months, activity conditions, and market contexts. Future pairwise comparison should be question-specific: a store pair may be comparable for search-entry structure but not comparable for promotion transfer, pricing pressure, SKU strategy, refund interpretation, or fulfillment interpretation.
 
 ## Structured Reasoning Scaffold: Factor-Aware Grounded Review
 

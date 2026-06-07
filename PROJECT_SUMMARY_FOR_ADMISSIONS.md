@@ -34,7 +34,7 @@ The data-science problem is therefore not to produce a global store ranking. It 
 | Layer | What it does |
 |---|---|
 | Metric dictionary | Preserves Meituan backend field meanings and canonical project field names. |
-| SQL diagnostic layer | Converts selected store-period backend data into comparable diagnostic outputs. |
+| SQL diagnostic layer | Converts selected store-period backend data into same-period diagnostic outputs with explicit interpretation limits. |
 | Generated memory facts | Stores store-period evidence with source paths, source fields, observed values, confidence, and interpretation limits. |
 | Evaluation checks | Verifies that answers preserve metric definitions and refuse unsupported comparison claims. |
 | Future comparability gate | Planned pairwise gate for deciding whether two store-period records can be compared for a specific analytical question. |
