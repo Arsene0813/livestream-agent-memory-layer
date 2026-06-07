@@ -192,6 +192,21 @@ Future pairwise comparability-gate design:
 
 - `retail_ops/COMPARABILITY_GATE_V0.md`
 
+## Admissions Review Path
+
+For admissions review, use this path first. It keeps the retail decision-support story in one order and avoids reading implementation appendices before the business problem is clear.
+
+| Step | File | What to check |
+|---|---|---|
+| 1 | `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Business origin, staged prototype scope, and current Demo 2 boundary. |
+| 2 | `retail_ops/data/DATA_DICTIONARY.md` | Canonical Meituan metric meanings and implemented field names. |
+| 3 | `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` | Store A month-over-month diagnostic path. |
+| 4 | `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` | Same-period B-F diagnostic reading and comparison limits. |
+| 5 | `retail_ops/EXPERIMENT_RESULTS.md` | What the current checks validate and what they do not prove. |
+| 6 | `retail_ops/COMPARABILITY_GATE_V0.md` | Future pairwise comparability-gate contract. |
+
+Detailed field boundaries live in `retail_ops/data/DATA_DICTIONARY.md`. This README only points to the review path and summarizes the current evidence boundary.
+
 ## Evaluation Snapshot
 
 For retail field names and metric meanings, `retail_ops/data/DATA_DICTIONARY.md` is authoritative. For generated diagnostic values and evaluation outcomes, use the saved files under `retail_ops/outputs/` and `eval/results/` if this summary table is later updated.

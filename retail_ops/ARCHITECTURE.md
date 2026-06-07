@@ -56,6 +56,17 @@ The Demo 2 endpoint is intentionally file-backed at this stage. Its purpose is t
 
 The retrieval-threshold calibration is a separate offline inspection over the file-backed evidence corpus. It should not be read as the runtime selection logic of `/chat_retail_ops_demo2_kb`.
 
+## Endpoint Evidence Modes
+
+The current retail endpoints do not use one identical evidence path.
+
+| Endpoint | Evidence mode | Boundary |
+|---|---|---|
+| `/chat_retail_ops_kb` | Qdrant-backed retrieval over the retail memory corpus, with embedding scores and threshold inspection used for retrieval behavior analysis. | Retrieval score is not treated as standalone operating evidence. |
+| `/chat_retail_ops_demo2_kb` | File-backed Demo 2 generated memory facts with local question routing and boundary refusal behavior. | Demo 2 remains a same-period B-F diagnostic endpoint, not a completed pairwise comparability gate. |
+
+Both paths should preserve metric definitions, entity scope, period scope, source limits, and comparison boundaries before returning an answer.
+
 ## Responsibility Split
 
 | Layer | Responsibility | Must not do |
