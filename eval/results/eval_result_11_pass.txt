@@ -1,0 +1,16 @@
+[PASS] price_retrieval_001
+[PASS] price_overwrite_001
+[PASS] fallback_unknown_product_001
+[PASS] entity_separation_001
+[PASS] stock_status_001
+[PASS] stock_overwrite_001
+[PASS] promo_retrieval_001
+[PASS] promo_overwrite_001
+[PASS] shipping_policy_001
+[PASS] product_feature_001
+[PASS] non_fact_filtering_001
+
+=== Summary ===
+Passed: 11
+Failed: 0
+Total: 11

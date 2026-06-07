@@ -1,0 +1,16 @@
+store_id,scenario,threshold_shift_pp,activity_order_share_pct,refund_pressure_pct,invalid_order_pressure_pct,top3_sku_transaction_amount_share_pct,triggered_guardrail_notes,changed_from_baseline
+B,looser_minus_5pp,-5.0,88.63,10.76,7.14,11.15,high_activity_involvement;high_refund_pressure;high_invalid_order_pressure,true
+B,baseline_sql_thresholds,0.0,88.63,10.76,7.14,11.15,high_activity_involvement;moderate_refund_pressure,false
+B,stricter_plus_5pp,5.0,88.63,10.76,7.14,11.15,high_activity_involvement,true
+C,looser_minus_5pp,-5.0,70.86,7.5,5.95,28.38,moderate_activity_involvement;moderate_refund_pressure;moderate_invalid_order_pressure;top3_sku_amount_concentration,true
+C,baseline_sql_thresholds,0.0,70.86,7.5,5.95,28.38,moderate_activity_involvement;top3_sku_amount_concentration,false
+C,stricter_plus_5pp,5.0,70.86,7.5,5.95,28.38,moderate_activity_involvement,true
+D,looser_minus_5pp,-5.0,83.42,8.95,7.59,16.9,high_activity_involvement;moderate_refund_pressure;high_invalid_order_pressure,true
+D,baseline_sql_thresholds,0.0,83.42,8.95,7.59,16.9,high_activity_involvement,false
+D,stricter_plus_5pp,5.0,83.42,8.95,7.59,16.9,moderate_activity_involvement,true
+E,looser_minus_5pp,-5.0,68.99,19.1,13.89,12.55,moderate_activity_involvement;high_refund_pressure;high_invalid_order_pressure,false
+E,baseline_sql_thresholds,0.0,68.99,19.1,13.89,12.55,moderate_activity_involvement;high_refund_pressure;high_invalid_order_pressure,false
+E,stricter_plus_5pp,5.0,68.99,19.1,13.89,12.55,moderate_refund_pressure;moderate_invalid_order_pressure,true
+F,looser_minus_5pp,-5.0,81.58,10.62,10.14,19.33,high_activity_involvement;high_refund_pressure;high_invalid_order_pressure,true
+F,baseline_sql_thresholds,0.0,81.58,10.62,10.14,19.33,high_activity_involvement;moderate_refund_pressure;moderate_invalid_order_pressure,false
+F,stricter_plus_5pp,5.0,81.58,10.62,10.14,19.33,moderate_activity_involvement,true

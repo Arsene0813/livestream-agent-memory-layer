@@ -1,0 +1,16 @@
+store_id,period_month,period_start,period_end,search_term_rank,search_term,search_term_en,search_term_exposure_times,search_term_click_times,search_term_order_times
+B,2026-03,2026-03-01,2026-03-31,1,隐形眼镜护理液,contact lens care solution,512,36,15
+B,2026-03,2026-03-01,2026-03-31,2,美瞳护理液,colored contact lens care solution,231,27,6
+B,2026-03,2026-03-01,2026-03-31,3,美瞳日抛,daily disposable colored contact lenses,231,28,11
+C,2026-03,2026-03-01,2026-03-31,1,隐形眼镜护理液,contact lens care solution,706,92,37
+C,2026-03,2026-03-01,2026-03-31,2,护理液,care solution,167,10,2
+C,2026-03,2026-03-01,2026-03-31,3,美瞳护理液,colored contact lens care solution,128,22,10
+D,2026-03,2026-03-01,2026-03-31,1,隐形眼镜护理液,contact lens care solution,800,83,45
+D,2026-03,2026-03-01,2026-03-31,2,美瞳日抛,daily disposable colored contact lenses,226,56,9
+D,2026-03,2026-03-01,2026-03-31,3,隐形眼镜日抛,daily disposable contact lenses,195,15,2
+E,2026-03,2026-03-01,2026-03-31,1,隐形眼镜护理液,contact lens care solution,412,42,17
+E,2026-03,2026-03-01,2026-03-31,2,护理液,care solution,93,3,1
+E,2026-03,2026-03-01,2026-03-31,3,美瞳护理液,colored contact lens care solution,59,6,4
+F,2026-03,2026-03-01,2026-03-31,1,隐形眼镜护理液,contact lens care solution,712,85,34
+F,2026-03,2026-03-01,2026-03-31,2,护理液,care solution,184,22,15
+F,2026-03,2026-03-01,2026-03-31,3,隐形眼镜日抛,daily disposable contact lenses,119,15,9

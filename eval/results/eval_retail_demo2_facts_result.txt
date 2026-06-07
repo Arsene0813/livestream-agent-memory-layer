@@ -1,0 +1,10 @@
+Retail Demo 2 facts eval result: 6/6 passed
+Passed: 6
+Failed: 0
+
+PASS store_b_visibility_entry_profile
+PASS store_c_top3_sku_product_mix_note
+PASS store_d_activity_lever_profile
+PASS store_e_order_quality_pressure_profile
+PASS store_f_transaction_conversion_profile
+PASS store_f_single_metric_attribution_guard

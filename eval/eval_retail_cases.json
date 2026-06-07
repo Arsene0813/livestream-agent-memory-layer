@@ -1,0 +1,104 @@
+[
+    {
+        "name": "store_a_visibility_entry_profile",
+        "message": "What does Store A's visibility and entry profile show from February to April 2026?",
+        "entity_id": "store_A",
+        "should_support": true,
+        "expected_slots": [
+            "visibility_entry_profile"
+        ],
+        "expected_substrings": [
+            "visibility",
+            "entry",
+            "not"
+        ]
+    },
+    {
+        "name": "store_a_activity_lever_profile",
+        "message": "How should Store A's activity metrics be interpreted?",
+        "entity_id": "store_A",
+        "should_support": true,
+        "expected_slots": [
+            "activity_lever_profile"
+        ],
+        "expected_substrings": [
+            "activity",
+            "lever",
+            "not"
+        ]
+    },
+    {
+        "name": "store_a_transaction_conversion_profile",
+        "message": "What happened to Store A's transaction scale, conversion, and average order value in April?",
+        "entity_id": "store_A",
+        "should_support": true,
+        "expected_slots": [
+            "transaction_conversion_profile"
+        ],
+        "expected_substrings": [
+            "transaction",
+            "conversion",
+            "average order value"
+        ]
+    },
+    {
+        "name": "store_a_order_quality_pressure_profile",
+        "message": "Did Store A's refund and invalid-order pressure improve in April?",
+        "entity_id": "store_A",
+        "should_support": true,
+        "expected_slots": [
+            "order_quality_pressure_profile"
+        ],
+        "expected_substrings": [
+            "refund",
+            "invalid"
+        ]
+    },
+    {
+        "name": "single_metric_attribution_guard",
+        "message": "Can Store A's April recovery be explained by one metric alone?",
+        "entity_id": "store_A",
+        "should_support": true,
+        "expected_slots": [
+            "single_metric_attribution_guard"
+        ],
+        "expected_substrings": [
+            "not",
+            "one metric"
+        ]
+    },
+    {
+        "name": "top3_sku_mix_limited",
+        "message": "What does the top SKU evidence say about product mix?",
+        "entity_id": "store_A",
+        "should_support": true,
+        "expected_slots": [
+            "top3_sku_product_mix_note"
+        ],
+        "expected_substrings": [
+            "SKU",
+            "not full"
+        ]
+    },
+    {
+        "name": "unknown_store_stage_refusal",
+        "message": "What is Store B's current operating stage?",
+        "entity_id": "store_B",
+        "should_support": false,
+        "expected_slots": [],
+        "expected_substrings": [
+            "only supports Store A"
+        ]
+    },
+    {
+        "name": "cross_store_comparability_not_implemented",
+        "message": "Compare all 48 stores and tell me which store should receive more activity subsidy.",
+        "entity_id": "store_A",
+        "should_support": false,
+        "expected_slots": [],
+        "expected_substrings": [
+            "Cross-store",
+            "not implemented"
+        ]
+    }
+]

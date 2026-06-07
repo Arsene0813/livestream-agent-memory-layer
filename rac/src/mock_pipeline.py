@@ -1,0 +1,568 @@
+from __future__ import annotations
+
+import json
+import re
+from pathlib import Path
+from typing import Any
+
+
+def slugify(text: str) -> str:
+    text = text.lower()
+    text = re.sub(r"[^a-z0-9]+", "_", text)
+    text = re.sub(r"_+", "_", text)
+    return text.strip("_")[:80] or "question"
+
+
+def analyze_question(question: str) -> dict[str, Any]:
+    q = question.lower()
+
+    if "attributed" in q or "caused" in q:
+        question_type = "causal_diagnostic"
+        domain = "retail_operations"
+    elif "comparable" in q or "stores b-f" in q:
+        question_type = "comparability_judgment"
+        domain = "retail_operations"
+    elif "promotion" in q or "checked before changing" in q:
+        question_type = "strategic_recommendation"
+        domain = "retail_operations"
+    else:
+        question_type = "technical_design"
+        domain = "ai_system_design"
+
+    return {
+        "question_type": question_type,
+        "domain": domain,
+        "requires_evidence": True,
+        "requires_internal_memory": True,
+        "requires_fresh_external_information": False,
+        "risk_level": "high" if question_type in {"causal_diagnostic", "comparability_judgment"} else "medium",
+        "reason": "The question requires structured reasoning, evidence boundaries, and explicit limitations."
+    }
+
+
+FACTOR_LIBRARY: dict[str, list[dict[str, Any]]] = {
+    "causal_diagnostic": [
+        {"factor_id": "search_exposure", "name": "Search exposure", "description": "Search visibility may contribute to traffic but cannot prove attribution alone.", "evidence_needed": ["search exposure users", "search entry users", "search average rank"]},
+        {"factor_id": "entry_conversion", "name": "Entry conversion", "description": "Shows whether exposure translated into store visits.", "evidence_needed": ["entry users", "exposure users", "entry conversion rate"]},
+        {"factor_id": "order_conversion", "name": "Order conversion", "description": "Shows whether store visits translated into order submissions.", "evidence_needed": ["order users", "entry users", "order conversion rate"]},
+        {"factor_id": "promotion_intensity", "name": "Promotion intensity", "description": "Promotion activity may affect orders, transaction amount, and attribution.", "evidence_needed": ["activity orders", "activity cost", "activity original transaction amount"]},
+        {"factor_id": "refund_pressure", "name": "Refund pressure", "description": "Refund pressure affects whether growth is high-quality or distorted.", "evidence_needed": ["refund amount", "refund orders"]},
+        {"factor_id": "valid_orders", "name": "Valid orders", "description": "Accepted and not-cancelled orders indicate usable demand.", "evidence_needed": ["valid orders"]},
+        {"factor_id": "invalid_orders", "name": "Invalid orders", "description": "Cancelled or invalid orders weaken performance interpretation.", "evidence_needed": ["invalid orders"]}
+    ],
+    "comparability_judgment": [
+        {"factor_id": "same_reporting_period", "name": "Same reporting period", "description": "Stores must first share the same reporting window.", "evidence_needed": ["period start", "period end"]},
+        {"factor_id": "store_type", "name": "Store type", "description": "Different store types may not be directly comparable.", "evidence_needed": ["store type"]},
+        {"factor_id": "order_volume", "name": "Order volume", "description": "Order volume affects stability and reliability.", "evidence_needed": ["transaction order count", "valid orders"]},
+        {"factor_id": "transaction_amount", "name": "Transaction amount", "description": "Gives scale context but is not sufficient alone.", "evidence_needed": ["transaction amount"]},
+        {"factor_id": "activity_intensity", "name": "Activity intensity", "description": "Promotion differences can distort comparison.", "evidence_needed": ["activity orders", "activity cost"]},
+        {"factor_id": "region_context", "name": "Region context", "description": "Region and market context affect demand.", "evidence_needed": ["region type", "business district context"]},
+        {"factor_id": "competition", "name": "Competition", "description": "Competitor behavior can independently affect performance.", "evidence_needed": ["competitor price", "competitor order trend"]},
+        {"factor_id": "sku_structure", "name": "SKU structure", "description": "SKU mix can change margins, conversion, and refunds.", "evidence_needed": ["top SKUs", "SKU transaction amount"]},
+        {"factor_id": "refund_pressure", "name": "Refund pressure", "description": "Refunds affect quality of transaction metrics.", "evidence_needed": ["refund amount", "refund orders"]},
+        {"factor_id": "invalid_order_pressure", "name": "Invalid order pressure", "description": "Invalid orders can distort comparison.", "evidence_needed": ["invalid orders"]},
+        {"factor_id": "repeated_reporting_windows", "name": "Repeated reporting windows", "description": "Repeated windows are needed before treating patterns as stable.", "evidence_needed": ["multi-period data"]}
+    ],
+    "strategic_recommendation": [
+        {"factor_id": "activity_orders", "name": "Activity orders", "description": "Shows how much order volume is tied to promotions.", "evidence_needed": ["activity order count"]},
+        {"factor_id": "activity_cost", "name": "Activity cost", "description": "Shows promotional cost burden.", "evidence_needed": ["activity cost"]},
+        {"factor_id": "merchant_subsidy", "name": "Merchant subsidy", "description": "Merchant-borne subsidy affects economics.", "evidence_needed": ["merchant subsidy amount"]},
+        {"factor_id": "platform_subsidy", "name": "Platform subsidy", "description": "Platform-borne subsidy changes cost interpretation.", "evidence_needed": ["platform subsidy amount"]},
+        {"factor_id": "order_conversion", "name": "Order conversion", "description": "Promotion should be checked against conversion.", "evidence_needed": ["order conversion rate"]},
+        {"factor_id": "payment_conversion", "name": "Payment conversion", "description": "Checks whether submitted orders become paid orders.", "evidence_needed": ["payment conversion rate"]},
+        {"factor_id": "refund_pressure", "name": "Refund pressure", "description": "High refunds weaken promotional growth quality.", "evidence_needed": ["refund amount", "refund order count"]},
+        {"factor_id": "invalid_order_pressure", "name": "Invalid order pressure", "description": "Invalid orders may indicate fulfillment or operational issues.", "evidence_needed": ["invalid order count"]},
+        {"factor_id": "sku_margin_structure", "name": "SKU margin structure", "description": "Promotion decisions require margin context.", "evidence_needed": ["SKU margin", "SKU activity participation"]},
+        {"factor_id": "competitor_context", "name": "Competitor context", "description": "Competitor pricing can change promotion effectiveness.", "evidence_needed": ["competitor prices", "competitor order trend"]}
+    ],
+    "technical_design": [
+        {"factor_id": "typed_memory", "name": "Typed memory", "description": "Preserve existing typed facts.", "evidence_needed": ["memory schema"]},
+        {"factor_id": "evidence_packets", "name": "Evidence packets", "description": "Pass structured evidence rather than free-form context.", "evidence_needed": ["source path", "claim supported", "limitations"]},
+        {"factor_id": "hypotheses", "name": "Hypotheses", "description": "Preserve competing explanations before final synthesis.", "evidence_needed": ["hypothesis records"]},
+        {"factor_id": "belief_records", "name": "Belief records", "description": "Store conclusions with confidence and validity conditions.", "evidence_needed": ["belief update schema"]},
+        {"factor_id": "confidence", "name": "Confidence", "description": "Expose uncertainty explicitly.", "evidence_needed": ["confidence field"]},
+        {"factor_id": "limitations", "name": "Limitations", "description": "State what cannot be concluded.", "evidence_needed": ["limitations field"]},
+        {"factor_id": "retrieval_trace", "name": "Retrieval trace", "description": "Make evidence traceable to sources.", "evidence_needed": ["source metadata"]},
+        {"factor_id": "active_state_filtering", "name": "Active-state filtering", "description": "Avoid stale or deprecated memory records.", "evidence_needed": ["active flag", "freshness policy"]}
+    ]
+}
+
+
+def expand_factors(question_type: str) -> list[dict[str, Any]]:
+    return FACTOR_LIBRARY[question_type]
+
+
+FACTOR_WEIGHT_BUCKETS: dict[str, set[str]] = {
+    "high": {
+        "promotion_intensity",
+        "activity_intensity",
+        "order_conversion",
+        "refund_pressure",
+        "sku_margin_structure",
+        "evidence_packets",
+        "belief_records",
+        "retrieval_trace",
+    },
+    "medium": {
+        "search_exposure",
+        "entry_conversion",
+        "same_reporting_period",
+        "store_type",
+        "order_volume",
+        "transaction_amount",
+        "payment_conversion",
+        "typed_memory",
+        "hypotheses",
+        "confidence",
+        "limitations",
+        "active_state_filtering",
+    },
+}
+
+FACTOR_WEIGHT_VALUES: dict[str, float] = {
+    "high": 0.85,
+    "medium": 0.72,
+    "default": 0.60,
+}
+
+FACTOR_WEIGHT_REASONS: dict[str, str] = {
+    "high": "Central to avoiding overconfident or misleading conclusions.",
+    "medium": "Important context but not sufficient on its own.",
+    "default": "Potentially relevant but requires stronger evidence.",
+}
+
+FACTOR_WEIGHTING_METHOD = (
+    "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; "
+    "not learned from data, not calculated directly from observed metric tables, "
+    "not a probability, and not an optimized business threshold"
+)
+
+
+def classify_factor_weight(factor_id: str) -> dict[str, Any]:
+    """Return the deterministic heuristic weight bucket for one factor."""
+
+    if factor_id in FACTOR_WEIGHT_BUCKETS["high"]:
+        bucket = "high"
+    elif factor_id in FACTOR_WEIGHT_BUCKETS["medium"]:
+        bucket = "medium"
+    else:
+        bucket = "default"
+
+    return {
+        "weight_bucket": bucket,
+        "weight": FACTOR_WEIGHT_VALUES[bucket],
+        "weight_reason": FACTOR_WEIGHT_REASONS[bucket],
+        "weighting_method": FACTOR_WEIGHTING_METHOD,
+        "weight_source": "rac/src/mock_pipeline.py",
+    }
+
+
+def build_factor_weighting_explanation(
+    question_type: str,
+    factor_weights: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Build a report-facing explanation of how factor weights were generated."""
+
+    bucket_rows: dict[str, list[str]] = {
+        "high": [],
+        "medium": [],
+        "default": [],
+    }
+
+    for row in factor_weights:
+        bucket = row.get("weight_bucket", "default")
+        bucket_rows.setdefault(bucket, []).append(row["factor_id"])
+
+    return {
+        "question_type": question_type,
+        "method": FACTOR_WEIGHTING_METHOD,
+        "source": "rac/src/mock_pipeline.py::classify_factor_weight",
+        "bucket_values": FACTOR_WEIGHT_VALUES,
+        "bucket_reasons": FACTOR_WEIGHT_REASONS,
+        "bucket_members": bucket_rows,
+        "limitations": [
+            "Weights are assigned by deterministic factor-id buckets.",
+            "Weights are not learned from historical data.",
+            "Weights are not calculated directly from observed metric tables.",
+            "Weights are not probabilities.",
+            "Weights are not optimized business thresholds.",
+            "Weights only indicate review priority inside the current evidence-bounded RAC scaffold.",
+        ],
+    }
+
+
+def weight_factors(factors: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    rows = []
+
+    for factor in factors:
+        fid = factor["factor_id"]
+        weight_info = classify_factor_weight(fid)
+        rows.append({
+            "factor_id": fid,
+            "weight": weight_info["weight"],
+            "weight_bucket": weight_info["weight_bucket"],
+            "weight_reason": weight_info["weight_reason"],
+            "weighting_method": weight_info["weighting_method"],
+            "weight_source": weight_info["weight_source"],
+            "evidence_status": "partially_supported",
+        })
+
+    return rows
+
+
+def route_evidence(question_type: str, factors: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    if question_type == "causal_diagnostic":
+        source_path = "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md"
+    elif question_type == "comparability_judgment":
+        source_path = "retail_ops/data/demo2_source_notes.md"
+    elif question_type == "strategic_recommendation":
+        source_path = "retail_ops/data/DATA_DICTIONARY.md"
+    else:
+        source_path = "rac/README.md"
+
+    packets = []
+    for factor in factors:
+        fid = factor["factor_id"]
+        packets.append({
+            "evidence_id": f"evidence_{fid}",
+            "source_type": "markdown",
+            "source_path": source_path,
+            "claim_supported": f"Provides context needed to evaluate factor: {fid}.",
+            "limitations": [
+                "Deterministic mock pipeline only.",
+                "No live retrieval is performed in this step."
+            ]
+        })
+    return packets
+
+
+def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
+    if question_type == "causal_diagnostic":
+        return [
+            {
+                "hypothesis_id": "H1",
+                "claim": "Search exposure may have contributed to Store A's April performance, but it is not sufficient as a single explanation.",
+                "confidence": 0.52,
+                "supporting_factors": ["search_exposure", "entry_conversion"],
+                "weaknesses": ["Does not isolate promotion effects.", "Does not prove order-quality improvement."],
+                "status": "plausible"
+            },
+            {
+                "hypothesis_id": "H2",
+                "claim": "Store A's April performance is better interpreted through traffic recovery, promotion intensity, conversion changes, and refund pressure together.",
+                "confidence": 0.74,
+                "supporting_factors": ["search_exposure", "promotion_intensity", "order_conversion", "refund_pressure", "valid_orders", "invalid_orders"],
+                "weaknesses": ["Observational evidence cannot establish strict causality."],
+                "status": "strong"
+            },
+            {
+                "hypothesis_id": "H3",
+                "claim": "The available evidence is insufficient for single-cause attribution.",
+                "confidence": 0.82,
+                "supporting_factors": ["promotion_intensity", "refund_pressure", "invalid_orders"],
+                "weaknesses": ["Conservative rather than complete causal explanation."],
+                "status": "strong"
+            }
+        ]
+
+    if question_type == "comparability_judgment":
+        return [
+            {
+                "hypothesis_id": "H1",
+                "claim": "Stores B-F can be staged in a same-period diagnostic table.",
+                "confidence": 0.78,
+                "supporting_factors": ["same_reporting_period"],
+                "weaknesses": ["Same-period staging does not equal robust comparability."],
+                "status": "strong"
+            },
+            {
+                "hypothesis_id": "H2",
+                "claim": "Stores B-F should not be treated as directly comparable without pairwise gates.",
+                "confidence": 0.86,
+                "supporting_factors": ["store_type", "activity_intensity", "region_context", "sku_structure", "refund_pressure", "invalid_order_pressure", "repeated_reporting_windows"],
+                "weaknesses": ["The mock pipeline does not compute quantitative pairwise thresholds."],
+                "status": "strong"
+            }
+        ]
+
+    if question_type == "strategic_recommendation":
+        return [
+            {
+                "hypothesis_id": "H1",
+                "claim": "Promotion decisions should be checked against cost, conversion, refund, invalid order, margin, and competitor context.",
+                "confidence": 0.84,
+                "supporting_factors": ["activity_orders", "activity_cost", "order_conversion", "payment_conversion", "refund_pressure", "invalid_order_pressure", "sku_margin_structure"],
+                "weaknesses": ["Final action still requires real margin and competitor evidence."],
+                "status": "strong"
+            },
+            {
+                "hypothesis_id": "H2",
+                "claim": "Promotion changes may be risky when activity cost and refund pressure rise together.",
+                "confidence": 0.68,
+                "supporting_factors": ["activity_cost", "refund_pressure", "invalid_order_pressure"],
+                "weaknesses": ["The mock pipeline does not calculate real cost trend."],
+                "status": "plausible"
+            }
+        ]
+
+    return [
+        {
+            "hypothesis_id": "H1",
+            "claim": "RAC should be implemented as a reasoning layer above the existing typed memory layer.",
+            "confidence": 0.86,
+            "supporting_factors": ["typed_memory", "evidence_packets", "hypotheses", "belief_records", "retrieval_trace", "active_state_filtering"],
+            "weaknesses": ["This mock pipeline does not call the existing API or vector database."],
+            "status": "strong"
+        },
+        {
+            "hypothesis_id": "H2",
+            "claim": "The first implementation should remain deterministic before adding LLM calls.",
+            "confidence": 0.80,
+            "supporting_factors": ["confidence", "limitations", "retrieval_trace"],
+            "weaknesses": ["Deterministic logic is less flexible than model-based reasoning."],
+            "status": "strong"
+        }
+    ]
+
+
+def critique(question_type: str) -> list[dict[str, str]]:
+    findings = [
+        {
+            "issue": "The mock pipeline must not claim causal proof from observational evidence.",
+            "severity": "high",
+            "recommendation": "Use cautious language and state that attribution is not proven."
+        },
+        {
+            "issue": "The mock pipeline uses structured placeholder evidence rather than live retrieval.",
+            "severity": "medium",
+            "recommendation": "State this limitation clearly."
+        }
+    ]
+
+    if question_type == "comparability_judgment":
+        findings.append({
+            "issue": "Same-period staging must not be described as a completed pairwise comparability gate.",
+            "severity": "critical",
+            "recommendation": "Separate same-period diagnostic comparison from pairwise comparability."
+        })
+
+    if question_type == "strategic_recommendation":
+        findings.append({
+            "issue": "Promotion recommendations require margin and competitor context.",
+            "severity": "high",
+            "recommendation": "Avoid final action recommendations without these checks."
+        })
+
+    return findings
+
+
+def fact_check(question_type: str, claims: list[str]) -> dict[str, Any]:
+    unsupported_claims = []
+    definition_conflicts = []
+
+    banned = [
+        "proves causality",
+        "live Meituan backend access",
+        "true Bayesian posterior",
+        "updates neural network weights",
+        "fully comparable"
+    ]
+
+    for claim in claims:
+        low = claim.lower()
+        for item in banned:
+            if item.lower() in low:
+                unsupported_claims.append(claim)
+
+    if question_type == "strategic_recommendation":
+        for claim in claims:
+            if "roi" in claim.lower():
+                definition_conflicts.append("Activity cost ratio should not be called ROI.")
+
+    return {
+        "status": "fail" if unsupported_claims or definition_conflicts else "pass",
+        "unsupported_claims": unsupported_claims,
+        "definition_conflicts": definition_conflicts
+    }
+
+
+def build_belief_update(question_type: str) -> dict[str, Any]:
+    if question_type == "causal_diagnostic":
+        return {
+            "belief_id": "store_a_april_growth_not_search_only",
+            "claim": "Store A's April performance should not be attributed to search exposure alone.",
+            "confidence": 0.82,
+            "status": "active",
+            "validity_conditions": ["Store A Demo 1 context.", "Available month-over-month evidence only."],
+            "limitations": ["No randomized experiment.", "No live backend retrieval in this mock pipeline.", "No complete competitor-side evidence."]
+        }
+
+    if question_type == "comparability_judgment":
+        return {
+            "belief_id": "stores_b_f_same_period_not_directly_comparable",
+            "claim": "Stores B-F can be staged for same-period diagnostic review, but should not be treated as directly comparable without pairwise gates.",
+            "confidence": 0.86,
+            "status": "active",
+            "validity_conditions": ["Demo 2 March 2026 B-F context."],
+            "limitations": ["Pairwise comparability gate is future work.", "Region type remains weak context.", "Repeated reporting windows are still needed."]
+        }
+
+    if question_type == "strategic_recommendation":
+        return {
+            "belief_id": "promotion_changes_require_multi_factor_check",
+            "claim": "Promotion changes should be checked against cost, conversion, refund, invalid order, margin, and competitor context.",
+            "confidence": 0.80,
+            "status": "active",
+            "validity_conditions": ["Retail operations decision-support questions."],
+            "limitations": ["The mock pipeline does not compute real margins.", "Competitor data may be incomplete.", "One reporting window is insufficient for robust action attribution."]
+        }
+
+    return {
+        "belief_id": "rac_should_layer_above_existing_memory",
+        "claim": "RAC should be implemented as a reasoning layer above the existing typed memory system before replacing any endpoint.",
+        "confidence": 0.84,
+        "status": "active",
+        "validity_conditions": ["Current project architecture stage."],
+        "limitations": ["The mock pipeline does not call Qdrant, FastAPI, Ollama, or external LLMs yet."]
+    }
+
+
+def write_final_report(state: dict[str, Any]) -> str:
+    factor_by_id = {factor["factor_id"]: factor for factor in state["factors"]}
+    lines = []
+
+    lines.append("# Answer")
+    lines.append("")
+    lines.append("## 1. Direct Answer")
+    lines.append("")
+    lines.append(state["belief_update"]["claim"])
+    lines.append("")
+    lines.append("This is a deterministic mock result. It proves the workflow can run end-to-end, but it does not claim live retrieval or autonomous world modeling.")
+    lines.append("")
+    lines.append("## 2. Question Type")
+    lines.append("")
+    lines.append(f"- Question type: {state['question_type']}")
+    lines.append(f"- Domain: {state['domain']}")
+    lines.append("")
+    lines.append("## 3. Relevant Factors Considered")
+    lines.append("")
+    lines.append("| Factor | Weight | Evidence Status | Why It Matters |")
+    lines.append("|---|---:|---|---|")
+
+    for row in state["factor_weights"]:
+        factor = factor_by_id[row["factor_id"]]
+        lines.append(f"| {factor['factor_id']} | {row['weight']:.2f} | {row['evidence_status']} | {row['weight_reason']} |")
+
+    lines.append("")
+    lines.append("## 4. Evidence Used")
+    lines.append("")
+    lines.append("| Evidence | Source | Supports | Limitations |")
+    lines.append("|---|---|---|---|")
+
+    for evidence in state["evidence_packets"]:
+        lines.append(f"| {evidence['evidence_id']} | {evidence['source_path']} | {evidence['claim_supported']} | {'; '.join(evidence['limitations'])} |")
+
+    lines.append("")
+    lines.append("## 5. Competing Hypotheses")
+    lines.append("")
+    lines.append(
+        "Hypothesis confidence values are deterministic scenario-template values "
+        "assigned by `generate_hypotheses(question_type)` in `rac/src/mock_pipeline.py`. "
+        "They are not learned probabilities, calibrated likelihoods, or direct calculations "
+        "from observed Meituan metric tables."
+    )
+    lines.append("")
+    lines.append("| Hypothesis | Confidence | Status | Weakness |")
+    lines.append("|---|---:|---|---|")
+
+    for h in state["hypotheses"]:
+        lines.append(f"| {h['claim']} | {h['confidence']:.2f} | {h['status']} | {'; '.join(h['weaknesses'])} |")
+
+    lines.append("")
+    lines.append("## 6. Critic Findings")
+    lines.append("")
+
+    for finding in state["critic_findings"]:
+        lines.append(f"- [{finding['severity']}] {finding['issue']} Recommendation: {finding['recommendation']}")
+
+    lines.append("")
+    lines.append("## 7. Final Judgment")
+    lines.append("")
+    lines.append(state["belief_update"]["claim"])
+    lines.append("")
+    lines.append("The conclusion is conservative because this mock pipeline uses structured placeholder evidence and does not perform live retrieval.")
+    lines.append("")
+    lines.append("## 8. Scenario-Template Confidence")
+    lines.append("")
+    lines.append(f"{state['belief_update']['confidence']:.2f}")
+    lines.append("")
+    lines.append("How this value is assigned:")
+    lines.append("")
+    lines.append("- Source: `build_belief_update(question_type)` in `rac/src/mock_pipeline.py`.")
+    lines.append("- Rule: deterministic case-template assignment by question type.")
+    lines.append("- It is not calculated from evidence-packet counts, factor weights, or observed metric tables.")
+    lines.append("- It is not learned from historical data.")
+    lines.append("- It is not a calibrated probability or Bayesian posterior.")
+    lines.append("- It is not a causal confidence score or business-success probability.")
+    lines.append("- It is kept only to show how the deterministic mock scaffold carries a review-state value.")
+    lines.append("- Grounded reports use a formula-based `Evidence-Coverage Score` instead.")
+    lines.append("")
+    lines.append("## 9. What Cannot Be Concluded")
+    lines.append("")
+
+    for limitation in state["belief_update"]["limitations"]:
+        lines.append(f"- {limitation}")
+
+    lines.append("")
+    lines.append("## 10. Review-State Update")
+    lines.append("")
+    lines.append(f"- review_state_id: {state['belief_update']['belief_id']}")
+    lines.append(f"- status: {state['belief_update']['status']}")
+    lines.append("- validity_conditions:")
+
+    for condition in state["belief_update"]["validity_conditions"]:
+        lines.append(f"  - {condition}")
+
+    lines.append("")
+    return "\n".join(lines)
+
+
+def run_mock_pipeline(question: str) -> dict[str, Any]:
+    analysis = analyze_question(question)
+    factors = expand_factors(analysis["question_type"])
+    factor_weights = weight_factors(factors)
+    evidence_packets = route_evidence(analysis["question_type"], factors)
+    hypotheses = generate_hypotheses(analysis["question_type"])
+    critic_findings = critique(analysis["question_type"])
+    fact_check_result = fact_check(analysis["question_type"], [h["claim"] for h in hypotheses])
+    belief_update = build_belief_update(analysis["question_type"])
+
+    state = {
+        "question": question,
+        "question_type": analysis["question_type"],
+        "domain": analysis["domain"],
+        "factors": factors,
+        "factor_weights": factor_weights,
+        "evidence_packets": evidence_packets,
+        "hypotheses": hypotheses,
+        "critic_findings": critic_findings,
+        "fact_check": fact_check_result,
+        "belief_update": belief_update,
+        "final_report": ""
+    }
+
+    state["final_report"] = write_final_report(state)
+    return state
+
+
+def save_state_outputs(state: dict[str, Any], output_dir: Path, name: str | None = None) -> dict[str, str]:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    slug = name or slugify(state["question"])
+
+    json_path = output_dir / f"{slug}.json"
+    md_path = output_dir / f"{slug}.md"
+
+    json_path.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+    md_path.write_text(state["final_report"], encoding="utf-8")
+
+    return {"json": str(json_path), "markdown": str(md_path)}

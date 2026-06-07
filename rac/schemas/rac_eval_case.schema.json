@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RACEvalCase",
+  "type": "object",
+  "required": [
+    "case_id",
+    "question",
+    "question_type",
+    "must_include_factors",
+    "must_not_claim",
+    "expected_confidence"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string"
+    },
+    "question": {
+      "type": "string"
+    },
+    "question_type": {
+      "type": "string"
+    },
+    "must_include_factors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "must_not_claim": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "expected_confidence": {
+      "type": "string",
+      "enum": [
+        "low",
+        "moderate",
+        "high"
+      ]
+    }
+  }
+}

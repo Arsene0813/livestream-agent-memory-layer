@@ -1,0 +1,333 @@
+# Lifecycle-Aware AI Memory Layer for Retail Decision Support
+
+Repository: `livestream-agent-memory-layer`
+
+A local evidence-bounded decision-support prototype for multi-store Meituan instant-retail operations, built with SQL diagnostics, metric-boundary preservation, and lifecycle-aware retrieval.
+
+The repository name is historical. The project began as a lifecycle-aware memory layer for commerce interaction, and the current implemented extension applies the same evidence-boundary design to Meituan instant-retail decision support.
+
+## Core Research Question
+
+This project grew from a real Meituan instant-retail operating problem.
+
+The Meituan merchant backend provides detailed single-store metrics, but it is mainly designed for reviewing one store at a time. As store count increased, the harder problem became cross-store decision support: which store-period records can be compared, under what operating conditions, and what kind of operating judgment the available evidence can support.
+
+For standardized instant-retail products, store competition is organized around one operating chain:
+
+```text
+being seen -> being entered -> being ordered -> being selected again / maintaining share
+```
+
+Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on store state, local competition, activity intensity, order quality, product mix, and reporting-window alignment.
+
+The goal is to build a more reliable evidence-based framework for multi-store operational analysis, so that future operating decisions can be made with clearer data boundaries as the business expands.
+
+## Current Prototype Workflow
+
+The current prototype follows one evidence path: Meituan backend metric evidence -> canonical field dictionary -> SQL diagnostic output -> generated retail memory facts -> boundary-preserving answer checks.
+
+In practice, this means the project first preserves backend metric definitions, then uses SQL to structure selected store-period data, then converts diagnostic evidence into memory facts with source fields, observed values, source paths, and limitations. The final check is whether later answers stay inside the available evidence boundary.
+
+The single source of truth for retail field names and metric meanings is:
+
+- `retail_ops/data/DATA_DICTIONARY.md`
+
+## Current Implemented Scope
+
+Retail Demo 2 is the current same-period diagnostic stage. It structures selected Stores B-F records under a shared March 2026 reporting window, the `DATA_DICTIONARY.md` field contract, and diagnostic guardrails before any future pairwise comparability gate is attempted.
+
+A future pairwise comparability gate would judge whether two store-period records can be compared for a specific operating question.
+
+Naming note: existing Demo 2 paths keep `cross_store_comparability` for reference stability. In the current implementation, this means same-period diagnostic evidence and interpretation guardrails, not a completed pairwise comparability gate.
+
+| Layer | Implemented role | Current boundary |
+| --- | --- | --- |
+| Livestream memory layer | Typed product facts, overwrite control, soft deactivation, active-state retrieval, fallback/refusal, scenario evaluation. | Local prototype for lifecycle-aware memory behavior. |
+| Retail metric dictionary | Meituan-style backend metric definitions and naming boundaries. | Manual normalization of selected backend exports. |
+| Retail Demo 1 | Store A month-over-month diagnostic across February, March, and April 2026. | Multi-metric interpretation rather than single-cause monthly explanation. |
+| Retail Demo 2 | Same-period B-F diagnostic with scope and limitation checks. | Same-period diagnostic evidence before pairwise comparability gating. |
+| Retail memory facts | Generated facts with observed values, source fields, source paths, confidence, and limitations. | File-backed evidence records for the implemented demos. |
+| Evaluation | Scenario-based checks for supported answers, unsupported-scope refusal, and metric-boundary preservation. | Project-specific behavior checks tied to the current evidence path. |
+
+## Key Design Principles
+
+This prototype emphasizes:
+
+- preserving Meituan backend metric semantics and reporting-window grain;
+- structuring store-period observations before pairwise comparison;
+- converting diagnostics into retrieval-facing evidence records with source fields and observed values;
+- carrying source paths, confidence labels, and limitations into memory facts;
+- checking whether generated answers remain tied to entity, period, metric definitions, and documented evidence boundaries;
+- returning boundary-preserving answers when the evidence does not support an operating conclusion.
+
+## Fast Reading Path
+
+For an admissions or project reviewer, read in this order:
+
+0. `retail_ops/REVIEWER_GUIDE.md`  
+   Fast map of the implemented scope, current boundaries, and recommended review path.
+
+1. `PROJECT_SUMMARY_FOR_ADMISSIONS.md`  
+   Short explanation of the real business problem, implemented scope, and future direction.
+
+2. `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md`  
+   Current Demo 2: same-period B-F diagnostic evidence before any pairwise comparability gate.
+
+3. `retail_ops/data/DATA_DICTIONARY.md`  
+   Canonical Meituan-style backend metric definitions and field naming rules.
+
+For technical audit, check:
+
+1. `retail_ops/ARCHITECTURE.md`  
+   How backend metrics move through the dictionary, SQL diagnostics,
+   generated memory facts, and boundary checks.
+
+2. `retail_ops/LINEAGE.md`  
+   Source-to-SQL-to-memory lineage and interpretation limits.
+
+3. `retail_ops/EXPERIMENTS.md`  
+   Current analytical experiment map, pass conditions, and failure modes.
+
+4. `retail_ops/EXPERIMENT_REVIEW_MAP.md`  
+   Reviewer-readable map connecting each current check to the business/data-science
+   question it answers.
+
+5. `retail_ops/EXPERIMENT_RESULTS.md`  
+   Implemented checks and validation outcomes.
+
+6. `retail_ops/FIELD_USAGE_REVIEW.md`  
+   Field-name review before future comparability-gate expansion.
+
+7. `retail_ops/COMPARABILITY_GATE_V0.md`  
+   Future pairwise comparability-gate design note.
+
+For implementation details, see:
+
+- `retail_ops/README.md`
+- SQL files
+- scripts
+- generated outputs
+- evaluation files
+
+## Architecture
+
+The prototype has two connected layers.
+
+| Layer | Purpose | Main files |
+| --- | --- | --- |
+| Memory-layer prototype | Store and retrieve typed facts while handling updates, stale knowledge, and unsupported questions. | `api/`, `scripts/`, `eval/` |
+| Retail operations extension | Structure Meituan-style backend metrics and preserve diagnostic evidence for cautious comparison. | `retail_ops/` |
+
+Basic flow:
+
+```text
+backend metrics / operator input
+-> metric dictionary and data contract
+-> SQL diagnostic output
+-> generated memory facts
+-> retrieval with source fields and limitations
+-> qualified answer or refusal
+```
+
+The important design choice is that memory facts are not just summaries. They carry source fields, observed values, calculation notes, source paths, supporting source paths, confidence labels, and limitations.
+
+## Implemented API and Retrieval Scope
+
+The local FastAPI prototype includes general chat, memory, and retrieval endpoints. The key implemented paths are:
+
+- `/health`
+- `/chat`
+- `/chat_mem`
+- `/chat_livestream_kb`
+- `/chat_retail_ops_kb`
+- `/chat_retail_ops_demo2_kb`
+
+The retail endpoints are local prototype endpoints. Demo 2 currently uses file-backed generated retail memory facts; it is not a production Meituan API integration.
+
+Retrieval-score inspection is kept as a separate offline analysis and is not the runtime selection logic of the Demo 2 endpoint.
+
+### Retrieval Mode Boundary
+
+| Endpoint | Current evidence mode | How to read it |
+| --- | --- | --- |
+| `/chat_livestream_kb` | Qdrant-backed lifecycle-aware memory retrieval. | Original memory-layer prototype for typed product facts, freshness, overwrite behavior, and fallback/refusal. |
+| `/chat_retail_ops_kb` | Retail memory retrieval over implemented Store A facts. | Retail extension path for source-bounded Store A diagnostic facts. |
+| `/chat_retail_ops_demo2_kb` | File-backed generated Demo 2 retail memory facts. | Boundary test for B-F same-period diagnostic facts; not retrieval-score evaluation and not a pairwise comparability gate. |
+
+## Retail Demo 1: Store A Month-over-Month Diagnostic
+
+Demo 1 analyzes one self-operated Qingdao store across February, March, and April 2026.
+
+It shows why operational performance should not be interpreted from one metric alone. Traffic, ranking, transaction amount, order conversion, activity cost, refund pressure, invalid orders, and top-SKU evidence can move in different directions.
+
+Main file:
+
+- `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md`
+
+The purpose is not to label the store as simply good or bad. The purpose is to keep month-over-month interpretation inside a documented evidence boundary.
+
+## Retail Demo 2: Same-Period B-F Diagnostic
+
+Demo 2 analyzes five anonymized stores, B-F, over the same March 2026 reporting window.
+
+In this repository, Demo 2 means same-period diagnostic evidence before stronger pairwise comparison. It places selected store-period records under a shared field contract, keeps search-entry structure visible through dedicated search-entry fields, then derives operating-context and pressure signals such as activity involvement, refund pressure, invalid-order pressure, and top-SKU concentration.
+
+The purpose is to make comparison limits visible before any stronger operating judgment is attempted.
+
+File paths that contain `cross_store_comparability` are retained for reference stability and should be read through the current field contract in `retail_ops/data/DATA_DICTIONARY.md`.
+
+The threshold-based guardrail notes are diagnostic warnings for the current evidence layer, not optimized business cutoffs, peer-selection rules, or strategy-transfer approvals.
+
+Demo 2 includes:
+
+- same-period store-period metrics;
+- top search-term evidence;
+- top-SKU transaction-amount evidence;
+- SQL-derived diagnostic fields;
+- `comparison_scope_flag`;
+- `comparison_limit_notes`;
+- generated Demo 2 retail memory facts;
+- facts evaluation and answer-boundary evaluation.
+
+Main file:
+
+- `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md`
+
+Future pairwise comparability-gate design:
+
+- `retail_ops/COMPARABILITY_GATE_V0.md`
+
+## Evaluation Snapshot
+
+For retail field names and metric meanings, `retail_ops/data/DATA_DICTIONARY.md` is authoritative. For generated diagnostic values and evaluation outcomes, use the saved files under `retail_ops/outputs/` and `eval/results/` if this summary table is later updated.
+
+The evaluations are intentionally narrow scenario-based behavior checks. They do not prove business correctness, causal effects, or general model performance. Their value is checking whether the current prototype preserves metric definitions, source boundaries, entity/period scope, and comparison limits when limited retail evidence is retrieved.
+
+| Check | Scope | Result |
+| --- | --- | --- |
+| Livestream memory evaluation | Fact retrieval, overwrite behavior, entity separation, fallback/refusal, non-fact filtering. | Current implemented cases pass. |
+| Retail retrieval evaluation | Store A retail-memory retrieval and unsupported-scope refusal. | 8/8 passed. |
+| Retail Demo 2 facts evaluation | Store B-F generated fact coverage across diagnostic slots. | 6/6 passed. |
+| Retail Demo 2 scope-boundary evaluation | Demo 2 remains a row-level same-period diagnostic and does not expose future pairwise-gate schema. | 5/5 passed. |
+| Retail Demo 2 answer-boundary evaluation | Activity-cost ratio, top-SKU share, search-entry comparison, promotion-transfer limits, same-period boundary, and `region_type` weak-context boundary. | 6/6 passed. |
+| Retail Demo 2 endpoint behavior evaluation | File-backed Demo 2 endpoint behavior for supported Store B-F questions, unsupported-scope refusal, and pairwise strategy-transfer refusal. | 7/7 passed. |
+| Retail data-contract validation | Dictionary phrases, source/output headers, forbidden aliases, generated fact structure. | Passed. |
+| Retrieval score distribution inspection | Inspects score distributions over file-backed Demo 1 and Demo 2 retail evidence across supported, unsupported, hard-negative, entity/period mismatch, and ambiguous comparison queries. | Completed as offline inspection; not used as production or Demo 2 runtime threshold. |
+| Query robustness under wording variation | Tests whether retrieval behavior remains stable under shortened, paraphrased, typo/noise, and keyword-order query variants. | Completed. |
+| Project consistency validation | Current-scope files, Demo 2 boundary wording, stale future-work artifacts, endpoint claims. | Passed. |
+
+Offline retrieval inspections make score behavior inspectable, but answer safety still depends on entity, period, slot, source path, and interpretation-boundary checks rather than retrieval score alone.
+
+## Optional Local Run
+
+The repository can be reviewed through the Markdown documents, SQL files, generated outputs, and evaluation results without running the local API.
+
+For local reproduction, the prototype uses FastAPI, Ollama, Qdrant, and Docker Compose. The local setup is defined by `docker-compose.yml`; the current validation commands are listed below.
+
+## Reproduce Key Checks
+
+Run the current implemented checks from the repository root:
+
+```bash
+python3 retail_ops/scripts/validate_retail_data_contract.py
+python3 retail_ops/scripts/validate_demo2_comparability_output.py
+python3 retail_ops/scripts/analyze_demo2_guardrail_sensitivity.py
+python3 eval/eval_retail_demo2_facts.py
+python3 eval/eval_retail_demo2_scope_boundary.py
+python3 eval/eval_retail_demo2_answer_behavior.py
+python3 eval/eval_retail_demo2_endpoint_behavior.py
+python3 eval/eval_future_comparability_gate_contract.py
+python3 scripts/validate_demo2_retail_endpoint_boundary.py
+python3 scripts/validate_project_consistency.py
+python3 scripts/validate_markdown_readability.py
+python3 retail_ops/scripts/validate_csv_physical_rows.py
+```
+
+Optional offline retrieval-inspection checks:
+
+```bash
+python3 eval/analyze_retail_embedding_score_distribution.py
+python3 eval/analyze_retail_query_robustness.py
+```
+
+These retrieval checks inspect score distribution and wording-variation behavior over the current file-backed retail evidence corpus. They support the boundary-check design, but they are not production retrieval benchmarks.
+
+## Key Evidence Files
+
+| File | Why it matters |
+| --- | --- |
+| `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Admissions-facing summary of the real business problem and prototype scope. |
+| `retail_ops/data/DATA_DICTIONARY.md` | Canonical backend metric definitions and naming boundaries. |
+| `retail_ops/LINEAGE.md` | How source fields support SQL diagnostics and memory facts. |
+| `retail_ops/FIELD_USAGE_REVIEW.md` | Field-name review before future comparability-gate expansion. |
+| `retail_ops/EXPERIMENTS.md` | Experiment questions, inputs, transformations, pass conditions, and failure modes. |
+| `retail_ops/COMPARABILITY_GATE_V0.md` | Future pairwise comparability-gate design note. |
+| `retail_ops/sql/` | SQL transformations for Demo 1 and Demo 2. |
+| `retail_ops/outputs/` | Generated diagnostic outputs and generated memory facts. |
+| `eval/` | Scenario-based evaluation scripts and reports. |
+
+## What This Demonstrates
+
+This project demonstrates:
+
+- turning a real multi-store Meituan instant-retail operating problem into a structured data problem;
+- preserving backend metric definitions instead of flattening them into generic business metrics;
+- using SQL to place selected store-period records under a shared diagnostic structure before stronger comparability claims are made;
+- converting diagnostic outputs into retrieval-facing memory facts with source fields, observed values, confidence labels, and limitations;
+- testing whether later answers preserve metric boundaries, source scope, and comparison limits;
+- adding a deterministic review scaffold that makes factor selection, evidence routing, critique, and confidence limits visible.
+
+The core contribution is the evidence boundary: selected backend metrics are kept under documented definitions, SQL diagnostics expose interpretation limits, and generated memory facts carry source fields and limitations before later answers are allowed to make operating claims.
+
+## Editing and Scope Guardrails
+
+Retail field names and metric meanings must follow `retail_ops/data/DATA_DICTIONARY.md`.
+
+Future field-name or semantic changes must follow `retail_ops/FIELD_USAGE_REVIEW.md` before source CSVs, SQL outputs, generated facts, README/admissions wording, or evaluation cases are changed.
+
+Future pairwise comparability-gate wording must follow `retail_ops/COMPARABILITY_GATE_V0.md`.
+
+## Current Boundary and Next Development
+
+The current retail implementation is a local evidence-bounded prototype. Demo 1 covers Store A month-over-month analysis, and Retail Demo 2 covers selected Stores B-F under the same March 2026 reporting window. Demo 2 is a diagnostic evidence layer under one field contract before future pairwise comparability rules are added.
+
+| Area | Current status | Boundary |
+|---|---|---|
+| Backend data | Selected Meituan backend evidence is manually structured into source files. | Not production Meituan backend ingestion. |
+| Demo 2 | Same-period B-F diagnostic evidence. | Not a peer-selection rule, store ranking, or strategy-transfer approval. |
+| Retrieval behavior | File-backed facts and offline retrieval inspections are available. | Retrieval score alone is not treated as sufficient evidence for operating conclusions. |
+| `region_type` | Weak region or market-context evidence. | Not a mature market-area classification, store-stage label, or hard peer-grouping rule. |
+| Top-SKU evidence | Lightweight product-mix evidence from selected top-SKU rows. | Not full product-category sales share. |
+| Future comparability gate | Design contract is documented in `retail_ops/COMPARABILITY_GATE_V0.md`. | Not implemented in the current prototype. |
+
+The next development step is to add more repeated store-period evidence and test whether the current diagnostic guardrails remain stable across more stores, months, activity conditions, and market contexts.
+
+Future pairwise comparison should be question-specific: a store pair may be comparable for search-entry structure but not comparable for promotion transfer, pricing pressure, SKU strategy, refund interpretation, or fulfillment interpretation.
+
+## Structured Reasoning Scaffold: Factor-Aware Grounded Review
+
+The `rac/` module adds a deterministic, source-aware review scaffold above the retail evidence path. It runs after the field dictionary, SQL diagnostics, and generated memory facts have already structured the available evidence.
+
+Its role is to make the review path inspectable before a grounded report is accepted. It is secondary to the retail evidence path and does not replace SQL diagnostics, the field dictionary, or future pairwise comparability rules.
+
+The scaffold covers:
+
+- question decomposition
+- factor expansion
+- factor weighting
+- local evidence grounding
+- competing hypotheses
+- critique
+- fact check
+- confidence and limitations
+
+Current RAC evidence and scripts:
+
+- `rac/DEMO_INDEX.md`
+- `rac/outputs/grounded_rac_store_a_attribution_001.md`
+- `rac/outputs/grounded_rac_cross_store_comparability_001.md`
+- `rac/outputs/grounded_quality_summary.md`
+- `rac/scripts/run_grounded_pipeline.py`
+- `rac/scripts/validate_grounded_quality_gate.py`
+
+Current implementation boundary: deterministic and local-evidence-based. It should be read as a review scaffold over the current project evidence, not as live backend ingestion or operating-decision automation.

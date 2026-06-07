@@ -1,0 +1,12 @@
+Retail eval result: 8/8 passed
+Passed: 8
+Failed: 0
+
+PASS store_a_visibility_entry_profile
+PASS store_a_activity_lever_profile
+PASS store_a_transaction_conversion_profile
+PASS store_a_order_quality_pressure_profile
+PASS single_metric_attribution_guard
+PASS top3_sku_mix_limited
+PASS unknown_store_stage_refusal
+PASS cross_store_comparability_not_implemented

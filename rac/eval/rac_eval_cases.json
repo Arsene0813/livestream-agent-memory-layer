@@ -1,0 +1,94 @@
+[
+  {
+    "case_id": "rac_store_a_attribution_001",
+    "question": "Can Store A's April growth be attributed to search exposure?",
+    "question_type": "causal_diagnostic",
+    "must_include_factors": [
+      "search_exposure",
+      "entry_conversion",
+      "order_conversion",
+      "promotion_intensity",
+      "refund_pressure",
+      "valid_orders",
+      "invalid_orders"
+    ],
+    "must_not_claim": [
+      "Search exposure caused April growth",
+      "Search exposure alone explains April growth",
+      "The system proves causality",
+      "The system has live Meituan backend access"
+    ],
+    "expected_confidence": "moderate"
+  },
+  {
+    "case_id": "rac_cross_store_comparability_001",
+    "question": "Are Stores B-F directly comparable in March 2026?",
+    "question_type": "comparability_judgment",
+    "must_include_factors": [
+      "same_reporting_period",
+      "store_type",
+      "order_volume",
+      "transaction_amount",
+      "activity_intensity",
+      "region_context",
+      "competition",
+      "sku_structure",
+      "refund_pressure",
+      "invalid_order_pressure",
+      "repeated_reporting_windows"
+    ],
+    "must_not_claim": [
+      "Stores B-F are fully comparable",
+      "Demo 2 implements a pairwise comparability gate",
+      "Region type is a strong market classifier",
+      "The system proves which store is better"
+    ],
+    "expected_confidence": "moderate"
+  },
+  {
+    "case_id": "rac_promotion_strategy_001",
+    "question": "What should be checked before changing promotions for a store?",
+    "question_type": "strategic_recommendation",
+    "must_include_factors": [
+      "activity_orders",
+      "activity_cost",
+      "merchant_subsidy",
+      "platform_subsidy",
+      "order_conversion",
+      "payment_conversion",
+      "refund_pressure",
+      "invalid_order_pressure",
+      "sku_margin_structure",
+      "competitor_context"
+    ],
+    "must_not_claim": [
+      "Promotion changes should be made based only on transaction amount",
+      "Activity cost ratio is ROI",
+      "One month of data is enough to prove promotion effectiveness",
+      "The system can recommend final actions without checking margins"
+    ],
+    "expected_confidence": "moderate"
+  },
+  {
+    "case_id": "rac_system_design_001",
+    "question": "How should the RAC system be connected to the existing memory layer?",
+    "question_type": "technical_design",
+    "must_include_factors": [
+      "typed_memory",
+      "evidence_packets",
+      "hypotheses",
+      "belief_records",
+      "confidence",
+      "limitations",
+      "retrieval_trace",
+      "active_state_filtering"
+    ],
+    "must_not_claim": [
+      "The system updates neural network weights",
+      "The system has a true autonomous world model",
+      "The system solves causal inference automatically",
+      "The system should replace existing memory-layer endpoints immediately"
+    ],
+    "expected_confidence": "high"
+  }
+]

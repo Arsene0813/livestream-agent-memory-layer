@@ -1,0 +1,282 @@
+[
+  {
+    "kind": "retail_memory_fact",
+    "type": "retail_metric_profile",
+    "entity_id": "store_A",
+    "slot": "visibility_entry_profile",
+    "period_label": "2026-02_to_2026-04",
+    "period_start": "2026-02-01",
+    "period_end": "2026-04-30",
+    "value": "Store A's visibility and entry structure can be described from `exposure_users`, `store_average_rank`, `entry_users`, `search_exposure_users`, `search_average_rank`, and `search_entry_users` across February, March, and April 2026. These metrics are used to understand whether the store was being seen and entered, not to assign a fixed store label.\nIn this business context, being visible, being entered, and being selected are core competitive conditions for Meituan instant retail stores.",
+    "observed_values": {
+      "2026-02": {
+        "exposure_users": 6118,
+        "store_average_rank": 18,
+        "entry_users": 763,
+        "search_entry_users": 694,
+        "search_entry_share_pct": 90.96
+      },
+      "2026-03": {
+        "exposure_users": 4663,
+        "store_average_rank": 22,
+        "entry_users": 522,
+        "search_entry_users": 445,
+        "search_entry_share_pct": 85.25
+      },
+      "2026-04": {
+        "exposure_users": 8366,
+        "store_average_rank": 18,
+        "entry_users": 906,
+        "search_entry_users": 839,
+        "search_entry_share_pct": 92.6
+      }
+    },
+    "calculation": "search_entry_share_pct = search_entry_users / entry_users * 100; search_entry_rate_pct = search_entry_users / search_exposure_users * 100",
+    "source_fields": [
+      "exposure_users",
+      "store_average_rank",
+      "entry_users",
+      "entry_conversion_rate_pct",
+      "search_exposure_users",
+      "search_average_rank",
+      "search_entry_users",
+      "search_entry_share_pct",
+      "search_entry_rate_pct"
+    ],
+    "confidence": "high",
+    "source_path": "retail_ops/outputs/store_a_demo1_sql_output.csv",
+    "lineage_path": "retail_ops/LINEAGE.md",
+    "limitations": [
+      "single-store demo",
+      "traffic-source users may overlap",
+      "visibility and entry metrics do not prove causal growth",
+      "cross-store comparability is not implemented yet"
+    ],
+    "is_active": true,
+    "period_granularity": "month_range"
+  },
+  {
+    "kind": "retail_memory_fact",
+    "type": "retail_metric_profile",
+    "entity_id": "store_A",
+    "slot": "activity_lever_profile",
+    "period_label": "2026-02_to_2026-04",
+    "period_start": "2026-02-01",
+    "period_end": "2026-04-30",
+    "value": "Store A's activity metrics describe how promotional tools were used during the demo period. Activity orders, activity cost, merchant subsidy, platform subsidy, and activity cost ratio should be interpreted as operating levers inside the store's competitive environment, not as a standalone causal explanation or a simple ROI judgment.",
+    "observed_values": {
+      "2026-02": {
+        "activity_orders": 270,
+        "transaction_orders": 274,
+        "activity_order_share_pct": 98.54,
+        "activity_cost_ratio_pct": 40.63
+      },
+      "2026-03": {
+        "activity_orders": 201,
+        "transaction_orders": 207,
+        "activity_order_share_pct": 97.1,
+        "activity_cost_ratio_pct": 38.55
+      },
+      "2026-04": {
+        "activity_orders": 329,
+        "transaction_orders": 337,
+        "activity_order_share_pct": 97.63,
+        "activity_cost_ratio_pct": 40.69
+      }
+    },
+    "calculation": "activity_order_share_pct = activity_orders / transaction_orders * 100; activity_cost_ratio_pct = activity_cost / activity_original_transaction_amount * 100",
+    "source_fields": [
+      "activity_original_transaction_amount",
+      "activity_orders",
+      "activity_cost",
+      "merchant_subsidy_amount",
+      "platform_subsidy_amount",
+      "activity_cost_ratio_pct",
+      "activity_order_share_pct",
+      "merchant_subsidy_share_of_activity_cost_pct"
+    ],
+    "confidence": "high",
+    "source_path": "retail_ops/outputs/store_a_demo1_sql_output.csv",
+    "lineage_path": "retail_ops/LINEAGE.md",
+    "limitations": [
+      "single-store demo",
+      "promotion cycle dates are unknown",
+      "activity metrics describe tool usage, not causal proof",
+      "activity-cost interpretation should consider visibility, market-share defense, operating context, and local competition"
+    ],
+    "is_active": true,
+    "period_granularity": "month_range"
+  },
+  {
+    "kind": "retail_memory_fact",
+    "type": "retail_metric_profile",
+    "entity_id": "store_A",
+    "slot": "transaction_conversion_profile",
+    "period_label": "2026-02_to_2026-04",
+    "period_start": "2026-02-01",
+    "period_end": "2026-04-30",
+    "value": "Store A's transaction and conversion signals moved in different directions across the demo period. April 2026 recovered in transaction amount and transaction orders compared with March, but order conversion rate and average order value declined. This supports a cautious operating-stage reading rather than a simple performance-improvement label.",
+    "observed_values": {
+      "2026-03": {
+        "transaction_amount": 6454.84,
+        "transaction_orders": 207,
+        "order_conversion_rate_pct": 42.34,
+        "average_order_value": 31.18
+      },
+      "2026-04": {
+        "transaction_amount": 9083.72,
+        "transaction_orders": 337,
+        "order_conversion_rate_pct": 37.42,
+        "average_order_value": 26.95,
+        "transaction_amount_mom_pct": 40.73,
+        "transaction_orders_mom_pct": 62.8,
+        "average_order_value_mom_pct": -13.57
+      }
+    },
+    "calculation": "Month-over-month interpretation based on transaction_amount, transaction_orders, order_conversion_rate_pct, and average_order_value.",
+    "source_fields": [
+      "transaction_amount",
+      "transaction_orders",
+      "order_conversion_rate_pct",
+      "average_order_value",
+      "transaction_amount_mom_pct",
+      "transaction_orders_mom_pct",
+      "average_order_value_mom_pct",
+      "transaction_recovered_with_conversion_aov_tradeoff"
+    ],
+    "confidence": "high",
+    "source_path": "retail_ops/outputs/store_a_demo1_sql_output.csv",
+    "lineage_path": "retail_ops/LINEAGE.md",
+    "limitations": [
+      "single-store demo",
+      "not causal attribution",
+      "does not prove whether the same pattern would transfer to another store"
+    ],
+    "is_active": true,
+    "period_granularity": "month_range"
+  },
+  {
+    "kind": "retail_memory_fact",
+    "type": "retail_quality_signal",
+    "entity_id": "store_A",
+    "slot": "order_quality_pressure_profile",
+    "period_label": "2026-04",
+    "period_start": "2026-04-01",
+    "period_end": "2026-04-30",
+    "value": "Store A's refund and invalid-order pressure improved in the latest observed month, April 2026, compared with the previous observed month, March 2026.\nRefund amount over transaction amount fell from 17.01% to 6.63%, and invalid-order pressure fell from 13.62% to 7.99%.\nThis is an order-quality pressure signal, not proof that customer satisfaction definitively improved.",
+    "observed_values": {
+      "2026-03": {
+        "refund_amount": 1097.97,
+        "transaction_amount": 6454.84,
+        "refund_pressure_pct": 17.01,
+        "invalid_orders": 32,
+        "invalid_order_pressure_pct": 13.62
+      },
+      "2026-04": {
+        "refund_amount": 602.26,
+        "transaction_amount": 9083.72,
+        "refund_pressure_pct": 6.63,
+        "invalid_orders": 29,
+        "invalid_order_pressure_pct": 7.99
+      }
+    },
+    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; invalid_order_pressure_pct = invalid_orders / (valid_orders + invalid_orders) * 100",
+    "source_fields": [
+      "refund_amount",
+      "transaction_amount",
+      "refund_pressure_pct",
+      "invalid_orders",
+      "valid_orders",
+      "invalid_order_pressure_pct",
+      "refund_pressure_improved"
+    ],
+    "confidence": "medium",
+    "source_path": "retail_ops/outputs/store_a_demo1_sql_output.csv",
+    "lineage_path": "retail_ops/LINEAGE.md",
+    "limitations": [
+      "refund amount is counted by refund-success date",
+      "not an exact original-order cohort refund rate",
+      "single-store demo"
+    ],
+    "is_active": true,
+    "period_granularity": "month"
+  },
+  {
+    "kind": "retail_memory_fact",
+    "type": "retail_decision_guard",
+    "entity_id": "store_A",
+    "slot": "single_metric_attribution_guard",
+    "period_label": "2026-02_to_2026-04",
+    "period_start": "2026-02-01",
+    "period_end": "2026-04-30",
+    "value": "Store A's month-over-month changes should not be explained by one metric alone. Transaction amount, order volume, exposure, entry, ranking, activity cost, order conversion, average order value, refund pressure, invalid-order pressure, and top-SKU evidence can move in different directions. The current demo supports structured comparison of these signals, not causal attribution.",
+    "observed_values": {
+      "2026-04": {
+        "transaction_amount_mom_pct": 40.73,
+        "transaction_orders_mom_pct": 62.8,
+        "entry_users_mom_pct": 73.56,
+        "search_entry_users_mom_pct": 88.54,
+        "average_order_value_mom_pct": -13.57,
+        "refund_amount_mom_pct": -45.15,
+        "refund_pressure_pct": 6.63,
+        "invalid_order_pressure_pct": 7.99
+      }
+    },
+    "calculation": "Decision guard based on multiple movement signals rather than a single threshold or one-factor explanation.",
+    "source_fields": [
+      "transaction_amount",
+      "transaction_orders",
+      "exposure_users",
+      "entry_users",
+      "store_average_rank",
+      "search_average_rank",
+      "activity_order_share_pct",
+      "activity_cost_ratio_pct",
+      "order_conversion_rate_pct",
+      "average_order_value",
+      "refund_pressure_pct",
+      "invalid_order_pressure_pct",
+      "top3_sku_transaction_amount_share_pct"
+    ],
+    "confidence": "high",
+    "source_path": "retail_ops/outputs/store_a_demo1_sql_output.csv",
+    "lineage_path": "retail_ops/LINEAGE.md",
+    "limitations": [
+      "single-store demo",
+      "not causal attribution",
+      "cross-store comparability is not implemented yet"
+    ],
+    "is_active": true,
+    "period_granularity": "month_range"
+  },
+  {
+    "kind": "retail_memory_fact",
+    "type": "retail_product_mix_note",
+    "entity_id": "store_A",
+    "slot": "top3_sku_product_mix_note",
+    "period_label": "2026-02_to_2026-04",
+    "period_start": "2026-02-01",
+    "period_end": "2026-04-30",
+    "value": "The top-SKU evidence for Store A is mainly care-solution-heavy. These top SKUs are used as lightweight qualitative product-mix evidence, not as a full category-level sales-share analysis.",
+    "observed_values": {
+      "evidence_scope": "top 3 SKU transaction and sales evidence only"
+    },
+    "calculation": "Qualitative product-mix note based on top-3 SKU records. This is not full SKU category-share analysis.",
+    "source_fields": [
+      "sku_name",
+      "sku_transaction_amount",
+      "sales_volume",
+      "sku_category_note"
+    ],
+    "confidence": "medium",
+    "source_path": "retail_ops/data/store_a_top_skus.csv",
+    "lineage_path": "retail_ops/LINEAGE.md",
+    "limitations": [
+      "top-3 SKU evidence only",
+      "not full SKU category-share analysis",
+      "manual category inference should not be overclaimed"
+    ],
+    "is_active": true,
+    "period_granularity": "month_range"
+  }
+]

@@ -1,0 +1,9 @@
+Retail Demo2 scope-boundary eval result: 5/5 passed
+Passed: 5
+Failed: 0
+
+PASS demo2_output_exists_and_has_rows
+PASS demo2_required_fields_exist
+PASS demo2_expected_store_ids_exist
+PASS demo2_scope_flag_is_present
+PASS future_pairwise_gate_schema_is_absent_from_demo2_output

@@ -1,0 +1,96 @@
+{
+  "total_cases": 4,
+  "passed_cases": 4,
+  "failed_cases": 0,
+  "results": [
+    {
+      "case_id": "rac_store_a_attribution_001",
+      "question_type": "causal_diagnostic",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "factor_count": 7,
+        "factor_weight_count": 7,
+        "hypothesis_count": 3,
+        "critic_count": 2,
+        "limitation_count": 3,
+        "grounded_row_count": 7,
+        "total_packets": 7,
+        "keyword_matched_count": 7,
+        "boundary_matched_count": 0,
+        "fallback_count": 0,
+        "source_missing_count": 0,
+        "row_status_counts": {
+          "keyword_matched": 7
+        }
+      }
+    },
+    {
+      "case_id": "rac_cross_store_comparability_001",
+      "question_type": "comparability_judgment",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "factor_count": 11,
+        "factor_weight_count": 11,
+        "hypothesis_count": 2,
+        "critic_count": 3,
+        "limitation_count": 3,
+        "grounded_row_count": 11,
+        "total_packets": 11,
+        "keyword_matched_count": 9,
+        "boundary_matched_count": 2,
+        "fallback_count": 0,
+        "source_missing_count": 0,
+        "row_status_counts": {
+          "keyword_matched": 9,
+          "boundary_matched": 2
+        }
+      }
+    },
+    {
+      "case_id": "rac_promotion_strategy_001",
+      "question_type": "strategic_recommendation",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "factor_count": 10,
+        "factor_weight_count": 10,
+        "hypothesis_count": 2,
+        "critic_count": 3,
+        "limitation_count": 3,
+        "grounded_row_count": 10,
+        "total_packets": 10,
+        "keyword_matched_count": 10,
+        "boundary_matched_count": 0,
+        "fallback_count": 0,
+        "source_missing_count": 0,
+        "row_status_counts": {
+          "keyword_matched": 10
+        }
+      }
+    },
+    {
+      "case_id": "rac_system_design_001",
+      "question_type": "technical_design",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "factor_count": 8,
+        "factor_weight_count": 8,
+        "hypothesis_count": 2,
+        "critic_count": 2,
+        "limitation_count": 1,
+        "grounded_row_count": 8,
+        "total_packets": 8,
+        "keyword_matched_count": 8,
+        "boundary_matched_count": 0,
+        "fallback_count": 0,
+        "source_missing_count": 0,
+        "row_status_counts": {
+          "keyword_matched": 8
+        }
+      }
+    }
+  ]
+}
