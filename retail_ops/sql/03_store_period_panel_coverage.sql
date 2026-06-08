@@ -1,7 +1,7 @@
--- Store-period panel coverage inspection.
+-- Repeated-window panel extension coverage inspection.
 --
 -- Purpose:
---   Check whether the repeated-window panel has enough clean store-period
+--   Check whether the repeated-window panel extension has enough clean store-period
 --   coverage to support later diagnostic work.
 --
 -- Boundary:

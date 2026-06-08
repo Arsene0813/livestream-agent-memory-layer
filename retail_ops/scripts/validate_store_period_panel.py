@@ -13,7 +13,7 @@ output_path = ROOT / "retail_ops/outputs/store_period_panel_coverage_output.csv"
 required_files = [panel_path, notes_path, sql_path, output_path]
 missing = [str(path.relative_to(ROOT)) for path in required_files if not path.exists()]
 if missing:
-    print("[FAIL] Missing panel files:")
+    print("[FAIL] Missing repeated-window panel extension files:")
     for item in missing:
         print(f"  - {item}")
     sys.exit(1)
@@ -100,18 +100,26 @@ if duplicates:
         print(f"  - {store_id} {period_month}")
     sys.exit(1)
 
-store_b_months = sorted(
-    row.get("period_month")
-    for row in rows
-    if row.get("store_id") == "B"
-)
-if store_b_months != ["2026-02", "2026-03", "2026-04"]:
-    print("[FAIL] Store B panel should contain exactly 2026-02, 2026-03, and 2026-04.")
-    print(f"Observed: {store_b_months}")
-    sys.exit(1)
+required_complete_stores = {
+    "B": ["2026-02", "2026-03", "2026-04"],
+    "C": ["2026-02", "2026-03", "2026-04"],
+}
+
+for store_id, expected_months in required_complete_stores.items():
+    observed_months = sorted(
+        row.get("period_month")
+        for row in rows
+        if row.get("store_id") == store_id
+    )
+    if observed_months != expected_months:
+        print(f"[FAIL] Store {store_id} panel months are incomplete.")
+        print(f"Expected: {expected_months}")
+        print(f"Observed: {observed_months}")
+        sys.exit(1)
 
 notes = notes_path.read_text(encoding="utf-8")
 required_note_phrases = [
+    "repeated-window panel extension",
     "The panel intentionally excludes:",
     "`valid_orders`",
     "`invalid_orders`",
@@ -120,7 +128,7 @@ required_note_phrases = [
 ]
 missing_note_phrases = [phrase for phrase in required_note_phrases if phrase not in notes]
 if missing_note_phrases:
-    print("[FAIL] Source notes missing required exclusion phrases:")
+    print("[FAIL] Source notes missing required repeated-window or exclusion phrases:")
     for phrase in missing_note_phrases:
         print(f"  - {phrase}")
     sys.exit(1)
@@ -129,21 +137,24 @@ with output_path.open(newline="", encoding="utf-8") as f:
     reader = csv.DictReader(f)
     output_rows = list(reader)
 
-b_output = [row for row in output_rows if row.get("store_id") == "B"]
-if len(b_output) != 1:
-    print(f"[FAIL] Expected one Store B coverage output row, found {len(b_output)}.")
-    sys.exit(1)
+output_by_store = {row.get("store_id"): row for row in output_rows}
 
-if b_output[0].get("observed_month_count") != "3":
-    print("[FAIL] Store B coverage output should show observed_month_count = 3.")
-    print(f"Observed row: {b_output[0]}")
-    sys.exit(1)
+for store_id in required_complete_stores:
+    if store_id not in output_by_store:
+        print(f"[FAIL] Missing Store {store_id} coverage output row.")
+        sys.exit(1)
 
-if b_output[0].get("panel_coverage_flag") != "panel_ready_for_repeated_window_diagnostic":
-    print("[FAIL] Store B should be ready for repeated-window diagnostic after adding March.")
-    print(f"Observed row: {b_output[0]}")
-    sys.exit(1)
+    row = output_by_store[store_id]
+    if row.get("observed_month_count") != "3":
+        print(f"[FAIL] Store {store_id} coverage output should show observed_month_count = 3.")
+        print(f"Observed row: {row}")
+        sys.exit(1)
 
-print("[PASS] Store-period panel validation passed.")
-print("[PASS] Store B has 2026-02, 2026-03, and 2026-04.")
+    if row.get("panel_coverage_flag") != "panel_ready_for_repeated_window_diagnostic":
+        print(f"[FAIL] Store {store_id} should be ready for repeated-window diagnostic.")
+        print(f"Observed row: {row}")
+        sys.exit(1)
+
+print("[PASS] Repeated-window panel extension validation passed.")
+print("[PASS] Store B and Store C each have 2026-02, 2026-03, and 2026-04.")
 print("[PASS] Ambiguous order-status fields are excluded from the panel.")
