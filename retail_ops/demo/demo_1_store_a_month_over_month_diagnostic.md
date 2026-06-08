@@ -227,19 +227,21 @@ This demo does not support:
 
 ## Future Work
 
-Demo 1 has already led into the current Demo 2 same-period diagnostic path. The next step is to make comparability rules more testable and expand the same field contract to more store-period records.
+Demo 1 has already led into the current Demo 2 same-period diagnostic path. The next step is not to turn Store A into a transfer rule. It is to expand repeated store-period evidence under the same field contract, then use a future pairwise comparability gate to decide whether selected store-period records can support one specific operating question.
 
-Future expansion should check whether stores can be compared by:
+Future expansion should check whether candidate records are comparable by:
 
 - aligned reporting period;
-- coarse market context;
+- transaction order volume;
+- transaction amount;
 - store type;
-- order volume band;
+- weak region context;
 - visibility and ranking profile;
 - entry and order-conversion profile;
-- activity-order share and subsidy profile;
+- activity involvement and activity intensity;
 - refund and invalid-order pressure;
-- dominant top-SKU evidence;
-- data completeness.
+- top-SKU evidence;
+- data completeness;
+- repeated reporting-window stability.
 
-Only after this comparability check should the system attempt cross-store interpretation. Store-stage diagnosis should remain out of scope until the project has stronger evidence on promotion cycles, competition, fulfillment conditions, rating/review signals, and stockout history.
+Only after this kind of comparability check should the system attempt stronger cross-store interpretation. Store-stage diagnosis should remain out of scope until the project has stronger evidence on promotion cycles, competition, fulfillment conditions, rating/review signals, and stockout history.

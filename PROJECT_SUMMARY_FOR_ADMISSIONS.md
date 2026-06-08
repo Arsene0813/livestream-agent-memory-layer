@@ -27,34 +27,15 @@ A future pairwise comparability gate should judge whether two store-period recor
 
 ## Review Note
 
-Fast reviewer guide:
+For admissions review, start with:
 
-- `retail_ops/REVIEWER_GUIDE.md`
-
-Narrative consistency rules:
-
-- `retail_ops/NARRATIVE_CONTRACT.md`
-
-Detailed metric definitions:
-
-- `retail_ops/data/DATA_DICTIONARY.md`
-
-Claim-to-data lineage:
-
-- `retail_ops/LINEAGE.md`
-
-Experiment and validation logic:
-
-- `retail_ops/EXPERIMENTS.md`
-- `retail_ops/EXPERIMENT_RESULTS.md`
-
-Reviewer-readable experiment map:
-
-- `retail_ops/EXPERIMENT_REVIEW_MAP.md`
-
-Future pairwise comparability-gate design:
-
-- `retail_ops/COMPARABILITY_GATE_V0.md`
+1. `README.md` - admissions review path and current implementation boundary.
+2. `PROJECT_SUMMARY_FOR_ADMISSIONS.md` - short application-facing project summary.
+3. `retail_ops/data/DATA_DICTIONARY.md` - authoritative field names and metric definitions.
+4. `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` - current single-store month-over-month diagnostic.
+5. `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` - current same-period B-F diagnostic.
+6. `retail_ops/EXPERIMENT_RESULTS.md` - implemented checks and validation outcomes.
+7. `retail_ops/COMPARABILITY_GATE_V0.md` - future pairwise comparability-gate contract.
 
 ## Operating Step Summary
 
