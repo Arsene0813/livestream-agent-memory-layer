@@ -12,6 +12,22 @@ ROOT = Path(__file__).resolve().parents[1]
 # repeated explanatory disclaimers across every Markdown file.
 
 
+REVIEWER_FACING_PATHS = [
+    "README.md",
+    "PROJECT_SUMMARY_FOR_ADMISSIONS.md",
+    "retail_ops/README.md",
+    "retail_ops/data/DATA_DICTIONARY.md",
+    "retail_ops/FIELD_USAGE_REVIEW.md",
+    "retail_ops/LINEAGE.md",
+    "retail_ops/ARCHITECTURE.md",
+    "retail_ops/EXPERIMENTS.md",
+    "retail_ops/EXPERIMENT_RESULTS.md",
+    "retail_ops/EXPERIMENT_REVIEW_MAP.md",
+    "retail_ops/COMPARABILITY_GATE_V0.md",
+    "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+    "retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md",
+]
+
 REQUIRED_FILES = [
     "README.md",
     "PROJECT_SUMMARY_FOR_ADMISSIONS.md",
@@ -151,6 +167,15 @@ def read_text(path: Path) -> str:
 
 def is_text_file(path: Path) -> bool:
     return path.suffix.lower() in SCAN_SUFFIXES
+
+
+
+def check_reviewer_facing_paths(failures: list[str]) -> None:
+    """Ensure the admissions/reviewer reading path points to existing files."""
+
+    for rel_path in REVIEWER_FACING_PATHS:
+        if not (ROOT / rel_path).exists():
+            failures.append(f"Missing reviewer-facing path: {rel_path}")
 
 
 def check_required_files(failures: list[str]) -> None:
@@ -297,6 +322,7 @@ def main() -> int:
     failures: list[str] = []
 
     check_required_files(failures)
+    check_reviewer_facing_paths(failures)
     check_required_terms(failures)
     check_markdown_tables(failures)
     check_api_patterns(failures)
