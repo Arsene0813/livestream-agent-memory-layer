@@ -26,14 +26,7 @@ The current retail path has two implemented demos and one planned future stage:
 
 ## Suggested Retail Review Path
 
-For a quick review of the retail extension, read these files in order:
-
-1. `retail_ops/data/DATA_DICTIONARY.md`
-2. `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md`
-3. `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md`
-4. `retail_ops/COMPARABILITY_GATE_V0.md`
-
-This path shows the movement from metric definitions, to single-store diagnostic, to same-period B-F diagnostic structure, and toward a future pairwise comparability-gate design.
+Use the `Retail Review Path` table in the `Current Demos` section below. This avoids maintaining two separate reviewer-path lists in the same file while keeping the table-based review entry visible.
 
 ## Editing and Scope Guardrails
 
