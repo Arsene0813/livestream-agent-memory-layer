@@ -64,7 +64,7 @@ This prototype emphasizes:
 
 For admissions review, use the `Admissions Review Path` table below. It keeps the business problem, current Demo 2 boundary, field dictionary, experiment results, and future comparability-gate contract in one stable order.
 
-For technical audit, use the same table first, then check `retail_ops/ARCHITECTURE.md`, `retail_ops/LINEAGE.md`, `retail_ops/EXPERIMENTS.md`, `retail_ops/EXPERIMENT_REVIEW_MAP.md`, `retail_ops/FIELD_USAGE_REVIEW.md`, and the validation commands near the end of this README.
+For technical audit, use the same table first, then check `retail_ops/ARCHITECTURE.md`, `retail_ops/LINEAGE.md`, `retail_ops/EXPERIMENTS.md`, `retail_ops/FIELD_USAGE_REVIEW.md`, and the validation commands near the end of this README.
 
 ## Architecture
 

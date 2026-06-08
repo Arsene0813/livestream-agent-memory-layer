@@ -1,6 +1,6 @@
 # Retail Operations Experiment Results
 
-Reviewer-facing companion: `retail_ops/EXPERIMENT_REVIEW_MAP.md` summarizes what each current check is meant to show in business and data-science terms.
+Reviewer-facing map: `retail_ops/EXPERIMENTS.md` now includes the experiment review map that summarizes what each current check is meant to show in business and data-science terms.
 
 ## Compact Validation Summary
 

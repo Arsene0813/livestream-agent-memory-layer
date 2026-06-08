@@ -22,7 +22,6 @@ REVIEWER_FACING_PATHS = [
     "retail_ops/ARCHITECTURE.md",
     "retail_ops/EXPERIMENTS.md",
     "retail_ops/EXPERIMENT_RESULTS.md",
-    "retail_ops/EXPERIMENT_REVIEW_MAP.md",
     "retail_ops/COMPARABILITY_GATE_V0.md",
     "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
     "retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md",
