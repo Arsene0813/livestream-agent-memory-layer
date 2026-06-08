@@ -2,13 +2,13 @@
 
 This file documents the repeated-window panel extension for the retail-operations evidence path.
 
-The current panel contains Store B and Store C for February, March, and April 2026. March rows are copied from the existing Demo 2 source table to avoid manual re-entry drift.
+The current panel contains Store B, Store C, and Store D for February, March, and April 2026. March rows are copied from the existing Demo 2 source table to avoid manual re-entry drift.
 
 ## Scope
 
 | Item | Current value |
 |---|---|
-| Current panel stores | Store B and Store C |
+| Current panel stores | Store B, Store C, and Store D |
 | Current months entered | 2026-02, 2026-03, and 2026-04 |
 | March source | Copied from existing Demo 2 source data |
 | Current purpose | Repeated-window panel extension |
