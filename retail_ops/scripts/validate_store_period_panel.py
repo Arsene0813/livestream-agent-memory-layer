@@ -103,6 +103,7 @@ if duplicates:
 required_complete_stores = {
     "B": ["2026-02", "2026-03", "2026-04"],
     "C": ["2026-02", "2026-03", "2026-04"],
+    "D": ["2026-02", "2026-03", "2026-04"],
 }
 
 for store_id, expected_months in required_complete_stores.items():
@@ -156,5 +157,5 @@ for store_id in required_complete_stores:
         sys.exit(1)
 
 print("[PASS] Repeated-window panel extension validation passed.")
-print("[PASS] Store B and Store C each have 2026-02, 2026-03, and 2026-04.")
+print("[PASS] Store B, Store C, and Store D each have 2026-02, 2026-03, and 2026-04.")
 print("[PASS] Ambiguous order-status fields are excluded from the panel.")
