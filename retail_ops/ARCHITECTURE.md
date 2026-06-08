@@ -1,8 +1,17 @@
 # Retail Operations Architecture
 
-This file gives a compact map of the current retail decision-support prototype.
+This file is the technical architecture appendix for the retail-operations evidence path.
 
-The project starts from a practical Meituan instant-retail problem: single-store backend reports are detailed, but they are mainly designed for reviewing one store at a time. Cross-store decisions need aligned reporting windows, comparable store context, and explicit interpretation limits.
+It should explain how evidence moves through the implemented prototype. It should not repeat the full admissions narrative, the full field dictionary, or the future pairwise comparability-gate design.
+
+## Document Ownership
+
+| This file owns | Canonical file for related detail |
+|---|---|
+| Current retail evidence path | `retail_ops/LINEAGE.md` for claim-to-data lineage |
+| Endpoint evidence modes | `api/main.py` for endpoint implementation |
+| Layer responsibilities | `retail_ops/data/DATA_DICTIONARY.md` for field meanings |
+| Architecture-level boundaries | `retail_ops/COMPARABILITY_GATE_V0.md` for future gate design |
 
 ## Current Demo Scope
 
@@ -25,25 +34,23 @@ selected Meituan backend metrics
 -> validation and scenario-based boundary checks
 ~~~
 
-The design is intentionally file-based at this stage. The priority is to keep each diagnostic claim traceable to source fields and output files before expanding toward a larger 48-store workflow.
-
 ~~~mermaid
 graph TD
-  A[Meituan backend evidence] --> B[Canonical CSV source tables]
-  B --> C[DATA_DICTIONARY.md field contract]
-  C --> D[SQL diagnostics]
-  D --> E[Generated retail memory facts]
-  E --> F[Retail KB endpoint and answer-boundary checks]
-  F --> G{Does the evidence support the question?}
-  G -->|Yes| H[Qualified answer with source and scope limits]
-  G -->|No| I[Refusal or limitation note]
+    A[Meituan backend evidence] --> B[Canonical CSV source tables]
+    B --> C[DATA_DICTIONARY.md field contract]
+    C --> D[SQL diagnostics]
+    D --> E[Generated retail memory facts]
+    E --> F[Retail KB endpoint and answer-boundary checks]
+    F --> G{Does the evidence support the question?}
+    G -->|Yes| H[Qualified answer with source and scope limits]
+    G -->|No| I[Refusal or limitation note]
 ~~~
 
-This diagram describes the implemented evidence path for the current retail demos. It should not be read as production Meituan API integration or as an implemented pairwise comparability gate.
+The design is intentionally file-based at this stage. The priority is to keep each diagnostic claim traceable before expanding toward broader 48-store workflow support.
 
 ## Retrieval Mode Boundary
 
-The current repository contains more than one retrieval path. They should not be read as the same level of implementation maturity.
+The repository contains more than one retrieval path. They should not be read as the same level of implementation maturity.
 
 | Path | Current mode | Current role | Boundary |
 |---|---|---|---|
@@ -51,8 +58,6 @@ The current repository contains more than one retrieval path. They should not be
 | `/chat_retail_ops_kb` | Retail memory retrieval path for implemented Store A facts. | Tests whether retail memory facts can be retrieved with source fields and limitations. | Limited to the implemented retail facts; not full 48-store automation. |
 | `/chat_retail_ops_demo2_kb` | File-backed generated Demo 2 retail memory facts. | Tests whether B-F same-period diagnostic facts can be returned or refused inside the current evidence boundary. | Not retrieval-score evaluation, production Meituan API integration, or a pairwise comparability gate. |
 | Future pairwise comparability gate | Not implemented. | Planned gate for judging whether two store-period records can be compared for a specific operating question. | Should be implemented only after broader store-period coverage, repeated windows, and stronger market-context evidence exist. |
-
-The Demo 2 endpoint is intentionally file-backed at this stage. Its purpose is to test evidence-boundary behavior after SQL diagnostics have been converted into memory facts. It should not be used to justify a retrieval-score threshold or to claim that pairwise store comparability has already been solved.
 
 The retrieval-threshold calibration is a separate offline inspection over the file-backed evidence corpus. It should not be read as the runtime selection logic of `/chat_retail_ops_demo2_kb`.
 
@@ -62,7 +67,7 @@ The current retail endpoints do not use one identical evidence path.
 
 | Endpoint | Evidence mode | Boundary |
 |---|---|---|
-| `/chat_retail_ops_kb` | Qdrant-backed retrieval over the retail memory corpus, with embedding scores and threshold inspection used for retrieval behavior analysis. | Retrieval score is not treated as standalone operating evidence. |
+| `/chat_retail_ops_kb` | Qdrant-backed retrieval over the retail memory corpus, with embedding scores used for retrieval behavior analysis. | Retrieval score is not treated as standalone operating evidence. |
 | `/chat_retail_ops_demo2_kb` | File-backed Demo 2 generated memory facts with local question routing and boundary refusal behavior. | Demo 2 remains a same-period B-F diagnostic endpoint, not a completed pairwise comparability gate. |
 
 Both paths should preserve metric definitions, entity scope, period scope, source limits, and comparison boundaries before returning an answer.
@@ -131,6 +136,4 @@ The memory-facing facts record:
 
 ## Current Boundary
 
-The current implemented retail scope stops at Demo 2.
-
-The future pairwise comparability gate is documented in `retail_ops/COMPARABILITY_GATE_V0.md`, but the current SQL output and generated facts should be read as diagnostic evidence rather than as a transfer rule or store-ranking system.
+The implemented retail scope stops at Demo 2. The future pairwise comparability gate is documented in `retail_ops/COMPARABILITY_GATE_V0.md`.

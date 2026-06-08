@@ -1,5 +1,21 @@
 # Field Usage Review Before Comparability-Gate Expansion
 
+## Document Ownership
+
+This file owns field-name and semantic-change review for the retail-operations evidence path.
+
+It should answer one narrow question: if a field name or field meaning changes, what existing dictionary definition, source file, SQL output, generated memory fact, and evaluation behavior could be affected?
+
+| This file owns | Canonical file for related detail |
+|---|---|
+| Field-name change review | `retail_ops/data/DATA_DICTIONARY.md` for authoritative field names and metric meanings |
+| Existing field usage review | Source CSV files, SQL outputs, generated memory facts, and eval files |
+| Future field-addition caution | `retail_ops/COMPARABILITY_GATE_V0.md` for future pairwise gate fields |
+| Rename decision tracking | The field review tables in this file |
+
+This file should not repeat the full admissions narrative, the full architecture path, or the future comparability-gate design. It should keep the review narrow: field meaning, field location, rename risk, and whether a change is allowed.
+
+
 This file records the field-name review before expanding the retail comparability narrative.
 
 Current decision: **no existing source CSV field, SQL output field, generated memory slot, or evaluation field is renamed in this patch**.
