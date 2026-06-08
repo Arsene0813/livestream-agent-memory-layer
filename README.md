@@ -113,7 +113,7 @@ Retrieval-score inspection is kept as a separate offline analysis and is not the
 
 ## Retail Demo 1: Store A Month-over-Month Diagnostic
 
-Demo 1 is the single-store baseline. It uses Store A across February, March, and April 2026 to show how exposure, entry, conversion, transaction amount, activity support, refund pressure, invalid-order pressure, and top-SKU evidence can move in different directions.
+Demo 1 analyzes one self-operated Qingdao store across February, March, and April 2026.
 
 - Main file: `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md`
 - Role in the project: preserve a careful month-over-month operating profile before any cross-store interpretation is attempted.
