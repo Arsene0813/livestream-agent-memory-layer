@@ -62,47 +62,9 @@ This prototype emphasizes:
 
 ## Fast Reading Path
 
-For an admissions or project reviewer, read in this order:
+For admissions review, use the `Admissions Review Path` table below. It keeps the business problem, current Demo 2 boundary, field dictionary, experiment results, and future comparability-gate contract in one stable order.
 
-1. `PROJECT_SUMMARY_FOR_ADMISSIONS.md`  
-   Short explanation of the real business problem, implemented scope, and future direction.
-
-2. `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md`  
-   Current Demo 2: same-period B-F diagnostic evidence before any pairwise comparability gate.
-
-3. `retail_ops/data/DATA_DICTIONARY.md`  
-   Canonical Meituan-style backend metric definitions and field naming rules.
-
-For technical audit, check:
-
-1. `retail_ops/ARCHITECTURE.md`  
-   How backend metrics move through the dictionary, SQL diagnostics, generated memory facts, and boundary checks.
-
-2. `retail_ops/LINEAGE.md`  
-   Source-to-SQL-to-memory lineage and interpretation limits.
-
-3. `retail_ops/EXPERIMENTS.md`  
-   Current analytical experiment map, pass conditions, and failure modes.
-
-4. `retail_ops/EXPERIMENT_REVIEW_MAP.md`  
-   Reviewer-readable map connecting each current check to the business/data-science question it answers.
-
-5. `retail_ops/EXPERIMENT_RESULTS.md`  
-   Implemented checks and validation outcomes.
-
-6. `retail_ops/FIELD_USAGE_REVIEW.md`  
-   Field-name review before future comparability-gate expansion.
-
-7. `retail_ops/COMPARABILITY_GATE_V0.md`  
-   Future pairwise comparability-gate design note.
-
-For implementation details, see:
-
-- `retail_ops/README.md`
-- SQL files
-- scripts
-- generated outputs
-- evaluation files
+For technical audit, use the same table first, then check `retail_ops/ARCHITECTURE.md`, `retail_ops/LINEAGE.md`, `retail_ops/EXPERIMENTS.md`, `retail_ops/EXPERIMENT_REVIEW_MAP.md`, `retail_ops/FIELD_USAGE_REVIEW.md`, and the validation commands near the end of this README.
 
 ## Architecture
 
