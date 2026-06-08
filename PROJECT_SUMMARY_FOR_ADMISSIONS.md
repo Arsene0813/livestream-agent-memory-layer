@@ -43,7 +43,7 @@ For admissions review, start with:
 |---|---|
 | Backend metric evidence | Real Meituan merchant-backend values are the starting point rather than invented examples. |
 | Metric dictionary | Backend metric meanings are preserved under canonical project field names. |
-| SQL diagnostics | Selected store-period records are structured into comparable diagnostic outputs under one field contract. |
+| SQL diagnostics | Selected store-period records are structured into diagnostic outputs under one reporting window and one field contract. |
 | Generated memory facts | Diagnostic evidence is stored with source fields, observed values, confidence labels, and limitations. |
 | Boundary checks | Later answers are checked against entity scope, period scope, metric definitions, and comparison limits. |
 | Future comparability gate | Planned pairwise logic will decide whether two store-period records can be compared for a specific operating question. |
@@ -118,6 +118,8 @@ Future market-context classification should be added only after broader store co
 
 ## Field Boundary Summary
 
+These are the main fields that are easy to misread in application review. Full definitions remain in `retail_ops/data/DATA_DICTIONARY.md`.
+
 | Field | Boundary |
 |---|---|
 | `region_type` | Weak region or market-context evidence only. It is not a peer-grouping field, market-area classification, consumption-level label, or store-stage label. |
@@ -128,11 +130,11 @@ Future market-context classification should be added only after broader store co
 
 ## Factor-Aware Grounded Review Scaffold
 
-The project also includes a deterministic source-aware review scaffold above the retail evidence path.
+The project also includes a deterministic source-aware review scaffold over local project evidence.
 
-It decomposes an operating question into relevant factors, routes each factor to local evidence or boundary evidence, generates competing hypotheses, applies critique and fact checks, and produces a grounded report with confidence, limitations, source paths, and local evidence snippets.
+This layer decomposes an operating question into relevant factors, routes each factor to local evidence or boundary evidence, generates competing hypotheses, applies critique and fact checks, and produces a grounded report with confidence, limitations, source paths, and local evidence snippets.
 
-The value of this layer is not to make final operating decisions. Its value is to make the review path inspectable before an answer is written, especially when the current evidence is strong for one factor but weak or missing for another.
+The value of this layer is reviewability. It makes the reasoning path inspectable before an answer is written, especially when current evidence is strong for one factor but weak or missing for another.
 
 Reviewer entry points:
 
@@ -140,59 +142,5 @@ Reviewer entry points:
 |---|---|
 | `rac/DEMO_INDEX.md` | Index of deterministic RAC demo cases. |
 | `rac/outputs/grounded_rac_store_a_attribution_001.md` | Store A attribution-boundary review. |
-| `rac/outputs/grounded_rac_cross_store_comparability_001.md` | Demo 2 cross-store comparability-boundary review. |
-| `rac/outputs/grounded_quality_summary.md` | Grounded quality summary across RAC cases. |
-
-Current boundary: deterministic and local-evidence-based. It should be read as a review scaffold over the current project evidence, not as live backend ingestion or a completed pairwise comparability gate.
-
-## Implemented Check Summary
-
-| Implemented check | What it proves | What it does not prove |
-|---|---|---|
-| Data dictionary contract | Meituan backend metrics are preserved under explicit field names and definitions. | It does not automate Meituan backend ingestion. |
-| Demo 2 SQL diagnostics | Selected B-F March 2026 records can be structured under one reporting window and field contract. | It does not approve peer selection, ranking, or strategy transfer. |
-| Generated memory facts | Diagnostic evidence can carry source fields, observed values, source paths, confidence, and limitations. | It does not replace raw backend evidence or prove business causality. |
-| Answer-boundary evaluations | Later answers can be checked for entity scope, period scope, metric definitions, and unsupported-comparison refusal. | It does not prove general model performance outside the current evidence path. |
-| Retrieval score inspection | Retrieval behavior can be inspected across supported, unsupported, hard-negative, mismatch, and ambiguous queries. | Retrieval score alone is not treated as sufficient for operational decisions. |
-| Grounded RAC quality gate | Factor-specific evidence routing, boundary evidence, critique, and report grounding can be checked. | It does not implement live retrieval or final operating automation. |
-
-## Future Work: Pairwise Comparability Gate
-
-The next planned stage is a pairwise comparability gate.
-
-It should answer one narrow question: can two store-period records be compared for this specific operating question?
-
-The current Demo 2 output is the evidence layer before that gate. It gives selected B-F March 2026 records a shared reporting window, field contract, diagnostic signals, and interpretation limits.
-
-A future gate should consider:
-
-- transaction order volume;
-- transaction amount;
-- activity involvement;
-- activity intensity;
-- explicit campaign evidence if available;
-- store type;
-- region and market context;
-- competition;
-- SKU structure;
-- refund pressure;
-- invalid-order pressure;
-- repeated reporting windows.
-
-The gate should not produce a global store ranking or universal comparability score. A store pair may be comparable for search-entry structure but not comparable for promotion transfer, pricing pressure, SKU strategy, refund interpretation, or fulfillment interpretation.
-
-## Why This Matters
-
-The value of this project is that it turns an operating problem into a staged, checkable decision-support prototype.
-
-The implemented work shows that I can:
-
-- identify a real data problem from business operations;
-- preserve platform-specific metric definitions instead of inventing vague business labels;
-- use SQL to structure selected backend data;
-- generate evidence records with source fields and limitations;
-- design checks that prevent unsupported comparison or overconfident advice;
-- connect the memory-layer idea to a more controlled review path;
-- plan the next technical step around pairwise comparability rather than jumping directly to automation.
-
-The broader goal is to support better multi-store operating decisions as the business expands.
+| `rac/outputs/grounded_rac_demo2_best_store_001.md` | Demo 2 best-store boundary review. |
+| `rac/src/grounded_pipeline.py` | Deterministic grounded review pipeline. |

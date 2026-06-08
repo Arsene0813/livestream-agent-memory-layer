@@ -47,7 +47,7 @@ A future pairwise comparability gate would judge whether two store-period record
 | SQL diagnostics | Derives limited diagnostic fields such as search-entry structure, activity involvement, refund pressure, invalid-order pressure, and top-SKU concentration. | Diagnostic structuring only; current derived fields are not optimized business cutoffs or final decision rules. |
 | Memory facts | Converts diagnostic outputs into source-bounded facts with observed values, source fields, source paths, confidence labels, and limitations. | File-backed evidence records for the implemented demos; not a replacement for raw backend evidence. |
 | Answer-boundary checks | Tests whether answers stay within entity, period, metric-definition, source, and interpretation boundaries. | Scenario-based checks tied to the current evidence path; not broad LLM robustness tests. |
-| RAC scaffold | Provides deterministic factor expansion, evidence routing, critique, fact checking, evidence-coverage update, and grounded report generation over local project evidence. | Deterministic local-evidence scaffold; not live backend ingestion, autonomous cognition, or operating-decision automation. |
+| RAC scaffold | Provides deterministic factor expansion, evidence routing, critique, fact checking, evidence-coverage update, and grounded report generation over local project evidence. | Local-evidence scaffold for reviewability; not live backend ingestion, autonomous cognition, or operating-decision automation. |
 
 ## Key Design Principles
 
@@ -64,7 +64,7 @@ This prototype emphasizes:
 
 For admissions review, use the `Admissions Review Path` table below. It keeps the business problem, current Demo 2 boundary, field dictionary, experiment results, and future comparability-gate contract in one stable order.
 
-For technical audit, use the same table first, then check `retail_ops/ARCHITECTURE.md`, `retail_ops/LINEAGE.md`, `retail_ops/EXPERIMENTS.md`, `retail_ops/FIELD_USAGE_REVIEW.md`, and the validation commands near the end of this README.
+For technical audit, use the same table first. Architecture, lineage, field-change review, and future-gate details are kept as appendices under `retail_ops/` so that the main reviewer path stays short.
 
 ## Architecture
 
@@ -122,7 +122,7 @@ Demo 1 analyzes one self-operated Qingdao store across February, March, and Apri
 
 Demo 2 is the current cross-store diagnostic stage. It uses selected Stores B-F under the same March 2026 reporting window and the same `retail_ops/data/DATA_DICTIONARY.md` field contract.
 
-The section exposes store-period operating profiles and comparison limits while the pairwise comparability gate remains future work.
+The section exposes store-period operating profiles and points to the canonical future-gate contract instead of repeating the full boundary in this README.
 
 - Main file: `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md`
 - Future gate contract: `retail_ops/COMPARABILITY_GATE_V0.md`
@@ -133,15 +133,26 @@ The section exposes store-period operating profiles and comparison limits while 
 For admissions review, use this path first. It keeps the retail decision-support story in one order and avoids reading implementation appendices before the business problem is clear.
 
 | Step | File | What to check |
-|---|---|---|
+|---:|---|---|
 | 1 | `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Business origin, staged prototype scope, and current Demo 2 boundary. |
 | 2 | `retail_ops/data/DATA_DICTIONARY.md` | Canonical Meituan metric meanings and implemented field names. |
 | 3 | `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` | Store A month-over-month diagnostic path. |
 | 4 | `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` | Same-period B-F diagnostic reading and comparison limits. |
-| 5 | `retail_ops/EXPERIMENT_RESULTS.md` | What the current checks validate and what they do not prove. |
-| 6 | `retail_ops/COMPARABILITY_GATE_V0.md` | Future pairwise comparability-gate contract. |
+| 5 | `retail_ops/EXPERIMENTS.md` | What each current analytical check is designed to test. |
+| 6 | `retail_ops/EXPERIMENT_RESULTS.md` | Implemented checks and validation outcomes. |
+| 7 | `retail_ops/COMPARABILITY_GATE_V0.md` | Future pairwise comparability-gate contract. |
 
-Detailed field boundaries live in `retail_ops/data/DATA_DICTIONARY.md`. This README only points to the review path and summarizes the current evidence boundary.
+Technical appendices remain available under `retail_ops/ARCHITECTURE.md`, `retail_ops/LINEAGE.md`, and `retail_ops/FIELD_USAGE_REVIEW.md`, but they are not required for the first admissions reading path.
+
+## Appendix Ownership
+
+The first review path should stay short. These files are retained for technical audit, but they are not separate entry points.
+
+| Appendix | Owns | Should not repeat |
+|---|---|---|
+| `retail_ops/ARCHITECTURE.md` | System structure, evidence path, retrieval mode, and endpoint responsibility. | Admissions summary, field dictionary, or future gate rationale. |
+| `retail_ops/LINEAGE.md` | Source-to-SQL-to-memory lineage and claim traceability. | Full architecture explanation or repeated business narrative. |
+| `retail_ops/FIELD_USAGE_REVIEW.md` | Field-name and semantic-change review before future expansion. | General project summary or experiment results. |
 
 ## Evaluation Snapshot
 
