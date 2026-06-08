@@ -1,18 +1,18 @@
-# Store-Period Panel Source Notes
+# Repeated-Window Panel Extension Source Notes
 
-This file documents the first repeated-window panel extension for the retail-operations evidence path.
+This file documents the repeated-window panel extension for the retail-operations evidence path.
 
-The first panel seed uses Store B for February, March, and April 2026. Store B March 2026 is copied from the existing Demo 2 source table to avoid manual re-entry drift.
+The current panel contains Store B and Store C for February, March, and April 2026. March rows are copied from the existing Demo 2 source table to avoid manual re-entry drift.
 
 ## Scope
 
 | Item | Current value |
 |---|---|
-| Current panel seed | Store B |
+| Current panel stores | Store B and Store C |
 | Current months entered | 2026-02, 2026-03, and 2026-04 |
 | March source | Copied from existing Demo 2 source data |
-| Current purpose | Repeated-window coverage foundation |
-| Not current purpose | a new numbered demo, pairwise comparability gate, endpoint behavior, or generated memory facts |
+| Current purpose | Repeated-window panel extension |
+| Not current purpose | A new numbered demo, pairwise comparability gate, endpoint behavior, or generated memory facts |
 
 ## Field Inclusion Rule
 
