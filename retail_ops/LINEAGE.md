@@ -1,28 +1,24 @@
 # Retail Data Lineage
 
-This file traces how selected Meituan backend metrics move from source CSV files into SQL diagnostics, SQL outputs, generated memory facts, and answer-boundary evaluations.
+This file owns claim-to-data lineage for the retail-operations evidence path.
 
-The source of truth for field names and metric meanings is:
+It traces how selected Meituan backend metrics move from source CSV files into SQL diagnostics, SQL outputs, generated memory facts, and answer-boundary evaluations.
 
-- `retail_ops/data/DATA_DICTIONARY.md`
+## Document Ownership
 
-Demo 1 covers Store A month-over-month diagnostics.
+| This file owns | Canonical file for related detail |
+|---|---|
+| Source-to-SQL-to-memory lineage | `retail_ops/ARCHITECTURE.md` for architecture structure |
+| Claim-to-field support | `retail_ops/data/DATA_DICTIONARY.md` for field meanings |
+| Metric interpretation rules | `retail_ops/data/DATA_DICTIONARY.md` for full definitions |
+| Current diagnostic boundaries | `retail_ops/EXPERIMENTS.md` and `retail_ops/EXPERIMENT_RESULTS.md` for test meaning and outcomes |
+| Future pairwise comparability lineage | `retail_ops/COMPARABILITY_GATE_V0.md` for the future gate contract |
 
-Demo 2 covers same-period Stores B-F diagnostic artifacts. Path names that include `cross_store_comparability` are retained for reference stability and should be read through the dictionary section `Path / File-Name Terms vs Implemented Meaning`.
-
-In the current implementation, Demo 2 means same-period diagnostic evidence and guardrails. The pairwise comparability gate is future work.
-
-## Document Responsibility
-
-This file owns claim-to-data lineage.
-
-It explains how selected source fields support SQL diagnostics, generated memory facts, and answer-boundary checks. It does not own the full admissions narrative, the full metric dictionary, or the full future pairwise comparability-gate design.
+Path names that include `cross_store_comparability` are retained for reference stability. In the current implementation, Demo 2 means same-period diagnostic evidence and guardrails. The future pairwise comparability gate is documented separately.
 
 ## Shared Lineage Contract
 
-Existing Meituan backend metrics are kept under a single canonical English field name.
-
-This avoids mixing multiple English names for the same Chinese backend metric.
+Existing Meituan backend metrics are kept under one canonical English field name. This avoids mixing multiple English names for the same Chinese backend metric.
 
 Main field-contract files:
 
@@ -48,38 +44,25 @@ Main output files:
 
 ## Demo 1 Scope
 
-| Item              | Value                                                                 |
-| ----------------- | --------------------------------------------------------------------- |
-| Store             | Store A                                                               |
-| Period            | February 2026 to April 2026                                           |
-| Data source       | Manually structured Meituan merchant-backend metrics                  |
-| Processing method | Offline SQL diagnostic                                                |
-| Output            | SQL-derived CSV, markdown diagnostic, generated retail memory facts   |
-| Limitation        | Single-store demo; not causal attribution; not cross-store comparison |
-
-## Operating Logic
-
-In this project, Meituan instant-retail stores are understood through this operating chain:
-
-- being seen;
-- being entered;
-- being ordered;
-- being selected again or maintaining share.
-
-Promotion, subsidy, price adjustment, SKU mix, ranking position, and fulfillment quality are operating levers inside this chain.
-
-SQL should prepare structured diagnostic signals. It should not turn one metric threshold into a fixed store-stage label.
+| Item | Value |
+|---|---|
+| Store | Store A |
+| Period | February 2026 to April 2026 |
+| Data source | Manually structured Meituan merchant-backend metrics |
+| Processing method | Offline SQL diagnostic |
+| Output | SQL-derived CSV, markdown diagnostic, generated retail memory facts |
+| Limitation | Single-store demo; not causal attribution; not cross-store comparison |
 
 ## Demo 1 Claim-to-Data Lineage
 
-| Claim / diagnostic                                                                                                 | Source fields                                                                                                                    | SQL output / derived metric                                                                          | Memory slot                       | Limitation                                                                                                 |
-| ------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | --------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Store A's visibility and entry structure can be described from exposure, ranking, entry, and search-entry metrics. | `exposure_users`, `store_average_rank`, `entry_users`, `search_exposure_users`, `search_average_rank`, `search_entry_users`      | `search_exposure_share_pct`, `search_entry_share_pct`, `search_entry_rate_pct`                       | `visibility_entry_profile`        | Describes whether the store was being seen and entered; does not prove causal growth.                      |
-| Store A's activity metrics should be interpreted as operating-lever evidence.                                      | `activity_original_transaction_amount`, `activity_orders`, `activity_cost`, `merchant_subsidy_amount`, `platform_subsidy_amount` | `activity_order_share_pct`, `activity_cost_ratio_pct`, `merchant_subsidy_share_of_activity_cost_pct` | `activity_lever_profile`          | Activity is a tool inside the operating chain, not a standalone causal explanation or simple ROI judgment. |
-| Store A's transaction and conversion signals moved in different directions.                                        | `transaction_amount`, `transaction_orders`, `order_conversion_rate_pct`, `average_order_value`                                   | `transaction_amount_mom_pct`, `transaction_orders_mom_pct`, `average_order_value_mom_pct`            | `transaction_conversion_profile`  | Transaction recovery can coexist with weaker conversion or lower AOV.                                      |
-| Store A's refund and invalid-order pressure improved in April.                                                     | `refund_amount`, `transaction_amount`, `valid_orders`, `invalid_orders`                                                          | `refund_pressure_pct`, `invalid_order_pressure_pct`, `refund_pressure_improved`                      | `order_quality_pressure_profile`  | Refund amount is dated by refund success date, not original order cohort.                                  |
-| Store A's changes should not be explained by one metric alone.                                                     | Visibility, entry, transaction, conversion, activity, refund, invalid-order, and SKU evidence                                    | Combined multi-signal interpretation                                                                 | `single_metric_attribution_guard` | The demo supports structured comparison of signals, not causal attribution.                                |
-| Top SKU mix appears care-solution-heavy.                                                                           | Top-3 SKU records                                                                                                                | Top-3 SKU observation                                                                                | `top3_sku_product_mix_note`       | Top-3 evidence only; not full SKU category-share analysis.                                                 |
+| Claim / diagnostic | Source fields | SQL output / derived metric | Memory slot | Limitation |
+|---|---|---|---|---|
+| Store A's visibility and entry structure can be described from exposure, ranking, entry, and search-entry metrics. | `exposure_users`, `store_average_rank`, `entry_users`, `search_exposure_users`, `search_average_rank`, `search_entry_users` | `search_exposure_share_pct`, `search_entry_share_pct`, `search_entry_rate_pct` | `visibility_entry_profile` | Describes whether the store was being seen and entered; does not prove causal growth. |
+| Store A's activity metrics should be interpreted as operating-lever evidence. | `activity_original_transaction_amount`, `activity_orders`, `activity_cost`, `merchant_subsidy_amount`, `platform_subsidy_amount` | `activity_order_share_pct`, `activity_cost_ratio_pct`, `merchant_subsidy_share_of_activity_cost_pct` | `activity_lever_profile` | Activity is a tool inside the operating chain, not a standalone causal explanation or simple ROI judgment. |
+| Store A's transaction and conversion signals moved in different directions. | `transaction_amount`, `transaction_orders`, `order_conversion_rate_pct`, `average_order_value` | `transaction_amount_mom_pct`, `transaction_orders_mom_pct`, `average_order_value_mom_pct` | `transaction_conversion_profile` | Transaction recovery can coexist with weaker conversion or lower average order value. |
+| Store A's refund and invalid-order pressure improved in April. | `refund_amount`, `transaction_amount`, `valid_orders`, `invalid_orders` | `refund_pressure_pct`, `invalid_order_pressure_pct`, `refund_pressure_improved` | `order_quality_pressure_profile` | Refund amount is dated by refund success date, not original order cohort. |
+| Store A's changes should not be explained by one metric alone. | Visibility, entry, transaction, conversion, activity, refund, invalid-order, and SKU evidence | Combined multi-signal interpretation | `single_metric_attribution_guard` | The demo supports structured comparison of signals, not causal attribution. |
+| Top SKU mix appears care-solution-heavy. | Top-3 SKU records | Top-3 SKU observation | `top3_sku_product_mix_note` | Top-3 evidence only; not full SKU category-share analysis. |
 
 ## Metric Lineage Rules
 
@@ -87,19 +70,21 @@ SQL should prepare structured diagnostic signals. It should not turn one metric 
 
 `order_conversion_rate_pct` follows the backend business definition:
 
-- `order_conversion_rate_pct = order_users / entry_users * 100`
+~~~text
+order_conversion_rate_pct = order_users / entry_users * 100
+~~~
 
 It is not derived from:
 
-- `valid_orders / entry_users`
+~~~text
+valid_orders / entry_users
+~~~
 
 Reason: `valid_orders` is an order-status metric, while `order_users` is a user-level funnel metric.
 
 ### Traffic Source
 
-Traffic-source users may overlap.
-
-The same customer may see the store through multiple exposure sources, so source-level exposure users should not be summed into total exposure users.
+Traffic-source users may overlap. The same customer may see the store through multiple exposure sources, so source-level exposure users should not be summed into total exposure users.
 
 `search_entry_users / entry_users` is used only as a directional source-entry structure signal.
 
@@ -107,11 +92,11 @@ The same customer may see the store through multiple exposure sources, so source
 
 `activity_cost_ratio_pct` follows the backend formula:
 
-- `activity_cost_ratio_pct = activity_cost / activity_original_transaction_amount * 100`
+~~~text
+activity_cost_ratio_pct = activity_cost / activity_original_transaction_amount * 100
+~~~
 
-A smaller value means lower activity cost per unit of activity-driven revenue.
-
-The project avoids calling this traditional ROI because traditional ROI is often interpreted in the opposite direction.
+A smaller value means lower activity cost per unit of activity-driven revenue. This project avoids calling it traditional ROI because traditional ROI is often interpreted in the opposite direction.
 
 ### Transaction Metrics
 
@@ -119,27 +104,23 @@ The project avoids calling this traditional ROI because traditional ROI is often
 
 For the transaction metric page:
 
-- `average_order_value = transaction_amount / transaction_orders`
+~~~text
+average_order_value = transaction_amount / transaction_orders
+~~~
 
 If another backend page defines 单均价 using valid orders, it should be treated as a separate backend-reported metric rather than mixed with transaction fields.
 
 ### Estimated Income
 
-`estimated_income_proxy` is treated as a platform-displayed income proxy.
-
-It should not be interpreted as audited profit because the current demo does not contain the full platform calculation breakdown.
+`estimated_income_proxy` is treated as a platform-displayed income proxy. It should not be interpreted as audited profit because the current demo does not contain the full platform calculation breakdown.
 
 ### Refund
 
-`refund_amount` is counted by refund-success date.
-
-It is interpreted as refund pressure during the selected period, not as a perfect refund rate for the original order cohort.
+`refund_amount` is counted by refund-success date. It is interpreted as refund pressure during the selected period, not as a perfect refund rate for the original order cohort.
 
 ### Ranking
 
-Business-district ranking is only comparable among merchants in the same main category and business district.
-
-Ranking may be unavailable when the store has no honeycomb or grid information, or no sales activity.
+Business-district ranking is only comparable among merchants in the same main category and business district. Ranking may be unavailable when the store has no honeycomb or grid information, or no sales activity.
 
 ## SKU Evidence Grain Note
 
@@ -175,15 +156,13 @@ The current Demo 2 scope is limited to five anonymized stores:
 
 All Demo 2 records use the same reporting window:
 
-| Field          | Value      |
-| -------------- | ---------- |
+| Field | Value |
+|---|---|
 | `period_start` | 2026-03-01 |
-| `period_end`   | 2026-03-31 |
-| `period_month` | 2026-03    |
+| `period_end` | 2026-03-31 |
+| `period_month` | 2026-03 |
 
-Demo 2 does not rank stores as simply better or worse.
-
-Its purpose is to structure selected backend metrics under the same reporting window and field contract, derive cautious diagnostic signals, and preserve interpretation limits before any operating recommendation is made.
+Demo 2 structures selected backend metrics under the same reporting window and field contract, derives cautious diagnostic signals, and preserves interpretation limits before any operating recommendation is made.
 
 ## Demo 2 Source Data
 
@@ -209,9 +188,7 @@ The generated SQL output is stored in:
 
 - `retail_ops/outputs/demo2_cross_store_comparability_output.csv`
 
-The SQL uses the March 2026 reporting window as a Demo 2 fixture contract.
-
-This keeps the current sample reproducible, but it should not be read as a reusable production SQL design for arbitrary 48-store reporting windows.
+The SQL uses the March 2026 reporting window as a Demo 2 fixture contract. This keeps the current sample reproducible, but it should not be read as a reusable production SQL design for arbitrary 48-store reporting windows.
 
 Carried-through canonical or backend-formula fields include:
 
@@ -231,20 +208,18 @@ SQL-derived diagnostic fields include:
 - `comparison_scope_flag`
 - `comparison_limit_notes`
 
-These derived fields are diagnostic summaries.
-
-They do not replace Meituan backend definitions, rank stores, assign store stages, or prove causal operating effects.
+These derived fields are diagnostic summaries. They do not replace Meituan backend definitions, rank stores, assign store stages, or prove causal operating effects.
 
 ## Demo 2 Claim-to-Field Mapping
 
-| Claim / diagnostic                                                                | Supporting fields                                                                                                                                              | Interpretation limit                                                                                                                                                  |
-| --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Stores are in the same Demo 2 reporting window.                                   | `period_month`, `period_start`, `period_end`                                                                                                                   | Same-period alignment improves diagnostic structure but does not remove differences in region, store type, activity conditions, competition, fulfillment, or SKU mix. |
-| Visibility and entry can be compared cautiously across stores.                    | `exposure_users`, `entry_users`, `entry_conversion_rate_pct`, `search_exposure_users`, `search_entry_users`, `search_entry_rate_pct`, `search_entry_share_pct` | Visibility and entry metrics do not prove causal transaction growth.                                                                                                  |
-| Activity involvement should constrain cross-store transaction comparison.         | `activity_orders`, `activity_order_share_pct`, `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, `platform_subsidy_amount`                | Activity mechanism details and promotion cycle dates are not included.                                                                                                |
-| Refund and invalid-order pressure should constrain direct performance comparison. | `refund_amount`, `refund_pressure_pct`, `valid_orders`, `invalid_orders`, `invalid_order_pressure_pct`                                                         | `refund_amount` is counted by refund-success date. Invalid-order reasons are not included.                                                                            |
-| Top search terms provide lightweight demand evidence.                             | `search_term`, `search_term_exposure_times`, `search_term_click_times`, `search_term_order_times`                                                              | Top search terms are store-period evidence, not complete regional consumer-preference proof.                                                                          |
-| Top SKU evidence provides lightweight product-mix evidence.                       | `sku_name`, `sku_transaction_amount`, `sales_volume`, `top3_sku_transaction_amount_share_pct`                                                                  | Top-3 evidence is not full SKU category-share analysis.                                                                                                               |
+| Claim / diagnostic | Supporting fields | Interpretation limit |
+|---|---|---|
+| Stores are in the same Demo 2 reporting window. | `period_month`, `period_start`, `period_end` | Same-period alignment improves diagnostic structure but does not remove differences in region, store type, activity conditions, competition, fulfillment, or SKU mix. |
+| Visibility and entry can be compared cautiously across stores. | `exposure_users`, `entry_users`, `entry_conversion_rate_pct`, `search_exposure_users`, `search_entry_users`, `search_entry_rate_pct`, `search_entry_share_pct` | Visibility and entry metrics do not prove causal transaction growth. |
+| Activity involvement should constrain cross-store transaction comparison. | `activity_orders`, `activity_order_share_pct`, `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, `platform_subsidy_amount` | Activity mechanism details and promotion cycle dates are not included. |
+| Refund and invalid-order pressure should constrain direct performance comparison. | `refund_amount`, `refund_pressure_pct`, `valid_orders`, `invalid_orders`, `invalid_order_pressure_pct` | `refund_amount` is counted by refund-success date. Invalid-order reasons are not included. |
+| Top search terms provide lightweight demand evidence. | `search_term`, `search_term_exposure_times`, `search_term_click_times`, `search_term_order_times` | Top search terms are store-period evidence, not complete regional consumer-preference proof. |
+| Top SKU evidence provides lightweight product-mix evidence. | `sku_name`, `sku_transaction_amount`, `sales_volume`, `top3_sku_transaction_amount_share_pct` | Top-3 evidence is not full SKU category-share analysis. |
 
 ## Demo 2 Memory Fact Output
 
@@ -290,36 +265,16 @@ Interpretation boundary:
 
 ## Future Comparability-Gate Lineage
 
-The comparability gate is future work.
-
 The current implemented retail lineage stops at Demo 2:
 
-- selected Meituan backend fields;
-- `DATA_DICTIONARY.md` definitions;
-- canonical CSV files;
-- Demo 1 and Demo 2 SQL diagnostics;
-- Demo 1 and Demo 2 output CSV files;
-- generated Demo 1 and Demo 2 retail memory facts;
-- validation and evaluation for the implemented scope.
+- selected Meituan backend fields
+- `DATA_DICTIONARY.md` definitions
+- canonical CSV files
+- Demo 1 and Demo 2 SQL diagnostics
+- Demo 1 and Demo 2 output CSV files
+- generated Demo 1 and Demo 2 retail memory facts
+- validation and evaluation for the implemented scope
 
-A future pairwise comparability gate should extend Demo 2 from same-period cross-store diagnostics into controlled pairwise comparison decisions after stronger evidence is available. The gate should first ask whether selected store-period rows can be compared for a specific operating question, and under what limits.
+The future pairwise comparability gate should extend this lineage only after stronger multi-store evidence is available. The detailed future gate contract is kept in:
 
-Reliable store comparability should depend on factors such as:
-
-- transaction order volume;
-- transaction amount;
-- explicit activity status when campaign-calendar or backend status evidence exists;
-- activity involvement;
-- activity intensity;
-- store type;
-- region and market context;
-- competition environment;
-- SKU structure;
-- refund pressure;
-- invalid-order pressure;
-- fulfillment, delivery-condition, or stockout evidence where available;
-- repeated reporting windows.
-
-At the current sample size, `region_type` must not be used to classify stores by subjective experience, intuition, or habitual labels.
-
-A reliable market-area classification should wait until more store data is available and can be judged together with data comparability, actual local consumption level, competition environment, activity conditions, SKU structure, refund pressure, invalid-order pressure, fulfillment context where available, and repeated reporting windows.
+- `retail_ops/COMPARABILITY_GATE_V0.md`
