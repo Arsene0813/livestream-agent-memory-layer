@@ -15,7 +15,7 @@ missing = [str(path.relative_to(ROOT)) for path in required_files if not path.ex
 if missing:
     print("[FAIL] Missing repeated-window panel summary files:")
     for item in missing:
-        print(f"  - {item}")
+        print(f" - {item}")
     sys.exit(1)
 
 sql_text = sql_path.read_text(encoding="utf-8")
@@ -33,9 +33,12 @@ for forbidden in [
     "valid_orders",
     "invalid_orders",
     "invalid_order_pressure_pct",
+    "full_refund_order_count",
+    "full_or_partial_refund_order_count",
+    "self_operated",
 ]:
     if re.search(rf"\b{re.escape(forbidden)}\b", query_text):
-        print(f"[FAIL] Summary SQL uses forbidden order-status field in query body: {forbidden}")
+        print(f"[FAIL] Summary SQL uses forbidden or non-canonical field/value in query body: {forbidden}")
         sys.exit(1)
 
 required_columns = {
@@ -62,6 +65,8 @@ required_columns = {
     "summary_boundary_note",
 }
 
+allowed_store_types = {"self-operated", "partner"}
+
 with output_path.open(newline="", encoding="utf-8") as f:
     reader = csv.DictReader(f)
     fields = set(reader.fieldnames or [])
@@ -71,12 +76,11 @@ missing_columns = sorted(required_columns - fields)
 if missing_columns:
     print("[FAIL] Summary output missing required columns:")
     for col in missing_columns:
-        print(f"  - {col}")
+        print(f" - {col}")
     sys.exit(1)
 
 expected_stores = ["B", "C", "D", "E", "F"]
 observed_stores = sorted(row.get("store_id") for row in rows)
-
 if observed_stores != expected_stores:
     print("[FAIL] Summary output should contain exactly Stores B-F.")
     print(f"Expected: {expected_stores}")
@@ -85,9 +89,15 @@ if observed_stores != expected_stores:
 
 for row in rows:
     store_id = row.get("store_id")
+
     if row.get("observed_month_count") != "3":
         print(f"[FAIL] Store {store_id} should have observed_month_count = 3.")
         print(row)
+        sys.exit(1)
+
+    if row.get("store_type") not in allowed_store_types:
+        print(f"[FAIL] Store {store_id} has non-canonical store_type: {row.get('store_type')}")
+        print("Allowed values: self-operated, partner")
         sys.exit(1)
 
     if row.get("repeated_window_summary_flag") != "summary_ready_for_descriptive_review":
@@ -106,7 +116,7 @@ for row in rows:
     if missing_bits:
         print(f"[FAIL] Store {store_id} summary boundary note is missing required phrases:")
         for bit in missing_bits:
-            print(f"  - {bit}")
+            print(f" - {bit}")
         sys.exit(1)
 
 numeric_check_columns = [
@@ -123,12 +133,21 @@ for row in rows:
         if value in ("", None):
             print(f"[FAIL] Store {row.get('store_id')} has empty numeric summary column: {col}")
             sys.exit(1)
+
         try:
             float(value)
         except ValueError:
             print(f"[FAIL] Store {row.get('store_id')} has non-numeric value in {col}: {value}")
             sys.exit(1)
 
+for path in [sql_path, output_path, panel_path]:
+    text = path.read_text(encoding="utf-8")
+    for alias in ["full_refund_order_count", "full_or_partial_refund_order_count", "self_operated"]:
+        if alias in text:
+            print(f"[FAIL] Non-canonical alias remains in {path.relative_to(ROOT)}: {alias}")
+            sys.exit(1)
+
 print("[PASS] Repeated-window panel summary validation passed.")
 print("[PASS] Summary output contains Stores B-F with 3 observed months each.")
+print("[PASS] Summary uses canonical store_type values.")
 print("[PASS] Summary remains descriptive and boundary-preserving.")

@@ -39,8 +39,8 @@ WITH typed_panel AS (
         CAST(NULLIF(activity_orders, '') AS REAL) AS activity_orders,
         CAST(NULLIF(activity_cost_ratio_pct, '') AS REAL) AS activity_cost_ratio_pct,
         CAST(NULLIF(refund_amount, '') AS REAL) AS refund_amount,
-        CAST(NULLIF(full_refund_order_count, '') AS REAL) AS full_refund_order_count,
-        CAST(NULLIF(full_or_partial_refund_order_count, '') AS REAL) AS full_or_partial_refund_order_count
+        CAST(NULLIF(full_refund_orders, '') AS REAL) AS full_refund_orders,
+        CAST(NULLIF(refund_orders_all_or_partial, '') AS REAL) AS refund_orders_all_or_partial
     FROM store_period_panel_metrics
 ),
 monthly_pivot AS (
@@ -87,8 +87,8 @@ monthly_pivot AS (
         MAX(CASE WHEN period_month = '2026-02' THEN refund_amount END) AS feb_refund_amount,
         MAX(CASE WHEN period_month = '2026-04' THEN refund_amount END) AS apr_refund_amount,
 
-        MAX(CASE WHEN period_month = '2026-02' THEN full_refund_order_count END) AS feb_full_refund_order_count,
-        MAX(CASE WHEN period_month = '2026-04' THEN full_refund_order_count END) AS apr_full_refund_order_count
+        MAX(CASE WHEN period_month = '2026-02' THEN full_refund_orders END) AS feb_full_refund_orders,
+        MAX(CASE WHEN period_month = '2026-04' THEN full_refund_orders END) AS apr_full_refund_orders
     FROM typed_panel
     GROUP BY store_id
 ),
@@ -176,9 +176,9 @@ summary AS (
             THEN ROUND((apr_refund_amount - feb_refund_amount) * 100.0 / feb_refund_amount, 2)
         END AS refund_amount_feb_to_apr_pct,
 
-        feb_full_refund_order_count,
-        apr_full_refund_order_count,
-        ROUND(apr_full_refund_order_count - feb_full_refund_order_count, 2) AS full_refund_order_count_feb_to_apr_delta,
+        feb_full_refund_orders,
+        apr_full_refund_orders,
+        ROUND(apr_full_refund_orders - feb_full_refund_orders, 2) AS full_refund_orders_feb_to_apr_delta,
 
         CASE
             WHEN observed_month_count = 3

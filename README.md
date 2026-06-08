@@ -290,3 +290,13 @@ Current RAC evidence and scripts:
 - `rac/scripts/validate_grounded_quality_gate.py`
 
 Current implementation boundary: deterministic and local-evidence-based. It should be read as a review scaffold over the current project evidence, not as live backend ingestion or operating-decision automation.
+
+## Current Retail Decision-Support Path
+
+The retail decision-support path now has three implemented evidence layers:
+
+1. Store A month-over-month diagnostic for one-store temporal interpretation.
+2. B-F same-period diagnostic for one-window cross-store review under a shared field contract.
+3. B-F repeated-window panel coverage and descriptive summary for 2026-02 to 2026-04.
+
+The third layer is not a pairwise comparability gate. It is a preparation step: before deciding which stores can be compared under which conditions, the project first checks whether repeated monthly evidence exists and whether the fields remain aligned with `retail_ops/data/DATA_DICTIONARY.md`.

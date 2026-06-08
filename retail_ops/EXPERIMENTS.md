@@ -166,12 +166,13 @@ The next comparability experiment should use repeated store-period windows befor
 
 ## Reviewer Experiment Map
 
-This section maps the current retail operations checks to the business and data-science questions they are meant to answer.
-
-It does not add a new demo, rename fields, change SQL output, or claim that the future pairwise comparability gate has been implemented.
-
-The purpose of this section is to make the current prototype easier to review: what each check uses as evidence, what it currently shows, and where interpretation should stop.
-
+| Check | Business / data question | Data used | Saved output | What it supports | Boundary |
+|---|---|---|---|---|---|
+| Demo 1: Store A month-over-month diagnostic | Can one store's monthly movement be explained using backend metric evidence? | Store A, 2026-02 to 2026-04 | `retail_ops/outputs/store_a_month_over_month_diagnostic_output.csv` | Metric-preserving single-store diagnosis with source fields and limitation notes. | Does not prove cross-store comparability. |
+| Demo 2: B-F same-period diagnostic | Can selected stores be reviewed under one reporting window and one field contract? | Stores B-F, 2026-03 | `retail_ops/outputs/demo2_cross_store_comparability_output.csv` | Same-period cross-store diagnostic structure and comparison-scope boundaries. | Does not implement a pairwise comparability gate. |
+| Retrieval threshold calibration | Is the retrieval cutoff supported by saved evidence rather than arbitrary tuning? | Saved retail evidence and threshold cases | `retail_ops/outputs/retrieval_threshold_summary.md` | Offline inspection of retrieval score behavior for the current evidence set. | Does not claim a universal threshold for future data. |
+| Repeated-window panel coverage | Do Stores B-F have enough repeated monthly evidence for descriptive panel review? | Stores B-F, 2026-02 to 2026-04 | `retail_ops/outputs/store_period_panel_coverage_output.csv` | Confirms repeated-window coverage before future comparability-gate work. | Does not rank stores or infer causality. |
+| Repeated-window panel summary | How did selected metrics move from February to April for each store? | Stores B-F, 2026-02 to 2026-04 | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Descriptive movement summary under dictionary-aligned fields. | Not a recommendation engine, not a pairwise gate, and not a causal test. |
 ## Current Evidence Path
 
 Meituan backend metric evidence
@@ -222,5 +223,5 @@ The checks also verify that ambiguous order-status fields are excluded from the 
 | Excluded field | Reason |
 |---|---|
 | `valid_orders` | Backend definition is not clear enough for current diagnostic use. |
-| `invalid_orders` | Current samples show it does not consistently equal `full_refund_order_count`; no hidden definition is inferred. |
+| `invalid_orders` | Current samples show it does not consistently equal `full_refund_orders`; no hidden definition is inferred. |
 | `invalid_order_pressure_pct` | Derived from an order-status field that is not stable enough for the panel extension. |

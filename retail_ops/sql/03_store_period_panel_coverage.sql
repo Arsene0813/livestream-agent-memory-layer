@@ -34,8 +34,8 @@ WITH panel AS (
         activity_orders,
         activity_cost_ratio_pct,
         refund_amount,
-        full_refund_order_count,
-        full_or_partial_refund_order_count
+        full_refund_orders,
+        refund_orders_all_or_partial
     FROM store_period_panel_metrics
 ),
 coverage AS (

@@ -34,15 +34,15 @@ The panel intentionally excludes:
 
 Reason:
 
-The Meituan backend page used for this project does not provide a clear enough definition for `valid_orders` and `invalid_orders` to support reliable diagnostic use. Current samples also show that `invalid_orders` does not consistently equal `full_refund_order_count`.
+The Meituan backend page used for this project does not provide a clear enough definition for `valid_orders` and `invalid_orders` to support reliable diagnostic use. Current samples also show that `invalid_orders` does not consistently equal `full_refund_orders`.
 
 No alternative hidden definition is inferred.
 
 Refund-related evidence is kept through explicitly labeled refund fields:
 
 - `refund_amount`
-- `full_refund_order_count`
-- `full_or_partial_refund_order_count`
+- `full_refund_orders`
+- `refund_orders_all_or_partial`
 
 ## Current Interpretation Boundary
 

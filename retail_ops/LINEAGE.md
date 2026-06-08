@@ -278,3 +278,32 @@ The current implemented retail lineage stops at Demo 2:
 The future pairwise comparability gate should extend this lineage only after stronger multi-store evidence is available. The detailed future gate contract is kept in:
 
 - `retail_ops/COMPARABILITY_GATE_V0.md`
+
+## Post-Demo2 Repeated-Window Panel Lineage
+
+The repeated-window panel extension follows the same dictionary-first rule as Demo 1 and Demo 2.
+
+Panel coverage lineage:
+
+| Step | Artifact |
+|---|---|
+| Metric definitions | `retail_ops/data/DATA_DICTIONARY.md` |
+| Source panel | `retail_ops/data/store_period_panel_metrics.csv` |
+| Coverage SQL | `retail_ops/sql/03_store_period_panel_coverage.sql` |
+| Coverage output | `retail_ops/outputs/store_period_panel_coverage_output.csv` |
+| Validator | `retail_ops/scripts/validate_store_period_panel.py` |
+| Saved validation result | `retail_ops/outputs/store_period_panel_validation_result.txt` |
+
+Repeated-window summary lineage:
+
+| Step | Artifact |
+|---|---|
+| Source panel | `retail_ops/data/store_period_panel_metrics.csv` |
+| Summary SQL | `retail_ops/sql/04_repeated_window_panel_summary.sql` |
+| Summary output | `retail_ops/outputs/repeated_window_panel_summary_output.csv` |
+| Validator | `retail_ops/scripts/validate_repeated_window_panel_summary.py` |
+| Saved validation result | `retail_ops/outputs/repeated_window_panel_summary_validation_result.txt` |
+
+This panel does not create a pairwise comparability gate. It checks whether Stores B-F have repeated monthly evidence across 2026-02, 2026-03, and 2026-04, then summarizes movement descriptively.
+
+The panel keeps the dictionary names `full_refund_orders` and `refund_orders_all_or_partial`. It also keeps `store_type` values aligned with the existing source data: `self-operated` and `partner`.
