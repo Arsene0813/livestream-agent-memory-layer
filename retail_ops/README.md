@@ -71,8 +71,11 @@ The repeated-window panel extension adds a small multi-month coverage layer afte
 | Source notes | `data/store_period_panel_source_notes.md` |
 | Coverage SQL | `sql/03_store_period_panel_coverage.sql` |
 | Coverage output | `outputs/store_period_panel_coverage_output.csv` |
-| Validator | `scripts/validate_store_period_panel.py` |
-| Boundary | Coverage foundation only; not a new numbered demo, pairwise comparability gate, endpoint behavior, generated memory facts, store ranking, or causal analysis. |
+| Coverage validator | `scripts/validate_store_period_panel.py` |
+| Descriptive summary SQL | `sql/04_repeated_window_panel_summary.sql` |
+| Descriptive summary output | `outputs/repeated_window_panel_summary_output.csv` |
+| Descriptive summary validator | `scripts/validate_repeated_window_panel_summary.py` |
+| Boundary | Coverage and descriptive summary only; not a new numbered demo, pairwise comparability gate, endpoint behavior, generated memory facts, store ranking, operating recommendation, or causal analysis. |
 
 The extension intentionally excludes `valid_orders`, `invalid_orders`, and `invalid_order_pressure_pct` because the current backend evidence does not define those order-status fields clearly enough for diagnostic use.
 

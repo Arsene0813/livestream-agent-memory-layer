@@ -286,10 +286,14 @@ The repeated-window panel extension currently covers Store B through Store F acr
 | Stores covered | B, C, D, E, F |
 | Months covered | 2026-02, 2026-03, 2026-04 |
 | Coverage output | `retail_ops/outputs/store_period_panel_coverage_output.csv` |
-| Validator | `python3 retail_ops/scripts/validate_store_period_panel.py` |
-| Current validator result | PASS |
-| Current coverage flag | `panel_ready_for_repeated_window_diagnostic` for B-F |
+| Coverage validator | `python3 retail_ops/scripts/validate_store_period_panel.py` |
+| Coverage validator result | PASS |
+| Coverage flag | `panel_ready_for_repeated_window_diagnostic` for B-F |
+| Descriptive summary output | `retail_ops/outputs/repeated_window_panel_summary_output.csv` |
+| Descriptive summary validator | `python3 retail_ops/scripts/validate_repeated_window_panel_summary.py` |
+| Descriptive summary validator result | PASS |
+| Descriptive summary flag | `summary_ready_for_descriptive_review` for B-F |
 | Excluded fields | `valid_orders`, `invalid_orders`, `invalid_order_pressure_pct` |
-| Interpretation boundary | Repeated-window coverage foundation only; not a new numbered demo, pairwise comparability gate, endpoint behavior, generated memory facts, store ranking, or causal analysis. |
+| Interpretation boundary | Repeated-window coverage and descriptive summary only; not a new numbered demo, pairwise comparability gate, endpoint behavior, generated memory facts, store ranking, operating recommendation, or causal analysis. |
 
-The panel extension strengthens the data foundation after the current Demo 2 same-period diagnostic by adding repeated reporting windows while preserving the existing field-boundary discipline.
+The panel extension strengthens the data foundation after the current Demo 2 same-period diagnostic by adding repeated reporting windows and a descriptive SQL summary while preserving the existing field-boundary discipline.
