@@ -12,7 +12,7 @@ The first panel seed uses Store B for February, March, and April 2026. Store B M
 | Current months entered | 2026-02, 2026-03, and 2026-04 |
 | March source | Copied from existing Demo 2 source data |
 | Current purpose | Repeated-window coverage foundation |
-| Not current purpose | Demo 3, pairwise comparability gate, endpoint behavior, or generated memory facts |
+| Not current purpose | a new numbered demo, pairwise comparability gate, endpoint behavior, or generated memory facts |
 
 ## Field Inclusion Rule
 

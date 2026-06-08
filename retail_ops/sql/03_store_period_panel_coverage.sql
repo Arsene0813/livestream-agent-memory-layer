@@ -5,7 +5,7 @@
 --   coverage to support later diagnostic work.
 --
 -- Boundary:
---   This is not Demo 3.
+--   This is not a new numbered demo.
 --   This is not a pairwise comparability gate.
 --   This does not use valid_orders, invalid_orders, or invalid_order_pressure_pct.
 
