@@ -60,6 +60,22 @@ These files are retained for auditability, but they are not separate reviewer en
 | Demo 1 | `demo/demo_1_store_a_month_over_month_diagnostic.md` | `data/store_a_monthly_metrics.csv`, `data/store_a_top_skus.csv`, `sql/01_store_a_month_over_month_diagnostic.sql`, `outputs/store_a_demo1_sql_output.csv`, `outputs/generated_retail_memory_facts.json` |
 | Demo 2 | `demo/demo_2_cross_store_comparability_diagnostic.md` | `data/demo2_store_period_metrics.csv`, `data/demo2_top_search_terms.csv`, `data/demo2_top_skus_by_sales_volume.csv`, `data/demo2_top_skus_by_transaction_amount.csv`, `sql/02_demo2_cross_store_comparability.sql`, `outputs/demo2_cross_store_comparability_output.csv`, `outputs/generated_demo2_retail_memory_facts.json` |
 
+## Repeated-Window Panel Extension
+
+The repeated-window panel extension adds a small multi-month coverage layer after the current Demo 2 same-period diagnostic.
+
+| Item | Current status |
+|---|---|
+| Current coverage | Stores B-F across 2026-02, 2026-03, and 2026-04 |
+| Source table | `data/store_period_panel_metrics.csv` |
+| Source notes | `data/store_period_panel_source_notes.md` |
+| Coverage SQL | `sql/03_store_period_panel_coverage.sql` |
+| Coverage output | `outputs/store_period_panel_coverage_output.csv` |
+| Validator | `scripts/validate_store_period_panel.py` |
+| Boundary | Coverage foundation only; not a new numbered demo, pairwise comparability gate, endpoint behavior, generated memory facts, store ranking, or causal analysis. |
+
+The extension intentionally excludes `valid_orders`, `invalid_orders`, and `invalid_order_pressure_pct` because the current backend evidence does not define those order-status fields clearly enough for diagnostic use.
+
 ## Script Notes
 
 | Script | Meaning |

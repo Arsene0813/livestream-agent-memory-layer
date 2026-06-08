@@ -207,3 +207,19 @@ The next data-science step should be repeated-window evidence before implementin
 The repeated-window check should test whether order volume, transaction amount, activity involvement, activity intensity, refund pressure, invalid-order pressure, and top-SKU concentration remain stable across more store-period records, or whether the current March 2026 guardrail signals are mostly one-period artifacts.
 
 Only after that should a future gate return question-specific decisions such as `comparable`, `comparable_with_limits`, `not_comparable`, or `insufficient_evidence`.
+
+## Repeated-Window Panel Extension Check
+
+This check verifies whether the post-Demo-2 panel has enough clean repeated-window coverage to support later diagnostic work.
+
+| Check | Question | Input | Pass condition | Boundary |
+|---|---|---|---|---|
+| Repeated-window panel validation | Do the current B-F stores each have February, March, and April 2026 panel rows under the same field contract? | `data/store_period_panel_metrics.csv`, `data/store_period_panel_source_notes.md`, `outputs/store_period_panel_coverage_output.csv` | `scripts/validate_store_period_panel.py` passes and each B-F store has exactly 2026-02, 2026-03, and 2026-04. | This is a coverage/readiness check, not a pairwise comparability gate, endpoint test, memory-fact generation step, ranking, or causal experiment. |
+
+The check also verifies that ambiguous order-status fields are excluded from the panel:
+
+| Excluded field | Reason |
+|---|---|
+| `valid_orders` | Backend definition is not clear enough for current diagnostic use. |
+| `invalid_orders` | Current samples show it does not consistently equal `full_refund_order_count`; no hidden definition is inferred. |
+| `invalid_order_pressure_pct` | Derived from an order-status field that is not stable enough for the panel extension. |

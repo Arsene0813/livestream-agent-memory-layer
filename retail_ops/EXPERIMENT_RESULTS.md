@@ -276,3 +276,20 @@ Checked by:
 Demo 2 is intentionally narrower than Demo 1. It is a same-period B-F diagnostic for field-contract consistency and comparison-boundary behavior, not a full multi-store diagnostic model.
 
 Some dictionary-defined derived metrics, including `refund_order_pressure_pct` and `search_exposure_share_pct`, are not expanded as required Demo 2 output columns at this stage.
+
+## Repeated-Window Panel Extension Result
+
+The repeated-window panel extension currently covers Store B through Store F across February, March, and April 2026.
+
+| Result item | Current result |
+|---|---|
+| Stores covered | B, C, D, E, F |
+| Months covered | 2026-02, 2026-03, 2026-04 |
+| Coverage output | `retail_ops/outputs/store_period_panel_coverage_output.csv` |
+| Validator | `python3 retail_ops/scripts/validate_store_period_panel.py` |
+| Current validator result | PASS |
+| Current coverage flag | `panel_ready_for_repeated_window_diagnostic` for B-F |
+| Excluded fields | `valid_orders`, `invalid_orders`, `invalid_order_pressure_pct` |
+| Interpretation boundary | Repeated-window coverage foundation only; not a new numbered demo, pairwise comparability gate, endpoint behavior, generated memory facts, store ranking, or causal analysis. |
+
+The panel extension strengthens the data foundation after the current Demo 2 same-period diagnostic by adding repeated reporting windows while preserving the existing field-boundary discipline.
