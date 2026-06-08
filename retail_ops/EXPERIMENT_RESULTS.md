@@ -297,3 +297,14 @@ The repeated-window panel extension currently covers Store B through Store F acr
 | Interpretation boundary | Repeated-window coverage and descriptive summary only; not a new numbered demo, pairwise comparability gate, endpoint behavior, generated memory facts, store ranking, operating recommendation, or causal analysis. |
 
 The panel extension strengthens the data foundation after the current Demo 2 same-period diagnostic by adding repeated reporting windows and a descriptive SQL summary while preserving the existing field-boundary discipline.
+
+## Repeated-Window Panel Validation Results
+
+The post-Demo2 repeated-window panel extension is validated by two saved result files.
+
+| Validator | Saved result | What it checks |
+|---|---|---|
+| `retail_ops/scripts/validate_store_period_panel.py` | `retail_ops/outputs/store_period_panel_validation_result.txt` | Stores B-F each have 2026-02, 2026-03, and 2026-04; panel uses canonical refund fields; `store_type` values are canonical; ambiguous order-status fields are excluded. |
+| `retail_ops/scripts/validate_repeated_window_panel_summary.py` | `retail_ops/outputs/repeated_window_panel_summary_validation_result.txt` | Repeated-window summary contains Stores B-F, keeps three observed months per store, uses canonical `store_type` values, and remains descriptive rather than causal or ranking-oriented. |
+
+These checks support panel readiness for descriptive review. They do not convert the panel into a pairwise comparability gate.

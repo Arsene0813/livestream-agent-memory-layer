@@ -137,3 +137,30 @@ The memory-facing facts record:
 ## Current Boundary
 
 The implemented retail scope stops at Demo 2. The future pairwise comparability gate is documented in `retail_ops/COMPARABILITY_GATE_V0.md`.
+
+## Current Retail Implementation Scope
+
+The current retail path has three implemented evidence layers.
+
+| Layer | Scope | Purpose | Saved evidence |
+|---|---|---|---|
+| Demo 1: Store A month-over-month diagnostic | Store A, 2026-02 to 2026-04 | Explain one store's monthly movement with backend metric evidence and boundary notes. | SQL diagnostic output and generated memory facts. |
+| Demo 2: same-period cross-store diagnostic | Stores B-F, 2026-03 | Review selected stores under one reporting window and one field contract before stronger cross-store claims. | Cross-store diagnostic output, comparison-scope fields, and generated memory facts. |
+| Post-Demo2 repeated-window panel extension | Stores B-F, 2026-02 to 2026-04 | Check whether same-store repeated-window evidence exists before building a future pairwise comparability gate. | Panel coverage output, descriptive repeated-window summary, and validator result files. |
+
+The current system organizes backend evidence, preserves metric definitions, and records limitations. It does not decide that two stores are fully comparable for every business question.
+
+Post-Demo2 repeated-window panel files:
+
+| File | Role |
+|---|---|
+| `retail_ops/data/store_period_panel_metrics.csv` | B-F store-period panel for 2026-02 to 2026-04 using dictionary-aligned field names. |
+| `retail_ops/data/store_period_panel_source_notes.md` | Source notes and exclusions for repeated-window panel fields. |
+| `retail_ops/sql/03_store_period_panel_coverage.sql` | Checks whether each store has the monthly windows needed for descriptive panel review. |
+| `retail_ops/sql/04_repeated_window_panel_summary.sql` | Produces descriptive February-to-April movement summaries. |
+| `retail_ops/outputs/store_period_panel_coverage_output.csv` | Saved panel coverage output. |
+| `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Saved descriptive repeated-window summary output. |
+| `retail_ops/scripts/validate_store_period_panel.py` | Validates panel coverage, canonical refund fields, canonical `store_type` values, and excluded ambiguous order-status fields. |
+| `retail_ops/scripts/validate_repeated_window_panel_summary.py` | Validates descriptive summary shape and boundary-preserving summary notes. |
+| `retail_ops/outputs/store_period_panel_validation_result.txt` | Saved validation result for the panel coverage layer. |
+| `retail_ops/outputs/repeated_window_panel_summary_validation_result.txt` | Saved validation result for the repeated-window summary layer. |
