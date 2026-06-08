@@ -222,5 +222,5 @@ The checks also verify that ambiguous order-status fields are excluded from the 
 | Excluded field | Reason |
 |---|---|
 | `valid_orders` | Backend definition is not clear enough for current diagnostic use. |
-| `invalid_orders` | Current samples show it does not consistently equal `full_refund_order_count`; no hidden definition is inferred. |
+| `invalid_orders` | Current samples show it does not consistently equal `full_refund_orders`; no hidden definition is inferred. |
 | `invalid_order_pressure_pct` | Derived from an order-status field that is not stable enough for the panel extension. |

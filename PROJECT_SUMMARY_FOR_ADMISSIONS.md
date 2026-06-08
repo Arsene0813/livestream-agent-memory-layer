@@ -21,7 +21,7 @@ The current prototype organizes selected backend evidence into this path:
 5. boundary-preserving answer checks
 6. deterministic source-aware review scaffold
 
-The current implementation stops at Demo 2: a same-period B-F diagnostic for March 2026. Demo 2 structures selected store-period evidence under one reporting window and one field contract before any stronger pairwise comparability decision is attempted.
+The current retail path includes Demo 1, Demo 2, and a post-Demo2 repeated-window panel extension for Stores B-F across February-April 2026. Demo 2 structures selected store-period evidence under one reporting window and one field contract; the repeated-window panel checks whether same-store multi-month evidence exists before any stronger pairwise comparability decision is attempted.
 
 A future pairwise comparability gate should judge whether two store-period records can be compared for a specific operating question. It should not produce a global store ranking or universal comparability score.
 
@@ -142,5 +142,5 @@ Reviewer entry points:
 |---|---|
 | `rac/DEMO_INDEX.md` | Index of deterministic RAC demo cases. |
 | `rac/outputs/grounded_rac_store_a_attribution_001.md` | Store A attribution-boundary review. |
-| `rac/outputs/grounded_rac_demo2_best_store_001.md` | Demo 2 best-store boundary review. |
+| `rac/outputs/grounded_rac_cross_store_comparability_001.md` | Demo 2 cross-store comparability boundary review. |
 | `rac/src/grounded_pipeline.py` | Deterministic grounded review pipeline. |
