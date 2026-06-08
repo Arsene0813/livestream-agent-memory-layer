@@ -113,46 +113,20 @@ Retrieval-score inspection is kept as a separate offline analysis and is not the
 
 ## Retail Demo 1: Store A Month-over-Month Diagnostic
 
-Demo 1 analyzes one self-operated Qingdao store across February, March, and April 2026.
+Demo 1 is the single-store baseline. It uses Store A across February, March, and April 2026 to show how exposure, entry, conversion, transaction amount, activity support, refund pressure, invalid-order pressure, and top-SKU evidence can move in different directions.
 
-It shows why operational performance should not be interpreted from one metric alone. Traffic, ranking, transaction amount, order conversion, activity cost, refund pressure, invalid orders, and top-SKU evidence can move in different directions.
-
-Main file:
-
-- `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md`
-
-The purpose is not to label the store as simply good or bad. The purpose is to keep month-over-month interpretation inside a documented evidence boundary.
+- Main file: `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md`
+- Role in the project: preserve a careful month-over-month operating profile before any cross-store interpretation is attempted.
 
 ## Retail Demo 2: Same-Period B-F Diagnostic
 
-Demo 2 analyzes five anonymized stores, B-F, over the same March 2026 reporting window.
+Demo 2 is the current cross-store diagnostic stage. It uses selected Stores B-F under the same March 2026 reporting window and the same `retail_ops/data/DATA_DICTIONARY.md` field contract.
 
-In this repository, Demo 2 means same-period diagnostic evidence before stronger pairwise comparison. It places selected store-period records under a shared field contract, keeps search-entry structure visible through dedicated search-entry fields, then derives operating-context and pressure signals such as activity involvement, refund pressure, invalid-order pressure, and top-SKU concentration.
+The section exposes store-period operating profiles and comparison limits while the pairwise comparability gate remains future work.
 
-The purpose is to make comparison limits visible before any stronger operating judgment is attempted.
-
-File paths that contain `cross_store_comparability` are retained for reference stability and should be read through the current field contract in `retail_ops/data/DATA_DICTIONARY.md`.
-
-The threshold-based guardrail notes are diagnostic warnings for the current evidence layer, not optimized business cutoffs, peer-selection rules, or strategy-transfer approvals.
-
-Demo 2 includes:
-
-- same-period store-period metrics;
-- top search-term evidence;
-- top-SKU transaction-amount evidence;
-- SQL-derived diagnostic fields;
-- `comparison_scope_flag`;
-- `comparison_limit_notes`;
-- generated Demo 2 retail memory facts;
-- facts evaluation and answer-boundary evaluation.
-
-Main file:
-
-- `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md`
-
-Future pairwise comparability-gate design:
-
-- `retail_ops/COMPARABILITY_GATE_V0.md`
+- Main file: `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md`
+- Future gate contract: `retail_ops/COMPARABILITY_GATE_V0.md`
+- Current boundary: same-period diagnostic evidence only; peer selection, store ranking, and strategy-transfer approval belong to the future gate stage.
 
 ## Admissions Review Path
 
