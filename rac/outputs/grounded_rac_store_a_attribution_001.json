@@ -486,7 +486,6 @@
           "intransaction_orders",
           "refund order",
           "intransaction orders",
-          "无效订单",
           "取消"
         ],
         "grounding_status": "source_found_no_keyword_match",

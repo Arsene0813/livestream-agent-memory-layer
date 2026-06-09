@@ -427,8 +427,8 @@
             "text": "| `visibility_entry_profile`        | Exposure, ranking, entry, and search-entry structure.                                              | Understanding whether the store was being seen and entered during the reporting window.                         | Claiming visibility alone caused transaction growth.                        |\n| `activity_lever_profile`          | Activity orders, activity cost, subsidy, and activity-cost ratio.                                  | Understanding how promotional tools were used in the store's operating context.                                 | Treating activity as a standalone cause or traditional ROI result.          |\n| `transaction_conversion_profile`  | Transaction scale, order conversion, payment, and average order value.                             | Reading transaction recovery or decline together with funnel quality.                                           | Calling a period good or bad from one transaction metric alone.             |"
           },
           {
-            "line_start": 589,
-            "line_end": 591,
+            "line_start": 587,
+            "line_end": 589,
             "matched_terms": [
               "activity_cost",
               "活动成本"
@@ -470,16 +470,16 @@
             "text": "- activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`;\n- activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`."
           },
           {
-            "line_start": 567,
-            "line_end": 569,
+            "line_start": 565,
+            "line_end": 567,
             "matched_terms": [
               "商家补贴"
             ],
             "text": "中文定义：平台展示的预计收入或预计订单收入类指标。预计订单收入通常指营业额扣除商家支出（包括商家补贴、平台服务费等）后的净收入，仅做数据展示，不做结算使用。"
           },
           {
-            "line_start": 591,
-            "line_end": 593,
+            "line_start": 589,
+            "line_end": 591,
             "matched_terms": [
               "商家补贴"
             ],
@@ -520,16 +520,16 @@
             "text": "- activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`;\n- activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`."
           },
           {
-            "line_start": 591,
-            "line_end": 593,
+            "line_start": 589,
+            "line_end": 591,
             "matched_terms": [
               "平台补贴"
             ],
             "text": "中文公式：活动成本 = 商家补贴金额 + 平台补贴金额"
           },
           {
-            "line_start": 593,
-            "line_end": 595,
+            "line_start": 591,
+            "line_end": 593,
             "matched_terms": [
               "platform_subsidy"
             ],
@@ -669,7 +669,6 @@
           "intransaction_orders",
           "refund order",
           "intransaction orders",
-          "无效订单",
           "取消"
         ],
         "grounding_status": "keyword_matched",

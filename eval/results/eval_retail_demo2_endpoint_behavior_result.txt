@@ -1,5 +1,5 @@
 Retail Demo 2 endpoint behavior evaluation passed.
-[PASS] Store E order-quality pressure endpoint behavior
+[PASS] Store E refund-pressure endpoint behavior
 [PASS] Store B activity endpoint behavior
 [PASS] Pairwise strategy-transfer refusal
 [PASS] B-F cross-store same-period guardrail endpoint behavior

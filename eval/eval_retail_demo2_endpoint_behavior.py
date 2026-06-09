@@ -104,7 +104,7 @@ async def run_checks() -> int:
             failed.append(f"[FAIL] {name}: {exc}")
 
     async def case_store_e_order_quality_pressure() -> None:
-        name = "Store E order-quality pressure endpoint behavior"
+        name = "Store E refund-pressure endpoint behavior"
         result = await ask(
             message="Describe Store E refund pressure in Demo 2.",
             entity_id="store_E",
@@ -201,7 +201,7 @@ async def run_checks() -> int:
         )
 
     await run_case(
-        "Store E order-quality pressure endpoint behavior",
+        "Store E refund-pressure endpoint behavior",
         case_store_e_order_quality_pressure,
     )
     await run_case(

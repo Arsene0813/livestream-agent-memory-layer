@@ -309,9 +309,7 @@
         "keywords_used": [
           "transaction_orders",
           "transaction orders",
-          "valid order",
-          "有效订单",
-          "有效订单数"
+          "valid order"
         ],
         "grounding_status": "keyword_matched",
         "snippets": [
@@ -330,7 +328,7 @@
               "transaction orders",
               "valid order"
             ],
-            "text": "| Refund Pressure        |  17.01% |   6.63% | Down      |\n| Invalid Orders         |      32 |      29 | Down      |\n| Refund Pressure |  13.62% |   7.99% | Down      |"
+            "text": "| Refund Pressure        |  17.01% |   6.63% | Down      |"
           }
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: transaction_orders.",
@@ -355,8 +353,6 @@
           "intransaction_orders",
           "intransaction orders",
           "refund order",
-          "无效订单",
-          "无效订单数",
           "cancelled",
           "canceled"
         ],
@@ -369,7 +365,7 @@
               "intransaction orders",
               "refund order"
             ],
-            "text": "| Refund Pressure        |  17.01% |   6.63% | Down      |\n| Invalid Orders         |      32 |      29 | Down      |\n| Refund Pressure |  13.62% |   7.99% | Down      |"
+            "text": "| Refund Pressure        |  17.01% |   6.63% | Down      |"
           }
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: intransaction_orders.",
