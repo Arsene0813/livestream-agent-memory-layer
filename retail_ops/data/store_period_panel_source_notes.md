@@ -26,7 +26,7 @@ visibility -> store entry -> order submission -> payment / transaction -> refund
 
 ## Excluded Order-Status Fields
 
-The panel intentionally excludes unclear backend order-status fields because their backend definitions are not clear enough for diagnostic use. Current samples also show that those order-status fields do not consistently align with explicitly labeled refund fields.
+The panel only uses fields whose meanings are documented clearly enough in `DATA_DICTIONARY.md` for diagnostic use.
 
 No alternative hidden definition is inferred.
 
