@@ -42,8 +42,6 @@ diagnostics AS (
 
         CAST(m.transaction_amount AS REAL) AS transaction_amount,
         CAST(m.transaction_orders AS INTEGER) AS transaction_orders,
-        CAST(m.valid_orders AS INTEGER) AS valid_orders,
-        CAST(m.invalid_orders AS INTEGER) AS invalid_orders,
         CAST(m.estimated_income_proxy AS REAL) AS estimated_income_proxy,
         CAST(m.average_order_value AS REAL) AS average_order_value,
 
@@ -119,15 +117,6 @@ diagnostics AS (
             2
         ) AS refund_pressure_pct,
 
-        ROUND(
-            CAST(m.invalid_orders AS REAL)
-            / NULLIF(
-                CAST(m.valid_orders AS REAL) + CAST(m.invalid_orders AS REAL),
-                0
-            ) * 100,
-            2
-        ) AS invalid_order_pressure_pct,
-
         CASE
             WHEN s.top3_sku_transaction_amount IS NULL
               OR m.transaction_amount IS NULL
@@ -156,8 +145,6 @@ SELECT
 
     transaction_amount,
     transaction_orders,
-    valid_orders,
-    invalid_orders,
     estimated_income_proxy,
     average_order_value,
 
@@ -200,7 +187,6 @@ SELECT
     full_refund_orders,
     refund_orders_all_or_partial,
     refund_pressure_pct,
-    invalid_order_pressure_pct,
 
     business_district_rank,
 
@@ -214,14 +200,12 @@ SELECT
 
         WHEN transaction_amount IS NULL
           OR transaction_orders IS NULL
-          OR valid_orders IS NULL
           OR exposure_users IS NULL
           OR entry_users IS NULL
           OR search_exposure_users IS NULL
           OR search_entry_users IS NULL
           OR activity_orders IS NULL
           OR refund_amount IS NULL
-          OR invalid_orders IS NULL
           OR top3_sku_transaction_amount IS NULL
         THEN 'insufficient_data'
 
@@ -232,12 +216,6 @@ SELECT
         CASE
             WHEN transaction_amount IS NULL
             THEN 'missing_transaction_amount; '
-            ELSE ''
-        END ||
-
-        CASE
-            WHEN valid_orders IS NULL
-            THEN 'missing_valid_orders; '
             ELSE ''
         END ||
 
@@ -260,14 +238,6 @@ SELECT
             THEN 'high_refund_pressure; '
             WHEN refund_pressure_pct >= 10
             THEN 'moderate_refund_pressure; '
-            ELSE ''
-        END ||
-
-        CASE
-            WHEN invalid_order_pressure_pct >= 12
-            THEN 'high_invalid_order_pressure; '
-            WHEN invalid_order_pressure_pct >= 8
-            THEN 'moderate_invalid_order_pressure; '
             ELSE ''
         END ||
 
