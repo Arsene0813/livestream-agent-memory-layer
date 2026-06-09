@@ -116,7 +116,7 @@ This rule is intentionally conservative. The project should prefer adding clearl
 | `visibility_entry_profile` | Retrieval-facing memory slot for exposure, ranking, entry, and search-entry structure. | Generated retail memory facts. | No. |
 | `activity_lever_profile` | Retrieval-facing memory slot for activity orders, activity cost, subsidy, and activity-cost ratio. | Generated retail memory facts. | No. |
 | `transaction_conversion_profile` | Retrieval-facing memory slot for transaction scale, order conversion, payment, and average order value. | Generated retail memory facts. | No. |
-| `order_quality_pressure_profile` | Retrieval-facing memory slot for refund-related evidence and related order-quality context. | Generated retail memory facts. | No. |
+| `order_quality_pressure_profile` | Retrieval-facing memory slot for refund-pressure evidence and related refund context. | Generated retail memory facts. | No. |
 | `single_metric_attribution_guard` | Retrieval-facing memory slot that prevents unsupported interpretation from one metric alone. | Generated retail memory facts. | No. |
 | `top3_sku_product_mix_note` | Retrieval-facing memory slot for limited top-SKU evidence. It is not full category-share analysis. | Generated retail memory facts. | No. |
 
