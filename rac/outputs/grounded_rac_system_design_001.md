@@ -55,11 +55,11 @@ Weighting limitations:
 | typed_memory | rac/README.md | default_evidence | keyword_matched | 8-10 | fact | question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-coverage and limitation update -> final report |
 | evidence_packets | rac/README.md | default_evidence | keyword_matched | 2-4 | evidence | This module is a structured reasoning scaffold for question decomposition, evidence routing, critique, and evidence-coverage and limitation update. |
 | hypotheses | rac/README.md | default_evidence | keyword_matched | 8-10 | hypothesis | question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-coverage and limitation update -> final report |
-| belief_records | rac/README.md | default_evidence | keyword_matched | 48-50 | belief | * FactChecker * BeliefUpdater / evidence-coverage and limitation updater * FinalReportWriter |
-| confidence | rac/README.md | default_evidence | keyword_matched | 66-68 | confidence | * critique unsupported assumptions before writing the final answer, * update confidence and limitations only when the evidence supports the change. |
+| belief_records | rac/README.md | default_evidence | keyword_matched | 62-64 | confidence | * critique unsupported assumptions before writing the final answer, * update confidence and limitations only when the evidence supports the change. |
+| confidence | rac/README.md | default_evidence | keyword_matched | 62-64 | confidence | * critique unsupported assumptions before writing the final answer, * update confidence and limitations only when the evidence supports the change. |
 | limitations | rac/README.md | default_evidence | keyword_matched | 2-4 | limitation | This module is a structured reasoning scaffold for question decomposition, evidence routing, critique, and evidence-coverage and limitation update. |
 | retrieval_trace | rac/README.md | default_evidence | keyword_matched | 4-6 | source | The `rac/` directory name is retained for path stability. In reviewer-facing wording, this should be read as a deterministic, source-grounded reasoning scaffold with explicit evidence and boundary checks. |
-| active_state_filtering | rac/README.md | default_evidence | keyword_matched | 28-30 | state | 1. A shared reasoning-state schema. 2. Prompt contracts for each reasoning stage. |
+| active_state_filtering | rac/README.md | default_evidence | keyword_matched | 26-28 | state | * a shared review-state schema, * deterministic question analysis and factor expansion, |
 
 ## 5. Competing Hypotheses
 
