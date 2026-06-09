@@ -9,8 +9,7 @@
       "order_conversion",
       "promotion_intensity",
       "refund_pressure",
-      "valid_orders",
-      "invalid_orders"
+      "transaction_orders"
     ],
     "must_not_claim": [
       "Search exposure caused April growth",
@@ -34,7 +33,6 @@
       "competition",
       "sku_structure",
       "refund_pressure",
-      "invalid_order_pressure",
       "repeated_reporting_windows"
     ],
     "must_not_claim": [
@@ -57,7 +55,6 @@
       "order_conversion",
       "payment_conversion",
       "refund_pressure",
-      "invalid_order_pressure",
       "sku_margin_structure",
       "competitor_context"
     ],

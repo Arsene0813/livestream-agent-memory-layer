@@ -20,8 +20,8 @@ This is a deterministic mock result. It proves the workflow can run end-to-end, 
 | order_conversion | 0.85 | partially_supported | Central to avoiding overconfident or misleading conclusions. |
 | promotion_intensity | 0.85 | partially_supported | Central to avoiding overconfident or misleading conclusions. |
 | refund_pressure | 0.85 | partially_supported | Central to avoiding overconfident or misleading conclusions. |
-| valid_orders | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |
-| invalid_orders | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |
+| transaction_orders | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |
+| intransaction_orders | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |
 
 ## 4. Evidence Used
 
@@ -32,8 +32,8 @@ This is a deterministic mock result. It proves the workflow can run end-to-end, 
 | evidence_order_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: order_conversion. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
 | evidence_promotion_intensity | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: promotion_intensity. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
 | evidence_refund_pressure | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: refund_pressure. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_valid_orders | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: valid_orders. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_invalid_orders | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: invalid_orders. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
+| evidence_transaction_orders | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: transaction_orders. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
+| evidence_intransaction_orders | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: intransaction_orders. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
 
 ## 5. Competing Hypotheses
 

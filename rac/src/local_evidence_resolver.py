@@ -58,17 +58,17 @@ FACTOR_KEYWORDS: dict[str, list[str]] = {
         "退款金额",
         "退款订单"
     ],
-    "valid_orders": [
-        "valid_orders",
-        "valid orders",
+    "transaction_orders": [
+        "transaction_orders",
+        "transaction orders",
         "valid order",
         "有效订单",
         "有效订单数"
     ],
-    "invalid_orders": [
-        "invalid_orders",
-        "invalid orders",
-        "invalid order",
+    "intransaction_orders": [
+        "intransaction_orders",
+        "intransaction orders",
+        "refund order",
         "无效订单",
         "无效订单数",
         "cancelled",
@@ -101,7 +101,7 @@ FACTOR_KEYWORDS: dict[str, list[str]] = {
         "transaction_orders",
         "transaction_order",
         "transaction_order_count",
-        "valid_orders",
+        "transaction_orders",
         "orders",
         "成交订单量",
         "有效订单"
@@ -160,12 +160,12 @@ FACTOR_KEYWORDS: dict[str, list[str]] = {
         "销量",
         "销售额"
     ],
-    "invalid_order_pressure": [
-        "invalid_order_pressure",
-        "invalid_order_pressure_pct",
-        "invalid_orders",
-        "invalid order",
-        "invalid orders",
+    "refund_pressure": [
+        "refund_pressure",
+        "refund_pressure_pct",
+        "intransaction_orders",
+        "refund order",
+        "intransaction orders",
         "无效订单",
         "取消"
     ],
@@ -366,7 +366,7 @@ COMPARABILITY_SOURCE_OVERRIDES: dict[str, list[dict[str, str]]] = {
             "grounding_role": "quantitative_evidence"
         }
     ],
-    "invalid_order_pressure": [
+    "refund_pressure": [
         {
             "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
             "grounding_role": "quantitative_evidence"

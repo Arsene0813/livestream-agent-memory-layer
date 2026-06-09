@@ -45,7 +45,6 @@ EXPECTED_CASES = [
         "slot": "order_quality_pressure_profile",
         "expected_terms": [
             "refund_pressure_pct",
-            "invalid_order_pressure_pct",
             "not an exact original-order cohort refund rate",
         ],
     },

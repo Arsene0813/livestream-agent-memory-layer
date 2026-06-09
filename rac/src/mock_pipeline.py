@@ -47,20 +47,17 @@ FACTOR_LIBRARY: dict[str, list[dict[str, Any]]] = {
         {"factor_id": "order_conversion", "name": "Order conversion", "description": "Shows whether store visits translated into order submissions.", "evidence_needed": ["order users", "entry users", "order conversion rate"]},
         {"factor_id": "promotion_intensity", "name": "Promotion intensity", "description": "Promotion activity may affect orders, transaction amount, and attribution.", "evidence_needed": ["activity orders", "activity cost", "activity original transaction amount"]},
         {"factor_id": "refund_pressure", "name": "Refund pressure", "description": "Refund pressure affects whether growth is high-quality or distorted.", "evidence_needed": ["refund amount", "refund orders"]},
-        {"factor_id": "valid_orders", "name": "Valid orders", "description": "Accepted and not-cancelled orders indicate usable demand.", "evidence_needed": ["valid orders"]},
-        {"factor_id": "invalid_orders", "name": "Invalid orders", "description": "Cancelled or invalid orders weaken performance interpretation.", "evidence_needed": ["invalid orders"]}
     ],
     "comparability_judgment": [
         {"factor_id": "same_reporting_period", "name": "Same reporting period", "description": "Stores must first share the same reporting window.", "evidence_needed": ["period start", "period end"]},
         {"factor_id": "store_type", "name": "Store type", "description": "Different store types may not be directly comparable.", "evidence_needed": ["store type"]},
-        {"factor_id": "order_volume", "name": "Order volume", "description": "Order volume affects stability and reliability.", "evidence_needed": ["transaction order count", "valid orders"]},
+        {"factor_id": "order_volume", "name": "Order volume", "description": "Order volume affects stability and reliability.", "evidence_needed": ["transaction order count", "transaction orders"]},
         {"factor_id": "transaction_amount", "name": "Transaction amount", "description": "Gives scale context but is not sufficient alone.", "evidence_needed": ["transaction amount"]},
         {"factor_id": "activity_intensity", "name": "Activity intensity", "description": "Promotion differences can distort comparison.", "evidence_needed": ["activity orders", "activity cost"]},
         {"factor_id": "region_context", "name": "Region context", "description": "Region and market context affect demand.", "evidence_needed": ["region type", "business district context"]},
         {"factor_id": "competition", "name": "Competition", "description": "Competitor behavior can independently affect performance.", "evidence_needed": ["competitor price", "competitor order trend"]},
         {"factor_id": "sku_structure", "name": "SKU structure", "description": "SKU mix can change margins, conversion, and refunds.", "evidence_needed": ["top SKUs", "SKU transaction amount"]},
         {"factor_id": "refund_pressure", "name": "Refund pressure", "description": "Refunds affect quality of transaction metrics.", "evidence_needed": ["refund amount", "refund orders"]},
-        {"factor_id": "invalid_order_pressure", "name": "Invalid order pressure", "description": "Invalid orders can distort comparison.", "evidence_needed": ["invalid orders"]},
         {"factor_id": "repeated_reporting_windows", "name": "Repeated reporting windows", "description": "Repeated windows are needed before treating patterns as stable.", "evidence_needed": ["multi-period data"]}
     ],
     "strategic_recommendation": [
@@ -71,7 +68,6 @@ FACTOR_LIBRARY: dict[str, list[dict[str, Any]]] = {
         {"factor_id": "order_conversion", "name": "Order conversion", "description": "Promotion should be checked against conversion.", "evidence_needed": ["order conversion rate"]},
         {"factor_id": "payment_conversion", "name": "Payment conversion", "description": "Checks whether submitted orders become paid orders.", "evidence_needed": ["payment conversion rate"]},
         {"factor_id": "refund_pressure", "name": "Refund pressure", "description": "High refunds weaken promotional growth quality.", "evidence_needed": ["refund amount", "refund order count"]},
-        {"factor_id": "invalid_order_pressure", "name": "Invalid order pressure", "description": "Invalid orders may indicate fulfillment or operational issues.", "evidence_needed": ["invalid order count"]},
         {"factor_id": "sku_margin_structure", "name": "SKU margin structure", "description": "Promotion decisions require margin context.", "evidence_needed": ["SKU margin", "SKU activity participation"]},
         {"factor_id": "competitor_context", "name": "Competitor context", "description": "Competitor pricing can change promotion effectiveness.", "evidence_needed": ["competitor prices", "competitor order trend"]}
     ],
@@ -251,7 +247,7 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
                 "hypothesis_id": "H2",
                 "claim": "Store A's April performance is better interpreted through traffic recovery, promotion intensity, conversion changes, and refund pressure together.",
                 "confidence": 0.74,
-                "supporting_factors": ["search_exposure", "promotion_intensity", "order_conversion", "refund_pressure", "valid_orders", "invalid_orders"],
+                "supporting_factors": ["search_exposure", "promotion_intensity", "order_conversion", "refund_pressure", "sku_structure"],
                 "weaknesses": ["Observational evidence cannot establish strict causality."],
                 "status": "strong"
             },
@@ -259,7 +255,7 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
                 "hypothesis_id": "H3",
                 "claim": "The available evidence is insufficient for single-cause attribution.",
                 "confidence": 0.82,
-                "supporting_factors": ["promotion_intensity", "refund_pressure", "invalid_orders"],
+                "supporting_factors": ["promotion_intensity", "refund_pressure", "sku_structure"],
                 "weaknesses": ["Conservative rather than complete causal explanation."],
                 "status": "strong"
             }
@@ -279,7 +275,7 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
                 "hypothesis_id": "H2",
                 "claim": "Stores B-F should not be treated as directly comparable without pairwise gates.",
                 "confidence": 0.86,
-                "supporting_factors": ["store_type", "activity_intensity", "region_context", "sku_structure", "refund_pressure", "invalid_order_pressure", "repeated_reporting_windows"],
+                "supporting_factors": ["store_type", "activity_intensity", "region_context", "sku_structure", "refund_pressure", "repeated_reporting_windows"],
                 "weaknesses": ["The mock pipeline does not compute quantitative pairwise thresholds."],
                 "status": "strong"
             }
@@ -289,9 +285,9 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
         return [
             {
                 "hypothesis_id": "H1",
-                "claim": "Promotion decisions should be checked against cost, conversion, refund, invalid order, margin, and competitor context.",
+                "claim": "Promotion decisions should be checked against cost, conversion, refund, SKU structure, margin, and competitor context.",
                 "confidence": 0.84,
-                "supporting_factors": ["activity_orders", "activity_cost", "order_conversion", "payment_conversion", "refund_pressure", "invalid_order_pressure", "sku_margin_structure"],
+                "supporting_factors": ["activity_orders", "activity_cost", "order_conversion", "payment_conversion", "refund_pressure", "sku_margin_structure"],
                 "weaknesses": ["Final action still requires real margin and competitor evidence."],
                 "status": "strong"
             },
@@ -299,7 +295,7 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
                 "hypothesis_id": "H2",
                 "claim": "Promotion changes may be risky when activity cost and refund pressure rise together.",
                 "confidence": 0.68,
-                "supporting_factors": ["activity_cost", "refund_pressure", "invalid_order_pressure"],
+                "supporting_factors": ["activity_cost", "refund_pressure", "sku_structure"],
                 "weaknesses": ["The mock pipeline does not calculate real cost trend."],
                 "status": "plausible"
             }
@@ -410,7 +406,7 @@ def build_belief_update(question_type: str) -> dict[str, Any]:
     if question_type == "strategic_recommendation":
         return {
             "belief_id": "promotion_changes_require_multi_factor_check",
-            "claim": "Promotion changes should be checked against cost, conversion, refund, invalid order, margin, and competitor context.",
+            "claim": "Promotion changes should be checked against cost, conversion, refund, SKU structure, margin, and competitor context.",
             "confidence": 0.80,
             "status": "active",
             "validity_conditions": ["Retail operations decision-support questions."],

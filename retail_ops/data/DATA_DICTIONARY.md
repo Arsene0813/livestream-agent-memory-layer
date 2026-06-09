@@ -287,7 +287,7 @@ A new retail memory slot should be added only when the same name is consistently
 4. README or project summary, if mentioned there;
 5. retail evaluation cases, if retrieval-tested.
 
-Supporting SQL observations such as transaction recovery, exposure movement, order-conversion decline, average-order-value decline, refund-pressure improvement, invalid-order-pressure improvement, activity-order share, and activity-cost ratio can support these slots, but they should not become independent canonical slots unless they are first documented here.
+Supporting SQL observations such as transaction recovery, exposure movement, order-conversion decline, average-order-value decline, refund-pressure improvement, activity-order share, and activity-cost ratio can support these slots, but they should not become independent canonical slots unless they are first documented here.
 
 ## 1. Traffic Exposure Metrics / 流量曝光指标
 

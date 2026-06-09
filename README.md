@@ -44,7 +44,7 @@ A future pairwise comparability gate would judge whether two store-period record
 | Data dictionary | Preserves Meituan-style backend metric meanings and canonical field names. | Manual normalization of selected backend evidence; field meanings follow `retail_ops/data/DATA_DICTIONARY.md`. |
 | Retail Demo 1 | Store A month-over-month diagnostic across February, March, and April 2026. | Multi-metric interpretation rather than single-cause monthly explanation. |
 | Retail Demo 2 | Same-period B-F diagnostic for March 2026. | Same-period diagnostic evidence before pairwise comparability gating; not peer selection, store ranking, or strategy-transfer approval. |
-| SQL diagnostics | Derives limited diagnostic fields such as search-entry structure, activity involvement, refund pressure, invalid-order pressure, and top-SKU concentration. | Diagnostic structuring only; current derived fields are not optimized business cutoffs or final decision rules. |
+| SQL diagnostics | Derives limited diagnostic fields such as search-entry structure, activity involvement, refund pressure, and top-SKU concentration. | Diagnostic structuring only; current derived fields are not optimized business cutoffs or final decision rules. |
 | Memory facts | Converts diagnostic outputs into source-bounded facts with observed values, source fields, source paths, confidence labels, and limitations. | File-backed evidence records for the implemented demos; not a replacement for raw backend evidence. |
 | Answer-boundary checks | Tests whether answers stay within entity, period, metric-definition, source, and interpretation boundaries. | Scenario-based checks tied to the current evidence path; not broad LLM robustness tests. |
 | RAC scaffold | Provides deterministic factor expansion, evidence routing, critique, fact checking, evidence-coverage update, and grounded report generation over local project evidence. | Local-evidence scaffold for reviewability; not live backend ingestion, autonomous cognition, or operating-decision automation. |
@@ -300,3 +300,21 @@ The retail decision-support path now has three implemented evidence layers:
 3. B-F repeated-window panel coverage and descriptive summary for 2026-02 to 2026-04.
 
 The third layer is not a pairwise comparability gate. It is a preparation step: before deciding which stores can be compared under which conditions, the project first checks whether repeated monthly evidence exists and whether the fields remain aligned with `retail_ops/data/DATA_DICTIONARY.md`.
+
+<!-- RAC_EXTENSION_START -->
+## Structured Reasoning Scaffold: Factor-Aware Grounded Review
+
+This repository also includes a structured reasoning scaffold under `rac/`. It is designed for question decomposition, factor expansion, factor weighting, local evidence grounding, competing hypotheses, critique, fact check, and confidence and limitations review.
+
+The RAC scaffold is deterministic only. It makes no LLM calls, uses no Qdrant retrieval, has no live Meituan backend access, implements no completed pairwise comparability gate, and provides no causal proof from observational store metrics.
+
+Key review files:
+
+- `rac/DEMO_INDEX.md`
+- `rac/outputs/grounded_rac_store_a_attribution_001.md`
+- `rac/outputs/grounded_rac_cross_store_comparability_001.md`
+- `rac/outputs/grounded_quality_summary.md`
+- `rac/scripts/run_grounded_pipeline.py`
+- `rac/scripts/validate_grounded_quality_gate.py`
+
+<!-- RAC_EXTENSION_END -->

@@ -66,7 +66,7 @@ Important consistency rules:
    It should not be recalculated as:
 
    ```text
-   valid_orders / entry_users
+   order-status counts / entry_users
    ```
 
 2. `activity_cost_ratio_pct` follows the backend-style formula:
@@ -146,14 +146,13 @@ This supports a cautious operating-signal reading: the store recovered scale, bu
 
 ## Order-Quality Pressure Profile
 
-Refund and invalid-order pressure improved in April compared with March.
+Refund pressure improved in April compared with March.
 
 | Metric                 | 2026-03 | 2026-04 | Direction |
 | ---------------------- | ------: | ------: | --------- |
 | Refund Amount          | 1097.97 |  602.26 | Down      |
 | Refund Pressure        |  17.01% |   6.63% | Down      |
 | Invalid Orders         |      32 |      29 | Down      |
-| Invalid-Order Pressure |  13.62% |   7.99% | Down      |
 
 Interpretation:
 
@@ -183,7 +182,7 @@ April 2026 showed:
 - order conversion rate down;
 - average order value down;
 - refund pressure down;
-- invalid-order pressure down;
+
 - activity-order share still high;
 - top-SKU evidence still limited.
 
@@ -198,7 +197,7 @@ The current generated retail memory facts use these slots:
 | `visibility_entry_profile`        | Describes exposure, ranking, entry, and search-entry structure.                                         |
 | `activity_lever_profile`          | Describes activity orders, activity cost, subsidy, and activity-cost ratio as operating-lever evidence. |
 | `transaction_conversion_profile`  | Describes transaction scale, order conversion, payment, and average order value.                        |
-| `order_quality_pressure_profile`  | Describes refund pressure and invalid-order pressure.                                                   |
+| `order_quality_pressure_profile`  | Describes refund-pressure evidence.                                                   |
 | `single_metric_attribution_guard` | Prevents one-factor explanations of growth or decline.                                                  |
 | `top3_sku_product_mix_note`       | Limits top-SKU evidence to lightweight product-mix support.                                             |
 
@@ -239,7 +238,7 @@ Future expansion should check whether candidate records are comparable by:
 - visibility and ranking profile;
 - entry and order-conversion profile;
 - activity involvement and activity intensity;
-- refund and invalid-order pressure;
+- refund pressure;
 - top-SKU evidence;
 - data completeness;
 - repeated reporting-window stability.
