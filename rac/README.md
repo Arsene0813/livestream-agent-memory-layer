@@ -12,11 +12,11 @@ question -> question analysis -> factor expansion -> factor weighting -> evidenc
 
 A normal LLM can produce a plausible answer without explicitly checking:
 
-  * which factors are relevant,
-  * which assumptions are unsupported,
-  * which evidence was actually used,
-  * which competing explanations remain possible,
-  * which conclusion should be downgraded because evidence is incomplete.
+ * which factors are relevant,
+ * which assumptions are unsupported,
+ * which evidence was actually used,
+ * which competing explanations remain possible,
+ * which conclusion should be downgraded because evidence is incomplete.
 
 This module turns answer generation into an evidence-grounded review workflow.
 
@@ -84,7 +84,6 @@ high:
 promotion_intensity
 activity_intensity
 order_conversion
-refund_pressure
 sku_margin_structure
 evidence_packets
 belief_records
@@ -118,11 +117,11 @@ The generated Grounded RAC Reports include a `How Factor Weights Are Generated` 
 
 This module should not claim:
 
-  * that the system has a true Bayesian posterior,
-  * that factor weights are mathematically learned probabilities,
-  * that it has live access to Meituan backend data,
-  * that Demo 2 already implements a pairwise comparability gate,
-  * that the system can fully infer causality from observational store metrics.
+ * that the system has a true Bayesian posterior,
+ * that factor weights are mathematically learned probabilities,
+ * that it has live access to Meituan backend data,
+ * that Demo 2 already implements a pairwise comparability gate,
+ * that the system can fully infer causality from observational store metrics.
 
 The correct claim is narrower:
 
@@ -141,7 +140,6 @@ Expected behavior:
 - consider entry conversion,
 - consider order conversion,
 - consider promotion intensity,
-- consider refund pressure,
 - avoid attributing growth to search alone.
 
 ### Cross-store comparability judgment
@@ -314,7 +312,6 @@ Current quality-gate result:
 
 For rac_cross_store_comparability_001:
 
-- order_volume, transaction_amount, refund_pressure, and sku_structure are routed to retail_ops/outputs/demo2_cross_store_comparability_output.csv.
 - competition and repeated_reporting_windows are routed to retail_ops/COMPARABILITY_GATE_V0.md as boundary_evidence.
 - The report does not claim that pairwise comparability is implemented.
 - Pairwise comparability remains future work.

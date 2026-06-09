@@ -2102,8 +2102,6 @@ def infer_retail_slots(message: str) -> list[str]:
     if any(x in q for x in ["promotion", "activity", "promo", "saturated", "活动", "促销", "补贴"]):
         slots.append("activity_lever_profile")
 
-    if any(x in q for x in ["refund", "invalid", "退款", "无效"]):
-        slots.append("order_quality_pressure_profile")
 
     if any(x in q for x in ["conversion", "aov", "average order", "growth", "recovery", "april", "转化", "客单价", "增长", "恢复", "四月", "4月"]):
         slots.extend([

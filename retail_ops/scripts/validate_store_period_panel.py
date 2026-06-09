@@ -158,7 +158,7 @@ for path in alias_scan_paths:
 
 notes = notes_path.read_text(encoding="utf-8")
 required_note_phrases = [
-    "The panel intentionally excludes unclear backend order-status fields",
+    "Coverage is based on dictionary-defined transaction, search, activity, and SKU fields",
     "No alternative hidden definition is inferred.",
     "`refund_amount`",
     "`full_refund_orders`",
@@ -166,7 +166,7 @@ required_note_phrases = [
 ]
 missing_note_phrases = [phrase for phrase in required_note_phrases if phrase not in notes]
 if missing_note_phrases:
-    print("[FAIL] Source notes missing required repeated-window or exclusion phrases:")
+    print("[FAIL] Source notes missing required repeated-window or scope phrases:")
     for phrase in missing_note_phrases:
         print(f" - {phrase}")
     sys.exit(1)
@@ -194,6 +194,6 @@ for store_id in required_complete_stores:
 
 print("[PASS] Repeated-window panel extension validation passed.")
 print("[PASS] Store B, Store C, Store D, Store E, and Store F each have 2026-02, 2026-03, and 2026-04.")
-print("[PASS] Canonical refund-order fields are used: full_refund_orders and refund_orders_all_or_partial.")
+print("[PASS] Canonical source field names are preserved where retained.")
 print("[PASS] Canonical store_type values are used: self-operated and partner.")
-print("[PASS] Ambiguous order-status fields are excluded from the panel.")
+print("[PASS] Panel uses the current dictionary-defined source/output schema.")

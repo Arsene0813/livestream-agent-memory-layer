@@ -6,7 +6,6 @@ invalid_order_pressure_pct. Demo 2 guardrail sensitivity is based only on
 fields that remain in the current field contract:
 
 - activity_order_share_pct
-- refund_pressure_pct
 - top3_sku_transaction_amount_share_pct
 - comparison_scope_flag
 - comparison_limit_notes
@@ -24,7 +23,6 @@ OUTPUT_PATH = Path("retail_ops/outputs/demo2_guardrail_sensitivity_summary.csv")
 REQUIRED_COLUMNS = [
     "store_id",
     "activity_order_share_pct",
-    "refund_pressure_pct",
     "top3_sku_transaction_amount_share_pct",
     "comparison_scope_flag",
     "comparison_limit_notes",
@@ -36,8 +34,6 @@ THRESHOLD_SETS = [
         "scenario": "current",
         "activity_high": 80.0,
         "activity_moderate": 60.0,
-        "refund_high": 15.0,
-        "refund_moderate": 10.0,
         "top3_high": 25.0,
         "top3_moderate": 15.0,
     },
@@ -45,8 +41,6 @@ THRESHOLD_SETS = [
         "scenario": "stricter",
         "activity_high": 75.0,
         "activity_moderate": 55.0,
-        "refund_high": 12.0,
-        "refund_moderate": 8.0,
         "top3_high": 22.0,
         "top3_moderate": 12.0,
     },
@@ -54,8 +48,6 @@ THRESHOLD_SETS = [
         "scenario": "looser",
         "activity_high": 85.0,
         "activity_moderate": 65.0,
-        "refund_high": 18.0,
-        "refund_moderate": 12.0,
         "top3_high": 30.0,
         "top3_moderate": 18.0,
     },
@@ -109,19 +101,17 @@ def main() -> None:
             notes: list[str] = []
 
             activity = parse_float(row, "activity_order_share_pct")
-            refund = parse_float(row, "refund_pressure_pct")
             top3 = parse_float(row, "top3_sku_transaction_amount_share_pct")
 
             for flag in [
                 classify(activity, scenario["activity_high"], scenario["activity_moderate"], "activity_involvement"),
-                classify(refund, scenario["refund_high"], scenario["refund_moderate"], "refund_pressure"),
                 classify(top3, scenario["top3_high"], scenario["top3_moderate"], "top3_sku_concentration"),
             ]:
                 if flag:
                     notes.append(flag)
 
             if notes:
-                notes.append("compare_with_region_store_type_activity_refund_limits")
+                notes.append("compare_with_region_store_type_activity_product_mix_limits")
             else:
                 notes.append("same_period_diagnostic_ready")
 
@@ -130,7 +120,6 @@ def main() -> None:
                     "scenario": scenario["scenario"],
                     "store_id": row["store_id"],
                     "activity_order_share_pct": f"{activity:.2f}",
-                    "refund_pressure_pct": f"{refund:.2f}",
                     "top3_sku_transaction_amount_share_pct": f"{top3:.2f}",
                     "sensitivity_limit_notes": "; ".join(notes),
                     "current_comparison_scope_flag": row["comparison_scope_flag"],
@@ -147,7 +136,6 @@ def main() -> None:
                 "scenario",
                 "store_id",
                 "activity_order_share_pct",
-                "refund_pressure_pct",
                 "top3_sku_transaction_amount_share_pct",
                 "sensitivity_limit_notes",
                 "current_comparison_scope_flag",

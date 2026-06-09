@@ -120,7 +120,6 @@ for row in comparability_rows:
         "same-period March 2026 comparison only",
         "traffic-source users may overlap",
         "not causal attribution",
-        "compare with region, store type, activity, refund, order-quality, and product-mix limits",
     ]
 
     facts.append(
@@ -273,41 +272,6 @@ for row in comparability_rows:
         )
     )
 
-    facts.append(
-        make_fact(
-            entity_id=entity_id,
-            slot="order_quality_pressure_profile",
-            value=(
-                f"Store {store_id}'s March 2026 refund metrics provide limited refund-pressure signals. "
-                f"They should constrain direct performance comparison when refund pressure is elevated."
-            ),
-            observed_values={
-                "refund_amount": as_float(row["refund_amount"]),
-                "transaction_amount": as_float(row["transaction_amount"]),
-                "refund_pressure_pct": as_float(row["refund_pressure_pct"]),
-                "transaction_orders": as_int(row["transaction_orders"]),
-                "full_refund_orders": as_int(row["full_refund_orders"]),
-                "refund_orders_all_or_partial": as_int(row["refund_orders_all_or_partial"]),
-            },
-            calculation=(
-                "refund_pressure_pct = refund_amount / transaction_amount * 100; "
-            ),
-            source_fields=[
-                "refund_amount",
-                "transaction_amount",
-                "refund_pressure_pct",
-                "transaction_orders",
-                "full_refund_orders",
-                "refund_orders_all_or_partial",
-            ],
-            confidence="medium",
-            limitations=[
-                "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
-                "refund amount is counted by refund-success date",
-                "not an exact original-order cohort refund rate",
-            ],
-        )
-    )
 
     facts.append(
         make_fact(
@@ -364,13 +328,12 @@ for row in comparability_rows:
                 "search_entry_share_pct": as_float(row["search_entry_share_pct"]),
                 "activity_order_share_pct": as_float(row["activity_order_share_pct"]),
                 "activity_cost_ratio_pct": as_float(row["activity_cost_ratio_pct"]),
-                "refund_pressure_pct": as_float(row["refund_pressure_pct"]),
                 "top3_sku_transaction_amount_share_pct": as_optional_float(row["top3_sku_transaction_amount_share_pct"]),
                 "comparison_scope_flag": row["comparison_scope_flag"],
                 "comparison_limit_notes": row["comparison_limit_notes"],
             },
             calculation=(
-                "comparison_limit_notes are derived from search, activity, refund, "
+                "comparison_limit_notes are derived from search, activity, "
                 "and top-3 SKU concentration thresholds in the Demo 2 SQL output"
             ),
             source_fields=[
@@ -383,7 +346,6 @@ for row in comparability_rows:
                 "search_entry_share_pct",
                 "activity_order_share_pct",
                 "activity_cost_ratio_pct",
-                "refund_pressure_pct",
                 "top3_sku_transaction_amount_share_pct",
                 "comparison_scope_flag",
                 "comparison_limit_notes",

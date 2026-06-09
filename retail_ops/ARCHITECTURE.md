@@ -36,14 +36,14 @@ selected Meituan backend metrics
 
 ~~~mermaid
 graph TD
-    A[Meituan backend evidence] --> B[Canonical CSV source tables]
-    B --> C[DATA_DICTIONARY.md field contract]
-    C --> D[SQL diagnostics]
-    D --> E[Generated retail memory facts]
-    E --> F[Retail KB endpoint and answer-boundary checks]
-    F --> G{Does the evidence support the question?}
-    G -->|Yes| H[Qualified answer with source and scope limits]
-    G -->|No| I[Refusal or limitation note]
+  A[Meituan backend evidence] --> B[Canonical CSV source tables]
+  B --> C[DATA_DICTIONARY.md field contract]
+  C --> D[SQL diagnostics]
+  D --> E[Generated retail memory facts]
+  E --> F[Retail KB endpoint and answer-boundary checks]
+  F --> G{Does the evidence support the question?}
+  G -->|Yes| H[Qualified answer with source and scope limits]
+  G -->|No| I[Refusal or limitation note]
 ~~~
 
 The design is intentionally file-based at this stage. The priority is to keep each diagnostic claim traceable before expanding toward broader 48-store workflow support.
@@ -88,7 +88,7 @@ Both paths should preserve metric definitions, entity scope, period scope, sourc
 |---|---|---|---|
 | Backend evidence | Selected Meituan merchant-backend metrics and manually structured evidence tables. | Canonical CSV source files. | Not full automated ingestion. |
 | Metric contract | Canonical CSV fields and backend definitions. | `retail_ops/data/DATA_DICTIONARY.md` and `retail_ops/LINEAGE.md`. | Existing Meituan backend metrics should not be silently renamed or redefined. |
-| SQL diagnostics | Store-period, search, activity, refund, order-quality, and top-SKU evidence. | SQL output files with ratios, shares, pressure indicators, and limitation notes. | SQL should not assign fixed store-stage labels or final operating decisions. |
+| SQL diagnostics | Store-period, search, activity, top-SKU evidence. | SQL output files with ratios, shares, pressure indicators, and limitation notes. | SQL should not assign fixed store-stage labels or final operating decisions. |
 | Generated memory facts | SQL outputs and supporting source tables. | Retrieval-facing memory facts with observed values, source fields, calculation notes, confidence, and limitations. | Memory facts are summaries, not raw backend exports. |
 | Offline evaluation | Generated facts, SQL outputs, and current-scope docs. | Eval result text files and consistency checks. | Evaluations check evidence boundaries; they are not causal business experiments. |
 
@@ -96,9 +96,6 @@ Both paths should preserve metric definitions, entity scope, period scope, sourc
 
 | Evidence type | Examples | Current role | Not sufficient for |
 |---|---|---|---|
-| Backend-derived fields | `transaction_amount`, `entry_users`, `order_users`, `activity_orders`, `refund_amount` | Preserve Meituan backend metric meanings under canonical field names. | Causal explanation or direct cross-store strategy transfer. |
-| SQL-derived diagnostics | `search_entry_rate_pct`, `search_entry_share_pct`, `activity_order_share_pct`, `refund_pressure_pct`, `comparison_limit_notes` | Expose visibility-entry structure, operating-context pressure metrics, and interpretation limits. | Peer selection, store ranking, or final operating decisions. |
-| Retrieval-facing memory slots | `visibility_entry_profile`, `activity_lever_profile`, `transaction_conversion_profile`, `order_quality_pressure_profile` | Store evidence with source fields, observed values, calculation notes, confidence, and limitations. | Replacing source metrics or inventing undocumented fields. |
 | Future gate fields | `comparison_question_type`, `comparison_decision`, `market_area_type` | Planned contract fields for future pairwise comparability work. | Current Demo 2 output or current source-table schema. |
 
 ## Implemented Source Files
@@ -160,7 +157,7 @@ Post-Demo2 repeated-window panel files:
 | `retail_ops/sql/04_repeated_window_panel_summary.sql` | Produces descriptive February-to-April movement summaries. |
 | `retail_ops/outputs/store_period_panel_coverage_output.csv` | Saved panel coverage output. |
 | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Saved descriptive repeated-window summary output. |
-| `retail_ops/scripts/validate_store_period_panel.py` | Validates panel coverage, canonical refund fields, canonical `store_type` values, and excluded ambiguous order-status fields. |
+| `retail_ops/scripts/validate_store_period_panel.py` | Validates panel coverage, canonical source fields, canonical `store_type` values, and excluded ambiguous order-status fields. |
 | `retail_ops/scripts/validate_repeated_window_panel_summary.py` | Validates descriptive summary shape and boundary-preserving summary notes. |
 | `retail_ops/outputs/store_period_panel_validation_result.txt` | Saved validation result for the panel coverage layer. |
 | `retail_ops/outputs/repeated_window_panel_summary_validation_result.txt` | Saved validation result for the repeated-window summary layer. |

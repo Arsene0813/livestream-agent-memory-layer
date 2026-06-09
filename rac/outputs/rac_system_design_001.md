@@ -81,4 +81,4 @@ How this value is assigned:
 - review_state_id: rac_should_layer_above_existing_memory
 - status: active
 - validity_conditions:
-  - Current project architecture stage.
+ - Current project architecture stage.

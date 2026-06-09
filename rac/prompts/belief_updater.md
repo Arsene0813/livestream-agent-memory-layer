@@ -11,12 +11,12 @@ Return JSON only.
 Required output fields:
 
 - belief_update
-  - belief_id
-  - claim
-  - confidence
-  - status
-  - validity_conditions
-  - limitations
+ - belief_id
+ - claim
+ - confidence
+ - status
+ - validity_conditions
+ - limitations
 
 Rules:
 

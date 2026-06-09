@@ -75,7 +75,7 @@ Current status: `region_type` is the implemented metadata field for weak region 
 
 In Demo 2, `region_type` may contain coarse available labels such as city-level region labels. These values are retained for data-contract stability and source traceability, but they are not market-area types, consumption-level groups, maturity labels, or peer-store groups; in short, `region_type` is not a hard market-area classification. Stores with similar visible region labels may still differ in purchasing power, delivery radius, local competition, rent structure, promotion pressure, customer behavior, stockout risk, and fulfillment constraints.
 
-In the current project, `region_type` can only be used as weak context alongside period alignment, store type, order volume, visibility and ranking signals, entry and order conversion, activity profile, refund evidence, SKU evidence, data completeness, and future external market evidence. The current Demo 2 sample is too small to support a reliable regional classification.
+In the current project, `region_type` can only be used as weak context alongside period alignment, store type, order volume, visibility and ranking signals, entry and order conversion, activity profile, SKU evidence, data completeness, and future external market evidence. The current Demo 2 sample is too small to support a reliable regional classification.
 
 Future market-area classification should be introduced only after the project has enough store coverage and supporting evidence. If added, it must use new documented fields rather than silently changing the meaning of `region_type`.
 
@@ -97,13 +97,9 @@ Current derived outputs are separated into two layers.
 
 1. SQL output columns:
 
-- share / ratio diagnostics, such as `search_entry_share_pct`, `refund_pressure_pct`, and `top3_sku_transaction_amount_share_pct`;
-- month-over-month diagnostics, such as `transaction_amount_mom_pct`, `entry_users_mom_pct`, and `refund_amount_mom_pct`;
-- ranking-change and boolean supporting diagnostics, such as `store_average_rank_change`, `search_average_rank_change`, `transaction_recovered_with_conversion_aov_tradeoff`, and `refund_pressure_improved`.
 
 2. Memory-facing artifacts:
 
-- retrieval-facing slots such as `visibility_entry_profile`, `activity_lever_profile`, `transaction_conversion_profile`, `order_quality_pressure_profile`, `single_metric_attribution_guard`, and `top3_sku_product_mix_note`.
 
 Memory-facing slots are generated from multiple source fields and SQL-derived columns. They are not raw Meituan backend fields and should not be treated as SQL output headers. The SQL layer must not silently rename, redefine, or reverse-engineer Meituan backend metrics. It also must not turn one threshold into a fixed store-stage label. For example, `order_conversion_rate_pct` follows the backend definition and must not be recomputed from a project-side order-status proxy.
 
@@ -113,7 +109,7 @@ Any new SQL-derived field must be explicitly documented before it is used in gen
 
 Pairwise comparability-gate fields are not currently implemented. Current Demo 2 produces same-period diagnostic evidence.
 
-A future pairwise comparability gate should use broader multi-store evidence to decide whether two store-period records can be compared for a specific operating question. Reliable store comparability should be judged from transaction order volume, transaction amount, store type, region and market context, competition environment, SKU structure, refund evidence, fulfillment or stockout evidence where available, repeated reporting windows, and activity evidence.
+A future pairwise comparability gate should use broader multi-store evidence to decide whether two store-period records can be compared for a specific operating question. Reliable store comparability should be judged from transaction order volume, transaction amount, store type, region and market context, competition environment, SKU structure, fulfillment or stockout evidence where available, repeated reporting windows, and activity evidence.
 
 Activity evidence should be separated into:
 
@@ -149,7 +145,6 @@ Examples:
 - `order_users_mom_pct`
 - `payment_users_mom_pct`
 - `average_order_value_mom_pct`
-- `refund_amount_mom_pct`
 
 Interpretation limit: MoM diagnostics describe directional change between adjacent observed months. They do not prove causality and should not be used alone to label a store as better or worse.
 
@@ -165,15 +160,13 @@ rank_change = current_rank - previous_rank
 
 Because lower ranking numbers indicate better position, a negative value means the average position improved, while a positive value means the average position worsened.
 
-Interpretation limit: ranking change should be read together with exposure, entry, conversion, activity, and order-quality signals. It should not be treated as a standalone explanation for transaction change.
+Interpretation limit: ranking change should be read together with exposure, entry, conversion, activity,. It should not be treated as a standalone explanation for transaction change.
 
 #### Boolean supporting diagnostics
 
 `transaction_recovered_with_conversion_aov_tradeoff` is a SQL-derived supporting observation. It is true only when the latest observed month for the same `store_id` has higher `transaction_amount` and higher `transaction_orders` than the previous month, while `order_conversion_rate_pct` and `average_order_value` both decline.
 
-`refund_pressure_improved` is a SQL-derived supporting observation. It is true only when the latest observed month for the same `store_id` has lower `refund_pressure_pct` than the previous month.
 
-Interpretation limit: these boolean fields are not canonical memory slots and must not be treated as store-stage labels. They only support broader memory slots such as `transaction_conversion_profile` and `order_quality_pressure_profile`.
 
 ## Reviewer Helper Fields / 审稿辅助字段
 
@@ -224,7 +217,6 @@ Evidence-completeness notes:
 
 | Note | Trigger | Meaning |
 |---|---|---|
-| `missing_transaction_amount` | `transaction_amount` is missing. | Amount-based ratios such as `refund_pressure_pct` and `top3_sku_transaction_amount_share_pct` should not be interpreted as comparable evidence. |
 | `missing_top3_sku_amount_evidence` | Top-SKU transaction-amount evidence is missing. | Missing product-mix evidence must not be treated as zero concentration. |
 
 Diagnostic threshold registry:
@@ -233,10 +225,8 @@ Diagnostic threshold registry:
 |---|---|---:|---|---|
 | `high_activity_involvement` | `activity_order_share_pct` | `>= 80` | A large share of transaction orders involved activity orders. | Activity involvement, not explicit campaign status or promotion-transfer approval. |
 | `moderate_activity_involvement` | `activity_order_share_pct` | `>= 65` | Activity orders are a meaningful part of the transaction-order structure. | Diagnostic warning only. |
-| `high_refund_pressure` | `refund_pressure_pct` | `>= 15` | Refund amount pressure is high for this diagnostic layer. | Not a cohort refund rate or customer-satisfaction conclusion. |
-| `moderate_refund_pressure` | `refund_pressure_pct` | `>= 10` | Refund pressure should constrain comparison. | Diagnostic warning only. |
 | `top3_sku_amount_concentration` | `top3_sku_transaction_amount_share_pct` | `>= 25` | Top-3 SKU transaction amount is concentrated. | Lightweight top-SKU evidence, not full product-category share. |
-| `compare_with_region_store_type_activity_refund_limits` | default note | always included for ready rows | Region, store type, activity, refund, order-quality, and product-mix evidence constrain direct comparison. | Reminder that the current output is a diagnostic evidence layer. |
+| `compare_with_region_store_type_activity_product_mix_limits` | default note | always included for ready rows | Region, store type, activity and product-mix evidence constrain direct comparison. | Reminder that the current output is a diagnostic evidence layer. |
 
 Correct use: This field is used by the memory layer as an interpretation-boundary note. It preserves comparison limits when answering cross-store questions.
 
@@ -270,14 +260,13 @@ They are not raw Meituan backend metrics, not store-stage labels, and not one-th
 
 The current Store A Demo 1 uses the following canonical retail memory slots:
 
-| Slot                              | Meaning                                                                                            | Correct Use                                                                                                     | Not Supported                                                               |
+| Slot               | Meaning                                              | Correct Use                                                   | Not Supported                                |
 | --------------------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `visibility_entry_profile`        | Exposure, ranking, entry, and search-entry structure.                                              | Understanding whether the store was being seen and entered during the reporting window.                         | Claiming visibility alone caused transaction growth.                        |
-| `activity_lever_profile`          | Activity orders, activity cost, subsidy, and activity-cost ratio.                                  | Understanding how promotional tools were used in the store's operating context.                                 | Treating activity as a standalone cause or traditional ROI result.          |
-| `transaction_conversion_profile`  | Transaction scale, order conversion, payment, and average order value.                             | Reading transaction recovery or decline together with funnel quality.                                           | Calling a period good or bad from one transaction metric alone.             |
-| `order_quality_pressure_profile`  | Refund-related evidence and related refund context. | Understanding whether order growth coexists with refund evidence.                               | Proving customer satisfaction or fulfillment quality definitively improved. |
-| `single_metric_attribution_guard` | Guardrail against explaining performance from one metric alone.                                    | Preventing unsupported attribution from exposure, ranking, activity, conversion, refund, or SKU evidence alone. | Rejecting those metrics as irrelevant.                                      |
-| `top3_sku_product_mix_note`       | Lightweight top-SKU evidence.                                                                      | Describing limited leading-SKU evidence.                                                                        | Full product-category sales-share analysis.                                 |
+| `visibility_entry_profile`    | Exposure, ranking, entry, and search-entry structure.                       | Understanding whether the store was being seen and entered during the reporting window.             | Claiming visibility alone caused transaction growth.            |
+| `activity_lever_profile`     | Activity orders, activity cost, subsidy, and activity-cost ratio.                 | Understanding how promotional tools were used in the store's operating context.                 | Treating activity as a standalone cause or traditional ROI result.     |
+| `transaction_conversion_profile` | Transaction scale, order conversion, payment, and average order value.               | Reading transaction recovery or decline together with funnel quality.                      | Calling a period good or bad from one transaction metric alone.       |
+| `single_metric_attribution_guard` | Guardrail against explaining performance from one metric alone.                  | Preventing unsupported attribution from exposure, ranking, activity, conversion, or SKU evidence alone. | Rejecting those metrics as irrelevant.                   |
+| `top3_sku_product_mix_note`    | Lightweight top-SKU evidence.                                   | Describing limited leading-SKU evidence.                                    | Full product-category sales-share analysis.                 |
 
 A new retail memory slot should be added only when the same name is consistently used across:
 
@@ -287,7 +276,7 @@ A new retail memory slot should be added only when the same name is consistently
 4. README or project summary, if mentioned there;
 5. retail evaluation cases, if retrieval-tested.
 
-Supporting SQL observations such as transaction recovery, exposure movement, order-conversion decline, average-order-value decline, refund-pressure improvement, activity-order share, and activity-cost ratio can support these slots, but they should not become independent canonical slots unless they are first documented here.
+Supporting SQL observations such as transaction recovery, exposure movement, order-conversion decline, average-order-value decline, source-field improvement, activity-order share, and activity-cost ratio can support these slots, but they should not become independent canonical slots unless they are first documented here.
 
 ## 1. Traffic Exposure Metrics / 流量曝光指标
 
@@ -621,7 +610,6 @@ Important naming rule:
 
 ---
 
-## 7. Refund and Order-Quality Metrics / 退款与订单质量指标
 
 ### `refund_amount` / 退款金额
 
@@ -629,7 +617,6 @@ Important naming rule:
 
 English definition: Actual refund amount successfully returned for the selected account, store, conditions, and time period. It includes partial refunds and excludes insurance fees and duplicate payments. The date is based on refund-success date.
 
-Interpretation: This should be interpreted as refund pressure during the selected period, not as a perfect refund rate for the original order cohort.
 
 ### `full_refund_orders` / 退款订单量（全部退款）
 
@@ -637,7 +624,6 @@ Interpretation: This should be interpreted as refund pressure during the selecte
 
 English definition: Number of successfully refunded orders under the selected account, store, conditions, and time period, excluding partial refunds. The date is based on refund-success date.
 
-Interpretation: This is a full-refund order-count metric for the selected refund-success period.
 
 ### `refund_orders_all_or_partial` / 退款订单量（全部退款+部分退款）
 
@@ -645,7 +631,6 @@ Interpretation: This is a full-refund order-count metric for the selected refund
 
 English definition: Number of successfully refunded orders under the selected account, store, conditions, and time period, including both full refunds and partial refunds. The date is based on refund-success date.
 
-Interpretation: This is a full-or-partial refund order-count metric for the selected refund-success period.
 
 
 ### `sku_rank` / SKU 排名
@@ -728,17 +713,12 @@ Formula: `estimated_income_proxy_ratio_pct = estimated_income_proxy / transactio
 
 Interpretation: This is a platform-displayed income proxy ratio, not audited profit margin.
 
-### `refund_pressure_pct` / 退款压力
 
-Formula: `refund_pressure_pct = refund_amount / transaction_amount * 100`
 
-Interpretation: This is a refund-pressure indicator for the selected period, not an exact cohort refund rate.
 
-### `refund_order_pressure_pct` / 退款订单压力
 
-Formula: `refund_order_pressure_pct = refund_orders_all_or_partial / transaction_orders * 100`
 
-Interpretation: This is an order-count-based refund-pressure indicator.
+Interpretation: This is an order-count-based .
 
 
 ### `activity_order_share_pct` / 活动订单占比
@@ -812,11 +792,9 @@ High activity-order share or a low activity cost ratio does not prove that activ
 
 高活动订单占比或较低活动成本率，不证明增长一定由活动导致。活动、补贴、价格、SKU 结构、排名和履约信号应结合门店阶段与竞争环境一起解释。
 
-### Rule 4: Treat refund amount as refund pressure, not exact cohort refund rate.
 
-规则 4：将退款金额解释为退款压力，而不是原订单 cohort 的精确退款率。
+规则 4：将退款金额解释为商品结构上下文，而不是原订单 cohort 的精确退款率。
 
-Refund amount is counted by refund-success date.
 
 退款金额按退款成功日期统计。
 

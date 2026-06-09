@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate Demo 2 cross-store comparability output.
 
-This validator intentionally excludes unclear order-status fields:
+This validator checks that Demo 2 output stays within the current dictionary-defined comparison schema.
 valid_orders, invalid_orders, and invalid_order_pressure_pct.
 
 Those fields are not used in the current Demo 2 diagnostic output because
@@ -58,7 +58,6 @@ REQUIRED_COLUMNS = [
     "refund_amount",
     "full_refund_orders",
     "refund_orders_all_or_partial",
-    "refund_pressure_pct",
     "business_district_rank",
     "top3_sku_transaction_amount",
     "top3_sku_transaction_amount_share_pct",
@@ -152,11 +151,6 @@ def main() -> None:
             row,
             "activity_order_share_pct",
             pct(activity_orders, transaction_orders),
-        )
-        assert_close(
-            row,
-            "refund_pressure_pct",
-            pct(refund_amount, transaction_amount),
         )
         assert_close(
             row,

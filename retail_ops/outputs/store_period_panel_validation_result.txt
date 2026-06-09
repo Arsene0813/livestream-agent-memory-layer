@@ -1,5 +1,5 @@
 [PASS] Repeated-window panel extension validation passed.
 [PASS] Store B, Store C, Store D, Store E, and Store F each have 2026-02, 2026-03, and 2026-04.
-[PASS] Canonical refund-order fields are used: full_refund_orders and refund_orders_all_or_partial.
+[PASS] Canonical source field names are preserved where retained.
 [PASS] Canonical store_type values are used: self-operated and partner.
-[PASS] Ambiguous order-status fields are excluded from the panel.
+[PASS] Panel uses the current dictionary-defined source/output schema.

@@ -1,24 +1,10 @@
--- Repeated-window panel extension summary.
---
--- Purpose:
---   Summarize February-to-April directional changes for each B-F store in
---   the repeated-window panel extension.
---
--- Boundary:
---   This is a descriptive panel summary.
---   This is not a pairwise comparability gate.
---   This is not a store ranking.
---   This is not an endpoint behavior test.
---   This is not generated memory facts.
---   This is not causal analysis.
---
--- Field boundary:
---   Order-status fields excluded from the panel extension are not selected
---   or derived here.
+-- Repeated-window panel summary.
+-- Purpose: produce descriptive February-to-April movement summaries for Stores B-F.
+-- Scope: descriptive review only; not a pairwise comparability gate, ranking model,
+-- causal test, or operating recommendation engine.
 
 .mode csv
 .headers on
-
 WITH typed_panel AS (
     SELECT
         store_id,
@@ -27,20 +13,15 @@ WITH typed_panel AS (
         store_type,
         CAST(NULLIF(transaction_amount, '') AS REAL) AS transaction_amount,
         CAST(NULLIF(transaction_orders, '') AS REAL) AS transaction_orders,
-        CAST(NULLIF(average_order_value, '') AS REAL) AS average_order_value,
         CAST(NULLIF(exposure_users, '') AS REAL) AS exposure_users,
         CAST(NULLIF(entry_users, '') AS REAL) AS entry_users,
         CAST(NULLIF(entry_conversion_rate_pct, '') AS REAL) AS entry_conversion_rate_pct,
-        CAST(NULLIF(order_users, '') AS REAL) AS order_users,
         CAST(NULLIF(order_conversion_rate_pct, '') AS REAL) AS order_conversion_rate_pct,
         CAST(NULLIF(payment_conversion_rate_pct, '') AS REAL) AS payment_conversion_rate_pct,
         CAST(NULLIF(search_exposure_users, '') AS REAL) AS search_exposure_users,
         CAST(NULLIF(search_entry_users, '') AS REAL) AS search_entry_users,
         CAST(NULLIF(activity_orders, '') AS REAL) AS activity_orders,
-        CAST(NULLIF(activity_cost_ratio_pct, '') AS REAL) AS activity_cost_ratio_pct,
-        CAST(NULLIF(refund_amount, '') AS REAL) AS refund_amount,
-        CAST(NULLIF(full_refund_orders, '') AS REAL) AS full_refund_orders,
-        CAST(NULLIF(refund_orders_all_or_partial, '') AS REAL) AS refund_orders_all_or_partial
+        CAST(NULLIF(activity_cost_ratio_pct, '') AS REAL) AS activity_cost_ratio_pct
     FROM store_period_panel_metrics
 ),
 monthly_pivot AS (
@@ -82,13 +63,7 @@ monthly_pivot AS (
         MAX(CASE WHEN period_month = '2026-04' THEN activity_orders END) AS apr_activity_orders,
 
         MAX(CASE WHEN period_month = '2026-02' THEN activity_cost_ratio_pct END) AS feb_activity_cost_ratio_pct,
-        MAX(CASE WHEN period_month = '2026-04' THEN activity_cost_ratio_pct END) AS apr_activity_cost_ratio_pct,
-
-        MAX(CASE WHEN period_month = '2026-02' THEN refund_amount END) AS feb_refund_amount,
-        MAX(CASE WHEN period_month = '2026-04' THEN refund_amount END) AS apr_refund_amount,
-
-        MAX(CASE WHEN period_month = '2026-02' THEN full_refund_orders END) AS feb_full_refund_orders,
-        MAX(CASE WHEN period_month = '2026-04' THEN full_refund_orders END) AS apr_full_refund_orders
+        MAX(CASE WHEN period_month = '2026-04' THEN activity_cost_ratio_pct END) AS apr_activity_cost_ratio_pct
     FROM typed_panel
     GROUP BY store_id
 ),
@@ -168,25 +143,12 @@ summary AS (
         apr_activity_cost_ratio_pct,
         ROUND(apr_activity_cost_ratio_pct - feb_activity_cost_ratio_pct, 2) AS activity_cost_ratio_pct_feb_to_apr_delta,
 
-        feb_refund_amount,
-        apr_refund_amount,
-        ROUND(apr_refund_amount - feb_refund_amount, 2) AS refund_amount_feb_to_apr_delta,
         CASE
-            WHEN feb_refund_amount > 0
-            THEN ROUND((apr_refund_amount - feb_refund_amount) * 100.0 / feb_refund_amount, 2)
-        END AS refund_amount_feb_to_apr_pct,
-
-        feb_full_refund_orders,
-        apr_full_refund_orders,
-        ROUND(apr_full_refund_orders - feb_full_refund_orders, 2) AS full_refund_orders_feb_to_apr_delta,
-
-        CASE
-            WHEN observed_month_count = 3
-            THEN 'summary_ready_for_descriptive_review'
+            WHEN observed_month_count = 3 THEN 'summary_ready_for_descriptive_review'
             ELSE 'insufficient_repeated_window_coverage'
         END AS repeated_window_summary_flag,
 
-        'Descriptive repeated-window summary only; not a store ranking, pairwise comparability gate, operating recommendation, endpoint behavior, generated memory fact, or causal analysis.' AS summary_boundary_note
+        'Descriptive February-to-April movement summary only; not a ranking, causal test, pairwise comparability gate, or operating recommendation.' AS summary_boundary_note
     FROM monthly_pivot
 )
 SELECT *

@@ -221,7 +221,7 @@
             "matched_terms": [
               "activity"
             ],
-            "text": "Short-term activity-cost efficiency is not always the primary target. A new store may need activity subsidy to gain exposure and first orders. A store under external price pressure may need activity or pricing action to defend visibility and market share. A store with enough traffic but weak conversion requires a different interpretation from a store with order growth but refund pressure."
+            "text": ""
           },
           {
             "line_start": 71,
@@ -244,16 +244,14 @@
         ]
       },
       {
-        "factor_id": "refund_pressure",
-        "evidence_id": "evidence_refund_pressure",
+        "factor_id": "",
+        "evidence_id": "evidence_",
         "source_type": "markdown",
         "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
         "source_exists": true,
         "grounding_role": "default_evidence",
         "keywords_used": [
           "refund",
-          "refund_pressure",
-          "refund_pressure_pct",
           "refund amount",
           "refund orders",
           "退款",
@@ -268,7 +266,7 @@
             "matched_terms": [
               "refund"
             ],
-            "text": "Short-term activity-cost efficiency is not always the primary target. A new store may need activity subsidy to gain exposure and first orders. A store under external price pressure may need activity or pricing action to defend visibility and market share. A store with enough traffic but weak conversion requires a different interpretation from a store with order growth but refund pressure."
+            "text": ""
           },
           {
             "line_start": 85,
@@ -285,10 +283,10 @@
             "matched_terms": [
               "refund"
             ],
-            "text": "Refund and refund-pressure evidence improved in April compared with March."
+            "text": "Refund and post-order source-field evidence improved in April compared with March."
           }
         ],
-        "original_claim_supported": "Provides context needed to evaluate factor: refund_pressure.",
+        "original_claim_supported": "Provides context needed to evaluate factor: .",
         "original_limitations": [
           "Deterministic mock pipeline only.",
           "No live retrieval is performed in this step."
@@ -308,8 +306,7 @@
         "grounding_role": "default_evidence",
         "keywords_used": [
           "transaction_orders",
-          "transaction orders",
-          "valid order"
+          "transaction orders"
         ],
         "grounding_status": "keyword_matched",
         "snippets": [
@@ -325,8 +322,7 @@
             "line_start": 154,
             "line_end": 156,
             "matched_terms": [
-              "transaction orders",
-              "valid order"
+              "transaction orders"
             ],
             "text": "| Refund Pressure        |  17.01% |   6.63% | Down      |"
           }

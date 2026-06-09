@@ -60,7 +60,6 @@ required_columns = {
     "search_exposure_users_feb_to_apr_pct",
     "search_entry_users_feb_to_apr_pct",
     "activity_cost_ratio_pct_feb_to_apr_delta",
-    "refund_amount_feb_to_apr_pct",
     "repeated_window_summary_flag",
     "summary_boundary_note",
 }
@@ -124,7 +123,6 @@ numeric_check_columns = [
     "transaction_orders_feb_to_apr_pct",
     "exposure_users_feb_to_apr_pct",
     "entry_users_feb_to_apr_pct",
-    "refund_amount_feb_to_apr_pct",
 ]
 
 for row in rows:

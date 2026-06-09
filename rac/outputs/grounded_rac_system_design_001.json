@@ -338,7 +338,7 @@
             "matched_terms": [
               "fact"
             ],
-            "text": "* which factors are relevant,\n  * which assumptions are unsupported,"
+            "text": "* which factors are relevant,\n * which assumptions are unsupported,"
           },
           {
             "line_start": 27,
@@ -444,7 +444,7 @@
             "matched_terms": [
               "competing"
             ],
-            "text": "* which evidence was actually used,\n  * which competing explanations remain possible,\n  * which conclusion should be downgraded because evidence is incomplete."
+            "text": "* which evidence was actually used,\n * which competing explanations remain possible,\n * which conclusion should be downgraded because evidence is incomplete."
           },
           {
             "line_start": 30,
@@ -493,16 +493,16 @@
             "text": "* critique unsupported assumptions before writing the final answer,\n* update confidence and limitations only when the evidence supports the change."
           },
           {
-            "line_start": 89,
-            "line_end": 91,
+            "line_start": 88,
+            "line_end": 90,
             "matched_terms": [
               "belief"
             ],
             "text": "evidence_packets\nbelief_records\nretrieval_trace"
           },
           {
-            "line_start": 102,
-            "line_end": 104,
+            "line_start": 101,
+            "line_end": 103,
             "matched_terms": [
               "confidence"
             ],
@@ -544,16 +544,16 @@
             "text": "* critique unsupported assumptions before writing the final answer,\n* update confidence and limitations only when the evidence supports the change."
           },
           {
-            "line_start": 102,
-            "line_end": 104,
+            "line_start": 101,
+            "line_end": 103,
             "matched_terms": [
               "confidence"
             ],
             "text": "hypotheses\nconfidence\nlimitations"
           },
           {
-            "line_start": 128,
-            "line_end": 130,
+            "line_start": 127,
+            "line_end": 129,
             "matched_terms": [
               "confidence"
             ],
@@ -659,8 +659,8 @@
             "text": "* carry typed state between stages,\n* require source references for evidence claims,\n* keep boundary evidence separate from direct metric evidence,"
           },
           {
-            "line_start": 90,
-            "line_end": 92,
+            "line_start": 89,
+            "line_end": 91,
             "matched_terms": [
               "retrieval",
               "trace"

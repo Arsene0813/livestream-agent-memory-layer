@@ -60,8 +60,7 @@ Main output files:
 | Store A's visibility and entry structure can be described from exposure, ranking, entry, and search-entry metrics. | `exposure_users`, `store_average_rank`, `entry_users`, `search_exposure_users`, `search_average_rank`, `search_entry_users` | `search_exposure_share_pct`, `search_entry_share_pct`, `search_entry_rate_pct` | `visibility_entry_profile` | Describes whether the store was being seen and entered; does not prove causal growth. |
 | Store A's activity metrics should be interpreted as operating-lever evidence. | `activity_original_transaction_amount`, `activity_orders`, `activity_cost`, `merchant_subsidy_amount`, `platform_subsidy_amount` | `activity_order_share_pct`, `activity_cost_ratio_pct`, `merchant_subsidy_share_of_activity_cost_pct` | `activity_lever_profile` | Activity is a tool inside the operating chain, not a standalone causal explanation or simple ROI judgment. |
 | Store A's transaction and conversion signals moved in different directions. | `transaction_amount`, `transaction_orders`, `order_conversion_rate_pct`, `average_order_value` | `transaction_amount_mom_pct`, `transaction_orders_mom_pct`, `average_order_value_mom_pct` | `transaction_conversion_profile` | Transaction recovery can coexist with weaker conversion or lower average order value. |
-| Store A's refund-pressure evidence improved in April. | `refund_amount`, `transaction_amount` | `refund_pressure_pct`, `refund_pressure_improved` | `order_quality_pressure_profile` | Refund amount is dated by refund success date, not original order cohort. |
-| Store A's changes should not be explained by one metric alone. | Visibility, entry, transaction, conversion, activity, refund, and SKU evidence | Combined multi-signal interpretation | `single_metric_attribution_guard` | The demo supports structured comparison of signals, not causal attribution. |
+| Store A's changes should not be explained by one metric alone. | Visibility, entry, transaction, conversion, activity, and SKU evidence | Combined multi-signal interpretation | `single_metric_attribution_guard` | The demo supports structured comparison of signals, not causal attribution. |
 | Top SKU mix appears care-solution-heavy. | Top-3 SKU records | Top-3 SKU observation | `top3_sku_product_mix_note` | Top-3 evidence only; not full SKU category-share analysis. |
 
 ## Metric Lineage Rules
@@ -116,7 +115,6 @@ If another backend page defines 单均价 using a different backend order-status
 
 ### Refund
 
-`refund_amount` is counted by refund-success date. It is interpreted as refund pressure during the selected period, not as a perfect refund rate for the original order cohort.
 
 ### Ranking
 
@@ -202,7 +200,6 @@ SQL-derived diagnostic fields include:
 - `search_entry_rate_pct`
 - `search_entry_share_pct`
 - `activity_order_share_pct`
-- `refund_pressure_pct`
 - `top3_sku_transaction_amount_share_pct`
 - `comparison_scope_flag`
 - `comparison_limit_notes`
@@ -216,7 +213,6 @@ These derived fields are diagnostic summaries. They do not replace Meituan backe
 | Stores are in the same Demo 2 reporting window. | `period_month`, `period_start`, `period_end` | Same-period alignment improves diagnostic structure but does not remove differences in region, store type, activity conditions, competition, fulfillment, or SKU mix. |
 | Visibility and entry can be compared cautiously across stores. | `exposure_users`, `entry_users`, `entry_conversion_rate_pct`, `search_exposure_users`, `search_entry_users`, `search_entry_rate_pct`, `search_entry_share_pct` | Visibility and entry metrics do not prove causal transaction growth. |
 | Activity involvement should constrain cross-store transaction comparison. | `activity_orders`, `activity_order_share_pct`, `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, `platform_subsidy_amount` | Activity mechanism details and promotion cycle dates are not included. |
-| Refund-pressure evidence should constrain direct performance comparison. | `refund_amount`, `refund_pressure_pct` | `refund_amount` is counted by refund-success date, and refund reasons are not included. |
 | Top search terms provide lightweight demand evidence. | `search_term`, `search_term_exposure_times`, `search_term_click_times`, `search_term_order_times` | Top search terms are store-period evidence, not complete regional consumer-preference proof. |
 | Top SKU evidence provides lightweight product-mix evidence. | `sku_name`, `sku_transaction_amount`, `sales_volume`, `top3_sku_transaction_amount_share_pct` | Top-3 evidence is not full SKU category-share analysis. |
 
@@ -239,7 +235,6 @@ Demo 2 reuses existing canonical retail memory slots:
 - `visibility_entry_profile`
 - `activity_lever_profile`
 - `transaction_conversion_profile`
-- `order_quality_pressure_profile`
 - `top3_sku_product_mix_note`
 - `single_metric_attribution_guard`
 
@@ -306,3 +301,11 @@ Repeated-window summary lineage:
 This panel does not create a pairwise comparability gate. It checks whether Stores B-F have repeated monthly evidence across 2026-02, 2026-03, and 2026-04, then summarizes movement descriptively.
 
 The panel keeps the dictionary names `full_refund_orders` and `refund_orders_all_or_partial`. It also keeps `store_type` values aligned with the existing source data: `self-operated` and `partner`.
+
+## Raw Backend Refund Fields
+
+The following backend fields are retained for source completeness:
+
+- `refund_amount`
+- `full_refund_orders`
+- `refund_orders_all_or_partial`

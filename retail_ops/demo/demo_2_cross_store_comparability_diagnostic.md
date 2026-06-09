@@ -4,7 +4,6 @@
 
 Demo 2 supports same-period diagnostic reading across selected Stores B-F for March 2026.
 
-It supports reading visibility-entry structure, activity involvement, activity-cost intensity, transaction conversion, refund pressure, and selected top-SKU concentration under one reporting window and one field contract.
 
 It does not approve pairwise strategy transfer, global store ranking, market-area classification, or promotion-setting transfer.
 
@@ -21,11 +20,9 @@ This file keeps the historical `cross_store_comparability` path wording for refe
 
 Demo 2 answers a narrow implementation question: can selected Stores B-F be organized under one March 2026 reporting window and one field contract without losing the original Meituan metric meanings?
 
-The output is row-level diagnostic evidence. It supports cautious reading of visibility, entry, activity involvement, refund pressure, and selected top-SKU concentration. It does not decide whether one store is a peer, template, or strategy-transfer target for another store.
 
 `comparison_scope_flag` is a row-level diagnostic-scope field. It means that a store-period row is structurally usable for the current Demo 2 diagnostic. It is not a pairwise store-matching decision.
 
-`comparison_limit_notes` records operating context for interpretation, including activity involvement, refund pressure, and SKU concentration. Search-entry structure remains visible through the dedicated search-entry fields.
 
 ## Purpose
 
@@ -39,22 +36,24 @@ With many stores, the harder problem is deciding which stores can be compared, u
 
 In this project, instant-retail competition is understood through this operating chain:
 
-    being seen -> being entered -> being ordered -> being selected again or maintaining share
+```text
+being seen -> being entered -> being ordered -> being selected again or maintaining share
+```
 
 Promotion, subsidy, price, SKU mix, ranking position, and fulfillment conditions are operating levers inside this chain. They should be interpreted through the store's current operating state and comparison limits, not as isolated goals.
 
 ## Scope
 
-| Item              | Value                                                                                     |
-| ----------------- | ----------------------------------------------------------------------------------------- |
-| Stores            | B, C, D, E, F                                                                             |
-| Reporting window  | 2026-03-01 to 2026-03-31                                                                  |
-| Period label      | 2026-03                                                                                   |
-| Source            | Manually structured Meituan merchant-backend metrics for instant-retail store operations. |
-| Processing method | Offline SQL diagnostic.                                                                   |
-| SQL file          | `retail_ops/sql/02_demo2_cross_store_comparability.sql`                                   |
-| SQL output        | `retail_ops/outputs/demo2_cross_store_comparability_output.csv`                           |
-| Memory facts      | `retail_ops/outputs/generated_demo2_retail_memory_facts.json`                             |
+| Item | Value |
+|---|---|
+| Stores | B, C, D, E, F |
+| Reporting window | 2026-03-01 to 2026-03-31 |
+| Period label | 2026-03 |
+| Source | Manually structured Meituan merchant-backend metrics for instant-retail store operations. |
+| Processing method | Offline SQL diagnostic. |
+| SQL file | `retail_ops/sql/02_demo2_cross_store_comparability.sql` |
+| SQL output | `retail_ops/outputs/demo2_cross_store_comparability_output.csv` |
+| Memory facts | `retail_ops/outputs/generated_demo2_retail_memory_facts.json` |
 
 Some source traffic-channel fields are retained in the structured source file but not carried into the current Demo 2 diagnostic output. Demo 2 focuses on selected same-period diagnostic signals rather than exhaustive traffic-source decomposition.
 
@@ -66,13 +65,12 @@ A future market-area field would require broader store coverage and external or 
 
 ## Demo 2 Evidence Path
 
-| Step                         | Artifact                                                                                                                                                       | Role                                                                                                                                                                                           |
-| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Source store-period metrics  | `retail_ops/data/demo2_store_period_metrics.csv`                                                                                                               | Stores selected Meituan backend metrics under canonical field names.                                                                                                                           |
-| Source search and SKU tables | `retail_ops/data/demo2_top_search_terms.csv`, `retail_ops/data/demo2_top_skus_by_transaction_amount.csv`, `retail_ops/data/demo2_top_skus_by_sales_volume.csv` | Keeps search-term and selected SKU evidence separate from store-period totals.                                                                                                                 |
-| SQL diagnostic output        | `retail_ops/outputs/demo2_cross_store_comparability_output.csv`                                                                                                | Adds derived diagnostic fields such as `search_entry_share_pct`, `activity_order_share_pct`, `refund_pressure_pct`, and `top3_sku_transaction_amount_share_pct`. |
-| Memory facts                 | `retail_ops/outputs/generated_demo2_retail_memory_facts.json`                                                                                                  | Converts diagnostic evidence into source-bounded facts with observed values and limitations.                                                                                                   |
-| Boundary checks              | Demo 2 validation and evaluation scripts                                                                                                                       | Checks that answers stay within the implemented evidence instead of treating the output as a pairwise comparability gate.                                                                      |
+| Step | Artifact | Role |
+|---|---|---|
+| Source store-period metrics | `retail_ops/data/demo2_store_period_metrics.csv` | Stores selected Meituan backend metrics under canonical field names. |
+| Source search and SKU tables | `retail_ops/data/demo2_top_search_terms.csv`, `retail_ops/data/demo2_top_skus_by_transaction_amount.csv`, `retail_ops/data/demo2_top_skus_by_sales_volume.csv` | Keeps search-term and selected SKU evidence separate from store-period totals. |
+| Memory facts | `retail_ops/outputs/generated_demo2_retail_memory_facts.json` | Converts diagnostic evidence into source-bounded facts with observed values and limitations. |
+| Boundary checks | Demo 2 validation and evaluation scripts | Checks that answers stay within the implemented evidence instead of treating the output as a pairwise comparability gate. |
 
 ## What the SQL Checks
 
@@ -82,8 +80,6 @@ The SQL prepares a same-period diagnostic output with:
 - region and store-type context;
 - exposure, ranking, entry, and search-entry structure;
 - activity-order share and activity-cost structure;
-- refund pressure;
-
 - top-3 SKU transaction-amount concentration;
 - comparison-scope and comparison-limit notes.
 
@@ -95,7 +91,7 @@ This field records whether the row is inside the current Demo 2 comparison scope
 
 In the current Demo 2 output, all B-F stores use the same March 2026 reporting window and are marked:
 
-    same_period_diagnostic_ready
+  same_period_diagnostic_ready
 
 This means the rows are ready for the current same-period diagnostic. It does not mean the stores are fully comparable in every business sense.
 
@@ -106,10 +102,9 @@ This field records the main reasons why direct cross-store interpretation should
 Examples include:
 
 - high or moderate activity involvement;
-- high or moderate refund pressure;
 
 - top-3 SKU transaction-amount concentration;
-- the need to compare with region, store type, activity, refund and product-mix limits.
+- the need to compare with region, store type, activity, product-mix limits.
 
 These notes are interpretation guardrails.
 
@@ -121,7 +116,6 @@ A guardrail-sensitivity check is included for this reason: in the current B-F sa
 
 This demo supports same-period diagnostic reading.
 
-It keeps activity involvement, refund pressure, and SKU concentration attached to metric interpretation, while search-entry structure remains visible through the dedicated search-entry fields.
 
 ## Current Interpretation Boundary
 
@@ -144,7 +138,6 @@ For this reason, Demo 2 converts SQL diagnostics into generated retail memory fa
 - `visibility_entry_profile`
 - `activity_lever_profile`
 - `transaction_conversion_profile`
-- `order_quality_pressure_profile`
 - `top3_sku_product_mix_note`
 - `single_metric_attribution_guard`
 
@@ -156,7 +149,6 @@ The memory facts are currently file-backed for Demo 2. This is enough to test th
 
 The table below shows selected numeric signals from the current Demo 2 SQL output. It is ordered by anonymized store ID, not by performance rank.
 
-| Store | transaction_orders | transaction_amount | search_exposure_users | search_average_rank | search_entry_users | search_entry_rate_pct | search_entry_share_pct | entry_conversion_rate_pct | order_conversion_rate_pct | activity_order_share_pct | refund_pressure_pct | top3_sku_transaction_amount_share_pct |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | B | 299 | 11665.5 | 4390 | 15 | 683 | 15.56 | 88.7 | 15.12 | 36.88 | 88.63 | 10.76 | 11.15 |
 | C | 175 | 7064.09 | 2416 | 13 | 355 | 14.69 | 68.8 | 17.3 | 32.75 | 70.86 | 7.5 | 28.38 |
@@ -176,13 +168,10 @@ The raw `comparison_limit_notes` column below uses the contract strings produced
 
 The readable summary is only a human-facing explanation.
 
-| Store | Raw `comparison_limit_notes` from current output                                                                                                                            | Readable summary                                                                                                                                                                                                                        |
+| Store | Raw `comparison_limit_notes` from current output                                                              | Readable summary                                                                                                            |
 | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| B     | `high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits`                                  | Activity involvement is high; refund pressure is moderate; comparison should stay limited by region, store type, activity, refund and product-mix context.                             |
-| C     | `moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_refund_limits`                                                       | Activity involvement is moderate; top-3 SKU transaction amount is concentrated; comparison should stay limited by region, store type, activity, refund and product-mix context.                                         |
-| D     | `high_activity_involvement; compare_with_region_store_type_activity_refund_limits`                                                            | Activity involvement is high; comparison should stay limited by region, store type, activity, refund and product-mix context.                                                          |
-| E     | `moderate_activity_involvement; high_refund_pressure; compare_with_region_store_type_activity_refund_limits`     | Activity involvement is moderate; refund pressure is high; comparison should stay limited by region, store type, activity, refund and product-mix context. |
-| F     | `high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits` | Activity involvement is high; refund pressure is moderate; comparison should stay limited by region, store type, activity, refund and product-mix context. |
+| C   | `moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_product_mix_limits`                            | Activity involvement is moderate; top-3 SKU transaction amount is concentrated; comparison should stay limited by region, store type, activity, product-mix context.                     |
+| D   | `high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits`                              | Activity involvement is high; comparison should stay limited by region, store type, activity, product-mix context.                             |
 
 This table does not rank stores. It only makes the SQL-derived interpretation limits easier to read before future pairwise gate work is added.
 
@@ -193,7 +182,3 @@ Demo 2 intentionally keeps the same-period B-F diagnostic output narrower than D
 Demo 1 is a month-over-month diagnostic for one store, so it includes more month-level derived indicators. Demo 2 is a same-period B-F diagnostic, so it focuses on field-contract consistency, selected diagnostic evidence, and comparison-boundary behavior.
 
 For that reason, Demo 2 does not expand every derived field defined in `retail_ops/data/DATA_DICTIONARY.md`.
-
-Fields such as `refund_order_pressure_pct` and `search_exposure_share_pct` remain valid dictionary definitions, but they are not required columns in the current Demo 2 output.
-
-Demo 2 mainly uses source refund-order fields, `refund_pressure_pct`, search-entry structure, activity evidence, order volume, transaction amount, store type, and top-SKU concentration evidence to support its current scope.

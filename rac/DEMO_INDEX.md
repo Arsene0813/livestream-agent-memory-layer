@@ -6,18 +6,20 @@ The module is a structured reasoning scaffold for question decomposition, eviden
 
 It forces an answer to pass through:
 
-    question
-    -> question analysis
-    -> factor expansion
-    -> factor weighting
-    -> source-aware local evidence grounding
-    -> boundary evidence for unavailable requirements
-    -> hypothesis generation
-    -> critique
-    -> fact checking
-    -> evidence-coverage update
-    -> grounded final report
-    -> quality gate
+```text
+question
+-> question analysis
+-> factor expansion
+-> factor weighting
+-> source-aware local evidence grounding
+-> boundary evidence for unavailable requirements
+-> hypothesis generation
+-> critique
+-> fact checking
+-> evidence-coverage update
+-> grounded final report
+-> quality gate
+```
 
 ## 30-Second Summary
 
@@ -25,18 +27,19 @@ Normal LLM answers can be fluent but weakly grounded. They may skip relevant fac
 
 This scaffold turns answer generation into a staged review process:
 
-  1. identify relevant factors,
-  2. assign interpretable factor weights,
-  3. route each factor to local evidence,
-  4. distinguish quantitative evidence from boundary evidence,
-  5. extract local evidence snippets,
-  6. generate competing hypotheses,
-  7. critique weak claims,
-  8. check unsupported claims,
-  9. output a grounded report with confidence and limitations,
-  10. validate the report through a quality gate.
+1. Identify relevant factors.
+2. Assign interpretable factor weights.
+3. Route each factor to local evidence.
+4. Distinguish quantitative evidence from boundary evidence.
+5. Extract local evidence snippets.
+6. Generate competing hypotheses.
+7. Critique weak claims.
+8. Check unsupported claims.
+9. Output a grounded report with confidence and limitations.
+10. Validate the report through a quality gate.
 
 The current implementation is deterministic. It does not call an LLM, Qdrant, Ollama, OpenAI, or a live Meituan backend service.
+
 ## Current Implementation Status
 
 | Stage | Status | Main Files |
@@ -57,29 +60,29 @@ The current implementation is deterministic. It does not call an LLM, Qdrant, Ol
 
 Run all grounded RAC demo cases:
 
-    python3 rac/scripts/run_grounded_pipeline.py --all-eval
+  python3 rac/scripts/run_grounded_pipeline.py --all-eval
 
 Validate the grounded reports:
 
-    python3 rac/scripts/validate_grounded_quality_gate.py
+  python3 rac/scripts/validate_grounded_quality_gate.py
 
 Expected quality-gate result:
 
-    [OK] RAC grounded quality gate passed
-    [OK] Cases checked: 4
-    [OK] Total grounded packets: 32
-    [OK] Keyword matched packets: 29
-    [OK] Boundary matched packets: 2
-    [OK] Fallback packets: 1
-    [OK] Missing source files: 0
+  [OK] RAC grounded quality gate passed
+  [OK] Cases checked: 4
+  [OK] Total grounded packets: 32
+  [OK] Keyword matched packets: 29
+  [OK] Boundary matched packets: 2
+  [OK] Fallback packets: 1
+  [OK] Missing source files: 0
 
 ## Demo Cases
 
 | Case | Question | What It Demonstrates | Grounded Report |
 |---|---|---|---|
-| rac_store_a_attribution_001 | Can Store A's April growth be attributed to search exposure? | Avoids single-cause attribution and considers traffic, conversion, promotion, refunds, SKU context, and evidence limits. | rac/outputs/grounded_rac_store_a_attribution_001.md |
+| rac_store_a_attribution_001 | Can Store A's April growth be attributed to search exposure? | Avoids single-cause attribution and considers traffic, conversion, promotion, SKU context, and evidence limits. | rac/outputs/grounded_rac_store_a_attribution_001.md |
 | rac_cross_store_comparability_001 | Are Stores B-F directly comparable in March 2026? | Routes quantitative factors to Demo 2 output evidence and routes unavailable comparability requirements to explicit boundary evidence. It does not implement a pairwise comparability gate. | rac/outputs/grounded_rac_cross_store_comparability_001.md |
-| rac_promotion_strategy_001 | What should be checked before changing promotions for a store? | Prevents action recommendations based only on transaction amount and forces cost, conversion, refund, margin, and competitor checks. | rac/outputs/grounded_rac_promotion_strategy_001.md |
+| rac_promotion_strategy_001 | What should be checked before changing promotions for a store? | Prevents action recommendations based only on transaction amount and forces cost, conversion, margin, and competitor checks. | rac/outputs/grounded_rac_promotion_strategy_001.md |
 | rac_system_design_001 | How should the RAC system be connected to the existing memory layer? | Shows how the scaffold can sit above typed memory as a reasoning layer instead of replacing existing endpoints. | rac/outputs/grounded_rac_system_design_001.md |
 
 ## Cross-Store Grounding Hardening
@@ -100,7 +103,6 @@ Required source routing:
 |---|---|---|
 | order_volume | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence |
 | transaction_amount | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence |
-| refund_pressure | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence |
 
 | competition | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence |
 | repeated_reporting_windows | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence |
@@ -150,11 +152,11 @@ This structure is designed to make the reasoning trace visible instead of hiding
 
 Ordinary RAG often works like this:
 
-    question -> retrieve similar chunks -> generate answer
+  question -> retrieve similar chunks -> generate answer
 
 This scaffold works like this:
 
-    question -> factors -> factor-specific evidence -> boundary evidence where evidence is unavailable -> hypotheses -> critique -> fact check -> grounded report
+  question -> factors -> factor-specific evidence -> boundary evidence where evidence is unavailable -> hypotheses -> critique -> fact check -> grounded report
 
 The difference is that retrieval is not treated as a generic context dump. Evidence is routed by factor and then carried into the final report with source paths, grounding roles, line ranges, and snippets.
 

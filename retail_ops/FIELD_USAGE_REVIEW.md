@@ -102,21 +102,16 @@ This rule is intentionally conservative. The project should prefer adding clearl
 | `platform_subsidy_amount` | Platform-borne subsidy amount. | Source CSVs, SQL output, activity facts. | No. |
 | `activity_cost_ratio_pct` | Activity cost divided by activity original transaction amount. It is activity-cost-ratio evidence, not traditional ROI. | Source CSVs, SQL output, activity facts, lineage. | No. |
 | `activity_order_share_pct` | SQL-derived activity-order share. It shows activity involvement, not full campaign status, promotion mechanism, causal demand lift, or promotion-transfer readiness. | Demo 2 SQL output, generated facts, comparability review. | No. |
-| `refund_amount` | Backend refund amount counted by refund-success date. | Source CSVs, SQL output, order-quality facts. | No. |
-| `full_refund_orders` | Backend all-refund order count, excluding partial refunds. | Source CSVs and order-quality evidence. | No. |
-| `refund_orders_all_or_partial` | Backend refund-order count including all-refund and partial-refund orders. | Source CSVs and order-quality evidence. | No. |
-| `refund_pressure_pct` | SQL-derived refund-pressure signal based on `refund_amount / transaction_amount * 100`. | SQL output and order-quality facts. | No. |
 | `sku_name` | SKU-level product name from top-SKU evidence. | Top-SKU source files. | No. |
 | `sku_name_en` | English helper column for readability. It does not replace the original Chinese SKU name. | Top-SKU source files. | No. |
 | `sku_transaction_amount` | SKU-level transaction amount. It must not be confused with store-period-level `transaction_amount`. | Top-SKU source files and top-SKU evidence. | No. |
 | `sales_volume` | SKU-level sales-volume evidence where available. | Top-SKU source files. | No. |
 | `top3_sku_transaction_amount_share_pct` | SQL-derived lightweight top-SKU concentration evidence. It is not full product-category sales share. | SQL output and top-SKU memory note. | No. |
 | `comparison_scope_flag` | SQL-derived data-readiness and comparison-scope guardrail for Demo 2. It is not a pairwise store-comparability decision. | Demo 2 SQL output and Demo 2 memory facts. | No. |
-| `comparison_limit_notes` | SQL-derived interpretation-boundary notes for Demo 2. It records constraints from search, activity, refund, order-quality, region/store context, and product-mix evidence. | Demo 2 SQL output and Demo 2 memory facts. | No. |
+| `comparison_limit_notes` | SQL-derived interpretation-boundary notes for Demo 2. It records constraints from search, activity, source-field, region/store context, and product-mix evidence. | Demo 2 SQL output and Demo 2 memory facts. | No. |
 | `visibility_entry_profile` | Retrieval-facing memory slot for exposure, ranking, entry, and search-entry structure. | Generated retail memory facts. | No. |
 | `activity_lever_profile` | Retrieval-facing memory slot for activity orders, activity cost, subsidy, and activity-cost ratio. | Generated retail memory facts. | No. |
 | `transaction_conversion_profile` | Retrieval-facing memory slot for transaction scale, order conversion, payment, and average order value. | Generated retail memory facts. | No. |
-| `order_quality_pressure_profile` | Retrieval-facing memory slot for refund-pressure evidence and related refund context. | Generated retail memory facts. | No. |
 | `single_metric_attribution_guard` | Retrieval-facing memory slot that prevents unsupported interpretation from one metric alone. | Generated retail memory facts. | No. |
 | `top3_sku_product_mix_note` | Retrieval-facing memory slot for limited top-SKU evidence. It is not full category-share analysis. | Generated retail memory facts. | No. |
 
@@ -124,7 +119,7 @@ This rule is intentionally conservative. The project should prefer adding clearl
 
 Pairwise comparability-gate fields are outside the current implemented retail scope.
 
-A reliable future gate should consider transaction order volume, transaction amount, explicit activity status when source evidence exists, activity involvement, activity intensity, store type, region and market context, competition environment, SKU structure, refund evidence, fulfillment or stockout evidence where available, and repeated reporting windows.
+A reliable future gate should consider transaction order volume, transaction amount, explicit activity status when source evidence exists, activity involvement, activity intensity, store type, region and market context, competition environment, SKU structure, fulfillment or stockout evidence where available, and repeated reporting windows.
 
 At the current sample size, `region_type` remains weak context only. It must not be used as a hard market-area classification, store-stage label, consumption-level label, or peer-store grouping rule.
 

@@ -16,13 +16,13 @@ The source data is not an automated backend export. It is a structured research 
 
 Demo 2 currently includes five anonymized store-period records:
 
-| store_id | region_type | store_type    | reporting window         |
+| store_id | region_type | store_type  | reporting window     |
 | -------- | ----------- | ------------- | ------------------------ |
-| B        | Qingdao     | self-operated | 2026-03-01 to 2026-03-31 |
-| C        | Qingdao     | self-operated | 2026-03-01 to 2026-03-31 |
-| D        | Yantai      | self-operated | 2026-03-01 to 2026-03-31 |
-| E        | Yantai      | partner       | 2026-03-01 to 2026-03-31 |
-| F        | Yantai      | partner       | 2026-03-01 to 2026-03-31 |
+| B    | Qingdao   | self-operated | 2026-03-01 to 2026-03-31 |
+| C    | Qingdao   | self-operated | 2026-03-01 to 2026-03-31 |
+| D    | Yantai   | self-operated | 2026-03-01 to 2026-03-31 |
+| E    | Yantai   | partner    | 2026-03-01 to 2026-03-31 |
+| F    | Yantai   | partner    | 2026-03-01 to 2026-03-31 |
 
 ## Source Tables
 

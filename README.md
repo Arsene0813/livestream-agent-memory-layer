@@ -18,7 +18,8 @@ For standardized instant-retail products, store competition is organized around 
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
-Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on store state, local competition, activity intensity, refund pressure, product mix, and reporting-window alignment.
+Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on store state, local competition, activity intensity, product mix, and reporting-window alignment.
+
 
 The goal is to build a more reliable evidence-based framework for multi-store operational analysis, so that future operating decisions can be made with clearer data boundaries as the business expands.
 
@@ -44,7 +45,6 @@ A future pairwise comparability gate would judge whether two store-period record
 | Data dictionary | Preserves Meituan-style backend metric meanings and canonical field names. | Manual normalization of selected backend evidence; field meanings follow `retail_ops/data/DATA_DICTIONARY.md`. |
 | Retail Demo 1 | Store A month-over-month diagnostic across February, March, and April 2026. | Multi-metric interpretation rather than single-cause monthly explanation. |
 | Retail Demo 2 | Same-period B-F diagnostic for March 2026. | Same-period diagnostic evidence before pairwise comparability gating; not peer selection, store ranking, or strategy-transfer approval. |
-| SQL diagnostics | Derives limited diagnostic fields such as search-entry structure, activity involvement, refund pressure, and top-SKU concentration. | Diagnostic structuring only; current derived fields are not optimized business cutoffs or final decision rules. |
 | Memory facts | Converts diagnostic outputs into source-bounded facts with observed values, source fields, source paths, confidence labels, and limitations. | File-backed evidence records for the implemented demos; not a replacement for raw backend evidence. |
 | Answer-boundary checks | Tests whether answers stay within entity, period, metric-definition, source, and interpretation boundaries. | Scenario-based checks tied to the current evidence path; not broad LLM robustness tests. |
 | RAC scaffold | Provides deterministic factor expansion, evidence routing, critique, fact checking, evidence-coverage update, and grounded report generation over local project evidence. | Local-evidence scaffold for reviewability; not live backend ingestion, autonomous cognition, or operating-decision automation. |
@@ -261,7 +261,7 @@ The current retail implementation is a local evidence-bounded prototype. Demo 1 
 | Top-SKU evidence | Lightweight product-mix evidence from selected top-SKU rows. | Not full product-category sales share. |
 | Future comparability gate | Design contract is documented in `retail_ops/COMPARABILITY_GATE_V0.md`. | Not implemented in the current prototype. |
 
-The next development step is to add more repeated store-period evidence and test whether the current diagnostic guardrails remain stable across more stores, months, activity conditions, and market contexts. Future pairwise comparison should be question-specific: a store pair may be comparable for search-entry structure but not comparable for promotion transfer, pricing pressure, SKU strategy, refund interpretation, or fulfillment interpretation.
+The next development step is to add more repeated store-period evidence and test whether the current diagnostic guardrails remain stable across more stores, months, activity conditions, and market contexts. Future pairwise comparison should be question-specific: a store pair may be comparable for search-entry structure but not comparable for promotion transfer, pricing pressure, SKU strategy, or fulfillment interpretation.
 
 <!-- RAC_EXTENSION_START -->
 ## Structured Reasoning Scaffold: Factor-Aware Grounded Review

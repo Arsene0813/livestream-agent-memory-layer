@@ -78,8 +78,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution",
-      "compare with region, store type, activity, refund, and product-mix limits"
+      "not causal attribution"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -178,48 +177,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "estimated_income_proxy is platform-displayed and not audited profit",
-      "order_conversion_rate_pct follows the backend definition and must not be recomputed from project-side order-status proxy / entry_users",
       "transaction and conversion metrics do not prove causality or final operating quality by themselves"
-    ],
-    "is_active": true,
-    "period_granularity": "month"
-  },
-  {
-    "kind": "retail_memory_fact",
-    "type": "retail_metric_profile",
-    "entity_id": "store_B",
-    "slot": "order_quality_pressure_profile",
-    "period_label": "2026-03",
-    "period_start": "2026-03-01",
-    "period_end": "2026-03-31",
-    "value": "Store B's March 2026 refund metrics provide limited refund-pressure signals. They should constrain direct performance comparison only as refund-success-date evidence.",
-    "observed_values": {
-      "refund_amount": 1254.9,
-      "transaction_amount": 11665.5,
-      "refund_pressure_pct": 10.76,
-      "transaction_orders": 299,
-      "full_refund_orders": 23,
-      "refund_orders_all_or_partial": 24
-    },
-    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100",
-    "source_fields": [
-      "refund_amount",
-      "transaction_amount",
-      "refund_pressure_pct",
-      "transaction_orders",
-      "full_refund_orders",
-      "refund_orders_all_or_partial"
-    ],
-    "confidence": "medium",
-    "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-    "supporting_source_paths": [
-      "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
-    ],
-    "lineage_path": "retail_ops/LINEAGE.md",
-    "limitations": [
-      "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
-      "refund amount is counted by refund-success date",
-      "not an exact original-order cohort refund rate"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -290,7 +248,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store B's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits.",
+    "value": "Store B's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits.",
     "observed_values": {
       "transaction_amount": 11665.5,
       "transaction_orders": 299,
@@ -301,12 +259,11 @@
       "search_entry_share_pct": 88.7,
       "activity_order_share_pct": 88.63,
       "activity_cost_ratio_pct": 24.12,
-      "refund_pressure_pct": 10.76,
       "top3_sku_transaction_amount_share_pct": 11.15,
       "comparison_scope_flag": "same_period_diagnostic_ready",
-      "comparison_limit_notes": "high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
+      "comparison_limit_notes": "high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
     },
-    "calculation": "comparison_limit_notes are derived from activity, refund, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from search, activity, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -317,7 +274,6 @@
       "search_entry_share_pct",
       "activity_order_share_pct",
       "activity_cost_ratio_pct",
-      "refund_pressure_pct",
       "top3_sku_transaction_amount_share_pct",
       "comparison_scope_flag",
       "comparison_limit_notes"
@@ -332,8 +288,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution",
-      "compare with region, store type, activity, refund, and product-mix limits"
+      "not causal attribution"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -417,8 +372,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution",
-      "compare with region, store type, activity, refund, and product-mix limits"
+      "not causal attribution"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -517,48 +471,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "estimated_income_proxy is platform-displayed and not audited profit",
-      "order_conversion_rate_pct follows the backend definition and must not be recomputed from project-side order-status proxy / entry_users",
       "transaction and conversion metrics do not prove causality or final operating quality by themselves"
-    ],
-    "is_active": true,
-    "period_granularity": "month"
-  },
-  {
-    "kind": "retail_memory_fact",
-    "type": "retail_metric_profile",
-    "entity_id": "store_C",
-    "slot": "order_quality_pressure_profile",
-    "period_label": "2026-03",
-    "period_start": "2026-03-01",
-    "period_end": "2026-03-31",
-    "value": "Store C's March 2026 refund metrics provide limited refund-pressure signals. They should constrain direct performance comparison only as refund-success-date evidence.",
-    "observed_values": {
-      "refund_amount": 529.6,
-      "transaction_amount": 7064.09,
-      "refund_pressure_pct": 7.5,
-      "transaction_orders": 175,
-      "full_refund_orders": 11,
-      "refund_orders_all_or_partial": 11
-    },
-    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100",
-    "source_fields": [
-      "refund_amount",
-      "transaction_amount",
-      "refund_pressure_pct",
-      "transaction_orders",
-      "full_refund_orders",
-      "refund_orders_all_or_partial"
-    ],
-    "confidence": "medium",
-    "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-    "supporting_source_paths": [
-      "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
-    ],
-    "lineage_path": "retail_ops/LINEAGE.md",
-    "limitations": [
-      "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
-      "refund amount is counted by refund-success date",
-      "not an exact original-order cohort refund rate"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -629,7 +542,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store C's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_refund_limits.",
+    "value": "Store C's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_product_mix_limits.",
     "observed_values": {
       "transaction_amount": 7064.09,
       "transaction_orders": 175,
@@ -640,12 +553,11 @@
       "search_entry_share_pct": 68.8,
       "activity_order_share_pct": 70.86,
       "activity_cost_ratio_pct": 9.45,
-      "refund_pressure_pct": 7.5,
       "top3_sku_transaction_amount_share_pct": 28.38,
       "comparison_scope_flag": "same_period_diagnostic_ready",
-      "comparison_limit_notes": "moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_refund_limits"
+      "comparison_limit_notes": "moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_product_mix_limits"
     },
-    "calculation": "comparison_limit_notes are derived from activity, refund, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from search, activity, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -656,7 +568,6 @@
       "search_entry_share_pct",
       "activity_order_share_pct",
       "activity_cost_ratio_pct",
-      "refund_pressure_pct",
       "top3_sku_transaction_amount_share_pct",
       "comparison_scope_flag",
       "comparison_limit_notes"
@@ -671,8 +582,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution",
-      "compare with region, store type, activity, refund, and product-mix limits"
+      "not causal attribution"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -756,8 +666,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution",
-      "compare with region, store type, activity, refund, and product-mix limits"
+      "not causal attribution"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -856,48 +765,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "estimated_income_proxy is platform-displayed and not audited profit",
-      "order_conversion_rate_pct follows the backend definition and must not be recomputed from project-side order-status proxy / entry_users",
       "transaction and conversion metrics do not prove causality or final operating quality by themselves"
-    ],
-    "is_active": true,
-    "period_granularity": "month"
-  },
-  {
-    "kind": "retail_memory_fact",
-    "type": "retail_metric_profile",
-    "entity_id": "store_D",
-    "slot": "order_quality_pressure_profile",
-    "period_label": "2026-03",
-    "period_start": "2026-03-01",
-    "period_end": "2026-03-31",
-    "value": "Store D's March 2026 refund metrics provide limited refund-pressure signals. They should constrain direct performance comparison only as refund-success-date evidence.",
-    "observed_values": {
-      "refund_amount": 1617.49,
-      "transaction_amount": 18078.7,
-      "refund_pressure_pct": 8.95,
-      "transaction_orders": 404,
-      "full_refund_orders": 33,
-      "refund_orders_all_or_partial": 44
-    },
-    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100",
-    "source_fields": [
-      "refund_amount",
-      "transaction_amount",
-      "refund_pressure_pct",
-      "transaction_orders",
-      "full_refund_orders",
-      "refund_orders_all_or_partial"
-    ],
-    "confidence": "medium",
-    "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-    "supporting_source_paths": [
-      "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
-    ],
-    "lineage_path": "retail_ops/LINEAGE.md",
-    "limitations": [
-      "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
-      "refund amount is counted by refund-success date",
-      "not an exact original-order cohort refund rate"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -968,7 +836,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store D's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: high_activity_involvement; compare_with_region_store_type_activity_refund_limits.",
+    "value": "Store D's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits.",
     "observed_values": {
       "transaction_amount": 18078.7,
       "transaction_orders": 404,
@@ -979,12 +847,11 @@
       "search_entry_share_pct": 87.65,
       "activity_order_share_pct": 83.42,
       "activity_cost_ratio_pct": 14.92,
-      "refund_pressure_pct": 8.95,
       "top3_sku_transaction_amount_share_pct": 16.9,
       "comparison_scope_flag": "same_period_diagnostic_ready",
-      "comparison_limit_notes": "high_activity_involvement; compare_with_region_store_type_activity_refund_limits"
+      "comparison_limit_notes": "high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
     },
-    "calculation": "comparison_limit_notes are derived from activity, refund, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from search, activity, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -995,7 +862,6 @@
       "search_entry_share_pct",
       "activity_order_share_pct",
       "activity_cost_ratio_pct",
-      "refund_pressure_pct",
       "top3_sku_transaction_amount_share_pct",
       "comparison_scope_flag",
       "comparison_limit_notes"
@@ -1010,8 +876,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution",
-      "compare with region, store type, activity, refund, and product-mix limits"
+      "not causal attribution"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1095,8 +960,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution",
-      "compare with region, store type, activity, refund, and product-mix limits"
+      "not causal attribution"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1195,48 +1059,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "estimated_income_proxy is platform-displayed and not audited profit",
-      "order_conversion_rate_pct follows the backend definition and must not be recomputed from project-side order-status proxy / entry_users",
       "transaction and conversion metrics do not prove causality or final operating quality by themselves"
-    ],
-    "is_active": true,
-    "period_granularity": "month"
-  },
-  {
-    "kind": "retail_memory_fact",
-    "type": "retail_metric_profile",
-    "entity_id": "store_E",
-    "slot": "order_quality_pressure_profile",
-    "period_label": "2026-03",
-    "period_start": "2026-03-01",
-    "period_end": "2026-03-31",
-    "value": "Store E's March 2026 refund metrics provide limited refund-pressure signals. They should constrain direct performance comparison only as refund-success-date evidence.",
-    "observed_values": {
-      "refund_amount": 1105.05,
-      "transaction_amount": 5784.87,
-      "refund_pressure_pct": 19.1,
-      "transaction_orders": 158,
-      "full_refund_orders": 25,
-      "refund_orders_all_or_partial": 29
-    },
-    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100",
-    "source_fields": [
-      "refund_amount",
-      "transaction_amount",
-      "refund_pressure_pct",
-      "transaction_orders",
-      "full_refund_orders",
-      "refund_orders_all_or_partial"
-    ],
-    "confidence": "medium",
-    "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-    "supporting_source_paths": [
-      "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
-    ],
-    "lineage_path": "retail_ops/LINEAGE.md",
-    "limitations": [
-      "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
-      "refund amount is counted by refund-success date",
-      "not an exact original-order cohort refund rate"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1307,7 +1130,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store E's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: moderate_activity_involvement; high_refund_pressure; compare_with_region_store_type_activity_refund_limits.",
+    "value": "Store E's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: moderate_activity_involvement; compare_with_region_store_type_activity_product_mix_limits.",
     "observed_values": {
       "transaction_amount": 5784.87,
       "transaction_orders": 158,
@@ -1318,12 +1141,11 @@
       "search_entry_share_pct": 87.01,
       "activity_order_share_pct": 68.99,
       "activity_cost_ratio_pct": 29.38,
-      "refund_pressure_pct": 19.1,
       "top3_sku_transaction_amount_share_pct": 12.55,
       "comparison_scope_flag": "same_period_diagnostic_ready",
-      "comparison_limit_notes": "moderate_activity_involvement; high_refund_pressure; compare_with_region_store_type_activity_refund_limits"
+      "comparison_limit_notes": "moderate_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
     },
-    "calculation": "comparison_limit_notes are derived from activity, refund, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from search, activity, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -1334,7 +1156,6 @@
       "search_entry_share_pct",
       "activity_order_share_pct",
       "activity_cost_ratio_pct",
-      "refund_pressure_pct",
       "top3_sku_transaction_amount_share_pct",
       "comparison_scope_flag",
       "comparison_limit_notes"
@@ -1349,8 +1170,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution",
-      "compare with region, store type, activity, refund, and product-mix limits"
+      "not causal attribution"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1434,8 +1254,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution",
-      "compare with region, store type, activity, refund, and product-mix limits"
+      "not causal attribution"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1534,48 +1353,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "estimated_income_proxy is platform-displayed and not audited profit",
-      "order_conversion_rate_pct follows the backend definition and must not be recomputed from project-side order-status proxy / entry_users",
       "transaction and conversion metrics do not prove causality or final operating quality by themselves"
-    ],
-    "is_active": true,
-    "period_granularity": "month"
-  },
-  {
-    "kind": "retail_memory_fact",
-    "type": "retail_metric_profile",
-    "entity_id": "store_F",
-    "slot": "order_quality_pressure_profile",
-    "period_label": "2026-03",
-    "period_start": "2026-03-01",
-    "period_end": "2026-03-31",
-    "value": "Store F's March 2026 refund metrics provide limited refund-pressure signals. They should constrain direct performance comparison only as refund-success-date evidence.",
-    "observed_values": {
-      "refund_amount": 987.89,
-      "transaction_amount": 9301.8,
-      "refund_pressure_pct": 10.62,
-      "transaction_orders": 266,
-      "full_refund_orders": 30,
-      "refund_orders_all_or_partial": 33
-    },
-    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100",
-    "source_fields": [
-      "refund_amount",
-      "transaction_amount",
-      "refund_pressure_pct",
-      "transaction_orders",
-      "full_refund_orders",
-      "refund_orders_all_or_partial"
-    ],
-    "confidence": "medium",
-    "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-    "supporting_source_paths": [
-      "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
-    ],
-    "lineage_path": "retail_ops/LINEAGE.md",
-    "limitations": [
-      "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
-      "refund amount is counted by refund-success date",
-      "not an exact original-order cohort refund rate"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1646,7 +1424,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store F's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits.",
+    "value": "Store F's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits.",
     "observed_values": {
       "transaction_amount": 9301.8,
       "transaction_orders": 266,
@@ -1657,12 +1435,11 @@
       "search_entry_share_pct": 88.91,
       "activity_order_share_pct": 81.58,
       "activity_cost_ratio_pct": 12.16,
-      "refund_pressure_pct": 10.62,
       "top3_sku_transaction_amount_share_pct": 19.33,
       "comparison_scope_flag": "same_period_diagnostic_ready",
-      "comparison_limit_notes": "high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
+      "comparison_limit_notes": "high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
     },
-    "calculation": "comparison_limit_notes are derived from activity, refund, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from search, activity, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -1673,7 +1450,6 @@
       "search_entry_share_pct",
       "activity_order_share_pct",
       "activity_cost_ratio_pct",
-      "refund_pressure_pct",
       "top3_sku_transaction_amount_share_pct",
       "comparison_scope_flag",
       "comparison_limit_notes"
@@ -1688,8 +1464,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution",
-      "compare with region, store type, activity, refund, and product-mix limits"
+      "not causal attribution"
     ],
     "is_active": true,
     "period_granularity": "month"

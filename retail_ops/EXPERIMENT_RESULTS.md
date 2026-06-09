@@ -106,7 +106,6 @@ Generated facts should preserve canonical field names and expose the main eviden
 - `visibility_entry_profile`
 - `activity_lever_profile`
 - `transaction_conversion_profile`
-- `order_quality_pressure_profile`
 - `top3_sku_product_mix_note`
 - `single_metric_attribution_guard`
 
@@ -238,7 +237,7 @@ Evidence path:
 
 Expected behavior:
 
-The future gate may define planned factors such as transaction order volume, transaction amount, activity status, activity intensity, store type, region and market context, SKU structure, refund evidence, and repeated reporting windows.
+The future gate may define planned factors such as transaction order volume, transaction amount, activity status, activity intensity, store type, region and market context, SKU structure, and repeated reporting windows.
 
 It should not appear as a current implemented gate in Demo 2 outputs.
 
@@ -275,7 +274,6 @@ Checked by:
 
 Demo 2 is intentionally narrower than Demo 1. It is a same-period B-F diagnostic for field-contract consistency and comparison-boundary behavior, not a full multi-store diagnostic model.
 
-Some dictionary-defined derived metrics, including `refund_order_pressure_pct` and `search_exposure_share_pct`, are not expanded as required Demo 2 output columns at this stage.
 
 ## Repeated-Window Panel Extension Result
 
@@ -304,7 +302,7 @@ The post-Demo2 repeated-window panel extension is validated by two saved result 
 
 | Validator | Saved result | What it checks |
 |---|---|---|
-| `retail_ops/scripts/validate_store_period_panel.py` | `retail_ops/outputs/store_period_panel_validation_result.txt` | Stores B-F each have 2026-02, 2026-03, and 2026-04; panel uses canonical refund fields; `store_type` values are canonical; ambiguous order-status fields are excluded. |
+| `retail_ops/scripts/validate_store_period_panel.py` | `retail_ops/outputs/store_period_panel_validation_result.txt` | Stores B-F each have 2026-02, 2026-03, and 2026-04; panel uses canonical source fields; `store_type` values are canonical; schema stays within the documented source/output contract. |
 | `retail_ops/scripts/validate_repeated_window_panel_summary.py` | `retail_ops/outputs/repeated_window_panel_summary_validation_result.txt` | Repeated-window summary contains Stores B-F, keeps three observed months per store, uses canonical `store_type` values, and remains descriptive rather than causal or ranking-oriented. |
 
 These checks support panel readiness for descriptive review. They do not convert the panel into a pairwise comparability gate.

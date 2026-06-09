@@ -51,7 +51,6 @@ REQUIRED_DEMO2_OUTPUT_FIELDS = [
     "search_entry_share_pct",
     "activity_order_share_pct",
     "activity_cost_ratio_pct",
-    "refund_pressure_pct",
     "top3_sku_transaction_amount_share_pct",
     "comparison_scope_flag",
     "comparison_limit_notes",
@@ -74,7 +73,6 @@ CANONICAL_MEMORY_SLOTS = {
     "visibility_entry_profile",
     "activity_lever_profile",
     "transaction_conversion_profile",
-    "order_quality_pressure_profile",
     "single_metric_attribution_guard",
     "top3_sku_product_mix_note",
 }

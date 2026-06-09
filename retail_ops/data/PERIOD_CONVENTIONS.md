@@ -12,8 +12,8 @@ Monthly data should use all three fields:
 
 Example:
 
-period_month = 2026-03  
-period_start = 2026-03-01  
+period_month = 2026-03 
+period_start = 2026-03-01 
 period_end = 2026-03-31
 
 ## Range-level facts
@@ -27,9 +27,9 @@ Range-level facts should use:
 
 Example:
 
-period_granularity = month_range  
-period_start = 2026-02-01  
-period_end = 2026-04-30  
+period_granularity = month_range 
+period_start = 2026-02-01 
+period_end = 2026-04-30 
 period_label = 2026-02_to_2026-04
 
 ## Narrative text

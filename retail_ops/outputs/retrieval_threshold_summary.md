@@ -14,11 +14,11 @@ The purpose is to inspect retrieval-threshold behavior. It is not a production-l
 - Retrieval threshold cases: 29
 - Embedding model: `bge-m3` via local Ollama
 - Generated memory fact sources:
-  - `retail_ops/outputs/generated_retail_memory_facts.json`
-  - `retail_ops/outputs/generated_demo2_retail_memory_facts.json`
+ - `retail_ops/outputs/generated_retail_memory_facts.json`
+ - `retail_ops/outputs/generated_demo2_retail_memory_facts.json`
 - Field-contract sources:
-  - `retail_ops/data/DATA_DICTIONARY.md`
-  - `retail_ops/data/demo2_source_notes.md`
+ - `retail_ops/data/DATA_DICTIONARY.md`
+ - `retail_ops/data/demo2_source_notes.md`
 
 ## Case Groups
 

@@ -21,7 +21,6 @@ This panel keeps only fields that are clear enough to support the current operat
 The operating chain is:
 
 ~~~text
-visibility -> store entry -> order submission -> payment / transaction -> refund pressure
 ~~~
 
 ## Excluded Order-Status Fields
@@ -30,7 +29,7 @@ The panel only uses fields whose meanings are documented clearly enough in `DATA
 
 No alternative hidden definition is inferred.
 
-Refund-related evidence is kept through explicitly labeled refund fields:
+The following raw backend fields are retained for source completeness:
 
 - `refund_amount`
 - `full_refund_orders`
@@ -46,3 +45,5 @@ It does not yet support:
 - pairwise comparability decisions
 - market-area classification
 - causal attribution
+
+Coverage is based on dictionary-defined transaction, search, activity, and SKU fields.

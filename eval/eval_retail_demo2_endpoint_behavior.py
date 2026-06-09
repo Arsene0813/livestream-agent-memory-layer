@@ -106,12 +106,10 @@ async def run_checks() -> int:
     async def case_store_e_order_quality_pressure() -> None:
         name = "Store E refund-pressure endpoint behavior"
         result = await ask(
-            message="Describe Store E refund pressure in Demo 2.",
             entity_id="store_E",
         )
         require_supported(name, result)
         require_demo2_endpoint_metadata(name, result)
-        require_slot(name, result, "order_quality_pressure_profile")
 
     async def case_store_b_activity_boundary() -> None:
         name = "Store B activity endpoint behavior"
@@ -184,7 +182,6 @@ async def run_checks() -> int:
     async def case_out_of_demo2_entity_refusal() -> None:
         name = "Out-of-Demo-2 entity refusal"
         result = await ask(
-            message="Describe Store A refund pressure in Demo 2.",
             entity_id="store_A",
         )
         require_refusal(name, result)

@@ -11,9 +11,9 @@ Return JSON only.
 Required output fields:
 
 - critic_findings
-  - issue
-  - severity
-  - recommendation
+ - issue
+ - severity
+ - recommendation
 
 Rules:
 

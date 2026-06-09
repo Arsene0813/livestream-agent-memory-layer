@@ -11,10 +11,10 @@ Return JSON only.
 Required output fields:
 
 - factor_weights
-  - factor_id
-  - weight
-  - weight_reason
-  - evidence_status
+ - factor_id
+ - weight
+ - weight_reason
+ - evidence_status
 
 Rules:
 

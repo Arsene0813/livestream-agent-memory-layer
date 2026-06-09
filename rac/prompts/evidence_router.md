@@ -11,10 +11,10 @@ Return JSON only.
 Required output fields:
 
 - retrieval_plan
-  - factor_id
-  - queries
-  - preferred_sources
-  - required_metadata
+ - factor_id
+ - queries
+ - preferred_sources
+ - required_metadata
 
 Rules:
 

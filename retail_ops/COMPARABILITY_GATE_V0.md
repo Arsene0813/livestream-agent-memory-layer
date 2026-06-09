@@ -63,7 +63,6 @@ The current `comparison_scope_flag` should not be treated as a pairwise comparab
 
 A reliable gate should judge a selected pair of store-period records for a specific operating question.
 
-The evidence should include transaction order volume, transaction amount, store type, region and market context, competition environment, SKU structure, refund pressure, repeated reporting windows, and activity evidence.
 
 The future gate should compare selected store-period records for a specific operating question instead of creating a store label from one threshold.
 
@@ -76,7 +75,6 @@ This matrix separates what the current evidence can support from what the future
 | Search-entry structure comparison | `search_exposure_users`, `search_average_rank`, `search_entry_users`, `search_entry_rate_pct`, `search_entry_share_pct`, `entry_conversion_rate_pct`, `order_conversion_rate_pct` | repeated windows, competition context, stronger market context | cautious same-period diagnostic comparison |
 | Promotion or subsidy comparison | `activity_orders`, `activity_order_share_pct`, `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, `platform_subsidy_amount` | campaign calendar, campaign mechanism, competitor reaction, repeated activity windows | activity involvement and activity intensity only |
 | SKU-mix comparison | top-SKU transaction-amount evidence, top-SKU sales-volume evidence, `top3_sku_transaction_amount_share_pct` | full product-category classification, broader catalog structure, category-level share | lightweight product-mix constraint |
-| Refund comparison | `refund_amount`, `refund_pressure_pct`, `full_refund_orders`, `refund_orders_all_or_partial` | refund reason and cohort-level refund evidence | refund-pressure signal with limited interpretation |
 | Market-context comparison | `region_type` | local consumption level, delivery-radius context, competitor density, broader store coverage | weak context only |
 | Strategy-transfer readiness | current diagnostic fields and `comparison_limit_notes` | repeated windows, pairwise decision output, activity mechanism, competition, market context, fulfillment and stockout evidence | insufficient for strategy-transfer approval |
 
@@ -115,7 +113,6 @@ The future gate should not collapse activity evidence into a single yes/no label
 | Region and market context | `region_type` | Current demo sample is too small for reliable regional classification. | More store data, local consumption-level evidence, delivery-radius context, and competition-context evidence. |
 | Competition context | Not currently structured. | Local competitor density and price pressure are not included. | Competitor and local market evidence. |
 | SKU structure | Top-SKU transaction-amount and sales-volume evidence. | Top-SKU evidence is not full category-share analysis. | Broader SKU classification or category mapping. |
-| Refund pressure | `refund_amount`, `refund_pressure_pct`, `full_refund_orders`, `refund_orders_all_or_partial` | Refund amount is counted by refund-success date. | Cohort-level refund or refund-reason evidence if available. |
 | Fulfillment or stockout context | Not currently structured. | Delivery condition, stockout, and fulfillment-cause evidence are not included. | Fulfillment status, stockout history, delivery-radius or delivery-capacity evidence if available. |
 | Data completeness | `comparison_scope_flag`, `comparison_limit_notes` | Current notes are diagnostic guardrails, not a gate decision. | Explicit pairwise decision output after broader data. |
 
@@ -133,7 +130,7 @@ The future gate should not classify stores by subjective experience, intuition, 
 
 The future gate should not produce one global comparability score.
 
-A store pair may be comparable for search-entry structure but not comparable for promotion transfer, pricing pressure, SKU strategy, refund interpretation, or fulfillment interpretation.
+A store pair may be comparable for search-entry structure but not comparable for promotion transfer, pricing pressure, SKU strategy, or fulfillment interpretation.
 
 The gate should return a decision only for the selected operating question.
 
@@ -153,7 +150,6 @@ A stronger pairwise comparability gate should not be implemented only because De
 | Region and market context | `region_type` as weak context only | Data-supported market-area classification, local consumption evidence, delivery-radius context, and competition context | More store data plus external or manually reviewed market evidence |
 | Competition context | Not currently structured | Competitor density, price pressure, ranking pressure, and local market reaction | Manual collection, platform observation, or future structured competitor table |
 | SKU structure | Top-SKU transaction-amount and sales-volume evidence | Broader SKU classification, category share, and margin-aware structure where available | SKU export and future category mapping |
-| Refund pressure | `refund_amount`, `refund_pressure_pct`, `full_refund_orders`, `refund_orders_all_or_partial` | Repeated-window refund pressure and refund-reason evidence where available | Backend refund data |
 | Fulfillment or stockout context | Not currently structured | Delivery-condition, stockout, fulfillment-capacity, or delivery-radius evidence | Future fulfillment or inventory records |
 | Data completeness | `comparison_scope_flag`, `comparison_limit_notes` | Pairwise decision output and question-specific evidence coverage | Future gate output contract |
 
@@ -170,7 +166,6 @@ A future gate should be implemented as a question-specific decision flow, not as
 5. Check whether transaction order volume and transaction amount are within a reasonable comparison band.
 6. Check activity involvement and activity intensity, without inferring full activity status unless campaign-calendar evidence exists.
 7. Check store type and market-context evidence, while keeping `region_type` as weak context only.
-8. Check SKU-structure evidence, refund pressure, and any known competition, fulfillment, stockout, or delivery-condition constraints.
 9. Return a question-specific `comparison_decision` with supporting fields, limiting factors, allowed interpretation, and unsupported interpretation.
 
 The gate should separate at least these comparison questions:
@@ -178,7 +173,7 @@ The gate should separate at least these comparison questions:
 - search-entry comparability;
 - promotion or subsidy comparability;
 - SKU-mix comparability;
-- refund comparability;
+- data-completeness comparability;
 - fulfillment or stockout comparability;
 - strategy-transfer readiness.
 
@@ -242,7 +237,6 @@ global store ranking.
 | Reference record | Store B, March 2026 |
 | Candidate record | Store F, March 2026 |
 | Operating question | Can search-entry structure be compared between these records? |
-| Evidence checked | Same reporting window, transaction order volume, transaction amount, store type, activity involvement, activity cost intensity, search exposure, search average rank, search entry users, search-entry rate, search-entry share, refund pressure, top-SKU concentration, weak region context, and repeated-window availability. |
 | Possible decision | Comparable with limits. |
 | Why limited | Same-period search-entry evidence may support a cautious diagnostic comparison, but current evidence is not enough to approve promotion transfer, pricing strategy, market-area classification, or general store ranking. |
 
@@ -269,7 +263,6 @@ The future gate should remain question-specific. It should not decide whether tw
 
 | Stage | Purpose | Conservative boundary |
 |---|---|---|
-| Repeated-window evidence | Check whether order volume, transaction amount, activity involvement, refund pressure and SKU concentration remain stable across multiple reporting windows | A one-month snapshot should not become a reusable peer-comparison rule |
 | Pairwise gate | Return a future decision such as `comparable`, `comparable_with_limits`, or `insufficient_evidence` for one question type | The decision should not approve strategy transfer by itself |
 | Factor-aware review | Expand the question into relevant factors, assign factor weights, retrieve evidence by factor, and generate competing hypotheses | Factor weights should be inspectable and evidence-bounded |
 | Critique and confidence update | Check unsupported assumptions, missing evidence, and contradiction risks before writing the final answer | The output should use confidence-and-limitation update, not a final causal claim |

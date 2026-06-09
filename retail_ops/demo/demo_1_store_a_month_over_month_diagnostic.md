@@ -20,9 +20,7 @@ being seen -> being entered -> being ordered -> being selected again or maintain
 
 A store may use activity subsidy, pricing, ranking optimization, SKU mix, and fulfillment control as operating levers inside this chain.
 
-These levers should not be interpreted as isolated causes. Their meaning depends on the store's current stage, local competition, visibility pressure, conversion quality, refund pressure, and product mix.
 
-Short-term activity-cost efficiency is not always the primary target. A new store may need activity subsidy to gain exposure and first orders. A store under external price pressure may need activity or pricing action to defend visibility and market share. A store with enough traffic but weak conversion requires a different interpretation from a store with order growth but refund pressure.
 
 ## Current Demo Boundary
 
@@ -41,15 +39,15 @@ The current demo only supports cautious interpretation of Store A's observed met
 
 ## Source Files
 
-| File                                                        | Purpose                                                                  |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------ |
-| `retail_ops/data/store_a_monthly_metrics.csv`               | Store-period backend metrics manually organized from Meituan-style data. |
-| `retail_ops/data/store_a_top_skus.csv`                      | Top-SKU evidence for each month.                                         |
-| `retail_ops/data/DATA_DICTIONARY.md`                        | Canonical field definitions and metric rules.                            |
-| `retail_ops/sql/01_store_a_month_over_month_diagnostic.sql` | Offline SQL diagnostic query.                                            |
-| `retail_ops/outputs/store_a_demo1_sql_output.csv`           | SQL output used by this demo.                                            |
-| `retail_ops/outputs/generated_retail_memory_facts.json`     | Generated retail memory facts for retrieval.                             |
-| `retail_ops/LINEAGE.md`                                     | Claim-to-data lineage and metric consistency rules.                      |
+| File | Purpose |
+|---|---|
+| `retail_ops/data/store_a_monthly_metrics.csv` | Store-period backend metrics manually organized from Meituan-style data. |
+| `retail_ops/data/store_a_top_skus.csv` | Top-SKU evidence for each month. |
+| `retail_ops/data/DATA_DICTIONARY.md` | Canonical field definitions and metric rules. |
+| `retail_ops/sql/01_store_a_month_over_month_diagnostic.sql` | Offline SQL diagnostic query. |
+| `retail_ops/outputs/store_a_demo1_sql_output.csv` | SQL output used by this demo. |
+| `retail_ops/outputs/generated_retail_memory_facts.json` | Generated retail memory facts for retrieval. |
+| `retail_ops/LINEAGE.md` | Claim-to-data lineage and metric consistency rules. |
 
 ## Metric Definition Rules
 
@@ -75,7 +73,7 @@ Important consistency rules:
    activity_cost_ratio_pct = activity_cost / activity_original_transaction_amount * 100
    ```
 
-   This is a cost ratio. It should not be treated as traditional ROI.
+  This is a cost ratio. It should not be treated as traditional ROI.
 
 3. Traffic-source users may overlap. Source-level users should not be summed into total exposure users or total entry users.
 
@@ -83,21 +81,21 @@ Important consistency rules:
 
 ## Store A Monthly Snapshot
 
-| Month   | Transaction Amount | Transaction Orders | Entry Users | Order Conversion Rate | Average Order Value | Refund Amount |
-| ------- | -----------------: | -----------------: | ----------: | --------------------: | ------------------: | ------------: |
-| 2026-02 |            9460.70 |                274 |         763 |                37.22% |               34.53 |       1480.95 |
-| 2026-03 |            6454.84 |                207 |         522 |                42.34% |               31.18 |       1097.97 |
-| 2026-04 |            9083.72 |                337 |         906 |                37.42% |               26.95 |        602.26 |
+| Month   | Transaction Amount | Transaction Orders | Entry Users | Order Conversion Rate | Average Order Value |
+| ------- | -----------------: | -----------------: | ----------: | --------------------: | ------------------: |
+| 2026-02 |            9460.70 |                274 |         763 |                37.22% |               34.53 |
+| 2026-03 |            6454.84 |                207 |         522 |                42.34% |               31.18 |
+| 2026-04 |            9083.72 |                337 |         906 |                37.42% |               26.95 |
 
 ## Visibility and Entry Profile
 
 Store A's visibility and entry structure can be described from exposure, ranking, entry, and search-entry metrics.
 
-| Month   | Exposure Users | Store Average Rank | Entry Users | Search Entry Users | Search Entry Share |
+| Month  | Exposure Users | Store Average Rank | Entry Users | Search Entry Users | Search Entry Share |
 | ------- | -------------: | -----------------: | ----------: | -----------------: | -----------------: |
-| 2026-02 |           6118 |                 18 |         763 |                694 |             90.96% |
-| 2026-03 |           4663 |                 22 |         522 |                445 |             85.25% |
-| 2026-04 |           8366 |                 18 |         906 |                839 |             92.60% |
+| 2026-02 |      6118 |         18 |     763 |        694 |       90.96% |
+| 2026-03 |      4663 |         22 |     522 |        445 |       85.25% |
+| 2026-04 |      8366 |         18 |     906 |        839 |       92.60% |
 
 Interpretation:
 
@@ -110,31 +108,31 @@ Interpretation:
 
 Activity metrics are interpreted as operating-lever evidence.
 
-| Month   | Activity Orders | Transaction Orders | Activity Order Share | Activity Cost Ratio |
+| Month  | Activity Orders | Transaction Orders | Activity Order Share | Activity Cost Ratio |
 | ------- | --------------: | -----------------: | -------------------: | ------------------: |
-| 2026-02 |             270 |                274 |               98.54% |              40.63% |
-| 2026-03 |             201 |                207 |               97.10% |              38.55% |
-| 2026-04 |             329 |                337 |               97.63% |              40.69% |
+| 2026-02 |       270 |        274 |        98.54% |       40.63% |
+| 2026-03 |       201 |        207 |        97.10% |       38.55% |
+| 2026-04 |       329 |        337 |        97.63% |       40.69% |
 
 Interpretation:
 
 - Activity orders accounted for a high share of transaction orders in all three months.
 - This does not mean activity alone caused growth.
 - It means activity was an important operating lever during the observed period.
-- The meaning of this lever depends on operating context, competition, price pressure, ranking pressure, and order-quality signals.
+- The meaning of this lever depends on operating context, competition, price pressure, ranking pressure,.
 
 ## Transaction and Conversion Profile
 
 April recovered in transaction scale compared with March.
 
-| Metric                | 2026-03 | 2026-04 | Direction |
+| Metric        | 2026-03 | 2026-04 | Direction |
 | --------------------- | ------: | ------: | --------- |
-| Transaction Amount    | 6454.84 | 9083.72 | Up        |
-| Transaction Orders    |     207 |     337 | Up        |
-| Entry Users           |     522 |     906 | Up        |
-| Search Entry Users    |     445 |     839 | Up        |
-| Order Conversion Rate |  42.34% |  37.42% | Down      |
-| Average Order Value   |   31.18 |   26.95 | Down      |
+| Transaction Amount  | 6454.84 | 9083.72 | Up    |
+| Transaction Orders  |   207 |   337 | Up    |
+| Entry Users      |   522 |   906 | Up    |
+| Search Entry Users  |   445 |   839 | Up    |
+| Order Conversion Rate | 42.34% | 37.42% | Down   |
+| Average Order Value  |  31.18 |  26.95 | Down   |
 
 Interpretation:
 
@@ -144,20 +142,16 @@ The store had more exposure, more entry users, more transaction orders, and high
 
 This supports a cautious operating-signal reading: the store recovered scale, but the recovery coexisted with weaker conversion rate and lower average order value.
 
-## Order-Quality Pressure Profile
 
-Refund pressure improved in April compared with March.
 
-| Metric                 | 2026-03 | 2026-04 | Direction |
+| Metric         | 2026-03 | 2026-04 | Direction |
 | ---------------------- | ------: | ------: | --------- |
-| Refund Amount          | 1097.97 |  602.26 | Down      |
-| Refund Pressure        |  17.01% |   6.63% | Down      |
 
 Interpretation:
 
-This is a refund-pressure signal.
+This is a source-field signal.
 
-It does not prove that customer satisfaction definitively improved, because refund amount is counted by refund-success date and is not a perfect original-order cohort refund rate.
+
 
 ## Top-SKU Evidence
 
@@ -180,7 +174,6 @@ April 2026 showed:
 - search-entry users up;
 - order conversion rate down;
 - average order value down;
-- refund pressure down;
 
 - activity-order share still high;
 - top-SKU evidence still limited.
@@ -191,14 +184,13 @@ This is exactly why the project uses a memory layer with traceable facts and lim
 
 The current generated retail memory facts use these slots:
 
-| Slot                              | Meaning                                                                                                 |
+| Slot               | Meaning                                                 |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `visibility_entry_profile`        | Describes exposure, ranking, entry, and search-entry structure.                                         |
-| `activity_lever_profile`          | Describes activity orders, activity cost, subsidy, and activity-cost ratio as operating-lever evidence. |
-| `transaction_conversion_profile`  | Describes transaction scale, order conversion, payment, and average order value.                        |
-| `order_quality_pressure_profile`  | Describes refund-pressure evidence.                                                   |
-| `single_metric_attribution_guard` | Prevents one-factor explanations of growth or decline.                                                  |
-| `top3_sku_product_mix_note`       | Limits top-SKU evidence to lightweight product-mix support.                                             |
+| `visibility_entry_profile`    | Describes exposure, ranking, entry, and search-entry structure.                     |
+| `activity_lever_profile`     | Describes activity orders, activity cost, subsidy, and activity-cost ratio as operating-lever evidence. |
+| `transaction_conversion_profile` | Describes transaction scale, order conversion, payment, and average order value.            |
+| `single_metric_attribution_guard` | Prevents one-factor explanations of growth or decline.                         |
+| `top3_sku_product_mix_note`    | Limits top-SKU evidence to lightweight product-mix support.                       |
 
 ## What This Demo Supports
 
@@ -237,7 +229,6 @@ Future expansion should check whether candidate records are comparable by:
 - visibility and ranking profile;
 - entry and order-conversion profile;
 - activity involvement and activity intensity;
-- refund pressure;
 - top-SKU evidence;
 - data completeness;
 - repeated reporting-window stability.

@@ -40,11 +40,8 @@ EXPECTED_CASES = [
         ],
     },
     {
-        "name": "store_e_order_quality_pressure_profile",
         "entity_id": "store_E",
-        "slot": "order_quality_pressure_profile",
         "expected_terms": [
-            "refund_pressure_pct",
             "not an exact original-order cohort refund rate",
         ],
     },

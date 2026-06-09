@@ -7,7 +7,7 @@
 -- Boundary:
 --   This is not a new numbered demo.
 --   This is not a pairwise comparability gate.
---   This does not use valid_orders, invalid_orders, or invalid_order_pressure_pct.
+--   Coverage is based on dictionary-defined transaction, search, activity, and SKU fields.
 
 .mode csv
 .headers on
@@ -38,29 +38,6 @@ WITH panel AS (
         refund_orders_all_or_partial
     FROM store_period_panel_metrics
 ),
-coverage AS (
-    SELECT
-        store_id,
-        COUNT(*) AS observed_month_count,
-        MIN(period_month) AS first_observed_month,
-        MAX(period_month) AS last_observed_month,
-        GROUP_CONCAT(period_month, '|') AS observed_months,
-        ROUND(AVG(transaction_amount), 2) AS avg_transaction_amount,
-        ROUND(AVG(transaction_orders), 2) AS avg_transaction_orders,
-        ROUND(AVG(exposure_users), 2) AS avg_exposure_users,
-        ROUND(AVG(entry_users), 2) AS avg_entry_users,
-        ROUND(AVG(order_conversion_rate_pct), 2) AS avg_order_conversion_rate_pct,
-        ROUND(AVG(payment_conversion_rate_pct), 2) AS avg_payment_conversion_rate_pct,
-        ROUND(AVG(activity_cost_ratio_pct), 2) AS avg_activity_cost_ratio_pct,
-        ROUND(AVG(refund_amount), 2) AS avg_refund_amount,
-        CASE
-            WHEN COUNT(*) >= 3 THEN 'panel_ready_for_repeated_window_diagnostic'
-            ELSE 'panel_seed_only_needs_more_months'
-        END AS panel_coverage_flag,
-        'valid_orders, invalid_orders, and invalid_order_pressure_pct are excluded because their backend definitions are not clear enough for diagnostic use.' AS excluded_order_status_note
-    FROM panel
-    GROUP BY store_id
-)
 SELECT *
 FROM coverage
 ORDER BY store_id;

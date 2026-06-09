@@ -9,12 +9,12 @@ Return JSON only.
 Required output fields:
 
 - hypotheses
-  - hypothesis_id
-  - claim
-  - confidence
-  - supporting_factors
-  - weaknesses
-  - status
+ - hypothesis_id
+ - claim
+ - confidence
+ - supporting_factors
+ - weaknesses
+ - status
 
 Rules:
 

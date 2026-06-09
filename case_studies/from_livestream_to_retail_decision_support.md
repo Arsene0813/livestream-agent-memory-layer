@@ -13,7 +13,6 @@ In instant-retail operations, similar problems also appear. Store-level informat
 - `entry_users` / 入店人数
 - `order_conversion_rate_pct` / 下单转化率
 - `activity_cost` and `activity_cost_ratio_pct` / 活动成本与活动成本比
-- `refund_amount` and `refund_pressure_pct` / 退款金额与退款压力
 - `store_average_rank` and `search_average_rank` / 店铺曝光与搜索曝光排名
 - top-SKU evidence
 - regional and store-type differences
@@ -22,7 +21,7 @@ These data points are not just static records. They need to be interpreted over 
 
 ## Analytical Shift
 
-In my retail experience, I initially focused on improving search exposure. However, I gradually realized that exposure alone cannot support unlimited growth. When a store already has sufficient visibility, the bottleneck may shift to conversion rate, product mix, pricing, campaign cost, refund behavior, or cross-store replication.
+In my retail experience, I initially focused on improving search exposure. However, I gradually realized that exposure alone cannot support unlimited growth. When a store already has sufficient visibility, the bottleneck may shift to conversion rate, product mix, pricing, campaign cost, post-order behavior, or cross-store replication.
 
 ## Connection to This Memory Layer
 
@@ -40,9 +39,8 @@ This extension connects AI memory, structured data, retrieval, and business deci
 
 ## Example: How Demo 2 Uses Evidence Boundaries
 
-In Demo 2, a store with stronger transaction scale should not automatically be treated as a better operating model. If a store also shows refund-pressure or invalid-order-pressure signals, the memory fact should preserve those pressure fields together with the March 2026 period, source fields, and comparison-limit notes.
+In Demo 2, a store with stronger transaction scale should not automatically be treated as a better operating model. If a store also shows source-field or source-field-pressure signals, the memory fact should preserve those pressure fields together with the March 2026 period, source fields, and comparison-limit notes.
 
 That means a later answer can discuss the store's observed March 2026 profile, but it should not directly recommend copying that store's pricing, activity, SKU, or fulfillment approach to another store.
 
 This is the practical role of the memory layer in the retail setting: it stores not only the metric value, but also the reason why the value may not support a stronger cross-store conclusion.
-

@@ -22,7 +22,6 @@ It does not evaluate:
 | Visibility and entry profile retrieval | `store_a_visibility_entry_profile` |
 | Activity-lever profile retrieval | `store_a_activity_lever_profile` |
 | Transaction and conversion profile retrieval | `store_a_transaction_conversion_profile` |
-| Refund pressure retrieval | `store_a_order_quality_pressure_profile` |
 | Single-metric attribution guard | `single_metric_attribution_guard` |
 | Top-SKU evidence limitation | `top3_sku_mix_limited` |
 | Unknown-store stage refusal | `unknown_store_stage_refusal` |

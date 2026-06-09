@@ -8,7 +8,6 @@
       "entry_conversion",
       "order_conversion",
       "promotion_intensity",
-      "refund_pressure",
       "transaction_orders"
     ],
     "must_not_claim": [
@@ -32,7 +31,6 @@
       "region_context",
       "competition",
       "sku_structure",
-      "refund_pressure",
       "repeated_reporting_windows"
     ],
     "must_not_claim": [
@@ -54,7 +52,6 @@
       "platform_subsidy",
       "order_conversion",
       "payment_conversion",
-      "refund_pressure",
       "sku_margin_structure",
       "competitor_context"
     ],

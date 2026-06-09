@@ -115,7 +115,6 @@ diagnostics AS (
             CAST(m.refund_amount AS REAL)
             / NULLIF(CAST(m.transaction_amount AS REAL), 0) * 100,
             2
-        ) AS refund_pressure_pct,
 
         CASE
             WHEN s.top3_sku_transaction_amount IS NULL
@@ -186,7 +185,6 @@ SELECT
     refund_amount,
     full_refund_orders,
     refund_orders_all_or_partial,
-    refund_pressure_pct,
 
     business_district_rank,
 
@@ -234,10 +232,6 @@ SELECT
         END ||
 
         CASE
-            WHEN refund_pressure_pct >= 15
-            THEN 'high_refund_pressure; '
-            WHEN refund_pressure_pct >= 10
-            THEN 'moderate_refund_pressure; '
             ELSE ''
         END ||
 
@@ -247,7 +241,7 @@ SELECT
             ELSE ''
         END ||
 
-        'compare_with_region_store_type_activity_refund_limits'
+        'compare_with_region_store_type_activity_product_mix_limits'
     ) AS comparison_limit_notes
 FROM diagnostics
 ORDER BY store_id;

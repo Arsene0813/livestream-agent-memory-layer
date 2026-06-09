@@ -48,27 +48,9 @@ FACTOR_KEYWORDS: dict[str, list[str]] = {
         "商家补贴",
         "平台补贴"
     ],
-    "refund_pressure": [
-        "refund",
-        "refund_pressure",
-        "refund_pressure_pct",
-        "refund amount",
-        "refund orders",
-        "退款",
-        "退款金额",
-        "退款订单"
-    ],
     "transaction_orders": [
         "transaction_orders",
         "transaction orders",
-        "valid order",
-    ],
-    "intransaction_orders": [
-        "intransaction_orders",
-        "intransaction orders",
-        "refund order",
-        "cancelled",
-        "canceled"
     ],
     "same_reporting_period": [
         "same reporting period",
@@ -154,14 +136,6 @@ FACTOR_KEYWORDS: dict[str, list[str]] = {
         "产品",
         "销量",
         "销售额"
-    ],
-    "refund_pressure": [
-        "refund_pressure",
-        "refund_pressure_pct",
-        "intransaction_orders",
-        "refund order",
-        "intransaction orders",
-        "取消"
     ],
     "repeated_reporting_windows": [
         "repeated",
@@ -352,18 +326,6 @@ COMPARABILITY_SOURCE_OVERRIDES: dict[str, list[dict[str, str]]] = {
         {
             "source_path": "retail_ops/data/demo2_top_skus_by_transaction_amount.csv",
             "grounding_role": "source_table_evidence"
-        }
-    ],
-    "refund_pressure": [
-        {
-            "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-            "grounding_role": "quantitative_evidence"
-        }
-    ],
-    "refund_pressure": [
-        {
-            "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-            "grounding_role": "quantitative_evidence"
         }
     ],
     "repeated_reporting_windows": [

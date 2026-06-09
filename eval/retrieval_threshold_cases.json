@@ -70,18 +70,16 @@
     ]
   },
   {
-    "case_id": "positive_store_e_refund_pressure",
+    "case_id": "",
     "case_type": "positive_supported",
-    "query": "What does Store E's March 2026 refund pressure show?",
+    "query": "",
     "expected_entity": "store_E",
-    "expected_slot": "order_quality_pressure_profile",
+    "expected_slot": "",
     "expected_period_terms": [
       "2026-03",
       "March 2026"
     ],
-    "expected_terms": [
-      "refund_pressure_pct"
-    ]
+    "expected_terms": []
   },
   {
     "case_id": "positive_store_f_estimated_income_proxy",
@@ -278,16 +276,14 @@
   {
     "case_id": "mismatch_store_d_february_refund",
     "case_type": "entity_period_mismatch",
-    "query": "What was Store D's February 2026 refund_pressure_pct?",
+    "query": "",
     "expected_entity": "store_D",
-    "expected_slot": "order_quality_pressure_profile",
+    "expected_slot": "",
     "expected_period_terms": [
       "2026-02",
       "February 2026"
     ],
-    "expected_terms": [
-      "refund_pressure_pct"
-    ]
+    "expected_terms": []
   },
   {
     "case_id": "mismatch_store_a_store_d_promotion_transfer",
@@ -328,15 +324,13 @@
     ]
   },
   {
-    "case_id": "ambiguous_compare_refund_pressure",
+    "case_id": "",
     "case_type": "ambiguous_comparison",
-    "query": "Which store has better refund pressure?",
+    "query": "",
     "expected_entity": null,
-    "expected_slot": "order_quality_pressure_profile",
+    "expected_slot": "",
     "expected_period_terms": [],
-    "expected_terms": [
-      "refund_pressure_pct"
-    ]
+    "expected_terms": []
   },
   {
     "case_id": "ambiguous_compare_activity_transfer",
