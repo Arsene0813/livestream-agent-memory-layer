@@ -108,7 +108,7 @@
             "matched_terms": [
               "entry"
             ],
-            "text": "```text\n   valid_orders / entry_users\n   ```"
+            "text": "```text\n   transaction_orders / entry_users\n   ```"
           },
           {
             "line_start": 79,
@@ -285,7 +285,7 @@
             "matched_terms": [
               "refund"
             ],
-            "text": "Refund and invalid-order pressure improved in April compared with March."
+            "text": "Refund and refund-pressure evidence improved in April compared with March."
           }
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: refund_pressure.",
@@ -300,15 +300,15 @@
         ]
       },
       {
-        "factor_id": "valid_orders",
-        "evidence_id": "evidence_valid_orders",
+        "factor_id": "transaction_orders",
+        "evidence_id": "evidence_transaction_orders",
         "source_type": "markdown",
         "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
         "source_exists": true,
         "grounding_role": "default_evidence",
         "keywords_used": [
-          "valid_orders",
-          "valid orders",
+          "transaction_orders",
+          "transaction orders",
           "valid order",
           "有效订单",
           "有效订单数"
@@ -319,21 +319,21 @@
             "line_start": 68,
             "line_end": 70,
             "matched_terms": [
-              "valid_orders"
+              "transaction_orders"
             ],
-            "text": "```text\n   valid_orders / entry_users\n   ```"
+            "text": "```text\n   transaction_orders / entry_users\n   ```"
           },
           {
             "line_start": 154,
             "line_end": 156,
             "matched_terms": [
-              "valid orders",
+              "transaction orders",
               "valid order"
             ],
-            "text": "| Refund Pressure        |  17.01% |   6.63% | Down      |\n| Invalid Orders         |      32 |      29 | Down      |\n| Invalid-Order Pressure |  13.62% |   7.99% | Down      |"
+            "text": "| Refund Pressure        |  17.01% |   6.63% | Down      |\n| Invalid Orders         |      32 |      29 | Down      |\n| Refund Pressure |  13.62% |   7.99% | Down      |"
           }
         ],
-        "original_claim_supported": "Provides context needed to evaluate factor: valid_orders.",
+        "original_claim_supported": "Provides context needed to evaluate factor: transaction_orders.",
         "original_limitations": [
           "Deterministic mock pipeline only.",
           "No live retrieval is performed in this step."
@@ -345,16 +345,16 @@
         ]
       },
       {
-        "factor_id": "invalid_orders",
-        "evidence_id": "evidence_invalid_orders",
+        "factor_id": "intransaction_orders",
+        "evidence_id": "evidence_intransaction_orders",
         "source_type": "markdown",
         "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
         "source_exists": true,
         "grounding_role": "default_evidence",
         "keywords_used": [
-          "invalid_orders",
-          "invalid orders",
-          "invalid order",
+          "intransaction_orders",
+          "intransaction orders",
+          "refund order",
           "无效订单",
           "无效订单数",
           "cancelled",
@@ -366,13 +366,13 @@
             "line_start": 154,
             "line_end": 156,
             "matched_terms": [
-              "invalid orders",
-              "invalid order"
+              "intransaction orders",
+              "refund order"
             ],
-            "text": "| Refund Pressure        |  17.01% |   6.63% | Down      |\n| Invalid Orders         |      32 |      29 | Down      |\n| Invalid-Order Pressure |  13.62% |   7.99% | Down      |"
+            "text": "| Refund Pressure        |  17.01% |   6.63% | Down      |\n| Invalid Orders         |      32 |      29 | Down      |\n| Refund Pressure |  13.62% |   7.99% | Down      |"
           }
         ],
-        "original_claim_supported": "Provides context needed to evaluate factor: invalid_orders.",
+        "original_claim_supported": "Provides context needed to evaluate factor: intransaction_orders.",
         "original_limitations": [
           "Deterministic mock pipeline only.",
           "No live retrieval is performed in this step."

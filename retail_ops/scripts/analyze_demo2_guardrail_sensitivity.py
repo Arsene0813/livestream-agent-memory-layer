@@ -1,187 +1,166 @@
+#!/usr/bin/env python3
+"""Analyze Demo 2 guardrail sensitivity without unclear order-status fields.
+
+This script intentionally excludes valid_orders, invalid_orders, and
+invalid_order_pressure_pct. Demo 2 guardrail sensitivity is based only on
+fields that remain in the current field contract:
+
+- activity_order_share_pct
+- refund_pressure_pct
+- top3_sku_transaction_amount_share_pct
+- comparison_scope_flag
+- comparison_limit_notes
+"""
+
 from __future__ import annotations
 
 import csv
 from pathlib import Path
-from typing import Any
-
-ROOT = Path(__file__).resolve().parents[2]
-
-INPUT_PATH = ROOT / "retail_ops" / "outputs" / "demo2_cross_store_comparability_output.csv"
-OUTPUT_CSV_PATH = ROOT / "retail_ops" / "outputs" / "demo2_guardrail_sensitivity_summary.csv"
-OUTPUT_TXT_PATH = ROOT / "retail_ops" / "outputs" / "demo2_guardrail_sensitivity_result.txt"
 
 
+INPUT_PATH = Path("retail_ops/outputs/demo2_cross_store_comparability_output.csv")
+OUTPUT_PATH = Path("retail_ops/outputs/demo2_guardrail_sensitivity_summary.csv")
 
-def repo_rel(path: Path) -> str:
-    """Return a repository-relative path for reproducible committed outputs."""
-    return path.relative_to(ROOT).as_posix()
-
-BASE_THRESHOLDS = {
-    "activity_high": 80.0,
-    "activity_moderate": 65.0,
-    "refund_high": 15.0,
-    "refund_moderate": 10.0,
-    "invalid_high": 12.0,
-    "invalid_moderate": 8.0,
-    "top3_sku_share_high": 25.0,
-}
-
-
-SCENARIOS = {
-    "looser_minus_5pp": -5.0,
-    "baseline_sql_thresholds": 0.0,
-    "stricter_plus_5pp": 5.0,
-}
-
-
-REQUIRED_COLUMNS = {
+REQUIRED_COLUMNS = [
     "store_id",
     "activity_order_share_pct",
     "refund_pressure_pct",
-    "invalid_order_pressure_pct",
     "top3_sku_transaction_amount_share_pct",
-}
+    "comparison_scope_flag",
+    "comparison_limit_notes",
+]
 
 
-def parse_float(row: dict[str, str], field: str) -> float | None:
-    raw = (row.get(field) or "").strip()
-    if raw == "":
-        return None
-    try:
-        return float(raw)
-    except ValueError:
-        return None
+THRESHOLD_SETS = [
+    {
+        "scenario": "current",
+        "activity_high": 80.0,
+        "activity_moderate": 60.0,
+        "refund_high": 15.0,
+        "refund_moderate": 10.0,
+        "top3_high": 25.0,
+        "top3_moderate": 15.0,
+    },
+    {
+        "scenario": "stricter",
+        "activity_high": 75.0,
+        "activity_moderate": 55.0,
+        "refund_high": 12.0,
+        "refund_moderate": 8.0,
+        "top3_high": 22.0,
+        "top3_moderate": 12.0,
+    },
+    {
+        "scenario": "looser",
+        "activity_high": 85.0,
+        "activity_moderate": 65.0,
+        "refund_high": 18.0,
+        "refund_moderate": 12.0,
+        "top3_high": 30.0,
+        "top3_moderate": 18.0,
+    },
+]
 
 
-def shifted_threshold(name: str, shift: float) -> float:
-    value = BASE_THRESHOLDS[name] + shift
-    return max(value, 0.0)
+def parse_float(row: dict[str, str], key: str) -> float:
+    value = row.get(key, "")
+    if value == "":
+        return 0.0
+    return float(value)
 
 
-def guardrail_notes(row: dict[str, str], shift: float) -> list[str]:
-    notes: list[str] = []
-    activity_share = parse_float(row, "activity_order_share_pct")
-    refund_pressure = parse_float(row, "refund_pressure_pct")
-    invalid_pressure = parse_float(row, "invalid_order_pressure_pct")
-    top3_share = parse_float(row, "top3_sku_transaction_amount_share_pct")
-    if activity_share is not None:
-        if activity_share >= shifted_threshold("activity_high", shift):
-            notes.append("high_activity_involvement")
-        elif activity_share >= shifted_threshold("activity_moderate", shift):
-            notes.append("moderate_activity_involvement")
-
-    if refund_pressure is not None:
-        if refund_pressure >= shifted_threshold("refund_high", shift):
-            notes.append("high_refund_pressure")
-        elif refund_pressure >= shifted_threshold("refund_moderate", shift):
-            notes.append("moderate_refund_pressure")
-
-    if invalid_pressure is not None:
-        if invalid_pressure >= shifted_threshold("invalid_high", shift):
-            notes.append("high_invalid_order_pressure")
-        elif invalid_pressure >= shifted_threshold("invalid_moderate", shift):
-            notes.append("moderate_invalid_order_pressure")
-
-    if (
-        top3_share is not None
-        and top3_share >= shifted_threshold("top3_sku_share_high", shift)
-    ):
-        notes.append("top3_sku_amount_concentration")
-
-    if not notes:
-        notes.append("no_threshold_guardrail_triggered")
-
-    return notes
+def classify(value: float, high: float, moderate: float, name: str) -> str | None:
+    if value >= high:
+        return f"high_{name}"
+    if value >= moderate:
+        return f"moderate_{name}"
+    return None
 
 
-def load_rows() -> list[dict[str, str]]:
+def main() -> None:
     if not INPUT_PATH.exists():
-        raise FileNotFoundError(f"Missing input file: {repo_rel(INPUT_PATH)}")
+        raise SystemExit(f"Missing Demo 2 output: {INPUT_PATH}")
 
-    with INPUT_PATH.open("r", encoding="utf-8-sig", newline="") as f:
+    with INPUT_PATH.open(newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
-        headers = set(reader.fieldnames or [])
-        missing = sorted(REQUIRED_COLUMNS - headers)
-        if missing:
-            raise ValueError(f"Missing required columns in {repo_rel(INPUT_PATH)}: {missing}")
-        return list(reader)
+        headers = reader.fieldnames or []
+        rows = list(reader)
 
+    missing = [col for col in REQUIRED_COLUMNS if col not in headers]
+    if missing:
+        raise SystemExit(f"Missing required columns in Demo 2 output: {missing}")
 
-def main() -> int:
-    rows = load_rows()
+    forbidden = [
+        "valid_orders",
+        "invalid_orders",
+        "invalid_order_pressure_pct",
+    ]
+    present_forbidden = [col for col in forbidden if col in headers]
+    if present_forbidden:
+        raise SystemExit(
+            "Forbidden unclear order-status fields remain in Demo 2 output: "
+            f"{present_forbidden}"
+        )
 
-    output_rows: list[dict[str, Any]] = []
-    fragile_store_ids: set[str] = set()
+    output_rows: list[dict[str, str]] = []
 
-    baseline_by_store = {
-        row["store_id"]: guardrail_notes(row, SCENARIOS["baseline_sql_thresholds"])
-        for row in rows
-    }
+    for scenario in THRESHOLD_SETS:
+        for row in rows:
+            notes: list[str] = []
 
-    for row in rows:
-        store_id = row["store_id"]
-        baseline_notes = baseline_by_store[store_id]
+            activity = parse_float(row, "activity_order_share_pct")
+            refund = parse_float(row, "refund_pressure_pct")
+            top3 = parse_float(row, "top3_sku_transaction_amount_share_pct")
 
-        for scenario_name, shift in SCENARIOS.items():
-            notes = guardrail_notes(row, shift)
-            changed = notes != baseline_notes
+            for flag in [
+                classify(activity, scenario["activity_high"], scenario["activity_moderate"], "activity_involvement"),
+                classify(refund, scenario["refund_high"], scenario["refund_moderate"], "refund_pressure"),
+                classify(top3, scenario["top3_high"], scenario["top3_moderate"], "top3_sku_concentration"),
+            ]:
+                if flag:
+                    notes.append(flag)
 
-            if scenario_name != "baseline_sql_thresholds" and changed:
-                fragile_store_ids.add(store_id)
+            if notes:
+                notes.append("compare_with_region_store_type_activity_refund_limits")
+            else:
+                notes.append("same_period_diagnostic_ready")
 
             output_rows.append(
                 {
-                    "store_id": store_id,
-                    "scenario": scenario_name,
-                    "threshold_shift_pp": shift,
-                    "activity_order_share_pct": row.get("activity_order_share_pct", ""),
-                    "refund_pressure_pct": row.get("refund_pressure_pct", ""),
-                    "invalid_order_pressure_pct": row.get("invalid_order_pressure_pct", ""),
-                    "top3_sku_transaction_amount_share_pct": row.get(
-                        "top3_sku_transaction_amount_share_pct", ""
-                    ),
-                    "triggered_guardrail_notes": ";".join(notes),
-                    "changed_from_baseline": "true" if changed else "false",
+                    "scenario": scenario["scenario"],
+                    "store_id": row["store_id"],
+                    "activity_order_share_pct": f"{activity:.2f}",
+                    "refund_pressure_pct": f"{refund:.2f}",
+                    "top3_sku_transaction_amount_share_pct": f"{top3:.2f}",
+                    "sensitivity_limit_notes": "; ".join(notes),
+                    "current_comparison_scope_flag": row["comparison_scope_flag"],
+                    "current_comparison_limit_notes": row["comparison_limit_notes"],
                 }
             )
 
-    OUTPUT_CSV_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with OUTPUT_CSV_PATH.open("w", encoding="utf-8", newline="") as f:
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+    with OUTPUT_PATH.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(
             f,
             fieldnames=[
-                "store_id",
                 "scenario",
-                "threshold_shift_pp",
-                            "activity_order_share_pct",
+                "store_id",
+                "activity_order_share_pct",
                 "refund_pressure_pct",
-                "invalid_order_pressure_pct",
                 "top3_sku_transaction_amount_share_pct",
-                "triggered_guardrail_notes",
-                "changed_from_baseline",
+                "sensitivity_limit_notes",
+                "current_comparison_scope_flag",
+                "current_comparison_limit_notes",
             ],
         )
         writer.writeheader()
         writer.writerows(output_rows)
 
-    lines = [
-        "Demo 2 guardrail sensitivity check completed.",
-        f"Input: {repo_rel(INPUT_PATH)}",
-        f"Output CSV: {repo_rel(OUTPUT_CSV_PATH)}",
-        "",
-        "Interpretation:",
-        "- This check does not optimize thresholds.",
-        "- It tests whether current Demo 2 guardrail notes are fragile under +/- 5 percentage-point threshold shifts.",
-        "- Any changed store should be treated as threshold-sensitive evidence, not as a stable peer-comparison rule.",
-        "",
-        f"Stores with changed guardrail notes under sensitivity scenarios: {', '.join(sorted(fragile_store_ids)) if fragile_store_ids else 'none'}",
-    ]
-
-    OUTPUT_TXT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
-
-    print("\n".join(lines))
-    return 0
+    print("[OK] Demo 2 guardrail sensitivity summary written")
+    print(f"[OK] Output: {OUTPUT_PATH}")
+    print("[OK] Unclear order-status fields are excluded")
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    main()

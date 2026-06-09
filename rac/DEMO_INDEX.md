@@ -77,7 +77,7 @@ Expected quality-gate result:
 
 | Case | Question | What It Demonstrates | Grounded Report |
 |---|---|---|---|
-| rac_store_a_attribution_001 | Can Store A's April growth be attributed to search exposure? | Avoids single-cause attribution and considers traffic, conversion, promotion, refunds, valid orders, and invalid orders. | rac/outputs/grounded_rac_store_a_attribution_001.md |
+| rac_store_a_attribution_001 | Can Store A's April growth be attributed to search exposure? | Avoids single-cause attribution and considers traffic, conversion, promotion, refunds, SKU context, and evidence limits. | rac/outputs/grounded_rac_store_a_attribution_001.md |
 | rac_cross_store_comparability_001 | Are Stores B-F directly comparable in March 2026? | Routes quantitative factors to Demo 2 output evidence and routes unavailable comparability requirements to explicit boundary evidence. It does not implement a pairwise comparability gate. | rac/outputs/grounded_rac_cross_store_comparability_001.md |
 | rac_promotion_strategy_001 | What should be checked before changing promotions for a store? | Prevents action recommendations based only on transaction amount and forces cost, conversion, refund, margin, and competitor checks. | rac/outputs/grounded_rac_promotion_strategy_001.md |
 | rac_system_design_001 | How should the RAC system be connected to the existing memory layer? | Shows how the scaffold can sit above typed memory as a reasoning layer instead of replacing existing endpoints. | rac/outputs/grounded_rac_system_design_001.md |
@@ -101,7 +101,7 @@ Required source routing:
 | order_volume | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence |
 | transaction_amount | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence |
 | refund_pressure | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence |
-| invalid_order_pressure | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence |
+
 | competition | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence |
 | repeated_reporting_windows | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence |
 

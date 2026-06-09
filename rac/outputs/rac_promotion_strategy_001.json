@@ -61,11 +61,11 @@
       ]
     },
     {
-      "factor_id": "invalid_order_pressure",
-      "name": "Invalid order pressure",
-      "description": "Invalid orders may indicate fulfillment or operational issues.",
+      "factor_id": "refund_pressure",
+      "name": "Refund order pressure",
+      "description": "Intransaction orders may indicate fulfillment or operational issues.",
       "evidence_needed": [
-        "invalid order count"
+        "refund order count"
       ]
     },
     {
@@ -152,7 +152,7 @@
       "evidence_status": "partially_supported"
     },
     {
-      "factor_id": "invalid_order_pressure",
+      "factor_id": "refund_pressure",
       "weight": 0.6,
       "weight_bucket": "default",
       "weight_reason": "Potentially relevant but requires stronger evidence.",
@@ -251,10 +251,10 @@
       ]
     },
     {
-      "evidence_id": "evidence_invalid_order_pressure",
+      "evidence_id": "evidence_refund_pressure",
       "source_type": "markdown",
       "source_path": "retail_ops/data/DATA_DICTIONARY.md",
-      "claim_supported": "Provides context needed to evaluate factor: invalid_order_pressure.",
+      "claim_supported": "Provides context needed to evaluate factor: refund_pressure.",
       "limitations": [
         "Deterministic mock pipeline only.",
         "No live retrieval is performed in this step."
@@ -284,7 +284,7 @@
   "hypotheses": [
     {
       "hypothesis_id": "H1",
-      "claim": "Promotion decisions should be checked against cost, conversion, refund, invalid order, margin, and competitor context.",
+      "claim": "Promotion decisions should be checked against cost, conversion, refund, SKU structure, margin, and competitor context.",
       "confidence": 0.84,
       "supporting_factors": [
         "activity_orders",
@@ -292,7 +292,7 @@
         "order_conversion",
         "payment_conversion",
         "refund_pressure",
-        "invalid_order_pressure",
+        "refund_pressure",
         "sku_margin_structure"
       ],
       "weaknesses": [
@@ -307,7 +307,7 @@
       "supporting_factors": [
         "activity_cost",
         "refund_pressure",
-        "invalid_order_pressure"
+        "refund_pressure"
       ],
       "weaknesses": [
         "The mock pipeline does not calculate real cost trend."
@@ -339,7 +339,7 @@
   },
   "belief_update": {
     "belief_id": "promotion_changes_require_multi_factor_check",
-    "claim": "Promotion changes should be checked against cost, conversion, refund, invalid order, margin, and competitor context.",
+    "claim": "Promotion changes should be checked against cost, conversion, refund, SKU structure, margin, and competitor context.",
     "confidence": 0.8,
     "status": "active",
     "validity_conditions": [
@@ -351,5 +351,5 @@
       "One reporting window is insufficient for robust action attribution."
     ]
   },
-  "final_report": "# Answer\n\n## 1. Direct Answer\n\nPromotion changes should be checked against cost, conversion, refund, invalid order, margin, and competitor context.\n\nThis is a deterministic mock result. It proves the workflow can run end-to-end, but it does not claim live retrieval or autonomous world modeling.\n\n## 2. Question Type\n\n- Question type: strategic_recommendation\n- Domain: retail_operations\n\n## 3. Relevant Factors Considered\n\n| Factor | Weight | Evidence Status | Why It Matters |\n|---|---:|---|---|\n| activity_orders | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |\n| activity_cost | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |\n| merchant_subsidy | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |\n| platform_subsidy | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |\n| order_conversion | 0.85 | partially_supported | Central to avoiding overconfident or misleading conclusions. |\n| payment_conversion | 0.72 | partially_supported | Important context but not sufficient on its own. |\n| refund_pressure | 0.85 | partially_supported | Central to avoiding overconfident or misleading conclusions. |\n| invalid_order_pressure | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |\n| sku_margin_structure | 0.85 | partially_supported | Central to avoiding overconfident or misleading conclusions. |\n| competitor_context | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |\n\n## 4. Evidence Used\n\n| Evidence | Source | Supports | Limitations |\n|---|---|---|---|\n| evidence_activity_orders | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: activity_orders. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_activity_cost | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: activity_cost. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_merchant_subsidy | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: merchant_subsidy. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: platform_subsidy. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_order_conversion | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: order_conversion. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_payment_conversion | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: payment_conversion. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_refund_pressure | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: refund_pressure. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_invalid_order_pressure | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: invalid_order_pressure. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_sku_margin_structure | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: sku_margin_structure. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_competitor_context | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: competitor_context. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n\n## 5. Competing Hypotheses\n\nHypothesis confidence values are deterministic scenario-template values assigned by `generate_hypotheses(question_type)` in `rac/src/mock_pipeline.py`. They are not learned probabilities, calibrated likelihoods, or direct calculations from observed Meituan metric tables.\n\n| Hypothesis | Confidence | Status | Weakness |\n|---|---:|---|---|\n| Promotion decisions should be checked against cost, conversion, refund, invalid order, margin, and competitor context. | 0.84 | strong | Final action still requires real margin and competitor evidence. |\n| Promotion changes may be risky when activity cost and refund pressure rise together. | 0.68 | plausible | The mock pipeline does not calculate real cost trend. |\n\n## 6. Critic Findings\n\n- [high] The mock pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.\n- [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.\n- [high] Promotion recommendations require margin and competitor context. Recommendation: Avoid final action recommendations without these checks.\n\n## 7. Final Judgment\n\nPromotion changes should be checked against cost, conversion, refund, invalid order, margin, and competitor context.\n\nThe conclusion is conservative because this mock pipeline uses structured placeholder evidence and does not perform live retrieval.\n\n## 8. Scenario-Template Confidence\n\n0.80\n\nHow this value is assigned:\n\n- Source: `build_belief_update(question_type)` in `rac/src/mock_pipeline.py`.\n- Rule: deterministic case-template assignment by question type.\n- It is not calculated from evidence-packet counts, factor weights, or observed metric tables.\n- It is not learned from historical data.\n- It is not a calibrated probability or Bayesian posterior.\n- It is not a causal confidence score or business-success probability.\n- It is kept only to show how the deterministic mock scaffold carries a review-state value.\n- Grounded reports use a formula-based `Evidence-Coverage Score` instead.\n\n## 9. What Cannot Be Concluded\n\n- The mock pipeline does not compute real margins.\n- Competitor data may be incomplete.\n- One reporting window is insufficient for robust action attribution.\n\n## 10. Review-State Update\n\n- review_state_id: promotion_changes_require_multi_factor_check\n- status: active\n- validity_conditions:\n  - Retail operations decision-support questions.\n"
+  "final_report": "# Answer\n\n## 1. Direct Answer\n\nPromotion changes should be checked against cost, conversion, refund, SKU structure, margin, and competitor context.\n\nThis is a deterministic mock result. It proves the workflow can run end-to-end, but it does not claim live retrieval or autonomous world modeling.\n\n## 2. Question Type\n\n- Question type: strategic_recommendation\n- Domain: retail_operations\n\n## 3. Relevant Factors Considered\n\n| Factor | Weight | Evidence Status | Why It Matters |\n|---|---:|---|---|\n| activity_orders | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |\n| activity_cost | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |\n| merchant_subsidy | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |\n| platform_subsidy | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |\n| order_conversion | 0.85 | partially_supported | Central to avoiding overconfident or misleading conclusions. |\n| payment_conversion | 0.72 | partially_supported | Important context but not sufficient on its own. |\n| refund_pressure | 0.85 | partially_supported | Central to avoiding overconfident or misleading conclusions. |\n| refund_pressure | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |\n| sku_margin_structure | 0.85 | partially_supported | Central to avoiding overconfident or misleading conclusions. |\n| competitor_context | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |\n\n## 4. Evidence Used\n\n| Evidence | Source | Supports | Limitations |\n|---|---|---|---|\n| evidence_activity_orders | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: activity_orders. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_activity_cost | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: activity_cost. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_merchant_subsidy | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: merchant_subsidy. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: platform_subsidy. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_order_conversion | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: order_conversion. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_payment_conversion | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: payment_conversion. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_refund_pressure | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: refund_pressure. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_refund_pressure | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: refund_pressure. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_sku_margin_structure | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: sku_margin_structure. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n| evidence_competitor_context | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: competitor_context. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |\n\n## 5. Competing Hypotheses\n\nHypothesis confidence values are deterministic scenario-template values assigned by `generate_hypotheses(question_type)` in `rac/src/mock_pipeline.py`. They are not learned probabilities, calibrated likelihoods, or direct calculations from observed Meituan metric tables.\n\n| Hypothesis | Confidence | Status | Weakness |\n|---|---:|---|---|\n| Promotion decisions should be checked against cost, conversion, refund, SKU structure, margin, and competitor context. | 0.84 | strong | Final action still requires real margin and competitor evidence. |\n| Promotion changes may be risky when activity cost and refund pressure rise together. | 0.68 | plausible | The mock pipeline does not calculate real cost trend. |\n\n## 6. Critic Findings\n\n- [high] The mock pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.\n- [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.\n- [high] Promotion recommendations require margin and competitor context. Recommendation: Avoid final action recommendations without these checks.\n\n## 7. Final Judgment\n\nPromotion changes should be checked against cost, conversion, refund, SKU structure, margin, and competitor context.\n\nThe conclusion is conservative because this mock pipeline uses structured placeholder evidence and does not perform live retrieval.\n\n## 8. Scenario-Template Confidence\n\n0.80\n\nHow this value is assigned:\n\n- Source: `build_belief_update(question_type)` in `rac/src/mock_pipeline.py`.\n- Rule: deterministic case-template assignment by question type.\n- It is not calculated from evidence-packet counts, factor weights, or observed metric tables.\n- It is not learned from historical data.\n- It is not a calibrated probability or Bayesian posterior.\n- It is not a causal confidence score or business-success probability.\n- It is kept only to show how the deterministic mock scaffold carries a review-state value.\n- Grounded reports use a formula-based `Evidence-Coverage Score` instead.\n\n## 9. What Cannot Be Concluded\n\n- The mock pipeline does not compute real margins.\n- Competitor data may be incomplete.\n- One reporting window is insufficient for robust action attribution.\n\n## 10. Review-State Update\n\n- review_state_id: promotion_changes_require_multi_factor_check\n- status: active\n- validity_conditions:\n  - Retail operations decision-support questions.\n"
 }

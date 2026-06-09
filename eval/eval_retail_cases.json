@@ -43,7 +43,7 @@
     },
     {
         "name": "store_a_order_quality_pressure_profile",
-        "message": "Did Store A's refund and invalid-order pressure improve in April?",
+        "message": "Did Store A's refund pressure improve in April?",
         "entity_id": "store_A",
         "should_support": true,
         "expected_slots": [

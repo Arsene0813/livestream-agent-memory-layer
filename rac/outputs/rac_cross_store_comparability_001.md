@@ -24,7 +24,7 @@ This is a deterministic mock result. It proves the workflow can run end-to-end, 
 | competition | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |
 | sku_structure | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |
 | refund_pressure | 0.85 | partially_supported | Central to avoiding overconfident or misleading conclusions. |
-| invalid_order_pressure | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |
+| refund_pressure | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |
 | repeated_reporting_windows | 0.60 | partially_supported | Potentially relevant but requires stronger evidence. |
 
 ## 4. Evidence Used
@@ -40,7 +40,7 @@ This is a deterministic mock result. It proves the workflow can run end-to-end, 
 | evidence_competition | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: competition. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
 | evidence_sku_structure | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: sku_structure. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
 | evidence_refund_pressure | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: refund_pressure. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_invalid_order_pressure | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: invalid_order_pressure. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
+| evidence_refund_pressure | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: refund_pressure. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
 | evidence_repeated_reporting_windows | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: repeated_reporting_windows. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
 
 ## 5. Competing Hypotheses

@@ -106,7 +106,7 @@ async def run_checks() -> int:
     async def case_store_e_order_quality_pressure() -> None:
         name = "Store E order-quality pressure endpoint behavior"
         result = await ask(
-            message="Describe Store E refund and invalid order pressure in Demo 2.",
+            message="Describe Store E refund pressure in Demo 2.",
             entity_id="store_E",
         )
         require_supported(name, result)

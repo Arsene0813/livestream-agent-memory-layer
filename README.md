@@ -300,3 +300,21 @@ The retail decision-support path now has three implemented evidence layers:
 3. B-F repeated-window panel coverage and descriptive summary for 2026-02 to 2026-04.
 
 The third layer is not a pairwise comparability gate. It is a preparation step: before deciding which stores can be compared under which conditions, the project first checks whether repeated monthly evidence exists and whether the fields remain aligned with `retail_ops/data/DATA_DICTIONARY.md`.
+
+<!-- RAC_EXTENSION_START -->
+## Structured Reasoning Scaffold: Factor-Aware Grounded Review
+
+This repository also includes a structured reasoning scaffold under `rac/`. It is designed for question decomposition, factor expansion, factor weighting, local evidence grounding, competing hypotheses, critique, fact check, and confidence and limitations review.
+
+The RAC scaffold is deterministic only. It makes no LLM calls, uses no Qdrant retrieval, has no live Meituan backend access, implements no completed pairwise comparability gate, and provides no causal proof from observational store metrics.
+
+Key review files:
+
+- `rac/DEMO_INDEX.md`
+- `rac/outputs/grounded_rac_store_a_attribution_001.md`
+- `rac/outputs/grounded_rac_cross_store_comparability_001.md`
+- `rac/outputs/grounded_quality_summary.md`
+- `rac/scripts/run_grounded_pipeline.py`
+- `rac/scripts/validate_grounded_quality_gate.py`
+
+<!-- RAC_EXTENSION_END -->

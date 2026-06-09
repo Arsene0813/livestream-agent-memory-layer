@@ -19,8 +19,6 @@ WITH store_monthly_metrics AS (
 
         m.transaction_amount,
         m.transaction_orders,
-        m.valid_orders,
-        m.invalid_orders,
         m.estimated_income_proxy,
         m.average_order_value,
 
@@ -90,8 +88,6 @@ derived_metrics AS (
 
         transaction_amount,
         transaction_orders,
-        valid_orders,
-        invalid_orders,
         estimated_income_proxy,
         average_order_value,
 
@@ -153,8 +149,6 @@ derived_metrics AS (
         ROUND(100.0 * refund_orders_all_or_partial / NULLIF(transaction_orders, 0), 2)
             AS refund_order_pressure_pct,
 
-        ROUND(100.0 * invalid_orders / NULLIF(valid_orders + invalid_orders, 0), 2)
-            AS invalid_order_pressure_pct,
 
         ROUND(100.0 * top3_sku_transaction_amount / NULLIF(transaction_amount, 0), 2)
             AS top3_sku_transaction_amount_share_pct
@@ -210,8 +204,6 @@ final_output AS (
 
         transaction_amount,
         transaction_orders,
-        valid_orders,
-        invalid_orders,
         estimated_income_proxy,
         average_order_value,
 
@@ -261,7 +253,6 @@ final_output AS (
 
         refund_pressure_pct,
         refund_order_pressure_pct,
-        invalid_order_pressure_pct,
 
         top3_sku_transaction_amount_share_pct,
 
