@@ -19,8 +19,6 @@ EXPECTED_METRICS_FIELDS = [
     "store_type",
     "transaction_amount",
     "transaction_orders",
-    "valid_orders",
-    "invalid_orders",
     "estimated_income_proxy",
     "average_order_value",
     "exposure_users",

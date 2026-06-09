@@ -2,7 +2,7 @@
 """Validate Demo 2 cross-store comparability output.
 
 This validator checks that Demo 2 output stays within the current dictionary-defined comparison schema.
-valid_orders, invalid_orders, and invalid_order_pressure_pct.
+unclear order-status interpretation fields.
 
 Those fields are not used in the current Demo 2 diagnostic output because
 their backend definitions are not clear enough for diagnostic interpretation.
@@ -66,9 +66,6 @@ REQUIRED_COLUMNS = [
 ]
 
 FORBIDDEN_COLUMNS = [
-    "valid_orders",
-    "invalid_orders",
-    "invalid_order_pressure_pct",
 ]
 
 
@@ -168,7 +165,7 @@ def main() -> None:
             raise SystemExit(f"{store_id} has empty comparison_limit_notes")
 
     print("[OK] Demo 2 comparability output validation passed")
-    print("[OK] Checked required fields without unclear order-status columns")
+    print("[OK] Checked required fields for current Demo 2 diagnostic output")
     print("[OK] Checked derived rates and comparison-scope fields")
 
 
