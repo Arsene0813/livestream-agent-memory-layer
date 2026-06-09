@@ -163,31 +163,24 @@
     "period_label": "2026-04",
     "period_start": "2026-04-01",
     "period_end": "2026-04-30",
-    "value": "Store A's refund and invalid-order pressure improved in the latest observed month, April 2026, compared with the previous observed month, March 2026.\nRefund amount over transaction amount fell from 17.01% to 6.63%, and invalid-order pressure fell from 13.62% to 7.99%.\nThis is an order-quality pressure signal, not proof that customer satisfaction definitively improved.",
+    "value": "Store A's refund pressure improved in the latest observed month, April 2026, compared with the previous observed month, March 2026.\nRefund amount over transaction amount fell from 17.01% to 6.63%.\nThis is a refund-pressure signal, not proof that customer satisfaction definitively improved.",
     "observed_values": {
       "2026-03": {
         "refund_amount": 1097.97,
         "transaction_amount": 6454.84,
-        "refund_pressure_pct": 17.01,
-        "invalid_orders": 32,
-        "invalid_order_pressure_pct": 13.62
+        "refund_pressure_pct": 17.01
       },
       "2026-04": {
         "refund_amount": 602.26,
         "transaction_amount": 9083.72,
-        "refund_pressure_pct": 6.63,
-        "invalid_orders": 29,
-        "invalid_order_pressure_pct": 7.99
+        "refund_pressure_pct": 6.63
       }
     },
-    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; invalid_order_pressure_pct = invalid_orders / (valid_orders + invalid_orders) * 100",
+    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100",
     "source_fields": [
       "refund_amount",
       "transaction_amount",
       "refund_pressure_pct",
-      "invalid_orders",
-      "valid_orders",
-      "invalid_order_pressure_pct",
       "refund_pressure_improved"
     ],
     "confidence": "medium",
@@ -209,7 +202,7 @@
     "period_label": "2026-02_to_2026-04",
     "period_start": "2026-02-01",
     "period_end": "2026-04-30",
-    "value": "Store A's month-over-month changes should not be explained by one metric alone. Transaction amount, order volume, exposure, entry, ranking, activity cost, order conversion, average order value, refund pressure, invalid-order pressure, and top-SKU evidence can move in different directions. The current demo supports structured comparison of these signals, not causal attribution.",
+    "value": "Store A's month-over-month changes should not be explained by one metric alone. Transaction amount, order volume, exposure, entry, ranking, activity cost, order conversion, average order value, refund pressure and top-SKU evidence can move in different directions. The current demo supports structured comparison of these signals, not causal attribution.",
     "observed_values": {
       "2026-04": {
         "transaction_amount_mom_pct": 40.73,
@@ -218,8 +211,7 @@
         "search_entry_users_mom_pct": 88.54,
         "average_order_value_mom_pct": -13.57,
         "refund_amount_mom_pct": -45.15,
-        "refund_pressure_pct": 6.63,
-        "invalid_order_pressure_pct": 7.99
+        "refund_pressure_pct": 6.63
       }
     },
     "calculation": "Decision guard based on multiple movement signals rather than a single threshold or one-factor explanation.",
@@ -235,7 +227,6 @@
       "order_conversion_rate_pct",
       "average_order_value",
       "refund_pressure_pct",
-      "invalid_order_pressure_pct",
       "top3_sku_transaction_amount_share_pct"
     ],
     "confidence": "high",

@@ -18,7 +18,7 @@ For standardized instant-retail products, store competition is organized around 
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
-Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on store state, local competition, activity intensity, order quality, product mix, and reporting-window alignment.
+Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on store state, local competition, activity intensity, refund pressure, product mix, and reporting-window alignment.
 
 The goal is to build a more reliable evidence-based framework for multi-store operational analysis, so that future operating decisions can be made with clearer data boundaries as the business expands.
 
@@ -44,7 +44,7 @@ A future pairwise comparability gate would judge whether two store-period record
 | Data dictionary | Preserves Meituan-style backend metric meanings and canonical field names. | Manual normalization of selected backend evidence; field meanings follow `retail_ops/data/DATA_DICTIONARY.md`. |
 | Retail Demo 1 | Store A month-over-month diagnostic across February, March, and April 2026. | Multi-metric interpretation rather than single-cause monthly explanation. |
 | Retail Demo 2 | Same-period B-F diagnostic for March 2026. | Same-period diagnostic evidence before pairwise comparability gating; not peer selection, store ranking, or strategy-transfer approval. |
-| SQL diagnostics | Derives limited diagnostic fields such as search-entry structure, activity involvement, refund pressure, invalid-order pressure, and top-SKU concentration. | Diagnostic structuring only; current derived fields are not optimized business cutoffs or final decision rules. |
+| SQL diagnostics | Derives limited diagnostic fields such as search-entry structure, activity involvement, refund pressure, and top-SKU concentration. | Diagnostic structuring only; current derived fields are not optimized business cutoffs or final decision rules. |
 | Memory facts | Converts diagnostic outputs into source-bounded facts with observed values, source fields, source paths, confidence labels, and limitations. | File-backed evidence records for the implemented demos; not a replacement for raw backend evidence. |
 | Answer-boundary checks | Tests whether answers stay within entity, period, metric-definition, source, and interpretation boundaries. | Scenario-based checks tied to the current evidence path; not broad LLM robustness tests. |
 | RAC scaffold | Provides deterministic factor expansion, evidence routing, critique, fact checking, evidence-coverage update, and grounded report generation over local project evidence. | Local-evidence scaffold for reviewability; not live backend ingestion, autonomous cognition, or operating-decision automation. |
@@ -263,6 +263,7 @@ The current retail implementation is a local evidence-bounded prototype. Demo 1 
 
 The next development step is to add more repeated store-period evidence and test whether the current diagnostic guardrails remain stable across more stores, months, activity conditions, and market contexts. Future pairwise comparison should be question-specific: a store pair may be comparable for search-entry structure but not comparable for promotion transfer, pricing pressure, SKU strategy, refund interpretation, or fulfillment interpretation.
 
+<!-- RAC_EXTENSION_START -->
 ## Structured Reasoning Scaffold: Factor-Aware Grounded Review
 
 The `rac/` module adds a deterministic, source-aware review scaffold above the retail evidence path. It runs after the field dictionary, SQL diagnostics, and generated memory facts have already structured the available evidence.
@@ -280,6 +281,8 @@ The scaffold covers:
 - fact check
 - confidence and limitations
 
+It is deterministic only: it makes no LLM calls, uses no Qdrant retrieval, has no live Meituan backend access, implements no completed pairwise comparability gate, and provides no causal proof from observational store metrics.
+
 Current RAC evidence and scripts:
 
 - `rac/DEMO_INDEX.md`
@@ -290,6 +293,8 @@ Current RAC evidence and scripts:
 - `rac/scripts/validate_grounded_quality_gate.py`
 
 Current implementation boundary: deterministic and local-evidence-based. It should be read as a review scaffold over the current project evidence, not as live backend ingestion or operating-decision automation.
+
+<!-- RAC_EXTENSION_END -->
 
 ## Current Retail Decision-Support Path
 

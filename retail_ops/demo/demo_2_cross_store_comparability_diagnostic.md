@@ -4,7 +4,7 @@
 
 Demo 2 supports same-period diagnostic reading across selected Stores B-F for March 2026.
 
-It supports reading visibility-entry structure, activity involvement, activity-cost intensity, transaction conversion, refund pressure, invalid-order pressure, and selected top-SKU concentration under one reporting window and one field contract.
+It supports reading visibility-entry structure, activity involvement, activity-cost intensity, transaction conversion, refund pressure, and selected top-SKU concentration under one reporting window and one field contract.
 
 It does not approve pairwise strategy transfer, global store ranking, market-area classification, or promotion-setting transfer.
 
@@ -21,11 +21,11 @@ This file keeps the historical `cross_store_comparability` path wording for refe
 
 Demo 2 answers a narrow implementation question: can selected Stores B-F be organized under one March 2026 reporting window and one field contract without losing the original Meituan metric meanings?
 
-The output is row-level diagnostic evidence. It supports cautious reading of visibility, entry, activity involvement, refund pressure, invalid-order pressure, and selected top-SKU concentration. It does not decide whether one store is a peer, template, or strategy-transfer target for another store.
+The output is row-level diagnostic evidence. It supports cautious reading of visibility, entry, activity involvement, refund pressure, and selected top-SKU concentration. It does not decide whether one store is a peer, template, or strategy-transfer target for another store.
 
 `comparison_scope_flag` is a row-level diagnostic-scope field. It means that a store-period row is structurally usable for the current Demo 2 diagnostic. It is not a pairwise store-matching decision.
 
-`comparison_limit_notes` records operating context for interpretation, including activity involvement, refund pressure, invalid-order pressure, and SKU concentration. Search-entry structure remains visible through the dedicated search-entry fields.
+`comparison_limit_notes` records operating context for interpretation, including activity involvement, refund pressure, and SKU concentration. Search-entry structure remains visible through the dedicated search-entry fields.
 
 ## Purpose
 
@@ -70,7 +70,7 @@ A future market-area field would require broader store coverage and external or 
 | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Source store-period metrics  | `retail_ops/data/demo2_store_period_metrics.csv`                                                                                                               | Stores selected Meituan backend metrics under canonical field names.                                                                                                                           |
 | Source search and SKU tables | `retail_ops/data/demo2_top_search_terms.csv`, `retail_ops/data/demo2_top_skus_by_transaction_amount.csv`, `retail_ops/data/demo2_top_skus_by_sales_volume.csv` | Keeps search-term and selected SKU evidence separate from store-period totals.                                                                                                                 |
-| SQL diagnostic output        | `retail_ops/outputs/demo2_cross_store_comparability_output.csv`                                                                                                | Adds derived diagnostic fields such as `search_entry_share_pct`, `activity_order_share_pct`, `refund_pressure_pct`, `invalid_order_pressure_pct`, and `top3_sku_transaction_amount_share_pct`. |
+| SQL diagnostic output        | `retail_ops/outputs/demo2_cross_store_comparability_output.csv`                                                                                                | Adds derived diagnostic fields such as `search_entry_share_pct`, `activity_order_share_pct`, `refund_pressure_pct`, and `top3_sku_transaction_amount_share_pct`. |
 | Memory facts                 | `retail_ops/outputs/generated_demo2_retail_memory_facts.json`                                                                                                  | Converts diagnostic evidence into source-bounded facts with observed values and limitations.                                                                                                   |
 | Boundary checks              | Demo 2 validation and evaluation scripts                                                                                                                       | Checks that answers stay within the implemented evidence instead of treating the output as a pairwise comparability gate.                                                                      |
 
@@ -83,7 +83,7 @@ The SQL prepares a same-period diagnostic output with:
 - exposure, ranking, entry, and search-entry structure;
 - activity-order share and activity-cost structure;
 - refund pressure;
-- invalid-order pressure;
+
 - top-3 SKU transaction-amount concentration;
 - comparison-scope and comparison-limit notes.
 
@@ -107,9 +107,9 @@ Examples include:
 
 - high or moderate activity involvement;
 - high or moderate refund pressure;
-- high or moderate invalid-order pressure;
+
 - top-3 SKU transaction-amount concentration;
-- the need to compare with region, store type, activity, refund, order-quality, and product-mix limits.
+- the need to compare with region, store type, activity, refund and product-mix limits.
 
 These notes are interpretation guardrails.
 
@@ -121,7 +121,7 @@ A guardrail-sensitivity check is included for this reason: in the current B-F sa
 
 This demo supports same-period diagnostic reading.
 
-It keeps activity involvement, refund pressure, invalid-order pressure, and SKU concentration attached to metric interpretation, while search-entry structure remains visible through the dedicated search-entry fields.
+It keeps activity involvement, refund pressure, and SKU concentration attached to metric interpretation, while search-entry structure remains visible through the dedicated search-entry fields.
 
 ## Current Interpretation Boundary
 
@@ -156,13 +156,13 @@ The memory facts are currently file-backed for Demo 2. This is enough to test th
 
 The table below shows selected numeric signals from the current Demo 2 SQL output. It is ordered by anonymized store ID, not by performance rank.
 
-| Store | transaction_orders | transaction_amount | search_exposure_users | search_average_rank | search_entry_users | search_entry_rate_pct | search_entry_share_pct | entry_conversion_rate_pct | order_conversion_rate_pct | activity_order_share_pct | refund_pressure_pct | invalid_order_pressure_pct | top3_sku_transaction_amount_share_pct |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| B | 299 | 11665.5 | 4390 | 15 | 683 | 15.56 | 88.7 | 15.12 | 36.88 | 88.63 | 10.76 | 7.14 | 11.15 |
-| C | 175 | 7064.09 | 2416 | 13 | 355 | 14.69 | 68.8 | 17.3 | 32.75 | 70.86 | 7.5 | 5.95 | 28.38 |
-| D | 404 | 18078.7 | 2663 | 13 | 738 | 27.71 | 87.65 | 13.88 | 46.56 | 83.42 | 8.95 | 7.59 | 16.9 |
-| E | 158 | 5784.87 | 2784 | 13 | 355 | 12.75 | 87.01 | 12.19 | 39.46 | 68.99 | 19.1 | 13.89 | 12.55 |
-| F | 266 | 9301.8 | 2699 | 13 | 481 | 17.82 | 88.91 | 15.27 | 49.72 | 81.58 | 10.62 | 10.14 | 19.33 |
+| Store | transaction_orders | transaction_amount | search_exposure_users | search_average_rank | search_entry_users | search_entry_rate_pct | search_entry_share_pct | entry_conversion_rate_pct | order_conversion_rate_pct | activity_order_share_pct | refund_pressure_pct | top3_sku_transaction_amount_share_pct |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| B | 299 | 11665.5 | 4390 | 15 | 683 | 15.56 | 88.7 | 15.12 | 36.88 | 88.63 | 10.76 | 11.15 |
+| C | 175 | 7064.09 | 2416 | 13 | 355 | 14.69 | 68.8 | 17.3 | 32.75 | 70.86 | 7.5 | 28.38 |
+| D | 404 | 18078.7 | 2663 | 13 | 738 | 27.71 | 87.65 | 13.88 | 46.56 | 83.42 | 8.95 | 16.9 |
+| E | 158 | 5784.87 | 2784 | 13 | 355 | 12.75 | 87.01 | 12.19 | 39.46 | 68.99 | 19.1 | 12.55 |
+| F | 266 | 9301.8 | 2699 | 13 | 481 | 17.82 | 88.91 | 15.27 | 49.72 | 81.58 | 10.62 | 19.33 |
 
 Search-entry structure should be read as a group: `search_exposure_users`, `search_average_rank`, `search_entry_users`, `search_entry_rate_pct`, and `search_entry_share_pct` describe different parts of visibility and entry.
 
@@ -178,11 +178,11 @@ The readable summary is only a human-facing explanation.
 
 | Store | Raw `comparison_limit_notes` from current output                                                                                                                            | Readable summary                                                                                                                                                                                                                        |
 | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| B     | `high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits`                                  | Activity involvement is high; refund pressure is moderate; comparison should stay limited by region, store type, activity, refund, order-quality, and product-mix context.                             |
-| C     | `moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_refund_limits`                                                       | Activity involvement is moderate; top-3 SKU transaction amount is concentrated; comparison should stay limited by region, store type, activity, refund, order-quality, and product-mix context.                                         |
-| D     | `high_activity_involvement; compare_with_region_store_type_activity_refund_limits`                                                            | Activity involvement is high; comparison should stay limited by region, store type, activity, refund, order-quality, and product-mix context.                                                          |
-| E     | `moderate_activity_involvement; high_refund_pressure; high_invalid_order_pressure; compare_with_region_store_type_activity_refund_limits`     | Activity involvement is moderate; refund pressure and invalid-order pressure are high; comparison should stay limited by region, store type, activity, refund, order-quality, and product-mix context. |
-| F     | `high_activity_involvement; moderate_refund_pressure; moderate_invalid_order_pressure; compare_with_region_store_type_activity_refund_limits` | Activity involvement is high; refund pressure and invalid-order pressure are moderate; comparison should stay limited by region, store type, activity, refund, order-quality, and product-mix context. |
+| B     | `high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits`                                  | Activity involvement is high; refund pressure is moderate; comparison should stay limited by region, store type, activity, refund and product-mix context.                             |
+| C     | `moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_refund_limits`                                                       | Activity involvement is moderate; top-3 SKU transaction amount is concentrated; comparison should stay limited by region, store type, activity, refund and product-mix context.                                         |
+| D     | `high_activity_involvement; compare_with_region_store_type_activity_refund_limits`                                                            | Activity involvement is high; comparison should stay limited by region, store type, activity, refund and product-mix context.                                                          |
+| E     | `moderate_activity_involvement; high_refund_pressure; compare_with_region_store_type_activity_refund_limits`     | Activity involvement is moderate; refund pressure is high; comparison should stay limited by region, store type, activity, refund and product-mix context. |
+| F     | `high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits` | Activity involvement is high; refund pressure is moderate; comparison should stay limited by region, store type, activity, refund and product-mix context. |
 
 This table does not rank stores. It only makes the SQL-derived interpretation limits easier to read before future pairwise gate work is added.
 

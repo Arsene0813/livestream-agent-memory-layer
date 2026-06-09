@@ -109,7 +109,7 @@
               "matched_terms": [
                 "entry"
               ],
-              "text": "```text\n   valid_orders / entry_users\n   ```"
+              "text": "```text\n   transaction_orders / entry_users\n   ```"
             },
             {
               "line_start": 79,
@@ -286,7 +286,7 @@
               "matched_terms": [
                 "refund"
               ],
-              "text": "Refund and invalid-order pressure improved in April compared with March."
+              "text": "Refund and refund-pressure evidence improved in April compared with March."
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: refund_pressure.",
@@ -301,18 +301,16 @@
           ]
         },
         {
-          "factor_id": "valid_orders",
-          "evidence_id": "evidence_valid_orders",
+          "factor_id": "transaction_orders",
+          "evidence_id": "evidence_transaction_orders",
           "source_type": "markdown",
           "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
           "source_exists": true,
           "grounding_role": "default_evidence",
           "keywords_used": [
-            "valid_orders",
-            "valid orders",
-            "valid order",
-            "有效订单",
-            "有效订单数"
+            "transaction_orders",
+            "transaction orders",
+            "valid order"
           ],
           "grounding_status": "keyword_matched",
           "snippets": [
@@ -320,21 +318,21 @@
               "line_start": 68,
               "line_end": 70,
               "matched_terms": [
-                "valid_orders"
+                "transaction_orders"
               ],
-              "text": "```text\n   valid_orders / entry_users\n   ```"
+              "text": "```text\n   transaction_orders / entry_users\n   ```"
             },
             {
               "line_start": 154,
               "line_end": 156,
               "matched_terms": [
-                "valid orders",
+                "transaction orders",
                 "valid order"
               ],
-              "text": "| Refund Pressure        |  17.01% |   6.63% | Down      |\n| Invalid Orders         |      32 |      29 | Down      |\n| Invalid-Order Pressure |  13.62% |   7.99% | Down      |"
+              "text": "| Refund Pressure        |  17.01% |   6.63% | Down      |"
             }
           ],
-          "original_claim_supported": "Provides context needed to evaluate factor: valid_orders.",
+          "original_claim_supported": "Provides context needed to evaluate factor: transaction_orders.",
           "original_limitations": [
             "Deterministic mock pipeline only.",
             "No live retrieval is performed in this step."
@@ -346,18 +344,16 @@
           ]
         },
         {
-          "factor_id": "invalid_orders",
-          "evidence_id": "evidence_invalid_orders",
+          "factor_id": "intransaction_orders",
+          "evidence_id": "evidence_intransaction_orders",
           "source_type": "markdown",
           "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
           "source_exists": true,
           "grounding_role": "default_evidence",
           "keywords_used": [
-            "invalid_orders",
-            "invalid orders",
-            "invalid order",
-            "无效订单",
-            "无效订单数",
+            "intransaction_orders",
+            "intransaction orders",
+            "refund order",
             "cancelled",
             "canceled"
           ],
@@ -367,13 +363,13 @@
               "line_start": 154,
               "line_end": 156,
               "matched_terms": [
-                "invalid orders",
-                "invalid order"
+                "intransaction orders",
+                "refund order"
               ],
-              "text": "| Refund Pressure        |  17.01% |   6.63% | Down      |\n| Invalid Orders         |      32 |      29 | Down      |\n| Invalid-Order Pressure |  13.62% |   7.99% | Down      |"
+              "text": "| Refund Pressure        |  17.01% |   6.63% | Down      |"
             }
           ],
-          "original_claim_supported": "Provides context needed to evaluate factor: invalid_orders.",
+          "original_claim_supported": "Provides context needed to evaluate factor: intransaction_orders.",
           "original_limitations": [
             "Deterministic mock pipeline only.",
             "No live retrieval is performed in this step."
@@ -496,7 +492,7 @@
               "matched_terms": [
                 "store_type"
               ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,valid_orders,invalid_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,refund_pressure_pct,invalid_order_pressure_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
+              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,transaction_orders,intransaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,refund_pressure_pct,refund_pressure_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
             },
             {
               "line_start": 2,
@@ -514,7 +510,7 @@
                 "store_type",
                 "partner"
               ],
-              "text": "D,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,402,33,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,8.95,7.59,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_refund_limits\nE,2026-03,2026-03-01,2026-03-31,Yantai,partner,5784.87,158,155,25,5337.95,36.61,3347,15667,14.0,408,1400,12.19,161,185,39.46,6828.37,159,6693.27,98.76,2784,13.0,355,12.75,87.01,306,16.0,3,5365.63,109,1576.26,1542.26,34.0,29.38,68.99,1105.05,25,29,19.1,13.89,1,726.25,12.55,same_period_diagnostic_ready,moderate_activity_involvement; high_refund_pressure; high_invalid_order_pressure; compare_with_region_store_type_activity_refund_limits\nF,2026-03,2026-03-01,2026-03-31,Yantai,partner,9301.8,266,266,30,5937.09,34.97,3543,18142,13.0,541,1946,15.27,269,305,49.72,10498.2,267,10227.8,99.26,2699,13.0,481,17.82,88.91,481,13.0,8,8291.5,217,1008.3,975.3,33.0,12.16,81.58,987.89,30,33,10.62,10.14,1,1798.4,19.33,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; moderate_invalid_order_pressure; compare_with_region_store_type_activity_refund_limits"
+              "text": "D,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,402,33,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,8.95,7.59,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_refund_limits\nE,2026-03,2026-03-01,2026-03-31,Yantai,partner,5784.87,158,155,25,5337.95,36.61,3347,15667,14.0,408,1400,12.19,161,185,39.46,6828.37,159,6693.27,98.76,2784,13.0,355,12.75,87.01,306,16.0,3,5365.63,109,1576.26,1542.26,34.0,29.38,68.99,1105.05,25,29,19.1,13.89,1,726.25,12.55,same_period_diagnostic_ready,moderate_activity_involvement; high_refund_pressure; high_refund_pressure; compare_with_region_store_type_activity_refund_limits\nF,2026-03,2026-03-01,2026-03-31,Yantai,partner,9301.8,266,266,30,5937.09,34.97,3543,18142,13.0,541,1946,15.27,269,305,49.72,10498.2,267,10227.8,99.26,2699,13.0,481,17.82,88.91,481,13.0,8,8291.5,217,1008.3,975.3,33.0,12.16,81.58,987.89,30,33,10.62,10.14,1,1798.4,19.33,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: store_type.",
@@ -555,10 +551,9 @@
             "transaction_orders",
             "transaction_order",
             "transaction_order_count",
-            "valid_orders",
+            "transaction_orders",
             "orders",
-            "成交订单量",
-            "有效订单"
+            "成交订单量"
           ],
           "grounding_status": "keyword_matched",
           "snippets": [
@@ -568,10 +563,10 @@
               "matched_terms": [
                 "transaction_orders",
                 "transaction_order",
-                "valid_orders",
+                "transaction_orders",
                 "orders"
               ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,valid_orders,invalid_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,refund_pressure_pct,invalid_order_pressure_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
+              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,transaction_orders,intransaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,refund_pressure_pct,refund_pressure_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: order_volume.",
@@ -609,7 +604,7 @@
                 "transaction_amount",
                 "transaction"
               ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,valid_orders,invalid_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,refund_pressure_pct,invalid_order_pressure_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
+              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,transaction_orders,intransaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,refund_pressure_pct,refund_pressure_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: transaction_amount.",
@@ -652,7 +647,7 @@
                 "activity_order_share_pct",
                 "activity_cost_ratio_pct"
               ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,valid_orders,invalid_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,refund_pressure_pct,invalid_order_pressure_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
+              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,transaction_orders,intransaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,refund_pressure_pct,refund_pressure_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
             },
             {
               "line_start": 2,
@@ -668,7 +663,7 @@
               "matched_terms": [
                 "activity"
               ],
-              "text": "D,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,402,33,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,8.95,7.59,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_refund_limits\nE,2026-03,2026-03-01,2026-03-31,Yantai,partner,5784.87,158,155,25,5337.95,36.61,3347,15667,14.0,408,1400,12.19,161,185,39.46,6828.37,159,6693.27,98.76,2784,13.0,355,12.75,87.01,306,16.0,3,5365.63,109,1576.26,1542.26,34.0,29.38,68.99,1105.05,25,29,19.1,13.89,1,726.25,12.55,same_period_diagnostic_ready,moderate_activity_involvement; high_refund_pressure; high_invalid_order_pressure; compare_with_region_store_type_activity_refund_limits\nF,2026-03,2026-03-01,2026-03-31,Yantai,partner,9301.8,266,266,30,5937.09,34.97,3543,18142,13.0,541,1946,15.27,269,305,49.72,10498.2,267,10227.8,99.26,2699,13.0,481,17.82,88.91,481,13.0,8,8291.5,217,1008.3,975.3,33.0,12.16,81.58,987.89,30,33,10.62,10.14,1,1798.4,19.33,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; moderate_invalid_order_pressure; compare_with_region_store_type_activity_refund_limits"
+              "text": "D,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,402,33,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,8.95,7.59,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_refund_limits\nE,2026-03,2026-03-01,2026-03-31,Yantai,partner,5784.87,158,155,25,5337.95,36.61,3347,15667,14.0,408,1400,12.19,161,185,39.46,6828.37,159,6693.27,98.76,2784,13.0,355,12.75,87.01,306,16.0,3,5365.63,109,1576.26,1542.26,34.0,29.38,68.99,1105.05,25,29,19.1,13.89,1,726.25,12.55,same_period_diagnostic_ready,moderate_activity_involvement; high_refund_pressure; high_refund_pressure; compare_with_region_store_type_activity_refund_limits\nF,2026-03,2026-03-01,2026-03-31,Yantai,partner,9301.8,266,266,30,5937.09,34.97,3543,18142,13.0,541,1946,15.27,269,305,49.72,10498.2,267,10227.8,99.26,2699,13.0,481,17.82,88.91,481,13.0,8,8291.5,217,1008.3,975.3,33.0,12.16,81.58,987.89,30,33,10.62,10.14,1,1798.4,19.33,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: activity_intensity.",
@@ -791,7 +786,7 @@
               "matched_terms": [
                 "competition"
               ],
-              "text": "The evidence should include transaction order volume, transaction amount, store type, region and market context, competition environment, SKU structure, refund pressure, invalid-order pressure, repeated reporting windows, and activity evidence."
+              "text": "The evidence should include transaction order volume, transaction amount, store type, region and market context, competition environment, SKU structure, refund pressure, refund-pressure evidence, repeated reporting windows, and activity evidence."
             },
             {
               "line_start": 87,
@@ -842,7 +837,7 @@
                 "top3_sku",
                 "top3_sku_transaction_amount"
               ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,valid_orders,invalid_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,refund_pressure_pct,invalid_order_pressure_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
+              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,transaction_orders,intransaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,refund_pressure_pct,refund_pressure_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
             },
             {
               "line_start": 2,
@@ -912,7 +907,7 @@
                 "refund_pressure",
                 "refund_pressure_pct"
               ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,valid_orders,invalid_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,refund_pressure_pct,invalid_order_pressure_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
+              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,transaction_orders,intransaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,refund_pressure_pct,refund_pressure_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
             },
             {
               "line_start": 2,
@@ -929,7 +924,7 @@
                 "refund",
                 "refund_pressure"
               ],
-              "text": "D,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,402,33,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,8.95,7.59,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_refund_limits\nE,2026-03,2026-03-01,2026-03-31,Yantai,partner,5784.87,158,155,25,5337.95,36.61,3347,15667,14.0,408,1400,12.19,161,185,39.46,6828.37,159,6693.27,98.76,2784,13.0,355,12.75,87.01,306,16.0,3,5365.63,109,1576.26,1542.26,34.0,29.38,68.99,1105.05,25,29,19.1,13.89,1,726.25,12.55,same_period_diagnostic_ready,moderate_activity_involvement; high_refund_pressure; high_invalid_order_pressure; compare_with_region_store_type_activity_refund_limits\nF,2026-03,2026-03-01,2026-03-31,Yantai,partner,9301.8,266,266,30,5937.09,34.97,3543,18142,13.0,541,1946,15.27,269,305,49.72,10498.2,267,10227.8,99.26,2699,13.0,481,17.82,88.91,481,13.0,8,8291.5,217,1008.3,975.3,33.0,12.16,81.58,987.89,30,33,10.62,10.14,1,1798.4,19.33,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; moderate_invalid_order_pressure; compare_with_region_store_type_activity_refund_limits"
+              "text": "D,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,402,33,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,8.95,7.59,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_refund_limits\nE,2026-03,2026-03-01,2026-03-31,Yantai,partner,5784.87,158,155,25,5337.95,36.61,3347,15667,14.0,408,1400,12.19,161,185,39.46,6828.37,159,6693.27,98.76,2784,13.0,355,12.75,87.01,306,16.0,3,5365.63,109,1576.26,1542.26,34.0,29.38,68.99,1105.05,25,29,19.1,13.89,1,726.25,12.55,same_period_diagnostic_ready,moderate_activity_involvement; high_refund_pressure; high_refund_pressure; compare_with_region_store_type_activity_refund_limits\nF,2026-03,2026-03-01,2026-03-31,Yantai,partner,9301.8,266,266,30,5937.09,34.97,3543,18142,13.0,541,1946,15.27,269,305,49.72,10498.2,267,10227.8,99.26,2699,13.0,481,17.82,88.91,481,13.0,8,8291.5,217,1008.3,975.3,33.0,12.16,81.58,987.89,30,33,10.62,10.14,1,1798.4,19.33,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: refund_pressure.",
@@ -944,19 +939,18 @@
           ]
         },
         {
-          "factor_id": "invalid_order_pressure",
-          "evidence_id": "evidence_invalid_order_pressure",
+          "factor_id": "refund_pressure",
+          "evidence_id": "evidence_refund_pressure",
           "source_type": "markdown",
           "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
           "source_exists": true,
           "grounding_role": "quantitative_evidence",
           "keywords_used": [
-            "invalid_order_pressure",
-            "invalid_order_pressure_pct",
-            "invalid_orders",
-            "invalid order",
-            "invalid orders",
-            "无效订单",
+            "refund_pressure",
+            "refund_pressure_pct",
+            "intransaction_orders",
+            "refund order",
+            "intransaction orders",
             "取消"
           ],
           "grounding_status": "keyword_matched",
@@ -965,22 +959,22 @@
               "line_start": 1,
               "line_end": 2,
               "matched_terms": [
-                "invalid_order_pressure",
-                "invalid_order_pressure_pct",
-                "invalid_orders"
+                "refund_pressure",
+                "refund_pressure_pct",
+                "intransaction_orders"
               ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,valid_orders,invalid_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,refund_pressure_pct,invalid_order_pressure_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
+              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,transaction_orders,intransaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,refund_pressure_pct,refund_pressure_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
             },
             {
               "line_start": 4,
               "line_end": 6,
               "matched_terms": [
-                "invalid_order_pressure"
+                "refund_pressure"
               ],
-              "text": "D,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,402,33,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,8.95,7.59,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_refund_limits\nE,2026-03,2026-03-01,2026-03-31,Yantai,partner,5784.87,158,155,25,5337.95,36.61,3347,15667,14.0,408,1400,12.19,161,185,39.46,6828.37,159,6693.27,98.76,2784,13.0,355,12.75,87.01,306,16.0,3,5365.63,109,1576.26,1542.26,34.0,29.38,68.99,1105.05,25,29,19.1,13.89,1,726.25,12.55,same_period_diagnostic_ready,moderate_activity_involvement; high_refund_pressure; high_invalid_order_pressure; compare_with_region_store_type_activity_refund_limits\nF,2026-03,2026-03-01,2026-03-31,Yantai,partner,9301.8,266,266,30,5937.09,34.97,3543,18142,13.0,541,1946,15.27,269,305,49.72,10498.2,267,10227.8,99.26,2699,13.0,481,17.82,88.91,481,13.0,8,8291.5,217,1008.3,975.3,33.0,12.16,81.58,987.89,30,33,10.62,10.14,1,1798.4,19.33,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; moderate_invalid_order_pressure; compare_with_region_store_type_activity_refund_limits"
+              "text": "D,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,402,33,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,8.95,7.59,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_refund_limits\nE,2026-03,2026-03-01,2026-03-31,Yantai,partner,5784.87,158,155,25,5337.95,36.61,3347,15667,14.0,408,1400,12.19,161,185,39.46,6828.37,159,6693.27,98.76,2784,13.0,355,12.75,87.01,306,16.0,3,5365.63,109,1576.26,1542.26,34.0,29.38,68.99,1105.05,25,29,19.1,13.89,1,726.25,12.55,same_period_diagnostic_ready,moderate_activity_involvement; high_refund_pressure; high_refund_pressure; compare_with_region_store_type_activity_refund_limits\nF,2026-03,2026-03-01,2026-03-31,Yantai,partner,9301.8,266,266,30,5937.09,34.97,3543,18142,13.0,541,1946,15.27,269,305,49.72,10498.2,267,10227.8,99.26,2699,13.0,481,17.82,88.91,481,13.0,8,8291.5,217,1008.3,975.3,33.0,12.16,81.58,987.89,30,33,10.62,10.14,1,1798.4,19.33,same_period_diagnostic_ready,high_activity_involvement; moderate_refund_pressure; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
             }
           ],
-          "original_claim_supported": "Provides context needed to evaluate factor: invalid_order_pressure.",
+          "original_claim_supported": "Provides context needed to evaluate factor: refund_pressure.",
           "original_limitations": [
             "Deterministic mock pipeline only.",
             "No live retrieval is performed in this step."
@@ -1302,7 +1296,7 @@
               "matched_terms": [
                 "order conversion"
               ],
-              "text": "In the current project, `region_type` can only be used as weak context alongside period alignment, store type, order volume, visibility and ranking signals, entry and order conversion, activity profile, refund and invalid-order pressure, SKU evidence, data completeness, and future external market evidence. The current Demo 2 sample is too small to support a reliable regional classification."
+              "text": "In the current project, `region_type` can only be used as weak context alongside period alignment, store type, order volume, visibility and ranking signals, entry and order conversion, activity profile, refund-pressure evidence, SKU evidence, data completeness, and future external market evidence. The current Demo 2 sample is too small to support a reliable regional classification."
             },
             {
               "line_start": 279,
@@ -1310,7 +1304,7 @@
               "matched_terms": [
                 "order conversion"
               ],
-              "text": "| `activity_lever_profile`          | Activity orders, activity cost, subsidy, and activity-cost ratio.                                  | Understanding how promotional tools were used in the store's operating context.                                 | Treating activity as a standalone cause or traditional ROI result.          |\n| `transaction_conversion_profile`  | Transaction scale, order conversion, payment, and average order value.                             | Reading transaction recovery or decline together with funnel quality.                                           | Calling a period good or bad from one transaction metric alone.             |\n| `order_quality_pressure_profile`  | Refund pressure, refund-order pressure, invalid-order pressure, and related order-quality signals. | Understanding whether order growth coexists with refund or cancellation pressure.                               | Proving customer satisfaction or fulfillment quality definitively improved. |"
+              "text": "| `activity_lever_profile`          | Activity orders, activity cost, subsidy, and activity-cost ratio.                                  | Understanding how promotional tools were used in the store's operating context.                                 | Treating activity as a standalone cause or traditional ROI result.          |\n| `transaction_conversion_profile`  | Transaction scale, order conversion, payment, and average order value.                             | Reading transaction recovery or decline together with funnel quality.                                           | Calling a period good or bad from one transaction metric alone.             |\n| `order_quality_pressure_profile`  | Refund pressure, refund-order pressure, refund-pressure evidence, and related order-quality signals. | Understanding whether order growth coexists with refund or cancellation pressure.                               | Proving customer satisfaction or fulfillment quality definitively improved. |"
             },
             {
               "line_start": 440,
@@ -1412,7 +1406,7 @@
               "matched_terms": [
                 "refund"
               ],
-              "text": "In the current project, `region_type` can only be used as weak context alongside period alignment, store type, order volume, visibility and ranking signals, entry and order conversion, activity profile, refund and invalid-order pressure, SKU evidence, data completeness, and future external market evidence. The current Demo 2 sample is too small to support a reliable regional classification."
+              "text": "In the current project, `region_type` can only be used as weak context alongside period alignment, store type, order volume, visibility and ranking signals, entry and order conversion, activity profile, refund-pressure evidence, SKU evidence, data completeness, and future external market evidence. The current Demo 2 sample is too small to support a reliable regional classification."
             },
             {
               "line_start": 99,
@@ -1422,7 +1416,7 @@
                 "refund_pressure",
                 "refund_pressure_pct"
               ],
-              "text": "- share / ratio diagnostics, such as `search_entry_share_pct`, `refund_pressure_pct`, `invalid_order_pressure_pct`, and `top3_sku_transaction_amount_share_pct`;\n- month-over-month diagnostics, such as `transaction_amount_mom_pct`, `entry_users_mom_pct`, and `refund_amount_mom_pct`;"
+              "text": "- share / ratio diagnostics, such as `search_entry_share_pct`, `refund_pressure_pct`, `refund_pressure_pct`, and `top3_sku_transaction_amount_share_pct`;\n- month-over-month diagnostics, such as `transaction_amount_mom_pct`, `entry_users_mom_pct`, and `refund_amount_mom_pct`;"
             },
             {
               "line_start": 101,
@@ -1446,19 +1440,18 @@
           ]
         },
         {
-          "factor_id": "invalid_order_pressure",
-          "evidence_id": "evidence_invalid_order_pressure",
+          "factor_id": "refund_pressure",
+          "evidence_id": "evidence_refund_pressure",
           "source_type": "markdown",
           "source_path": "retail_ops/data/DATA_DICTIONARY.md",
           "source_exists": true,
           "grounding_role": "default_evidence",
           "keywords_used": [
-            "invalid_order_pressure",
-            "invalid_order_pressure_pct",
-            "invalid_orders",
-            "invalid order",
-            "invalid orders",
-            "无效订单",
+            "refund_pressure",
+            "refund_pressure_pct",
+            "intransaction_orders",
+            "refund order",
+            "intransaction orders",
             "取消"
           ],
           "grounding_status": "keyword_matched",
@@ -1467,31 +1460,31 @@
               "line_start": 99,
               "line_end": 101,
               "matched_terms": [
-                "invalid_order_pressure",
-                "invalid_order_pressure_pct"
+                "refund_pressure",
+                "refund_pressure_pct"
               ],
-              "text": "- share / ratio diagnostics, such as `search_entry_share_pct`, `refund_pressure_pct`, `invalid_order_pressure_pct`, and `top3_sku_transaction_amount_share_pct`;\n- month-over-month diagnostics, such as `transaction_amount_mom_pct`, `entry_users_mom_pct`, and `refund_amount_mom_pct`;"
+              "text": "- share / ratio diagnostics, such as `search_entry_share_pct`, `refund_pressure_pct`, `refund_pressure_pct`, and `top3_sku_transaction_amount_share_pct`;\n- month-over-month diagnostics, such as `transaction_amount_mom_pct`, `entry_users_mom_pct`, and `refund_amount_mom_pct`;"
             },
             {
               "line_start": 227,
               "line_end": 229,
               "matched_terms": [
-                "invalid_order_pressure",
-                "invalid_order_pressure_pct"
+                "refund_pressure",
+                "refund_pressure_pct"
               ],
-              "text": "| `missing_transaction_amount` | `transaction_amount` is missing. | Amount-based ratios such as `refund_pressure_pct` and `top3_sku_transaction_amount_share_pct` should not be interpreted as comparable evidence. |\n| `missing_valid_orders` | `valid_orders` is missing. | `invalid_order_pressure_pct` should not be interpreted as comparable evidence. |\n| `missing_top3_sku_amount_evidence` | Top-SKU transaction-amount evidence is missing. | Missing product-mix evidence must not be treated as zero concentration. |"
+              "text": "| `missing_transaction_amount` | `transaction_amount` is missing. | Amount-based ratios such as `refund_pressure_pct` and `top3_sku_transaction_amount_share_pct` should not be interpreted as comparable evidence. |\n| `missing_transaction_orders` | `transaction_orders` is missing. | `refund_pressure_pct` should not be interpreted as comparable evidence. |\n| `missing_top3_sku_amount_evidence` | Top-SKU transaction-amount evidence is missing. | Missing product-mix evidence must not be treated as zero concentration. |"
             },
             {
               "line_start": 238,
               "line_end": 240,
               "matched_terms": [
-                "invalid_order_pressure",
-                "invalid_order_pressure_pct"
+                "refund_pressure",
+                "refund_pressure_pct"
               ],
-              "text": "| `moderate_refund_pressure` | `refund_pressure_pct` | `>= 10` | Refund pressure should constrain comparison. | Diagnostic warning only. |\n| `high_invalid_order_pressure` | `invalid_order_pressure_pct` | `>= 12` | Cancelled-order pressure is high for this diagnostic layer. | Needs cancellation-reason evidence before fulfillment diagnosis. |\n| `moderate_invalid_order_pressure` | `invalid_order_pressure_pct` | `>= 8` | Cancelled-order pressure should constrain comparison. | Diagnostic warning only. |"
+              "text": "| `moderate_refund_pressure` | `refund_pressure_pct` | `>= 10` | Refund pressure should constrain comparison. | Diagnostic warning only. |\n| `high_refund_pressure` | `refund_pressure_pct` | `>= 12` | Cancelled-order pressure is high for this diagnostic layer. | Needs cancellation-reason evidence before fulfillment diagnosis. |\n| `moderate_refund_pressure` | `refund_pressure_pct` | `>= 8` | Cancelled-order pressure should constrain comparison. | Diagnostic warning only. |"
             }
           ],
-          "original_claim_supported": "Provides context needed to evaluate factor: invalid_order_pressure.",
+          "original_claim_supported": "Provides context needed to evaluate factor: refund_pressure.",
           "original_limitations": [
             "Deterministic mock pipeline only.",
             "No live retrieval is performed in this step."
@@ -1586,7 +1579,7 @@
               "matched_terms": [
                 "competition"
               ],
-              "text": "A future pairwise comparability gate should use broader multi-store evidence to decide whether two store-period records can be compared for a specific operating question. Reliable store comparability should be judged from transaction order volume, transaction amount, store type, region and market context, competition environment, SKU structure, refund pressure, invalid-order pressure, fulfillment or stockout evidence where available, repeated reporting windows, and activity evidence."
+              "text": "A future pairwise comparability gate should use broader multi-store evidence to decide whether two store-period records can be compared for a specific operating question. Reliable store comparability should be judged from transaction order volume, transaction amount, store type, region and market context, competition environment, SKU structure, refund pressure, refund-pressure evidence, fulfillment or stockout evidence where available, repeated reporting windows, and activity evidence."
             },
             {
               "line_start": 245,

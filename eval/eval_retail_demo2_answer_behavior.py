@@ -29,7 +29,6 @@ REQUIRED_COLUMNS = [
     "activity_cost_ratio_pct",
     "activity_order_share_pct",
     "refund_pressure_pct",
-    "invalid_order_pressure_pct",
     "top3_sku_transaction_amount_share_pct",
     "comparison_scope_flag",
     "comparison_limit_notes",
@@ -211,7 +210,7 @@ def main() -> int:
                 f"{fmt(c, 'activity_order_share_pct')} and activity_cost_ratio_pct="
                 f"{fmt(c, 'activity_cost_ratio_pct')}. Any transfer claim must also "
                 "check merchant_subsidy_amount, platform_subsidy_amount, refund_pressure_pct, "
-                "invalid_order_pressure_pct, comparison_scope_flag, and "
+                "comparison_scope_flag and "
                 "comparison_limit_notes. The supported answer is qualified comparison, "
                 "not direct strategy transfer."
             ),
@@ -222,7 +221,6 @@ def main() -> int:
                 "merchant_subsidy_amount",
                 "platform_subsidy_amount",
                 "refund_pressure_pct",
-                "invalid_order_pressure_pct",
                 "comparison_scope_flag",
                 "comparison_limit_notes",
                 "qualified comparison",

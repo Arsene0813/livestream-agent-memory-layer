@@ -12,9 +12,9 @@ DOCS = [
 ]
 
 REQUIRED_PHRASES = [
-    "Keyword matched packets: 34",
+    "Keyword matched packets: 29",
     "Boundary matched packets: 2",
-    "Fallback packets: 0",
+    "Fallback packets: 1",
     "Missing source files: 0",
     "source-aware",
     "boundary-aware",
@@ -83,7 +83,7 @@ def main() -> None:
 
     print("[OK] RAC doc alignment validation passed")
     print(f"[OK] Docs checked: {len(DOCS)}")
-    print("[OK] Docs aligned with 34 keyword / 2 boundary / 0 fallback grounding result")
+    print("[OK] Docs aligned with 29 keyword / 2 boundary / 1 fallback grounding result")
 
 
 if __name__ == "__main__":

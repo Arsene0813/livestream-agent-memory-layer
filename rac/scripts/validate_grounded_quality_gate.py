@@ -55,7 +55,7 @@ CROSS_STORE_REQUIRED_QUANTITATIVE_SOURCES = {
     "order_volume": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "transaction_amount": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "refund_pressure": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-    "invalid_order_pressure": "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
+    "sku_structure": "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
 }
 
 CROSS_STORE_REQUIRED_BOUNDARY_SOURCES = {
@@ -383,7 +383,7 @@ def write_markdown_summary(results: list[dict[str, Any]], output_path: Path) -> 
     lines.append("- order_volume -> retail_ops/outputs/demo2_cross_store_comparability_output.csv")
     lines.append("- transaction_amount -> retail_ops/outputs/demo2_cross_store_comparability_output.csv")
     lines.append("- refund_pressure -> retail_ops/outputs/demo2_cross_store_comparability_output.csv")
-    lines.append("- invalid_order_pressure -> retail_ops/outputs/demo2_cross_store_comparability_output.csv")
+    lines.append("- sku_structure -> retail_ops/outputs/demo2_cross_store_comparability_output.csv")
     lines.append("- competition -> retail_ops/COMPARABILITY_GATE_V0.md as boundary_evidence")
     lines.append("- repeated_reporting_windows -> retail_ops/COMPARABILITY_GATE_V0.md as boundary_evidence")
     lines.append("")

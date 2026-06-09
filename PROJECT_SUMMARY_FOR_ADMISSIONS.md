@@ -52,9 +52,9 @@ For admissions review, start with:
 
 In Meituan instant retail, store competition is not only about having products online. For standardized products such as contact lenses, care solutions, and related eye-care items, stores compete through a local operating chain: being seen, being entered, being ordered, and then being selected again or maintaining share.
 
-Promotion, subsidy, price adjustment, SKU arrangement, ranking optimization, and fulfillment stability are tools inside this chain. Their meaning depends on store state, local competition, activity intensity, order quality, product mix, and reporting-window alignment.
+Promotion, subsidy, price adjustment, SKU arrangement, ranking optimization, and fulfillment stability are tools inside this chain. Their meaning depends on store state, local competition, activity intensity, refund pressure, product mix, and reporting-window alignment.
 
-A new store may use activity support to gain first exposure and first orders. A store under local price pressure may use pricing or subsidy tools to defend visibility and market share. A store with high exposure may still underperform if entry quality, order conversion, refund pressure, invalid orders, or SKU concentration create friction.
+A new store may use activity support to gain first exposure and first orders. A store under local price pressure may use pricing or subsidy tools to defend visibility and market share. A store with high exposure may still underperform if entry quality, order conversion, refund pressure, or SKU concentration create friction.
 
 The practical question is therefore not whether one store looks better in isolation. The useful question is whether the available evidence is strong enough to compare records and transfer any operating interpretation.
 
@@ -84,7 +84,7 @@ The memory layer does not replace the data. It records evidence and limitations 
 
 Demo 1 analyzes Store A across February, March, and April 2026. It shows why one metric alone is not enough.
 
-April 2026 showed recovery in traffic and transaction scale, while order conversion and average order value declined. Refund pressure and invalid-order pressure improved at the same time.
+April 2026 showed recovery in traffic and transaction scale, while order conversion and average order value declined. Refund pressure improved at the same time.
 
 The purpose is to preserve a careful operating profile, not to label a month as simply good or bad.
 
@@ -96,7 +96,7 @@ Main file:
 
 Demo 2 extends the analysis to selected Stores B-F under the same March 2026 reporting window.
 
-The point is to place selected store-period fields under the same reporting window and field contract before any stronger operating interpretation is made. Store type, order volume, transaction amount, activity involvement, activity intensity, search-entry structure, refund pressure, invalid-order pressure, and top-SKU evidence can all affect what a cross-store comparison means.
+The point is to place selected store-period fields under the same reporting window and field contract before any stronger operating interpretation is made. Store type, order volume, transaction amount, activity involvement, activity intensity, search-entry structure, refund pressure, and top-SKU evidence can all affect what a cross-store comparison means.
 
 Current SKU evidence uses selected top-SKU ranking views rather than full catalogue-level product-category classification.
 

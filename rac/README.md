@@ -20,45 +20,41 @@ A normal LLM can produce a plausible answer without explicitly checking:
 
 This module turns answer generation into an evidence-grounded review workflow.
 
-## What this module does in V0
+## Current deterministic review scaffold
 
-V0 is intentionally narrow and conservative.
+The current implementation is intentionally narrow and conservative. It defines:
 
-It defines:
+* a shared review-state schema,
+* deterministic question analysis and factor expansion,
+* deterministic factor-weight buckets,
+* local file-based evidence routing,
+* competing-hypothesis templates,
+* critique and fact-check stages,
+* evidence-coverage scoring,
+* explicit limitation reporting.
 
-  1. A shared reasoning-state schema.
-  2. Prompt contracts for each reasoning stage.
-  3. Evaluation cases that test whether the system avoids overclaiming.
-  4. Validation scripts that check the scaffold exists and remains structurally consistent.
+The current implementation does not claim to implement autonomous world modeling, live Meituan backend access, neural-network weight updates, completed pairwise comparability, or automated operating decisions.
 
-V0 does not claim to implement autonomous world modeling, live Meituan backend access, or neural-network weight updates.
+## Future graph-based extension
 
-## Intended future implementation
+A future implementation could connect these contracts to a graph workflow, such as a LangGraph-style shared-state node design. That would be an extension of the current deterministic scaffold, not a capability claimed by the current implementation.
 
-The next implementation step is to connect these contracts to a graph workflow, likely using LangGraph's shared-state node design.
+The future version should still keep the current evidence-boundary discipline:
 
-Each node should read from and write to the same reasoning state:
-
-  * QuestionAnalyzer
-  * FactorExpander
-  * FactorWeighter
-  * EvidenceRouter
-  * HypothesisGenerator
-  * Critic
-  * FactChecker
-  * BeliefUpdater / evidence-coverage and limitation updater
-  * FinalReportWriter
-
-The internal `belief_updater` name is retained for compatibility with existing prompt, schema, and output files. Reviewer-facing wording should describe this stage as evidence-coverage and limitation update, not Bayesian belief modeling.
+* carry typed state between stages,
+* require source references for evidence claims,
+* keep boundary evidence separate from direct metric evidence,
+* report missing evidence instead of filling gaps with unsupported claims,
+* avoid causal or operating-decision claims when the evidence does not support them.
 
 <!-- RAC_FUTURE_FACTOR_LOOP_START -->
-## Future Extension: Dynamic Factor Weighting
+## Future extension: dynamic factor weighting
 
-The current RAC implementation is deterministic and file-grounded. A future version can make the reasoning loop more adaptive by assigning different weights to factors depending on the question type and available evidence.
+The current RAC implementation is deterministic and file-grounded. A future version could make the reasoning loop more adaptive by assigning different weights to factors depending on the question type and available evidence.
 
 For example, a search-entry comparison may prioritize search exposure, search entry rate, and ranking context. A promotion-transfer question should give more weight to activity involvement, activity-cost ratio, campaign timing evidence, competitor context, and repeated-window evidence.
 
-The future loop should preserve the current boundary discipline:
+Any future loop should preserve the current boundary discipline:
 
 * expand factors before retrieving evidence,
 * retrieve evidence by factor instead of searching for a ready-made answer,
@@ -66,7 +62,7 @@ The future loop should preserve the current boundary discipline:
 * critique unsupported assumptions before writing the final answer,
 * update confidence and limitations only when the evidence supports the change.
 
-This planned extension keeps the same evidence-boundary discipline as the current implementation: strategy decisions and causal claims still require stronger evidence than the current scaffold provides.
+This planned extension should keep the same evidence-boundary discipline as the current implementation: strategy decisions and causal claims still require stronger evidence than the current scaffold provides.
 <!-- RAC_FUTURE_FACTOR_LOOP_END -->
 
 ## Factor Weight Generation
@@ -177,7 +173,7 @@ Expected behavior:
 
 ## Deterministic mock pipeline
 
-The deterministic mock pipeline is the first runnable implementation of the structured reasoning workflow.
+The deterministic mock pipeline is the current runnable implementation of the structured reasoning workflow.
 
 It does not call an LLM, Qdrant, Ollama, OpenAI, or any live backend service.
 
@@ -206,7 +202,7 @@ The generated reports are written to:
 
 rac/outputs/
 
-This stage is intentionally conservative. The mock pipeline should not be presented as real LLM reasoning or real retrieval. It is a stable execution scaffold for the future LangGraph / retrieval-backed implementation.
+This stage is intentionally conservative. The mock pipeline should not be presented as real LLM reasoning or real retrieval. It is a stable execution scaffold before any future LangGraph-style or retrieval-backed implementation.
 
 ## Local evidence resolver
 
@@ -310,15 +306,15 @@ The RAC grounding layer has been hardened so that the cross-store comparability 
 
 Current quality-gate result:
 
-- Total grounded packets: 36
-- Keyword matched packets: 34
+- Total grounded packets: 32
+- Keyword matched packets: 29
 - Boundary matched packets: 2
-- Fallback packets: 0
+- Fallback packets: 1
 - Missing source files: 0
 
 For rac_cross_store_comparability_001:
 
-- order_volume, transaction_amount, refund_pressure, and invalid_order_pressure are routed to retail_ops/outputs/demo2_cross_store_comparability_output.csv.
+- order_volume, transaction_amount, refund_pressure, and sku_structure are routed to retail_ops/outputs/demo2_cross_store_comparability_output.csv.
 - competition and repeated_reporting_windows are routed to retail_ops/COMPARABILITY_GATE_V0.md as boundary_evidence.
 - The report does not claim that pairwise comparability is implemented.
 - Pairwise comparability remains future work.

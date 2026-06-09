@@ -97,7 +97,7 @@ Both paths should preserve metric definitions, entity scope, period scope, sourc
 | Evidence type | Examples | Current role | Not sufficient for |
 |---|---|---|---|
 | Backend-derived fields | `transaction_amount`, `entry_users`, `order_users`, `activity_orders`, `refund_amount` | Preserve Meituan backend metric meanings under canonical field names. | Causal explanation or direct cross-store strategy transfer. |
-| SQL-derived diagnostics | `search_entry_rate_pct`, `search_entry_share_pct`, `activity_order_share_pct`, `refund_pressure_pct`, `invalid_order_pressure_pct`, `comparison_limit_notes` | Expose visibility-entry structure, operating-context pressure metrics, and interpretation limits. | Peer selection, store ranking, or final operating decisions. |
+| SQL-derived diagnostics | `search_entry_rate_pct`, `search_entry_share_pct`, `activity_order_share_pct`, `refund_pressure_pct`, `comparison_limit_notes` | Expose visibility-entry structure, operating-context pressure metrics, and interpretation limits. | Peer selection, store ranking, or final operating decisions. |
 | Retrieval-facing memory slots | `visibility_entry_profile`, `activity_lever_profile`, `transaction_conversion_profile`, `order_quality_pressure_profile` | Store evidence with source fields, observed values, calculation notes, confidence, and limitations. | Replacing source metrics or inventing undocumented fields. |
 | Future gate fields | `comparison_question_type`, `comparison_decision`, `market_area_type` | Planned contract fields for future pairwise comparability work. | Current Demo 2 output or current source-table schema. |
 

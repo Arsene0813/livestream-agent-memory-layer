@@ -45,8 +45,6 @@ REQUIRED_CANONICAL_FIELDS = [
     "merchant_subsidy_amount",
     "platform_subsidy_amount",
     "refund_amount",
-    "valid_orders",
-    "invalid_orders",
 ]
 
 REQUIRED_DEMO2_OUTPUT_FIELDS = [
@@ -54,7 +52,6 @@ REQUIRED_DEMO2_OUTPUT_FIELDS = [
     "activity_order_share_pct",
     "activity_cost_ratio_pct",
     "refund_pressure_pct",
-    "invalid_order_pressure_pct",
     "top3_sku_transaction_amount_share_pct",
     "comparison_scope_flag",
     "comparison_limit_notes",
@@ -314,7 +311,6 @@ def main() -> int:
         "activity_original_transaction_amount",
         "estimated_income_proxy",
         "order_conversion_rate_pct",
-        "valid_orders",
         "refund_amount",
         "activity_cost_ratio_pct",
         "top3_sku_transaction_amount_share_pct",
@@ -365,6 +361,35 @@ def main() -> int:
         f"Saved result path: {RESULT_PATH.relative_to(ROOT)}",
     ]
     write_report(report)
+    # Unclear backend order-status fields are excluded from the current
+    # implemented diagnostic contract. Refund fields remain available.
+    forbidden_order_status_files = [
+        "retail_ops/data/store_a_monthly_metrics.csv",
+        "retail_ops/data/demo2_store_period_metrics.csv",
+        "retail_ops/outputs/store_a_demo1_sql_output.csv",
+        "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
+        "retail_ops/outputs/demo2_guardrail_sensitivity_summary.csv",
+        "retail_ops/sql/02_demo2_cross_store_comparability.sql",
+    ]
+
+    forbidden_order_status_terms = [
+        "valid_orders",
+        "invalid_orders",
+        "invalid_order_pressure_pct",
+        "missing_valid_orders",
+        "high_invalid_order_pressure",
+        "moderate_invalid_order_pressure",
+    ]
+
+    for rel_path in forbidden_order_status_files:
+        check_path = ROOT / rel_path
+        if not check_path.exists():
+            continue
+        content = check_path.read_text(encoding="utf-8")
+        for forbidden in forbidden_order_status_terms:
+            if forbidden in content:
+                fail(f"Forbidden unclear order-status field remains in {rel_path}: {forbidden}")
+
     return 0
 
 
