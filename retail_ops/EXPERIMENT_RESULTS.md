@@ -238,7 +238,7 @@ Evidence path:
 
 Expected behavior:
 
-The future gate may define planned factors such as transaction order volume, transaction amount, activity status, activity intensity, store type, region and market context, SKU structure, refund pressure, invalid-order pressure, and repeated reporting windows.
+The future gate may define planned factors such as transaction order volume, transaction amount, activity status, activity intensity, store type, region and market context, SKU structure, refund evidence, and repeated reporting windows.
 
 It should not appear as a current implemented gate in Demo 2 outputs.
 
@@ -293,7 +293,7 @@ The repeated-window panel extension currently covers Store B through Store F acr
 | Descriptive summary validator | `python3 retail_ops/scripts/validate_repeated_window_panel_summary.py` |
 | Descriptive summary validator result | PASS |
 | Descriptive summary flag | `summary_ready_for_descriptive_review` for B-F |
-| Excluded fields | `valid_orders`, `invalid_orders`, `invalid_order_pressure_pct` |
+| Excluded fields | Unclear backend order-status fields. |
 | Interpretation boundary | Repeated-window coverage and descriptive summary only; not a new numbered demo, pairwise comparability gate, endpoint behavior, generated memory facts, store ranking, operating recommendation, or causal analysis. |
 
 The panel extension strengthens the data foundation after the current Demo 2 same-period diagnostic by adding repeated reporting windows and a descriptive SQL summary while preserving the existing field-boundary discipline.
