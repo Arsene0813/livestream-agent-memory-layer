@@ -26,15 +26,7 @@ visibility -> store entry -> order submission -> payment / transaction -> refund
 
 ## Excluded Order-Status Fields
 
-The panel intentionally excludes:
-
-- `valid_orders`
-- `invalid_orders`
-- `invalid_order_pressure_pct`
-
-Reason:
-
-The Meituan backend page used for this project does not provide a clear enough definition for `valid_orders` and `invalid_orders` to support reliable diagnostic use. Current samples also show that `invalid_orders` does not consistently equal `full_refund_orders`.
+The panel intentionally excludes unclear backend order-status fields because their backend definitions are not clear enough for diagnostic use. Current samples also show that those order-status fields do not consistently align with explicitly labeled refund fields.
 
 No alternative hidden definition is inferred.
 
@@ -43,7 +35,6 @@ Refund-related evidence is kept through explicitly labeled refund fields:
 - `refund_amount`
 - `full_refund_orders`
 - `refund_orders_all_or_partial`
-
 ## Current Interpretation Boundary
 
 This panel supports repeated-window coverage inspection.

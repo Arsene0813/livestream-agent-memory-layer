@@ -158,12 +158,11 @@ for path in alias_scan_paths:
 
 notes = notes_path.read_text(encoding="utf-8")
 required_note_phrases = [
-    "repeated-window panel extension",
-    "The panel intentionally excludes:",
-    "`valid_orders`",
-    "`invalid_orders`",
-    "`invalid_order_pressure_pct`",
+    "The panel intentionally excludes unclear backend order-status fields",
     "No alternative hidden definition is inferred.",
+    "`refund_amount`",
+    "`full_refund_orders`",
+    "`refund_orders_all_or_partial`",
 ]
 missing_note_phrases = [phrase for phrase in required_note_phrases if phrase not in notes]
 if missing_note_phrases:
