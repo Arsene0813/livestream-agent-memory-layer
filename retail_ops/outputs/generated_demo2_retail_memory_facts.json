@@ -192,7 +192,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store B's March 2026 refund and unclear order-status metrics provide order-quality pressure signals. They should constrain direct performance comparison when refund or refund-related evidence is elevated.",
+    "value": "Store B's March 2026 refund metrics provide limited refund-pressure signals. They should constrain direct performance comparison only as refund-success-date evidence.",
     "observed_values": {
       "refund_amount": 1254.9,
       "transaction_amount": 11665.5,
@@ -219,8 +219,7 @@
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "refund amount is counted by refund-success date",
-      "not an exact original-order cohort refund rate",
-      "invalid order reason is not included"
+      "not an exact original-order cohort refund rate"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -307,7 +306,7 @@
       "comparison_scope_flag": "same_period_diagnostic_ready",
       "comparison_limit_notes": "high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
     },
-    "calculation": "comparison_limit_notes are derived from activity, refund, unclear order-status, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from activity, refund, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -532,7 +531,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store C's March 2026 refund and unclear order-status metrics provide order-quality pressure signals. They should constrain direct performance comparison when refund or refund-related evidence is elevated.",
+    "value": "Store C's March 2026 refund metrics provide limited refund-pressure signals. They should constrain direct performance comparison only as refund-success-date evidence.",
     "observed_values": {
       "refund_amount": 529.6,
       "transaction_amount": 7064.09,
@@ -559,8 +558,7 @@
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "refund amount is counted by refund-success date",
-      "not an exact original-order cohort refund rate",
-      "invalid order reason is not included"
+      "not an exact original-order cohort refund rate"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -647,7 +645,7 @@
       "comparison_scope_flag": "same_period_diagnostic_ready",
       "comparison_limit_notes": "moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_refund_limits"
     },
-    "calculation": "comparison_limit_notes are derived from activity, refund, unclear order-status, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from activity, refund, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -872,7 +870,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store D's March 2026 refund and unclear order-status metrics provide order-quality pressure signals. They should constrain direct performance comparison when refund or refund-related evidence is elevated.",
+    "value": "Store D's March 2026 refund metrics provide limited refund-pressure signals. They should constrain direct performance comparison only as refund-success-date evidence.",
     "observed_values": {
       "refund_amount": 1617.49,
       "transaction_amount": 18078.7,
@@ -899,8 +897,7 @@
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "refund amount is counted by refund-success date",
-      "not an exact original-order cohort refund rate",
-      "invalid order reason is not included"
+      "not an exact original-order cohort refund rate"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -987,7 +984,7 @@
       "comparison_scope_flag": "same_period_diagnostic_ready",
       "comparison_limit_notes": "high_activity_involvement; compare_with_region_store_type_activity_refund_limits"
     },
-    "calculation": "comparison_limit_notes are derived from activity, refund, unclear order-status, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from activity, refund, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -1212,7 +1209,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store E's March 2026 refund and unclear order-status metrics provide order-quality pressure signals. They should constrain direct performance comparison when refund or refund-related evidence is elevated.",
+    "value": "Store E's March 2026 refund metrics provide limited refund-pressure signals. They should constrain direct performance comparison only as refund-success-date evidence.",
     "observed_values": {
       "refund_amount": 1105.05,
       "transaction_amount": 5784.87,
@@ -1239,8 +1236,7 @@
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "refund amount is counted by refund-success date",
-      "not an exact original-order cohort refund rate",
-      "invalid order reason is not included"
+      "not an exact original-order cohort refund rate"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1327,7 +1323,7 @@
       "comparison_scope_flag": "same_period_diagnostic_ready",
       "comparison_limit_notes": "moderate_activity_involvement; high_refund_pressure; compare_with_region_store_type_activity_refund_limits"
     },
-    "calculation": "comparison_limit_notes are derived from activity, refund, unclear order-status, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from activity, refund, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -1552,7 +1548,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store F's March 2026 refund and unclear order-status metrics provide order-quality pressure signals. They should constrain direct performance comparison when refund or refund-related evidence is elevated.",
+    "value": "Store F's March 2026 refund metrics provide limited refund-pressure signals. They should constrain direct performance comparison only as refund-success-date evidence.",
     "observed_values": {
       "refund_amount": 987.89,
       "transaction_amount": 9301.8,
@@ -1579,8 +1575,7 @@
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "refund amount is counted by refund-success date",
-      "not an exact original-order cohort refund rate",
-      "invalid order reason is not included"
+      "not an exact original-order cohort refund rate"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1667,7 +1662,7 @@
       "comparison_scope_flag": "same_period_diagnostic_ready",
       "comparison_limit_notes": "high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
     },
-    "calculation": "comparison_limit_notes are derived from activity, refund, unclear order-status, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from activity, refund, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
