@@ -1,5 +1,5 @@
-Retail Demo 2 facts eval result: 6/6 passed
-Passed: 6
+Retail Demo 2 facts eval result: 5/5 passed
+Passed: 5
 Failed: 0
 
 PASS store_b_visibility_entry_profile

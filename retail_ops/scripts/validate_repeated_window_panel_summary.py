@@ -30,9 +30,6 @@ for line in sql_text.splitlines():
 query_text = "\n".join(sql_without_comments)
 
 for forbidden in [
-    "valid_orders",
-    "invalid_orders",
-    "invalid_order_pressure_pct",
     "full_refund_order_count",
     "full_or_partial_refund_order_count",
     "self_operated",

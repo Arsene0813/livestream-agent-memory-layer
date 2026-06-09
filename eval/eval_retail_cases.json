@@ -42,17 +42,6 @@
     ]
   },
   {
-    "name": "",
-    "message": "",
-    "entity_id": "store_A",
-    "should_support": true,
-    "expected_slots": [],
-    "expected_substrings": [
-      "refund",
-      "invalid"
-    ]
-  },
-  {
     "name": "single_metric_attribution_guard",
     "message": "Can Store A's April recovery be explained by one metric alone?",
     "entity_id": "store_A",

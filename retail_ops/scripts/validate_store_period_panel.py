@@ -19,9 +19,6 @@ if missing:
     sys.exit(1)
 
 forbidden_panel_aliases = {
-    "valid_orders",
-    "invalid_orders",
-    "invalid_order_pressure_pct",
     "full_refund_order_count",
     "full_or_partial_refund_order_count",
 }

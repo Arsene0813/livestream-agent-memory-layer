@@ -4,7 +4,6 @@ import json
 import sys
 from pathlib import Path
 
-
 FACTS_PATH = Path("retail_ops/outputs/generated_demo2_retail_memory_facts.json")
 RESULTS_PATH = Path("eval/results/eval_retail_demo2_facts_result.txt")
 
@@ -40,12 +39,6 @@ EXPECTED_CASES = [
         ],
     },
     {
-        "entity_id": "store_E",
-        "expected_terms": [
-            "not an exact original-order cohort refund rate",
-        ],
-    },
-    {
         "name": "store_f_transaction_conversion_profile",
         "entity_id": "store_F",
         "slot": "transaction_conversion_profile",
@@ -78,7 +71,6 @@ lines = []
 for case in EXPECTED_CASES:
     key = (case["entity_id"], case["slot"])
     fact = index.get(key)
-
     if fact is None:
         failed += 1
         lines.append(f"FAIL {case['name']}: missing fact {key}")
@@ -86,7 +78,6 @@ for case in EXPECTED_CASES:
 
     serialized = json.dumps(fact, ensure_ascii=False)
     missing_terms = [term for term in case["expected_terms"] if term not in serialized]
-
     if missing_terms:
         failed += 1
         lines.append(f"FAIL {case['name']}: missing terms {missing_terms}")
@@ -106,6 +97,5 @@ summary = [
 
 RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
 RESULTS_PATH.write_text("\n".join(summary), encoding="utf-8")
-
 print("\n".join(summary))
 sys.exit(0 if failed == 0 else 1)

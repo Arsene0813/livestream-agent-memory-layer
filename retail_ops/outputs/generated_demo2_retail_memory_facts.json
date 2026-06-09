@@ -78,7 +78,8 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution"
+      "not causal attribution",
+      "compare with region, store type, activity, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -177,6 +178,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "estimated_income_proxy is platform-displayed and not audited profit",
+      "order_conversion_rate_pct follows the backend definition and must not be recomputed from transaction-order counts",
       "transaction and conversion metrics do not prove causality or final operating quality by themselves"
     ],
     "is_active": true,
@@ -263,7 +265,7 @@
       "comparison_scope_flag": "same_period_diagnostic_ready",
       "comparison_limit_notes": "high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
     },
-    "calculation": "comparison_limit_notes are derived from search, activity, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from activity involvement and top-3 SKU concentration checks in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -288,7 +290,8 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution"
+      "not causal attribution",
+      "compare with region, store type, activity, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -372,7 +375,8 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution"
+      "not causal attribution",
+      "compare with region, store type, activity, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -471,6 +475,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "estimated_income_proxy is platform-displayed and not audited profit",
+      "order_conversion_rate_pct follows the backend definition and must not be recomputed from transaction-order counts",
       "transaction and conversion metrics do not prove causality or final operating quality by themselves"
     ],
     "is_active": true,
@@ -557,7 +562,7 @@
       "comparison_scope_flag": "same_period_diagnostic_ready",
       "comparison_limit_notes": "moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_product_mix_limits"
     },
-    "calculation": "comparison_limit_notes are derived from search, activity, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from activity involvement and top-3 SKU concentration checks in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -582,7 +587,8 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution"
+      "not causal attribution",
+      "compare with region, store type, activity, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -666,7 +672,8 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution"
+      "not causal attribution",
+      "compare with region, store type, activity, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -765,6 +772,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "estimated_income_proxy is platform-displayed and not audited profit",
+      "order_conversion_rate_pct follows the backend definition and must not be recomputed from transaction-order counts",
       "transaction and conversion metrics do not prove causality or final operating quality by themselves"
     ],
     "is_active": true,
@@ -851,7 +859,7 @@
       "comparison_scope_flag": "same_period_diagnostic_ready",
       "comparison_limit_notes": "high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
     },
-    "calculation": "comparison_limit_notes are derived from search, activity, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from activity involvement and top-3 SKU concentration checks in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -876,7 +884,8 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution"
+      "not causal attribution",
+      "compare with region, store type, activity, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -960,7 +969,8 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution"
+      "not causal attribution",
+      "compare with region, store type, activity, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1059,6 +1069,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "estimated_income_proxy is platform-displayed and not audited profit",
+      "order_conversion_rate_pct follows the backend definition and must not be recomputed from transaction-order counts",
       "transaction and conversion metrics do not prove causality or final operating quality by themselves"
     ],
     "is_active": true,
@@ -1145,7 +1156,7 @@
       "comparison_scope_flag": "same_period_diagnostic_ready",
       "comparison_limit_notes": "moderate_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
     },
-    "calculation": "comparison_limit_notes are derived from search, activity, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from activity involvement and top-3 SKU concentration checks in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -1170,7 +1181,8 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution"
+      "not causal attribution",
+      "compare with region, store type, activity, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1254,7 +1266,8 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution"
+      "not causal attribution",
+      "compare with region, store type, activity, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1353,6 +1366,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "estimated_income_proxy is platform-displayed and not audited profit",
+      "order_conversion_rate_pct follows the backend definition and must not be recomputed from transaction-order counts",
       "transaction and conversion metrics do not prove causality or final operating quality by themselves"
     ],
     "is_active": true,
@@ -1439,7 +1453,7 @@
       "comparison_scope_flag": "same_period_diagnostic_ready",
       "comparison_limit_notes": "high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
     },
-    "calculation": "comparison_limit_notes are derived from search, activity, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from activity involvement and top-3 SKU concentration checks in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -1464,7 +1478,8 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
-      "not causal attribution"
+      "not causal attribution",
+      "compare with region, store type, activity, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"

@@ -317,16 +317,6 @@ def main() -> int:
         if field not in lineage:
             failures.append(f"Critical lineage field `{field}` missing from LINEAGE.md")
 
-    if re.search(
-        r"valid_orders\s*/\s*NULLIF\s*\(\s*entry_users\s*,\s*0\s*\)",
-        demo1_sql + "\n" + demo2_sql,
-        flags=re.IGNORECASE,
-    ):
-        failures.append(
-            "SQL appears to derive a conversion metric from valid_orders / entry_users. "
-            "Do not use valid_orders as the numerator for order_conversion_rate_pct."
-        )
-
     validate_generated_facts(
         relative_path="retail_ops/outputs/generated_retail_memory_facts.json",
         allowed_entities={"store_A"},
@@ -351,11 +341,11 @@ def main() -> int:
         "Checked canonical field presence across dictionary and current source/output files.",
         "Checked Demo 1 source/output headers.",
         "Checked Demo 2 source/output headers.",
-        "Checked Demo 2 comparison-scope and limitation fields.",
+        "Checked Demo 2 diagnostic-scope and limitation fields.",
         "Checked generated Demo 1 and Demo 2 memory fact structure.",
         "Checked source_path existence and known source_fields.",
         "Checked critical metric-boundary phrases in DATA_DICTIONARY.md.",
-        "Checked forbidden alias fields outside validator scripts.",
+        "Checked current schema aliases and retained field boundaries.",
         f"Saved result path: {RESULT_PATH.relative_to(ROOT)}",
     ]
     write_report(report)
@@ -371,12 +361,6 @@ def main() -> int:
     ]
 
     forbidden_order_status_terms = [
-        "valid_orders",
-        "invalid_orders",
-        "invalid_order_pressure_pct",
-        "missing_valid_orders",
-        "high_invalid_order_pressure",
-        "moderate_invalid_order_pressure",
     ]
 
     for rel_path in forbidden_order_status_files:

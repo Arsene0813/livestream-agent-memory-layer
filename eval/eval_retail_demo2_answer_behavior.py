@@ -210,6 +210,7 @@ def main() -> int:
                 "comparison_scope_flag and "
                 "comparison_limit_notes. The supported answer is qualified comparison, "
                 "not direct strategy transfer."
+                " Activity evidence should cite activity_orders, activity_cost_ratio_pct, merchant_subsidy_amount, and platform_subsidy_amount before discussing any promotion transfer."
             ),
             "required_terms": [
                 "cannot directly transfer",

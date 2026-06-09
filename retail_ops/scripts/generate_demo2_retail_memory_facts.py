@@ -120,6 +120,7 @@ for row in comparability_rows:
         "same-period March 2026 comparison only",
         "traffic-source users may overlap",
         "not causal attribution",
+        "compare with region, store type, activity, and product-mix limits",
     ]
 
     facts.append(
@@ -267,11 +268,11 @@ for row in comparability_rows:
                 "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
                 "same-period March 2026 comparison only",
                 "estimated_income_proxy is platform-displayed and not audited profit",
+                "order_conversion_rate_pct follows the backend definition and must not be recomputed from transaction-order counts",
                 "transaction and conversion metrics do not prove causality or final operating quality by themselves",
             ],
         )
     )
-
 
     facts.append(
         make_fact(
@@ -333,8 +334,8 @@ for row in comparability_rows:
                 "comparison_limit_notes": row["comparison_limit_notes"],
             },
             calculation=(
-                "comparison_limit_notes are derived from search, activity, "
-                "and top-3 SKU concentration thresholds in the Demo 2 SQL output"
+                "comparison_limit_notes are derived from activity involvement and top-3 SKU concentration checks "
+                "in the Demo 2 SQL output"
             ),
             source_fields=[
                 "transaction_amount",

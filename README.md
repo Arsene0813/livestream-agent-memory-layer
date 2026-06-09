@@ -166,7 +166,7 @@ Demo 2 guardrail sensitivity is also inspected. In the current B-F sample, all f
 | --- | --- | --- |
 | Livestream memory evaluation | Fact retrieval, overwrite behavior, entity separation, fallback/refusal, non-fact filtering. | Current implemented cases pass. |
 | Retail retrieval evaluation | Store A retail-memory retrieval and unsupported-scope refusal. | 8/8 passed. |
-| Retail Demo 2 facts evaluation | Store B-F generated fact coverage across diagnostic slots. | 6/6 passed. |
+| Retail Demo 2 facts evaluation | Store B-F generated fact coverage across diagnostic slots. | 5/5 passed. |
 | Retail Demo 2 scope-boundary evaluation | Demo 2 remains a row-level same-period diagnostic and does not expose future pairwise-gate schema. | 5/5 passed. |
 | Retail Demo 2 answer-boundary evaluation | Activity-cost ratio, top-SKU share, search-entry comparison, promotion-transfer limits, same-period boundary, and `region_type` weak-context boundary. | 6/6 passed. |
 | Retail Demo 2 endpoint behavior evaluation | File-backed Demo 2 endpoint behavior for supported Store B-F questions, unsupported-scope refusal, and pairwise strategy-transfer refusal. | 7/7 passed. |

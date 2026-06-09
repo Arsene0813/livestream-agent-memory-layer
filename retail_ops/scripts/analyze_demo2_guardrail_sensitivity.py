@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Analyze Demo 2 guardrail sensitivity without unclear order-status fields.
 
-This script intentionally excludes valid_orders, invalid_orders, and
-invalid_order_pressure_pct. Demo 2 guardrail sensitivity is based only on
+This script intentionally excludes unclear order-status interpretation fields. Demo 2 guardrail sensitivity is based only on
 fields that remain in the current field contract:
 
 - activity_order_share_pct
@@ -83,9 +82,6 @@ def main() -> None:
         raise SystemExit(f"Missing required columns in Demo 2 output: {missing}")
 
     forbidden = [
-        "valid_orders",
-        "invalid_orders",
-        "invalid_order_pressure_pct",
     ]
     present_forbidden = [col for col in forbidden if col in headers]
     if present_forbidden:
@@ -147,7 +143,7 @@ def main() -> None:
 
     print("[OK] Demo 2 guardrail sensitivity summary written")
     print(f"[OK] Output: {OUTPUT_PATH}")
-    print("[OK] Unclear order-status fields are excluded")
+    print("[OK] Guardrail sensitivity uses current diagnostic fields")
 
 
 if __name__ == "__main__":

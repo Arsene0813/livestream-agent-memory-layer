@@ -103,13 +103,27 @@ async def run_checks() -> int:
         except AssertionError as exc:
             failed.append(f"[FAIL] {name}: {exc}")
 
-    async def case_store_e_order_quality_pressure() -> None:
-        name = "Store E refund-pressure endpoint behavior"
+    async def case_store_e_transaction_conversion_profile() -> None:
+        name = "Store E transaction-conversion endpoint behavior"
         result = await ask(
+            message="For Store E in Demo 2, explain the March 2026 transaction and conversion profile. Do not make a final operating recommendation.",
             entity_id="store_E",
         )
         require_supported(name, result)
         require_demo2_endpoint_metadata(name, result)
+        require_slot(name, result, "transaction_conversion_profile")
+        require_contains(
+            name,
+            result,
+            [
+                "transaction scale",
+                "order-submission conversion",
+                "payment conversion",
+                "estimated income proxy",
+                "average order value",
+                "not be used alone",
+            ],
+        )
 
     async def case_store_b_activity_boundary() -> None:
         name = "Store B activity endpoint behavior"
@@ -182,6 +196,7 @@ async def run_checks() -> int:
     async def case_out_of_demo2_entity_refusal() -> None:
         name = "Out-of-Demo-2 entity refusal"
         result = await ask(
+            message="Explain Store A using the Demo 2 endpoint.",
             entity_id="store_A",
         )
         require_refusal(name, result)
@@ -189,17 +204,18 @@ async def run_checks() -> int:
             name,
             result,
             [
-                "store b",
-                "store c",
-                "store d",
-                "store e",
-                "store f",
+                "Demo 2",
+                "Store B",
+                "Store C",
+                "Store D",
+                "Store E",
+                "Store F",
             ],
         )
 
     await run_case(
-        "Store E refund-pressure endpoint behavior",
-        case_store_e_order_quality_pressure,
+        "Store E transaction-conversion endpoint behavior",
+        case_store_e_transaction_conversion_profile,
     )
     await run_case(
         "Store B activity endpoint behavior",
