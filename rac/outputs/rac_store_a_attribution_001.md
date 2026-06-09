@@ -41,7 +41,7 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 
 | Hypothesis | Confidence | Status | Weakness |
 |---|---:|---|---|
-| Search exposure may have contributed to Store A's April performance, but it is not sufficient as a single explanation. | 0.52 | plausible | Does not isolate promotion effects.; Does not prove order-quality improvement. |
+| Search exposure may have contributed to Store A's April performance, but it is not sufficient as a single explanation. | 0.52 | plausible | Does not isolate promotion effects.; Does not prove refund-pressure improvement. |
 | Store A's April performance is better interpreted through traffic recovery, promotion intensity, conversion changes, and refund pressure together. | 0.74 | strong | Observational evidence cannot establish strict causality. |
 | The available evidence is insufficient for single-cause attribution. | 0.82 | strong | Conservative rather than complete causal explanation. |
 

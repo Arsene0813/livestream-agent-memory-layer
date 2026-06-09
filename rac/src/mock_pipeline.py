@@ -240,7 +240,7 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
                 "claim": "Search exposure may have contributed to Store A's April performance, but it is not sufficient as a single explanation.",
                 "confidence": 0.52,
                 "supporting_factors": ["search_exposure", "entry_conversion"],
-                "weaknesses": ["Does not isolate promotion effects.", "Does not prove order-quality improvement."],
+                "weaknesses": ["Does not isolate promotion effects.", "Does not prove refund-pressure improvement."],
                 "status": "plausible"
             },
             {

@@ -109,7 +109,7 @@ Examples include:
 - high or moderate refund pressure;
 
 - top-3 SKU transaction-amount concentration;
-- the need to compare with region, store type, activity, refund, order-quality, and product-mix limits.
+- the need to compare with region, store type, activity, refund and product-mix limits.
 
 These notes are interpretation guardrails.
 
