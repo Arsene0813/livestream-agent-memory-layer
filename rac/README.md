@@ -310,10 +310,10 @@ The RAC grounding layer has been hardened so that the cross-store comparability 
 
 Current quality-gate result:
 
-- Total grounded packets: 36
-- Keyword matched packets: 34
+- Total grounded packets: 32
+- Keyword matched packets: 29
 - Boundary matched packets: 2
-- Fallback packets: 0
+- Fallback packets: 1
 - Missing source files: 0
 
 For rac_cross_store_comparability_001:
