@@ -77,7 +77,7 @@ The repeated-window panel extension adds a small multi-month coverage layer afte
 | Descriptive summary validator | `scripts/validate_repeated_window_panel_summary.py` |
 | Boundary | Coverage and descriptive summary only; not a new numbered demo, pairwise comparability gate, endpoint behavior, generated memory facts, store ranking, operating recommendation, or causal analysis. |
 
-The extension intentionally excludes unclear backend order-status fields because the current backend evidence does not define those fields clearly enough for diagnostic use.
+The extension only uses fields whose meanings are documented clearly enough in `data/DATA_DICTIONARY.md` for diagnostic use.
 
 ## Script Notes
 
