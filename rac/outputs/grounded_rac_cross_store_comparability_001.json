@@ -519,8 +519,7 @@
           "transaction_order_count",
           "transaction_orders",
           "orders",
-          "成交订单量",
-          "有效订单"
+          "成交订单量"
         ],
         "grounding_status": "keyword_matched",
         "snippets": [
@@ -860,7 +859,6 @@
           "intransaction_orders",
           "refund order",
           "intransaction orders",
-          "无效订单",
           "取消"
         ],
         "grounding_status": "keyword_matched",

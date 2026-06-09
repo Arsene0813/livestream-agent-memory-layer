@@ -79,7 +79,7 @@
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
       "not causal attribution",
-      "compare with region, store type, activity, refund, order-quality, and product-mix limits"
+      "compare with region, store type, activity, refund, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -201,7 +201,7 @@
       "full_refund_orders": 23,
       "refund_orders_all_or_partial": 24
     },
-    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; refund_pressure_pct = inproject_side_order_status_proxy / (project_side_order_status_proxy + inproject_side_order_status_proxy) * 100",
+    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100",
     "source_fields": [
       "refund_amount",
       "transaction_amount",
@@ -333,7 +333,7 @@
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
       "not causal attribution",
-      "compare with region, store type, activity, refund, order-quality, and product-mix limits"
+      "compare with region, store type, activity, refund, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -418,7 +418,7 @@
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
       "not causal attribution",
-      "compare with region, store type, activity, refund, order-quality, and product-mix limits"
+      "compare with region, store type, activity, refund, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -540,7 +540,7 @@
       "full_refund_orders": 11,
       "refund_orders_all_or_partial": 11
     },
-    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; refund_pressure_pct = inproject_side_order_status_proxy / (project_side_order_status_proxy + inproject_side_order_status_proxy) * 100",
+    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100",
     "source_fields": [
       "refund_amount",
       "transaction_amount",
@@ -672,7 +672,7 @@
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
       "not causal attribution",
-      "compare with region, store type, activity, refund, order-quality, and product-mix limits"
+      "compare with region, store type, activity, refund, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -757,7 +757,7 @@
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
       "not causal attribution",
-      "compare with region, store type, activity, refund, order-quality, and product-mix limits"
+      "compare with region, store type, activity, refund, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -879,7 +879,7 @@
       "full_refund_orders": 33,
       "refund_orders_all_or_partial": 44
     },
-    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; refund_pressure_pct = inproject_side_order_status_proxy / (project_side_order_status_proxy + inproject_side_order_status_proxy) * 100",
+    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100",
     "source_fields": [
       "refund_amount",
       "transaction_amount",
@@ -1011,7 +1011,7 @@
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
       "not causal attribution",
-      "compare with region, store type, activity, refund, order-quality, and product-mix limits"
+      "compare with region, store type, activity, refund, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1096,7 +1096,7 @@
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
       "not causal attribution",
-      "compare with region, store type, activity, refund, order-quality, and product-mix limits"
+      "compare with region, store type, activity, refund, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1218,7 +1218,7 @@
       "full_refund_orders": 25,
       "refund_orders_all_or_partial": 29
     },
-    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; refund_pressure_pct = inproject_side_order_status_proxy / (project_side_order_status_proxy + inproject_side_order_status_proxy) * 100",
+    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100",
     "source_fields": [
       "refund_amount",
       "transaction_amount",
@@ -1350,7 +1350,7 @@
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
       "not causal attribution",
-      "compare with region, store type, activity, refund, order-quality, and product-mix limits"
+      "compare with region, store type, activity, refund, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1435,7 +1435,7 @@
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
       "not causal attribution",
-      "compare with region, store type, activity, refund, order-quality, and product-mix limits"
+      "compare with region, store type, activity, refund, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1557,7 +1557,7 @@
       "full_refund_orders": 30,
       "refund_orders_all_or_partial": 33
     },
-    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; refund_pressure_pct = inproject_side_order_status_proxy / (project_side_order_status_proxy + inproject_side_order_status_proxy) * 100",
+    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100",
     "source_fields": [
       "refund_amount",
       "transaction_amount",
@@ -1689,7 +1689,7 @@
       "same-period March 2026 comparison only",
       "traffic-source users may overlap",
       "not causal attribution",
-      "compare with region, store type, activity, refund, order-quality, and product-mix limits"
+      "compare with region, store type, activity, refund, and product-mix limits"
     ],
     "is_active": true,
     "period_granularity": "month"

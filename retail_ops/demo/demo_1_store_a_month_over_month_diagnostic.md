@@ -152,11 +152,10 @@ Refund pressure improved in April compared with March.
 | ---------------------- | ------: | ------: | --------- |
 | Refund Amount          | 1097.97 |  602.26 | Down      |
 | Refund Pressure        |  17.01% |   6.63% | Down      |
-| Invalid Orders         |      32 |      29 | Down      |
 
 Interpretation:
 
-This is an order-quality pressure signal.
+This is a refund-pressure signal.
 
 It does not prove that customer satisfaction definitively improved, because refund amount is counted by refund-success date and is not a perfect original-order cohort refund rate.
 

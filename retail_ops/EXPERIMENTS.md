@@ -161,7 +161,7 @@ The next comparability experiment should use repeated store-period windows befor
 | Activity involvement stability | Repeated `activity_orders`, `activity_order_share_pct`, and `activity_cost_ratio_pct` | Whether activity-heavy rows remain activity-heavy across months | One campaign month creates a false peer group |
 | Region / market-context evidence | More stores plus local consumption, competition, or delivery-radius notes where available | Whether `region_type` is enough as weak context or new `market_area_type` fields are justified | Region labels alone explain too little |
 | SKU-structure comparability | Broader SKU evidence beyond top-3 ranking views | Whether top-SKU concentration is stable enough to constrain comparison | Top-3 evidence changes too much or misses category structure |
-| Refund-evidence stability | Repeated refund-evidence signals | Whether refund-related evidence is persistent or one-period noise | One-period refund-related evidence creates misleading store comparison |
+| Refund-evidence stability | Repeated refund-evidence signals | Whether refund-pressure evidence is persistent or one-period noise | One-period refund-pressure evidence creates misleading store comparison |
 
 ## Reviewer Experiment Map
 

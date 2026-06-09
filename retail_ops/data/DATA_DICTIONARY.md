@@ -535,9 +535,7 @@ English formula: `average_order_value = transaction_amount / transaction_orders`
 
 English interpretation: In this demo, `average_order_value` follows the transaction-metric page definition: transaction amount divided by transaction orders.
 
-Consistency note: If another backend page defines 单均价 as valid-order average price, that value should be treated as a separate backend-reported metric and should not be mixed with `average_order_value`.
-
-Suggested future field if needed: `valid_order_average_value`.
+Consistency note: If another backend page defines 单均价 with a different denominator, that value should be treated as a separate backend-reported metric only after its denominator is verified. It should not be mixed with `average_order_value`.
 
 ### `business_district_rank` / 商圈排名
 

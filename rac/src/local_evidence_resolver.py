@@ -62,15 +62,11 @@ FACTOR_KEYWORDS: dict[str, list[str]] = {
         "transaction_orders",
         "transaction orders",
         "valid order",
-        "有效订单",
-        "有效订单数"
     ],
     "intransaction_orders": [
         "intransaction_orders",
         "intransaction orders",
         "refund order",
-        "无效订单",
-        "无效订单数",
         "cancelled",
         "canceled"
     ],
@@ -104,7 +100,6 @@ FACTOR_KEYWORDS: dict[str, list[str]] = {
         "transaction_orders",
         "orders",
         "成交订单量",
-        "有效订单"
     ],
     "transaction_amount": [
         "transaction_amount",
@@ -166,7 +161,6 @@ FACTOR_KEYWORDS: dict[str, list[str]] = {
         "intransaction_orders",
         "refund order",
         "intransaction orders",
-        "无效订单",
         "取消"
     ],
     "repeated_reporting_windows": [
