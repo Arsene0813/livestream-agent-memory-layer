@@ -20,7 +20,7 @@ being seen -> being entered -> being ordered -> being selected again or maintain
 
 A store may use activity subsidy, pricing, ranking optimization, SKU mix, and fulfillment control as operating levers inside this chain.
 
-These levers should not be interpreted as isolated causes. Their meaning depends on the store's current stage, local competition, visibility pressure, conversion quality, order quality, and product mix.
+These levers should not be interpreted as isolated causes. Their meaning depends on the store's current stage, local competition, visibility pressure, conversion quality, refund pressure, and product mix.
 
 Short-term activity-cost efficiency is not always the primary target. A new store may need activity subsidy to gain exposure and first orders. A store under external price pressure may need activity or pricing action to defend visibility and market share. A store with enough traffic but weak conversion requires a different interpretation from a store with order growth but refund pressure.
 

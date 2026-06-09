@@ -70,9 +70,9 @@
     ]
   },
   {
-    "case_id": "positive_store_e_order_quality_pressure",
+    "case_id": "positive_store_e_refund_pressure",
     "case_type": "positive_supported",
-    "query": "What does Store E's March 2026 order quality pressure show?",
+    "query": "What does Store E's March 2026 refund pressure show?",
     "expected_entity": "store_E",
     "expected_slot": "order_quality_pressure_profile",
     "expected_period_terms": [
@@ -328,9 +328,9 @@
     ]
   },
   {
-    "case_id": "ambiguous_compare_order_quality",
+    "case_id": "ambiguous_compare_refund_pressure",
     "case_type": "ambiguous_comparison",
-    "query": "Which store has better order quality?",
+    "query": "Which store has better refund pressure?",
     "expected_entity": null,
     "expected_slot": "order_quality_pressure_profile",
     "expected_period_terms": [],

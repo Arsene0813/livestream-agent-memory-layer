@@ -52,7 +52,7 @@ For admissions review, start with:
 
 In Meituan instant retail, store competition is not only about having products online. For standardized products such as contact lenses, care solutions, and related eye-care items, stores compete through a local operating chain: being seen, being entered, being ordered, and then being selected again or maintaining share.
 
-Promotion, subsidy, price adjustment, SKU arrangement, ranking optimization, and fulfillment stability are tools inside this chain. Their meaning depends on store state, local competition, activity intensity, order quality, product mix, and reporting-window alignment.
+Promotion, subsidy, price adjustment, SKU arrangement, ranking optimization, and fulfillment stability are tools inside this chain. Their meaning depends on store state, local competition, activity intensity, refund pressure, product mix, and reporting-window alignment.
 
 A new store may use activity support to gain first exposure and first orders. A store under local price pressure may use pricing or subsidy tools to defend visibility and market share. A store with high exposure may still underperform if entry quality, order conversion, refund pressure, or SKU concentration create friction.
 

@@ -18,7 +18,7 @@ For standardized instant-retail products, store competition is organized around 
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
-Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on store state, local competition, activity intensity, order quality, product mix, and reporting-window alignment.
+Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on store state, local competition, activity intensity, refund pressure, product mix, and reporting-window alignment.
 
 The goal is to build a more reliable evidence-based framework for multi-store operational analysis, so that future operating decisions can be made with clearer data boundaries as the business expands.
 
