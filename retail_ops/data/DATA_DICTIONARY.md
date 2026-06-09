@@ -75,7 +75,7 @@ Current status: `region_type` is the implemented metadata field for weak region 
 
 In Demo 2, `region_type` may contain coarse available labels such as city-level region labels. These values are retained for data-contract stability and source traceability, but they are not market-area types, consumption-level groups, maturity labels, or peer-store groups; in short, `region_type` is not a hard market-area classification. Stores with similar visible region labels may still differ in purchasing power, delivery radius, local competition, rent structure, promotion pressure, customer behavior, stockout risk, and fulfillment constraints.
 
-In the current project, `region_type` can only be used as weak context alongside period alignment, store type, order volume, visibility and ranking signals, entry and order conversion, activity profile, refund and invalid-order pressure, SKU evidence, data completeness, and future external market evidence. The current Demo 2 sample is too small to support a reliable regional classification.
+In the current project, `region_type` can only be used as weak context alongside period alignment, store type, order volume, visibility and ranking signals, entry and order conversion, activity profile, refund evidence, SKU evidence, data completeness, and future external market evidence. The current Demo 2 sample is too small to support a reliable regional classification.
 
 Future market-area classification should be introduced only after the project has enough store coverage and supporting evidence. If added, it must use new documented fields rather than silently changing the meaning of `region_type`.
 
@@ -97,7 +97,7 @@ Current derived outputs are separated into two layers.
 
 1. SQL output columns:
 
-- share / ratio diagnostics, such as `search_entry_share_pct`, `refund_pressure_pct`, `invalid_order_pressure_pct`, and `top3_sku_transaction_amount_share_pct`;
+- share / ratio diagnostics, such as `search_entry_share_pct`, `refund_pressure_pct`, and `top3_sku_transaction_amount_share_pct`;
 - month-over-month diagnostics, such as `transaction_amount_mom_pct`, `entry_users_mom_pct`, and `refund_amount_mom_pct`;
 - ranking-change and boolean supporting diagnostics, such as `store_average_rank_change`, `search_average_rank_change`, `transaction_recovered_with_conversion_aov_tradeoff`, and `refund_pressure_improved`.
 
@@ -105,7 +105,7 @@ Current derived outputs are separated into two layers.
 
 - retrieval-facing slots such as `visibility_entry_profile`, `activity_lever_profile`, `transaction_conversion_profile`, `order_quality_pressure_profile`, `single_metric_attribution_guard`, and `top3_sku_product_mix_note`.
 
-Memory-facing slots are generated from multiple source fields and SQL-derived columns. They are not raw Meituan backend fields and should not be treated as SQL output headers. The SQL layer must not silently rename, redefine, or reverse-engineer Meituan backend metrics. It also must not turn one threshold into a fixed store-stage label. For example, `order_conversion_rate_pct` follows the backend definition and must not be recomputed from `valid_orders / entry_users`.
+Memory-facing slots are generated from multiple source fields and SQL-derived columns. They are not raw Meituan backend fields and should not be treated as SQL output headers. The SQL layer must not silently rename, redefine, or reverse-engineer Meituan backend metrics. It also must not turn one threshold into a fixed store-stage label. For example, `order_conversion_rate_pct` follows the backend definition and must not be recomputed from a project-side order-status proxy.
 
 Any new SQL-derived field must be explicitly documented before it is used in generated outputs or memory facts.
 
@@ -113,7 +113,7 @@ Any new SQL-derived field must be explicitly documented before it is used in gen
 
 Pairwise comparability-gate fields are not currently implemented. Current Demo 2 produces same-period diagnostic evidence.
 
-A future pairwise comparability gate should use broader multi-store evidence to decide whether two store-period records can be compared for a specific operating question. Reliable store comparability should be judged from transaction order volume, transaction amount, store type, region and market context, competition environment, SKU structure, refund pressure, invalid-order pressure, fulfillment or stockout evidence where available, repeated reporting windows, and activity evidence.
+A future pairwise comparability gate should use broader multi-store evidence to decide whether two store-period records can be compared for a specific operating question. Reliable store comparability should be judged from transaction order volume, transaction amount, store type, region and market context, competition environment, SKU structure, refund evidence, fulfillment or stockout evidence where available, repeated reporting windows, and activity evidence.
 
 Activity evidence should be separated into:
 
@@ -225,7 +225,6 @@ Evidence-completeness notes:
 | Note | Trigger | Meaning |
 |---|---|---|
 | `missing_transaction_amount` | `transaction_amount` is missing. | Amount-based ratios such as `refund_pressure_pct` and `top3_sku_transaction_amount_share_pct` should not be interpreted as comparable evidence. |
-| `missing_valid_orders` | `valid_orders` is missing. | `invalid_order_pressure_pct` should not be interpreted as comparable evidence. |
 | `missing_top3_sku_amount_evidence` | Top-SKU transaction-amount evidence is missing. | Missing product-mix evidence must not be treated as zero concentration. |
 
 Diagnostic threshold registry:
@@ -236,8 +235,6 @@ Diagnostic threshold registry:
 | `moderate_activity_involvement` | `activity_order_share_pct` | `>= 65` | Activity orders are a meaningful part of the transaction-order structure. | Diagnostic warning only. |
 | `high_refund_pressure` | `refund_pressure_pct` | `>= 15` | Refund amount pressure is high for this diagnostic layer. | Not a cohort refund rate or customer-satisfaction conclusion. |
 | `moderate_refund_pressure` | `refund_pressure_pct` | `>= 10` | Refund pressure should constrain comparison. | Diagnostic warning only. |
-| `high_invalid_order_pressure` | `invalid_order_pressure_pct` | `>= 12` | Cancelled-order pressure is high for this diagnostic layer. | Needs cancellation-reason evidence before fulfillment diagnosis. |
-| `moderate_invalid_order_pressure` | `invalid_order_pressure_pct` | `>= 8` | Cancelled-order pressure should constrain comparison. | Diagnostic warning only. |
 | `top3_sku_amount_concentration` | `top3_sku_transaction_amount_share_pct` | `>= 25` | Top-3 SKU transaction amount is concentrated. | Lightweight top-SKU evidence, not full product-category share. |
 | `compare_with_region_store_type_activity_refund_limits` | default note | always included for ready rows | Region, store type, activity, refund, order-quality, and product-mix evidence constrain direct comparison. | Reminder that the current output is a diagnostic evidence layer. |
 
@@ -278,7 +275,7 @@ The current Store A Demo 1 uses the following canonical retail memory slots:
 | `visibility_entry_profile`        | Exposure, ranking, entry, and search-entry structure.                                              | Understanding whether the store was being seen and entered during the reporting window.                         | Claiming visibility alone caused transaction growth.                        |
 | `activity_lever_profile`          | Activity orders, activity cost, subsidy, and activity-cost ratio.                                  | Understanding how promotional tools were used in the store's operating context.                                 | Treating activity as a standalone cause or traditional ROI result.          |
 | `transaction_conversion_profile`  | Transaction scale, order conversion, payment, and average order value.                             | Reading transaction recovery or decline together with funnel quality.                                           | Calling a period good or bad from one transaction metric alone.             |
-| `order_quality_pressure_profile`  | Refund pressure, refund-order pressure, invalid-order pressure, and related order-quality signals. | Understanding whether order growth coexists with refund or cancellation pressure.                               | Proving customer satisfaction or fulfillment quality definitively improved. |
+| `order_quality_pressure_profile`  | Refund-related evidence and related order-quality context. | Understanding whether order growth coexists with refund evidence.                               | Proving customer satisfaction or fulfillment quality definitively improved. |
 | `single_metric_attribution_guard` | Guardrail against explaining performance from one metric alone.                                    | Preventing unsupported attribution from exposure, ranking, activity, conversion, refund, or SKU evidence alone. | Rejecting those metrics as irrelevant.                                      |
 | `top3_sku_product_mix_note`       | Lightweight top-SKU evidence.                                                                      | Describing limited leading-SKU evidence.                                                                        | Full product-category sales-share analysis.                                 |
 
@@ -446,16 +443,16 @@ English definition: Number of users who entered the merchant page through other 
 
 English formula: `order_conversion_rate_pct = order_users / entry_users * 100`
 
-中文解释：本 demo 将 `order_conversion_rate_pct` 作为美团后台展示的下单转化率，不用有效订单数反推。
+中文解释：本 demo 将 `order_conversion_rate_pct` 作为美团后台展示的下单转化率，不用项目侧订单状态口径反推。
 
-English interpretation: In this demo, `order_conversion_rate_pct` is treated as the backend-reported order conversion rate. It is not recomputed from valid orders.
+English interpretation: In this demo, `order_conversion_rate_pct` is treated as the backend-reported order conversion rate. It is not recomputed from project-side order-status proxies.
 
-It should not be recomputed as `valid_orders / entry_users`.
+It should not be recomputed from a project-side order-status proxy.
 
 Reason:
 
 - `order_users` / 下单人数 is a user-count funnel metric;
-- `valid_orders` / 有效订单数 is an order-status metric;
+- project-side order-status fields are not used as conversion numerators;
 - `entry_users` / 入店人数 is a user-count traffic metric.
 
 ### `order_users` / 下单人数
@@ -652,23 +649,6 @@ English definition: Number of successfully refunded orders under the selected ac
 
 Interpretation: This is a full-or-partial refund order-count metric for the selected refund-success period.
 
-### `valid_orders` / 有效订单数
-
-中文定义：商家已接单后，且未被取消的订单数。
-
-English definition: Number of orders accepted by the merchant and not cancelled.
-
-Interpretation: This is an order-status metric. It is not used as the numerator of `order_conversion_rate_pct`.
-
-### `invalid_orders` / 无效订单数
-
-中文定义：已取消的订单数。
-
-English definition: Number of cancelled orders.
-
----
-
-## 8. SKU Evidence Metrics / SKU 证据指标
 
 ### `sku_rank` / SKU 排名
 
@@ -762,11 +742,6 @@ Formula: `refund_order_pressure_pct = refund_orders_all_or_partial / transaction
 
 Interpretation: This is an order-count-based refund-pressure indicator.
 
-### `invalid_order_pressure_pct` / 无效订单压力
-
-Formula: `invalid_order_pressure_pct = invalid_orders / (valid_orders + invalid_orders) * 100`
-
-Interpretation: This measures the share of invalid/cancelled orders among valid plus invalid orders.
 
 ### `activity_order_share_pct` / 活动订单占比
 
@@ -804,9 +779,9 @@ Therefore:
 
 ## 11. Metric Consistency Rules / 指标一致性规则
 
-### Rule 1: Do not recompute order conversion from valid orders.
+### Rule 1: Do not recompute order conversion from project-side order-status proxies.
 
-规则 1：不要用有效订单数反推下单转化率。
+规则 1：不要用项目侧订单状态口径反推下单转化率。
 
 `order_conversion_rate_pct` follows:
 
@@ -814,12 +789,12 @@ Therefore:
 
 It should not be recomputed as:
 
-`valid_orders / entry_users`
+project-side order-status proxy / entry_users
 
 because:
 
 - `order_users` / 下单人数 is a user-count funnel metric;
-- `valid_orders` / 有效订单数 is an order-status metric;
+- project-side order-status fields are not used as conversion numerators;
 - `entry_users` / 入店人数 is a user-count traffic metric;
 - the backend may use its own UV deduplication and reporting-window logic.
 

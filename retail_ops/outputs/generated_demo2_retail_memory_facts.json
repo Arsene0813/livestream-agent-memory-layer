@@ -151,9 +151,7 @@
       "payment_users": 280,
       "payment_amount": 12821.1,
       "payment_conversion_rate_pct": 98.59,
-      "entry_users": 770,
-      "valid_orders": 299,
-      "invalid_orders": 23
+      "entry_users": 770
     },
     "calculation": "average_order_value = transaction_amount / transaction_orders; order_conversion_rate_pct follows the backend definition order_users / entry_users * 100; payment_conversion_rate_pct = payment_users / order_users * 100",
     "source_fields": [
@@ -168,9 +166,7 @@
       "payment_users",
       "payment_amount",
       "payment_conversion_rate_pct",
-      "entry_users",
-      "valid_orders",
-      "invalid_orders"
+      "entry_users"
     ],
     "confidence": "high",
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
@@ -182,7 +178,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "estimated_income_proxy is platform-displayed and not audited profit",
-      "order_conversion_rate_pct follows the backend definition and must not be recomputed from valid_orders / entry_users",
+      "order_conversion_rate_pct follows the backend definition and must not be recomputed from project-side order-status proxy / entry_users",
       "transaction and conversion metrics do not prove causality or final operating quality by themselves"
     ],
     "is_active": true,
@@ -196,27 +192,21 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store B's March 2026 refund and invalid-order metrics provide order-quality pressure signals. They should constrain direct performance comparison when refund or invalid-order pressure is elevated.",
+    "value": "Store B's March 2026 refund and unclear order-status metrics provide order-quality pressure signals. They should constrain direct performance comparison when refund or refund-related evidence is elevated.",
     "observed_values": {
       "refund_amount": 1254.9,
       "transaction_amount": 11665.5,
       "refund_pressure_pct": 10.76,
-      "valid_orders": 299,
-      "invalid_orders": 23,
       "transaction_orders": 299,
-      "invalid_order_pressure_pct": 7.14,
       "full_refund_orders": 23,
       "refund_orders_all_or_partial": 24
     },
-    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; invalid_order_pressure_pct = invalid_orders / (valid_orders + invalid_orders) * 100",
+    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; refund_pressure_pct = inproject_side_order_status_proxy / (project_side_order_status_proxy + inproject_side_order_status_proxy) * 100",
     "source_fields": [
       "refund_amount",
       "transaction_amount",
       "refund_pressure_pct",
-      "valid_orders",
-      "invalid_orders",
       "transaction_orders",
-      "invalid_order_pressure_pct",
       "full_refund_orders",
       "refund_orders_all_or_partial"
     ],
@@ -313,12 +303,11 @@
       "activity_order_share_pct": 88.63,
       "activity_cost_ratio_pct": 24.12,
       "refund_pressure_pct": 10.76,
-      "invalid_order_pressure_pct": 7.14,
       "top3_sku_transaction_amount_share_pct": 11.15,
       "comparison_scope_flag": "same_period_diagnostic_ready",
       "comparison_limit_notes": "high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
     },
-    "calculation": "comparison_limit_notes are derived from activity, refund, invalid-order, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from activity, refund, unclear order-status, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -330,7 +319,6 @@
       "activity_order_share_pct",
       "activity_cost_ratio_pct",
       "refund_pressure_pct",
-      "invalid_order_pressure_pct",
       "top3_sku_transaction_amount_share_pct",
       "comparison_scope_flag",
       "comparison_limit_notes"
@@ -503,9 +491,7 @@
       "payment_users": 166,
       "payment_amount": 7554.39,
       "payment_conversion_rate_pct": 98.22,
-      "entry_users": 516,
-      "valid_orders": 174,
-      "invalid_orders": 11
+      "entry_users": 516
     },
     "calculation": "average_order_value = transaction_amount / transaction_orders; order_conversion_rate_pct follows the backend definition order_users / entry_users * 100; payment_conversion_rate_pct = payment_users / order_users * 100",
     "source_fields": [
@@ -520,9 +506,7 @@
       "payment_users",
       "payment_amount",
       "payment_conversion_rate_pct",
-      "entry_users",
-      "valid_orders",
-      "invalid_orders"
+      "entry_users"
     ],
     "confidence": "high",
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
@@ -534,7 +518,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "estimated_income_proxy is platform-displayed and not audited profit",
-      "order_conversion_rate_pct follows the backend definition and must not be recomputed from valid_orders / entry_users",
+      "order_conversion_rate_pct follows the backend definition and must not be recomputed from project-side order-status proxy / entry_users",
       "transaction and conversion metrics do not prove causality or final operating quality by themselves"
     ],
     "is_active": true,
@@ -548,27 +532,21 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store C's March 2026 refund and invalid-order metrics provide order-quality pressure signals. They should constrain direct performance comparison when refund or invalid-order pressure is elevated.",
+    "value": "Store C's March 2026 refund and unclear order-status metrics provide order-quality pressure signals. They should constrain direct performance comparison when refund or refund-related evidence is elevated.",
     "observed_values": {
       "refund_amount": 529.6,
       "transaction_amount": 7064.09,
       "refund_pressure_pct": 7.5,
-      "valid_orders": 174,
-      "invalid_orders": 11,
       "transaction_orders": 175,
-      "invalid_order_pressure_pct": 5.95,
       "full_refund_orders": 11,
       "refund_orders_all_or_partial": 11
     },
-    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; invalid_order_pressure_pct = invalid_orders / (valid_orders + invalid_orders) * 100",
+    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; refund_pressure_pct = inproject_side_order_status_proxy / (project_side_order_status_proxy + inproject_side_order_status_proxy) * 100",
     "source_fields": [
       "refund_amount",
       "transaction_amount",
       "refund_pressure_pct",
-      "valid_orders",
-      "invalid_orders",
       "transaction_orders",
-      "invalid_order_pressure_pct",
       "full_refund_orders",
       "refund_orders_all_or_partial"
     ],
@@ -665,12 +643,11 @@
       "activity_order_share_pct": 70.86,
       "activity_cost_ratio_pct": 9.45,
       "refund_pressure_pct": 7.5,
-      "invalid_order_pressure_pct": 5.95,
       "top3_sku_transaction_amount_share_pct": 28.38,
       "comparison_scope_flag": "same_period_diagnostic_ready",
       "comparison_limit_notes": "moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_refund_limits"
     },
-    "calculation": "comparison_limit_notes are derived from activity, refund, invalid-order, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from activity, refund, unclear order-status, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -682,7 +659,6 @@
       "activity_order_share_pct",
       "activity_cost_ratio_pct",
       "refund_pressure_pct",
-      "invalid_order_pressure_pct",
       "top3_sku_transaction_amount_share_pct",
       "comparison_scope_flag",
       "comparison_limit_notes"
@@ -855,9 +831,7 @@
       "payment_users": 385,
       "payment_amount": 19355.0,
       "payment_conversion_rate_pct": 98.21,
-      "entry_users": 842,
-      "valid_orders": 402,
-      "invalid_orders": 33
+      "entry_users": 842
     },
     "calculation": "average_order_value = transaction_amount / transaction_orders; order_conversion_rate_pct follows the backend definition order_users / entry_users * 100; payment_conversion_rate_pct = payment_users / order_users * 100",
     "source_fields": [
@@ -872,9 +846,7 @@
       "payment_users",
       "payment_amount",
       "payment_conversion_rate_pct",
-      "entry_users",
-      "valid_orders",
-      "invalid_orders"
+      "entry_users"
     ],
     "confidence": "high",
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
@@ -886,7 +858,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "estimated_income_proxy is platform-displayed and not audited profit",
-      "order_conversion_rate_pct follows the backend definition and must not be recomputed from valid_orders / entry_users",
+      "order_conversion_rate_pct follows the backend definition and must not be recomputed from project-side order-status proxy / entry_users",
       "transaction and conversion metrics do not prove causality or final operating quality by themselves"
     ],
     "is_active": true,
@@ -900,27 +872,21 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store D's March 2026 refund and invalid-order metrics provide order-quality pressure signals. They should constrain direct performance comparison when refund or invalid-order pressure is elevated.",
+    "value": "Store D's March 2026 refund and unclear order-status metrics provide order-quality pressure signals. They should constrain direct performance comparison when refund or refund-related evidence is elevated.",
     "observed_values": {
       "refund_amount": 1617.49,
       "transaction_amount": 18078.7,
       "refund_pressure_pct": 8.95,
-      "valid_orders": 402,
-      "invalid_orders": 33,
       "transaction_orders": 404,
-      "invalid_order_pressure_pct": 7.59,
       "full_refund_orders": 33,
       "refund_orders_all_or_partial": 44
     },
-    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; invalid_order_pressure_pct = invalid_orders / (valid_orders + invalid_orders) * 100",
+    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; refund_pressure_pct = inproject_side_order_status_proxy / (project_side_order_status_proxy + inproject_side_order_status_proxy) * 100",
     "source_fields": [
       "refund_amount",
       "transaction_amount",
       "refund_pressure_pct",
-      "valid_orders",
-      "invalid_orders",
       "transaction_orders",
-      "invalid_order_pressure_pct",
       "full_refund_orders",
       "refund_orders_all_or_partial"
     ],
@@ -1017,12 +983,11 @@
       "activity_order_share_pct": 83.42,
       "activity_cost_ratio_pct": 14.92,
       "refund_pressure_pct": 8.95,
-      "invalid_order_pressure_pct": 7.59,
       "top3_sku_transaction_amount_share_pct": 16.9,
       "comparison_scope_flag": "same_period_diagnostic_ready",
       "comparison_limit_notes": "high_activity_involvement; compare_with_region_store_type_activity_refund_limits"
     },
-    "calculation": "comparison_limit_notes are derived from activity, refund, invalid-order, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from activity, refund, unclear order-status, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -1034,7 +999,6 @@
       "activity_order_share_pct",
       "activity_cost_ratio_pct",
       "refund_pressure_pct",
-      "invalid_order_pressure_pct",
       "top3_sku_transaction_amount_share_pct",
       "comparison_scope_flag",
       "comparison_limit_notes"
@@ -1207,9 +1171,7 @@
       "payment_users": 159,
       "payment_amount": 6693.27,
       "payment_conversion_rate_pct": 98.76,
-      "entry_users": 408,
-      "valid_orders": 155,
-      "invalid_orders": 25
+      "entry_users": 408
     },
     "calculation": "average_order_value = transaction_amount / transaction_orders; order_conversion_rate_pct follows the backend definition order_users / entry_users * 100; payment_conversion_rate_pct = payment_users / order_users * 100",
     "source_fields": [
@@ -1224,9 +1186,7 @@
       "payment_users",
       "payment_amount",
       "payment_conversion_rate_pct",
-      "entry_users",
-      "valid_orders",
-      "invalid_orders"
+      "entry_users"
     ],
     "confidence": "high",
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
@@ -1238,7 +1198,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "estimated_income_proxy is platform-displayed and not audited profit",
-      "order_conversion_rate_pct follows the backend definition and must not be recomputed from valid_orders / entry_users",
+      "order_conversion_rate_pct follows the backend definition and must not be recomputed from project-side order-status proxy / entry_users",
       "transaction and conversion metrics do not prove causality or final operating quality by themselves"
     ],
     "is_active": true,
@@ -1252,27 +1212,21 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store E's March 2026 refund and invalid-order metrics provide order-quality pressure signals. They should constrain direct performance comparison when refund or invalid-order pressure is elevated.",
+    "value": "Store E's March 2026 refund and unclear order-status metrics provide order-quality pressure signals. They should constrain direct performance comparison when refund or refund-related evidence is elevated.",
     "observed_values": {
       "refund_amount": 1105.05,
       "transaction_amount": 5784.87,
       "refund_pressure_pct": 19.1,
-      "valid_orders": 155,
-      "invalid_orders": 25,
       "transaction_orders": 158,
-      "invalid_order_pressure_pct": 13.89,
       "full_refund_orders": 25,
       "refund_orders_all_or_partial": 29
     },
-    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; invalid_order_pressure_pct = invalid_orders / (valid_orders + invalid_orders) * 100",
+    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; refund_pressure_pct = inproject_side_order_status_proxy / (project_side_order_status_proxy + inproject_side_order_status_proxy) * 100",
     "source_fields": [
       "refund_amount",
       "transaction_amount",
       "refund_pressure_pct",
-      "valid_orders",
-      "invalid_orders",
       "transaction_orders",
-      "invalid_order_pressure_pct",
       "full_refund_orders",
       "refund_orders_all_or_partial"
     ],
@@ -1357,7 +1311,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store E's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: moderate_activity_involvement; high_refund_pressure; high_invalid_order_pressure; compare_with_region_store_type_activity_refund_limits.",
+    "value": "Store E's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: moderate_activity_involvement; high_refund_pressure; compare_with_region_store_type_activity_refund_limits.",
     "observed_values": {
       "transaction_amount": 5784.87,
       "transaction_orders": 158,
@@ -1369,12 +1323,11 @@
       "activity_order_share_pct": 68.99,
       "activity_cost_ratio_pct": 29.38,
       "refund_pressure_pct": 19.1,
-      "invalid_order_pressure_pct": 13.89,
       "top3_sku_transaction_amount_share_pct": 12.55,
       "comparison_scope_flag": "same_period_diagnostic_ready",
-      "comparison_limit_notes": "moderate_activity_involvement; high_refund_pressure; high_invalid_order_pressure; compare_with_region_store_type_activity_refund_limits"
+      "comparison_limit_notes": "moderate_activity_involvement; high_refund_pressure; compare_with_region_store_type_activity_refund_limits"
     },
-    "calculation": "comparison_limit_notes are derived from activity, refund, invalid-order, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from activity, refund, unclear order-status, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -1386,7 +1339,6 @@
       "activity_order_share_pct",
       "activity_cost_ratio_pct",
       "refund_pressure_pct",
-      "invalid_order_pressure_pct",
       "top3_sku_transaction_amount_share_pct",
       "comparison_scope_flag",
       "comparison_limit_notes"
@@ -1559,9 +1511,7 @@
       "payment_users": 267,
       "payment_amount": 10227.8,
       "payment_conversion_rate_pct": 99.26,
-      "entry_users": 541,
-      "valid_orders": 266,
-      "invalid_orders": 30
+      "entry_users": 541
     },
     "calculation": "average_order_value = transaction_amount / transaction_orders; order_conversion_rate_pct follows the backend definition order_users / entry_users * 100; payment_conversion_rate_pct = payment_users / order_users * 100",
     "source_fields": [
@@ -1576,9 +1526,7 @@
       "payment_users",
       "payment_amount",
       "payment_conversion_rate_pct",
-      "entry_users",
-      "valid_orders",
-      "invalid_orders"
+      "entry_users"
     ],
     "confidence": "high",
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
@@ -1590,7 +1538,7 @@
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
       "estimated_income_proxy is platform-displayed and not audited profit",
-      "order_conversion_rate_pct follows the backend definition and must not be recomputed from valid_orders / entry_users",
+      "order_conversion_rate_pct follows the backend definition and must not be recomputed from project-side order-status proxy / entry_users",
       "transaction and conversion metrics do not prove causality or final operating quality by themselves"
     ],
     "is_active": true,
@@ -1604,27 +1552,21 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store F's March 2026 refund and invalid-order metrics provide order-quality pressure signals. They should constrain direct performance comparison when refund or invalid-order pressure is elevated.",
+    "value": "Store F's March 2026 refund and unclear order-status metrics provide order-quality pressure signals. They should constrain direct performance comparison when refund or refund-related evidence is elevated.",
     "observed_values": {
       "refund_amount": 987.89,
       "transaction_amount": 9301.8,
       "refund_pressure_pct": 10.62,
-      "valid_orders": 266,
-      "invalid_orders": 30,
       "transaction_orders": 266,
-      "invalid_order_pressure_pct": 10.14,
       "full_refund_orders": 30,
       "refund_orders_all_or_partial": 33
     },
-    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; invalid_order_pressure_pct = invalid_orders / (valid_orders + invalid_orders) * 100",
+    "calculation": "refund_pressure_pct = refund_amount / transaction_amount * 100; refund_pressure_pct = inproject_side_order_status_proxy / (project_side_order_status_proxy + inproject_side_order_status_proxy) * 100",
     "source_fields": [
       "refund_amount",
       "transaction_amount",
       "refund_pressure_pct",
-      "valid_orders",
-      "invalid_orders",
       "transaction_orders",
-      "invalid_order_pressure_pct",
       "full_refund_orders",
       "refund_orders_all_or_partial"
     ],
@@ -1709,7 +1651,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store F's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: high_activity_involvement; moderate_refund_pressure; moderate_invalid_order_pressure; compare_with_region_store_type_activity_refund_limits.",
+    "value": "Store F's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits.",
     "observed_values": {
       "transaction_amount": 9301.8,
       "transaction_orders": 266,
@@ -1721,12 +1663,11 @@
       "activity_order_share_pct": 81.58,
       "activity_cost_ratio_pct": 12.16,
       "refund_pressure_pct": 10.62,
-      "invalid_order_pressure_pct": 10.14,
       "top3_sku_transaction_amount_share_pct": 19.33,
       "comparison_scope_flag": "same_period_diagnostic_ready",
-      "comparison_limit_notes": "high_activity_involvement; moderate_refund_pressure; moderate_invalid_order_pressure; compare_with_region_store_type_activity_refund_limits"
+      "comparison_limit_notes": "high_activity_involvement; moderate_refund_pressure; compare_with_region_store_type_activity_refund_limits"
     },
-    "calculation": "comparison_limit_notes are derived from activity, refund, invalid-order, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
+    "calculation": "comparison_limit_notes are derived from activity, refund, unclear order-status, and top-3 SKU concentration thresholds in the Demo 2 SQL output",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -1738,7 +1679,6 @@
       "activity_order_share_pct",
       "activity_cost_ratio_pct",
       "refund_pressure_pct",
-      "invalid_order_pressure_pct",
       "top3_sku_transaction_amount_share_pct",
       "comparison_scope_flag",
       "comparison_limit_notes"
