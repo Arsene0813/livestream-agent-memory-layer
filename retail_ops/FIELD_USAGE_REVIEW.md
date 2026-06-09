@@ -87,7 +87,7 @@ This rule is intentionally conservative. The project should prefer adding clearl
 | `order_users` | Backend order-user metric used in the backend order-conversion formula. | Source CSVs, SQL output, transaction/conversion facts. | No. |
 | `order_times` | Backend order-submission/action-count metric. It is not the same as `order_users`. | Source CSVs and funnel evidence. | No. |
 | `order_amount` | Backend order-submission amount field. It belongs to the order-submission funnel and must not be merged with `transaction_amount`. | Demo 2 source metrics, SQL output, generated facts, lineage. | No. |
-| `order_conversion_rate_pct` | Backend formula field: `order_users / entry_users * 100`. It must not be recomputed from `valid_orders / entry_users`. | Source CSVs, SQL output, lineage, transaction/conversion facts. | No. |
+| `order_conversion_rate_pct` | Backend formula field: `order_users / entry_users * 100`. It must not be recomputed from project-side order-status proxies. | Source CSVs, SQL output, lineage, transaction/conversion facts. | No. |
 | `payment_users` | Backend successful-payment-user metric. | Source CSVs, SQL output, transaction/conversion facts. | No. |
 | `payment_amount` | Backend paid-order commodity amount field. It belongs to the payment funnel and must not be merged with `transaction_amount`. | Demo 2 source metrics, SQL output, generated facts, lineage. | No. |
 | `payment_conversion_rate_pct` | Backend payment-conversion metric. | Source CSVs, SQL output, transaction/conversion facts. | No. |
@@ -106,9 +106,6 @@ This rule is intentionally conservative. The project should prefer adding clearl
 | `full_refund_orders` | Backend all-refund order count, excluding partial refunds. | Source CSVs and order-quality evidence. | No. |
 | `refund_orders_all_or_partial` | Backend refund-order count including all-refund and partial-refund orders. | Source CSVs and order-quality evidence. | No. |
 | `refund_pressure_pct` | SQL-derived refund-pressure signal based on `refund_amount / transaction_amount * 100`. | SQL output and order-quality facts. | No. |
-| `valid_orders` | Backend accepted-and-not-cancelled order count. It is an order-status metric, not a user-funnel metric. | Source CSVs, SQL output. | No. |
-| `invalid_orders` | Backend cancelled-order count. | Source CSVs, SQL output, invalid-order pressure. | No. |
-| `invalid_order_pressure_pct` | SQL-derived invalid-order pressure based on `invalid_orders / (valid_orders + invalid_orders) * 100`. | SQL output and order-quality facts. | No. |
 | `sku_name` | SKU-level product name from top-SKU evidence. | Top-SKU source files. | No. |
 | `sku_name_en` | English helper column for readability. It does not replace the original Chinese SKU name. | Top-SKU source files. | No. |
 | `sku_transaction_amount` | SKU-level transaction amount. It must not be confused with store-period-level `transaction_amount`. | Top-SKU source files and top-SKU evidence. | No. |
@@ -119,7 +116,7 @@ This rule is intentionally conservative. The project should prefer adding clearl
 | `visibility_entry_profile` | Retrieval-facing memory slot for exposure, ranking, entry, and search-entry structure. | Generated retail memory facts. | No. |
 | `activity_lever_profile` | Retrieval-facing memory slot for activity orders, activity cost, subsidy, and activity-cost ratio. | Generated retail memory facts. | No. |
 | `transaction_conversion_profile` | Retrieval-facing memory slot for transaction scale, order conversion, payment, and average order value. | Generated retail memory facts. | No. |
-| `order_quality_pressure_profile` | Retrieval-facing memory slot for refund pressure, refund-order pressure, invalid-order pressure, and related order-quality signals. | Generated retail memory facts. | No. |
+| `order_quality_pressure_profile` | Retrieval-facing memory slot for refund-related evidence and related order-quality context. | Generated retail memory facts. | No. |
 | `single_metric_attribution_guard` | Retrieval-facing memory slot that prevents unsupported interpretation from one metric alone. | Generated retail memory facts. | No. |
 | `top3_sku_product_mix_note` | Retrieval-facing memory slot for limited top-SKU evidence. It is not full category-share analysis. | Generated retail memory facts. | No. |
 
@@ -127,7 +124,7 @@ This rule is intentionally conservative. The project should prefer adding clearl
 
 Pairwise comparability-gate fields are outside the current implemented retail scope.
 
-A reliable future gate should consider transaction order volume, transaction amount, explicit activity status when source evidence exists, activity involvement, activity intensity, store type, region and market context, competition environment, SKU structure, refund pressure, invalid-order pressure, fulfillment or stockout evidence where available, and repeated reporting windows.
+A reliable future gate should consider transaction order volume, transaction amount, explicit activity status when source evidence exists, activity involvement, activity intensity, store type, region and market context, competition environment, SKU structure, refund evidence, fulfillment or stockout evidence where available, and repeated reporting windows.
 
 At the current sample size, `region_type` remains weak context only. It must not be used as a hard market-area classification, store-stage label, consumption-level label, or peer-store grouping rule.
 
