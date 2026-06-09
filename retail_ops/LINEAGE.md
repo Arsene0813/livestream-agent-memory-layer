@@ -265,7 +265,7 @@ Interpretation boundary:
 
 ## Future Comparability-Gate Lineage
 
-The current implemented retail lineage stops at Demo 2:
+The current implemented retail lineage includes Demo 1, Demo 2, and the post-Demo2 repeated-window panel evidence-preparation layer. Demo 1 traces Store A month-over-month evidence, Demo 2 traces same-period B-F diagnostic evidence, and the panel lineage traces B-F repeated-window coverage and descriptive summary outputs.
 
 - selected Meituan backend fields
 - `DATA_DICTIONARY.md` definitions

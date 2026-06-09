@@ -136,7 +136,7 @@ The memory-facing facts record:
 
 ## Current Boundary
 
-The implemented retail scope stops at Demo 2. The future pairwise comparability gate is documented in `retail_ops/COMPARABILITY_GATE_V0.md`.
+The implemented retail path now includes Demo 1, Demo 2, and the post-Demo2 repeated-window panel extension. Demo 1 covers Store A month-over-month evidence, Demo 2 covers same-period B-F diagnostic evidence, and the repeated-window panel checks B-F monthly evidence before future pairwise comparability-gate work.
 
 ## Current Retail Implementation Scope
 
