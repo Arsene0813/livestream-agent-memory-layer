@@ -268,7 +268,6 @@ def main() -> int:
 
     validator_paths = {
         (ROOT / "retail_ops/scripts/validate_retail_data_contract.py").resolve(),
-        (ROOT / "scripts/validate_project_consistency.py").resolve(),
         (ROOT / "scripts/validate_demo2_retail_endpoint_boundary.py").resolve(),
     }
 

@@ -184,7 +184,7 @@ The following fields are SQL-derived diagnostic fields used in Demo 2. They are 
 
 | Field | Formula | Current interpretation | Boundary |
 |---|---|---|---|
-| `search_entry_share_pct` | `search_entry_users / entry_users * 100` | Directional structure metric for how much store entry is search-driven in the current reporting window. | Source-level traffic users may overlap, so this should not be interpreted as perfect user-level attribution. |
+| `search_entry_share_pct` | `search_entry_users / entry_users * 100` | Directional structure metric for the share of store entry attributed to the search source in the current reporting window. | Source-level traffic users may overlap, so this should not be interpreted as perfect user-level attribution. |
 | `activity_order_share_pct` | `activity_orders / transaction_orders * 100` | Measures the share of transaction orders associated with activity orders in the current reporting window. | Indicates activity involvement, not full activity status, campaign mechanism, causal demand lift, or promotion-transfer readiness. |
 
 ### `comparison_scope_flag`

@@ -88,7 +88,7 @@ Both paths should preserve metric definitions, entity scope, period scope, sourc
 |---|---|---|---|
 | Backend evidence | Selected Meituan merchant-backend metrics and manually structured evidence tables. | Canonical CSV source files. | Not full automated ingestion. |
 | Metric contract | Canonical CSV fields and backend definitions. | `retail_ops/data/DATA_DICTIONARY.md` and `retail_ops/LINEAGE.md`. | Existing Meituan backend metrics should not be silently renamed or redefined. |
-| SQL diagnostics | Store-period, search, activity, top-SKU evidence. | SQL output files with ratios, shares, pressure indicators, and limitation notes. | SQL should not assign fixed store-stage labels or final operating decisions. |
+| SQL diagnostics | Store-period, search, activity, top-SKU evidence. | SQL output files with ratios, shares, guardrail notes, and limitation notes. | SQL should not assign fixed store-stage labels or final operating decisions. |
 | Generated memory facts | SQL outputs and supporting source tables. | Retrieval-facing memory facts with observed values, source fields, calculation notes, confidence, and limitations. | Memory facts are summaries, not raw backend exports. |
 | Offline evaluation | Generated facts, SQL outputs, and current-scope docs. | Eval result text files and consistency checks. | Evaluations check evidence boundaries; they are not causal business experiments. |
 

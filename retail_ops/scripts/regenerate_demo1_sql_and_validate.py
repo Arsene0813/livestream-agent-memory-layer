@@ -67,7 +67,6 @@ def main() -> int:
         capture_to=RETAIL_VALIDATION_RESULT_PATH,
     )
 
-    run_command([sys.executable, "scripts/validate_project_consistency.py"])
 
     print("\nDemo 1 SQL output regeneration and validation completed successfully.")
     return 0

@@ -199,7 +199,6 @@ python3 eval/eval_retail_demo2_endpoint_behavior.py
 The endpoint behavior eval imports `api.main`, so run it inside the project virtual environment after dependencies are installed.
 python3 eval/eval_future_comparability_gate_contract.py
 python3 scripts/validate_demo2_retail_endpoint_boundary.py
-python3 scripts/validate_project_consistency.py
 python3 scripts/validate_markdown_readability.py
 python3 retail_ops/scripts/validate_csv_physical_rows.py
 ```

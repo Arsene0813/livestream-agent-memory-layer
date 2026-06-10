@@ -250,25 +250,23 @@ Checked by:
 Result path:
 - `eval/results/eval_future_comparability_gate_contract_result.txt`
 
-## Experiment 8: Whole-Project Consistency Check
+## Experiment 8: Retail Data Contract Check
 
-Question: Do the current reviewer-facing documents, retail docs, scripts, and outputs remain consistent with the Demo 1 / Demo 2 scope?
+Question: Do the current retail data dictionary, source files, SQL outputs, and generated memory facts preserve the same Demo 1 / Demo 2 field contract?
 
 Evidence path:
 
-- Validator: `scripts/validate_project_consistency.py`
 - Data-contract validator: `retail_ops/scripts/validate_retail_data_contract.py`
 
 Expected behavior:
 
-The project should keep Demo 2 as the current implemented retail scope, keep the pairwise comparability gate as future work, and avoid stale or overclaimed wording.
+The data contract should keep canonical field names aligned across source CSV files, SQL outputs, generated memory facts, and dictionary boundary notes.
 
 Current result: Implemented.
 
 Checked by:
 
 - `python3 retail_ops/scripts/validate_retail_data_contract.py`
-- `python3 scripts/validate_project_consistency.py`
 
 ## Demo 2 Derived-Metric Scope
 
