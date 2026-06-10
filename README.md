@@ -223,18 +223,20 @@ These retrieval checks inspect score distribution and wording-variation behavior
 | `retail_ops/outputs/` | Generated diagnostic outputs and generated memory facts. |
 | `eval/` | Scenario-based evaluation scripts and reports. |
 
-## What This Demonstrates
+## Review Takeaway and Next Step
 
-This project demonstrates:
+This repository demonstrates a staged decision-support prototype for a real Meituan multi-store operating problem. Selected backend metrics are preserved under documented definitions, structured with SQL, converted into retrieval-facing memory facts, and checked against evidence boundaries before later answers make operating claims.
 
-- turning a real multi-store Meituan instant-retail operating problem into a structured data problem;
-- preserving backend metric definitions instead of flattening them into generic business metrics;
-- using SQL to place selected store-period records under a shared diagnostic structure before stronger comparability claims are made;
-- converting diagnostic outputs into retrieval-facing memory facts with source fields, observed values, confidence labels, and limitations;
-- testing whether later answers preserve metric boundaries, source scope, and comparison limits;
-- adding a deterministic review scaffold that makes factor selection, evidence routing, critique, and confidence limits visible.
+| Area | Current role | Next use |
+| --- | --- | --- |
+| Metric dictionary | Preserves selected Meituan backend metric meanings and canonical field names. | Keeps later SQL, memory facts, and reviewer-facing answers aligned. |
+| Demo 1 | Structures Store A February-April 2026 movement as a multi-metric operating profile. | Shows single-store temporal diagnosis. |
+| Demo 2 | Structures selected B-F March 2026 store-period records under one reporting window and one field contract. | Provides same-period diagnostic evidence before stronger pairwise comparison rules. |
+| Repeated-window panel | Adds B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04. | Prepares the evidence base for future question-specific comparability checks. |
+| Evaluation layer | Checks answer-boundary behavior, field meanings, entity scope, period scope, and comparison limits. | Keeps retrieval-backed answers tied to the current evidence path. |
+| Future comparability gate | Design contract is documented in `retail_ops/COMPARABILITY_GATE_V0.md`. | Should judge whether two store-period records can be compared for one selected operating question. |
 
-The core contribution is the evidence boundary: selected backend metrics are kept under documented definitions, SQL diagnostics expose interpretation limits, and generated memory facts carry source fields and limitations before later answers are allowed to make operating claims.
+The next development step is to add more repeated store-period evidence and test whether the current diagnostic guardrails remain stable across more stores, months, activity conditions, and market contexts.
 
 ## Editing and Scope Guardrails
 
@@ -244,22 +246,8 @@ Future field-name or semantic changes must follow `retail_ops/FIELD_USAGE_REVIEW
 
 Future pairwise comparability-gate wording must follow `retail_ops/COMPARABILITY_GATE_V0.md`.
 
-## Current Boundary and Next Development
-
-The current retail implementation is a local evidence-bounded prototype. Demo 1 covers Store A month-over-month analysis, and Demo 2 covers selected Stores B-F under the same March 2026 reporting window. Demo 2 is a diagnostic evidence layer under one field contract before future pairwise comparability rules are added.
-
-| Area | Current status | Boundary |
-| --- | --- | --- |
-| Backend data | Selected Meituan backend evidence is manually structured into source files. | Not production Meituan backend ingestion. |
-| Demo 2 | Same-period B-F diagnostic evidence. | Not a peer-selection rule, store ranking, or strategy-transfer approval. |
-| Retrieval behavior | File-backed facts and offline retrieval inspections are available. | Retrieval score alone is not treated as sufficient evidence for operating conclusions. |
-| `region_type` | Weak region or market-context evidence. | Not a mature market-area classification, store-stage label, or hard peer-grouping rule. |
-| Top-SKU evidence | Lightweight product-mix evidence from selected top-SKU rows. | Not full product-category sales share. |
-| Future comparability gate | Design contract is documented in `retail_ops/COMPARABILITY_GATE_V0.md`. | Not implemented in the current prototype. |
-
-The next development step is to add more repeated store-period evidence and test whether the current diagnostic guardrails remain stable across more stores, months, activity conditions, and market contexts. Future pairwise comparison should be question-specific: a store pair may be comparable for search-entry structure but not comparable for promotion transfer, pricing pressure, SKU strategy, or fulfillment interpretation.
-
 <!-- RAC_EXTENSION_START -->
+
 ## Structured Reasoning Scaffold: Factor-Aware Grounded Review
 
 The `rac/` module adds a deterministic, source-aware review scaffold above the retail evidence path. It runs after the field dictionary, SQL diagnostics, and generated memory facts have already structured the available evidence.
@@ -291,13 +279,3 @@ Current RAC evidence and scripts:
 Current implementation boundary: deterministic and local-evidence-based. It should be read as a review scaffold over the current project evidence, not as live backend ingestion or operating-decision automation.
 
 <!-- RAC_EXTENSION_END -->
-
-## Current Retail Decision-Support Path
-
-The retail decision-support path now has three implemented evidence layers:
-
-1. Store A month-over-month diagnostic for one-store temporal interpretation.
-2. B-F same-period diagnostic for one-window cross-store review under a shared field contract.
-3. B-F repeated-window panel coverage and descriptive summary for 2026-02 to 2026-04.
-
-The third layer is not a pairwise comparability gate. It is a preparation step: before deciding which stores can be compared under which conditions, the project first checks whether repeated monthly evidence exists and whether the fields remain aligned with `retail_ops/data/DATA_DICTIONARY.md`.
