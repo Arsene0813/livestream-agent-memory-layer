@@ -1,25 +1,25 @@
 # Retail Operations Experiment Results
 
-Reviewer-facing map: `retail_ops/EXPERIMENTS.md` now includes the experiment review map that summarizes what each current check is meant to show in business and data-science terms.
+Reviewer-facing companion: `retail_ops/EXPERIMENTS.md` explains the purpose of each analytical check.
 
 ## Compact Validation Summary
 
-| Validation target | What was checked | Current result | What it does not prove |
-|---|---|---|---|
-| Metric contract | Required fields, canonical names, forbidden aliases, and generated fact structure. | Passed. | It does not prove the manually structured source data is complete. |
-| Demo 1 diagnostic | Store A month-over-month evidence can be structured without single-metric attribution. | Implemented. | It does not prove causal attribution for monthly change. |
-| Demo 2 diagnostic SQL | Selected B-F March 2026 records can be placed under one reporting window and field contract. | Implemented. | It does not prove pairwise store comparability. |
-| Demo 2 memory facts | SQL diagnostic evidence can be converted into source-bounded memory facts. | Implemented. | It does not replace the raw backend evidence. |
-| Answer-boundary behavior | Unsupported ranking, strategy-transfer, ROI, region-type, and causal claims stay bounded. | Implemented as offline scenario checks. | It does not prove general conversational robustness. |
-| Demo 2 endpoint behavior | File-backed Demo 2 facts can answer supported B-F questions and refuse unsupported scope. | Implemented as endpoint-level checks. | It does not implement production retrieval or backend ingestion. |
-| Retrieval threshold inspection | Score distributions were inspected over supported, unsupported, mismatch, and ambiguous queries. | Completed as offline inspection. | It does not set a production retrieval threshold. |
-| Query robustness inspection | Retrieval behavior was inspected under small wording variations. | Completed as offline inspection. | It does not prove production-level semantic robustness. |
-| Future comparability-gate contract | The future gate is documented without exposing it as a current implemented feature. | Contract documented as future work. | It does not implement the gate. |
-| RAC grounded review | Factor expansion, evidence routing, critique, fact checking, and confidence update are made visible. | Implemented as deterministic local-evidence scaffold. | It does not implement autonomous cognition, live retrieval, or production recommendation. |
+| Validation target | Review value | Current result |
+|---|---|---|
+| Metric contract | Checks whether selected Meituan backend fields keep canonical names, documented meanings, and generated-fact structure. | Passed. |
+| Demo 1 diagnostic | Shows that Store A monthly movement can be structured as a multi-metric operating profile. | Implemented. |
+| Demo 2 diagnostic SQL | Places selected B-F March 2026 store-period records under one reporting window and one field contract. | Implemented. |
+| Demo 2 memory facts | Converts SQL diagnostic evidence into retrieval-facing facts with source fields, observed values, and limitation notes. | Implemented. |
+| Answer-boundary behavior | Checks whether answers preserve metric definitions, entity scope, period scope, and comparison limits. | Implemented as offline scenario checks. |
+| Demo 2 endpoint behavior | Checks whether the file-backed Demo 2 endpoint answers supported B-F questions and keeps unsupported requests outside current scope. | Implemented as endpoint-level checks. |
+| Retrieval threshold inspection | Makes score behavior inspectable across supported, unsupported, mismatch, and ambiguous retail queries. | Completed as offline inspection. |
+| Query robustness inspection | Inspects whether small wording changes still retrieve the expected evidence path. | Completed as offline inspection. |
+| Future comparability-gate contract | Documents the planned pairwise gate as a question-specific future stage. | Contract documented. |
+| RAC grounded review | Makes factor expansion, evidence routing, critique, fact checking, and confidence updates visible over local project evidence. | Implemented as deterministic local-evidence scaffold. |
 
-These are implementation checks for a staged decision-support prototype.
+These checks are designed for a staged decision-support prototype. They show whether the current data path preserves field meanings, source scope, diagnostic boundaries, and reviewer-traceable evidence.
 
-They are best read as data-contract, scope-boundary, and answer-boundary checks. They are not causal business experiments and not broad LLM benchmarks. Each record below follows the same structure: question, evidence path, expected behavior, and current result.
+Each record below follows the same structure: question, evidence path, expected behavior, current result, and checked-by command.
 
 ## Experiment 1: Store A Month-over-Month Diagnostic
 
@@ -135,7 +135,7 @@ The answer-boundary contract should preserve these rules:
 
 - `activity_cost_ratio_pct` is not traditional ROI or profit margin.
 - `top3_sku_transaction_amount_share_pct` is not full product-category sales share.
-- Search-entry evidence does not prove causal performance.
+- Search-entry evidence is treated as one visibility-to-entry signal within the current store-period profile.
 - Activity evidence describes operating-tool usage, not automatic promotion-transfer logic.
 - `same_period_diagnostic_ready` is not a finished pairwise comparability decision.
 - `region_type` is weak context only.
@@ -224,7 +224,7 @@ Current result: Implemented as an offline small-corpus robustness inspection.
 
 Boundary:
 
-This check does not prove production-level retrieval robustness. It supports the current design choice that retrieval score is only one signal and must be paired with answer-boundary checks.
+This check supports the current design choice that retrieval score is only one signal and should be paired with answer-boundary checks.
 
 ## Experiment 7: Future Gate Contract Check
 
@@ -267,11 +267,6 @@ Current result: Implemented.
 Checked by:
 
 - `python3 retail_ops/scripts/validate_retail_data_contract.py`
-
-## Demo 2 Derived-Metric Scope
-
-Demo 2 is intentionally narrower than Demo 1. It is a same-period B-F diagnostic for field-contract consistency and comparison-boundary behavior, not a full multi-store diagnostic model.
-
 
 ## Repeated-Window Panel Extension Result
 

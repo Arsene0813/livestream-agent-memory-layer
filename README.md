@@ -156,26 +156,23 @@ The first review path should stay short. These files are retained for technical 
 
 ## Evaluation Snapshot
 
-For retail field names and metric meanings, `retail_ops/data/DATA_DICTIONARY.md` is authoritative. For generated diagnostic values and evaluation outcomes, use the saved files under `retail_ops/outputs/` and `eval/results/` if this summary table is later updated.
+For retail field names and metric meanings, `retail_ops/data/DATA_DICTIONARY.md` is authoritative. For generated diagnostic values and evaluation outcomes, use the saved files under `retail_ops/outputs/` and `eval/results/`.
 
-The evaluations are intentionally narrow scenario-based behavior checks. They do not prove business correctness, causal effects, or general model performance. Their value is checking whether the current prototype preserves metric definitions, source boundaries, entity/period scope, and comparison limits when limited retail evidence is retrieved.
-
-Demo 2 guardrail sensitivity is also inspected. In the current B-F sample, all five store rows have `comparison_limit_notes` that change under at least one plus or minus 5 percentage-point threshold scenario. This means the current threshold notes should be read as diagnostic warnings, not stable peer-selection rules, strategy-transfer approvals, or optimized business cutoffs.
+The evaluation layer checks whether the current prototype preserves metric definitions, source boundaries, entity/period scope, and comparison limits when selected retail evidence is retrieved.
 
 | Check | Scope | Result |
 | --- | --- | --- |
-| Livestream memory evaluation | Fact retrieval, overwrite behavior, entity separation, fallback/refusal, non-fact filtering. | Current implemented cases pass. |
-| Retail retrieval evaluation | Store A retail-memory retrieval and unsupported-scope refusal. | 8/8 passed. |
+| Livestream memory evaluation | Fact retrieval, overwrite behavior, entity separation, fallback/refusal, and non-fact filtering. | Current implemented cases pass. |
+| Retail retrieval evaluation | Store A retail-memory retrieval and unsupported-scope handling. | 8/8 passed. |
 | Retail Demo 2 facts evaluation | Store B-F generated fact coverage across diagnostic slots. | 5/5 passed. |
 | Retail Demo 2 scope-boundary evaluation | Demo 2 remains a row-level same-period diagnostic and does not expose future pairwise-gate schema. | 5/5 passed. |
 | Retail Demo 2 answer-boundary evaluation | Activity-cost ratio, top-SKU share, search-entry comparison, promotion-transfer limits, same-period boundary, and `region_type` weak-context boundary. | 6/6 passed. |
-| Retail Demo 2 endpoint behavior evaluation | File-backed Demo 2 endpoint behavior for supported Store B-F questions, unsupported-scope refusal, and pairwise strategy-transfer refusal. | 7/7 passed. |
-| Retail data-contract validation | Dictionary phrases, source/output headers, forbidden aliases, generated fact structure. | Passed. |
-| Retrieval score distribution inspection | Inspects score distributions over file-backed Demo 1 and Demo 2 retail evidence across supported, unsupported, hard-negative, entity/period mismatch, and ambiguous comparison queries. | Completed as offline inspection; not used as production or Demo 2 runtime threshold. |
-| Query robustness under wording variation | Tests whether retrieval behavior remains stable under shortened, paraphrased, typo/noise, and keyword-order query variants. | Completed. |
-| Project consistency validation | Current-scope files, Demo 2 boundary wording, stale future-work artifacts, endpoint claims. | Passed. |
+| Retail Demo 2 endpoint behavior evaluation | File-backed Demo 2 endpoint behavior for supported Store B-F questions, unsupported-scope handling, and pairwise strategy-transfer boundary. | 7/7 passed. |
+| Retail data-contract validation | Dictionary phrases, source/output headers, forbidden aliases, and generated fact structure. | Passed. |
+| Retrieval score distribution inspection | Inspects score distributions over file-backed Demo 1 and Demo 2 retail evidence across supported, unsupported, hard-negative, entity/period mismatch, and ambiguous comparison queries. | Completed as offline inspection. |
+| Query robustness under wording variation | Tests retrieval behavior under shortened, paraphrased, typo/noise, and keyword-order query variants. | Completed. |
 
-Offline retrieval inspections make score behavior inspectable, but answer safety still depends on entity, period, slot, source path, and interpretation-boundary checks rather than retrieval score alone.
+Demo 2 guardrail sensitivity is also inspected. In the current B-F sample, all five store rows have `comparison_limit_notes` that change under at least one plus or minus 5 percentage-point threshold scenario. These rows remain useful as diagnostic evidence, while the threshold-sensitive notes should be reviewed again when broader repeated-window evidence is added.
 
 ## Optional Local Run
 
@@ -195,13 +192,13 @@ python3 eval/eval_retail_demo2_facts.py
 python3 eval/eval_retail_demo2_scope_boundary.py
 python3 eval/eval_retail_demo2_answer_behavior.py
 python3 eval/eval_retail_demo2_endpoint_behavior.py
-
-The endpoint behavior eval imports `api.main`, so run it inside the project virtual environment after dependencies are installed.
 python3 eval/eval_future_comparability_gate_contract.py
 python3 scripts/validate_demo2_retail_endpoint_boundary.py
 python3 scripts/validate_markdown_readability.py
 python3 retail_ops/scripts/validate_csv_physical_rows.py
 ```
+
+The endpoint behavior eval imports `api.main`, so run it inside the project virtual environment after dependencies are installed.
 
 Optional offline retrieval-inspection checks:
 
@@ -210,7 +207,7 @@ python3 eval/analyze_retail_embedding_score_distribution.py
 python3 eval/analyze_retail_query_robustness.py
 ```
 
-These retrieval checks inspect score distribution and wording-variation behavior over the current file-backed retail evidence corpus. They support the boundary-check design, but they are not production retrieval benchmarks.
+These retrieval checks inspect score distribution and wording-variation behavior over the current file-backed retail evidence corpus.
 
 ## Key Evidence Files
 

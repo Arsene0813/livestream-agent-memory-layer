@@ -1,41 +1,44 @@
 # Retail Operations Experiment Map
 
-This file records the current analytical experiments in the retail operations extension.
+This file records the analytical checks used in the retail operations extension.
 
-In this repository, "experiment" means a staged analytical check on whether the data path preserves metric definitions and answer boundaries.
+The checks follow the current evidence path:
 
-It does not mean a randomized business experiment or causal A/B test.
+```text
+selected Meituan backend metrics
+-> canonical field dictionary
+-> SQL diagnostic output
+-> generated memory facts
+-> answer-boundary checks
+-> retrieval and robustness inspection
+```
+
+The purpose is to verify that selected store-period evidence remains interpretable as the project moves from single-store diagnosis toward future cross-store comparability analysis.
 
 ## Current Experiment Scope
 
-The current experiments test whether selected Meituan backend metrics can be:
+The current experiments check whether selected Meituan backend metrics can be:
 
-1. structured into canonical fields;
-2. processed through SQL diagnostics;
+1. preserved under canonical field names;
+2. structured through SQL diagnostics;
 3. converted into retrieval-facing memory facts;
-4. discussed without losing metric definitions or evidence limits.
+4. retrieved and discussed without losing entity, period, source, or metric boundaries.
 
-The current experiments do not prove causal business effects.
+## Threshold Review
 
-## Planned Threshold Review
+Demo 2 currently uses literal diagnostic thresholds to create `comparison_limit_notes`.
 
-The current Demo 2 thresholds used to create `comparison_limit_notes` are fixture-stage literal thresholds for this prototype.
-
-They are not estimated optimal cutoffs.
-
-When broader store coverage and repeated reporting windows are added, these thresholds should be reviewed with stability checks and simple sensitivity analysis before being used in a stronger pairwise comparability gate.
+The threshold review inspects whether those notes are stable under small changes. If a store's notes change under a small threshold shift, the row remains useful for diagnostic discussion, but it should be treated as threshold-sensitive evidence when preparing future pairwise comparison logic.
 
 ## Demo 2 Guardrail Sensitivity Check
 
-The Demo 2 thresholds used in `comparison_limit_notes` are prototype guardrails, not optimized business cutoffs. To make that boundary inspectable, the repository includes a small sensitivity check:
+The repository includes a small sensitivity check:
 
 - Script: `retail_ops/scripts/analyze_demo2_guardrail_sensitivity.py`
 - Output CSV: `retail_ops/outputs/demo2_guardrail_sensitivity_summary.csv`
 - Output note: `retail_ops/outputs/demo2_guardrail_sensitivity_result.txt`
 
-The check recomputes the current guardrail notes under three scenarios: baseline SQL thresholds, a looser minus-5-percentage-point setting, and a stricter plus-5-percentage-point setting. Its purpose is not to choose the best threshold. Its purpose is to show whether the current interpretation notes are fragile under small threshold changes.
-
-A store whose notes change under this check should be treated as threshold-sensitive evidence. That means the current row can still be used for cautious diagnostic discussion, but it should not be used as a stable peer-comparison or strategy-transfer rule.
+The check recomputes the current guardrail notes under three scenarios: baseline SQL thresholds, a looser minus-5-percentage-point setting, and a stricter plus-5-percentage-point setting.
 
 ## Experiment 1: Store A Month-over-Month Diagnostic
 
@@ -183,10 +186,10 @@ Meituan backend metric evidence
 
 | Analytical question | Evidence used | Method | Current result | Interpretation boundary |
 |---|---|---|---|---|
-| Can a single store's monthly operating movement be interpreted without reducing the result to one metric? | Store A February, March, and April 2026 store-period metrics and selected top-SKU evidence. | SQL month-over-month diagnostic over exposure, entry, ranking, transaction, conversion, activity, and top-SKU signals. | Store A can be described through a multi-metric operating profile instead of a single-cause monthly explanation. | The result does not prove that any one metric caused the monthly change. |
+| Can a single store's monthly operating movement be interpreted without reducing the result to one metric? | Store A February, March, and April 2026 store-period metrics and selected top-SKU evidence. | SQL month-over-month diagnostic over exposure, entry, ranking, transaction, conversion, activity, and top-SKU signals. | Store A can be described through a multi-metric operating profile instead of a single-cause monthly explanation. | The result should be read as a structured operating profile across visibility, entry, conversion, activity, and SKU signals. |
 | Can selected B-F store-period rows be structured before cross-store interpretation? | March 2026 B-F store-period metrics, top search-term evidence, and top-SKU transaction-amount evidence. | SQL derives search-entry structure, activity involvement, top-3 SKU concentration, `comparison_scope_flag`, and `comparison_limit_notes`. | Demo 2 creates same-period diagnostic evidence under one field contract. | `comparison_scope_flag` is not a pairwise comparability decision, and `comparison_limit_notes` are diagnostic guardrails rather than peer-selection rules. |
 | Can SQL diagnostic output become retrieval-facing memory facts without losing evidence boundaries? | Demo 2 SQL output, top search terms, top-SKU evidence, dictionary definitions, and lineage rules. | Generated memory facts preserve entity, period, slot, observed values, source fields, source paths, confidence labels, and limitations. | Current facts can support bounded Store B-F questions while keeping source paths and limitations visible. | Generated facts do not replace raw backend evidence or prove business causality. |
-| Can unsupported claims be blocked or qualified? | Retail evaluation cases, generated facts, data dictionary, and lineage rules. | Scenario-based answer checks test unsupported ranking, ROI, strategy-transfer, region-type, and causal claims. | Current checks verify that answers stay inside entity, period, metric-definition, source, and interpretation boundaries. | Passing these checks does not prove general conversational robustness outside the current evidence path. |
+| Can unsupported claims be blocked or qualified? | Retail evaluation cases, generated facts, data dictionary, and lineage rules. | Scenario-based answer checks test unsupported ranking, ROI, strategy-transfer, region-type, and causal claims. | Current checks verify that answers stay inside entity, period, metric-definition, source, and interpretation boundaries. | The checks are scoped to the current evidence path and reviewer-facing Demo 1 / Demo 2 questions. |
 | Are Demo 2 guardrail notes stable enough to become reusable peer-comparison rules? | Demo 2 guardrail sensitivity output. | The guardrail sensitivity script recomputes notes under baseline, looser, and stricter threshold scenarios. | Current notes are inspectable and threshold-sensitive. | The thresholds should remain diagnostic warnings until more store-period windows are added. |
 | Can retrieval score behavior be inspected instead of justified from isolated examples? | Generated Demo 1 and Demo 2 retail facts, dictionary notes, source notes, and retrieval threshold cases. | Offline embedding-score inspection records top-k scores, margins, entity matches, slot matches, period checks, and expected-match behavior. | Retrieval score behavior is visible across supported, unsupported, hard-negative, mismatch, and ambiguous queries. | Retrieval score alone is not treated as sufficient evidence for operational conclusions. |
 | Does wording variation change retrieval behavior too much? | Query robustness cases over the current file-backed retail evidence corpus. | Wording variants test shortened, paraphrased, noisy, typo-like, and keyword-order changes. | The current corpus can be inspected for retrieval behavior under small query variations. | This is not a production-level semantic robustness benchmark. |
