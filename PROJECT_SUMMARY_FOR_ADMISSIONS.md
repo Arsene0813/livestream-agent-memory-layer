@@ -1,5 +1,20 @@
 # Project Summary for Admissions Review
 
+## Current Evidence Path
+
+The project is organized as a staged evidence path:
+
+| Layer | Current status | Review value |
+|---|---|---|
+| Metric dictionary | Implemented | Preserves selected Meituan backend metric meanings and canonical field names before analysis. |
+| Demo 1 | Implemented | Structures Store A February-April 2026 movement as a multi-metric operating profile. |
+| Demo 2 | Implemented | Structures Stores B-F March 2026 under one reporting window and one field contract. |
+| Repeated-window panel | Implemented | Adds B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04. |
+| Evaluation layer | Implemented | Checks whether answers preserve metric definitions, entity scope, period scope, and comparison boundaries. |
+| Pairwise comparability gate | Future work | Will judge whether two store-period records can be compared for one selected operating question. |
+
+This staged path reflects the business problem: the Meituan backend contains rich store-level metrics, but a 48-store operation needs a stricter way to decide which store-period records can be compared, under what evidence conditions, and for which operating question.
+
 ## Project Title
 
 Meituan Instant-Retail Decision Support Prototype
