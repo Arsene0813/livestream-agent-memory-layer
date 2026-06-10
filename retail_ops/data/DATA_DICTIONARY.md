@@ -802,7 +802,7 @@ High activity-order share or a low activity cost ratio does not prove that activ
 
 规则 5：当口径不完全明确时，以后台展示指标作为事实来源。
 
-Manual recomputation is only valid when numerator, denominator, time window, deduplication rule, and order-status scope are explicitly aligned.
+Manual recomputation is only valid when numerator, denominator, time window, deduplication rule, and backend reporting scope are explicitly aligned.
 
 只有在分子、分母、时间窗口、去重规则和后台统计口径全部明确一致时，才进行手动重算。
 
