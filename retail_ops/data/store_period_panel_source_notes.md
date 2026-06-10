@@ -11,39 +11,26 @@ The current panel contains Store B, Store C, Store D, Store E, and Store F for F
 | Current panel stores | Store B, Store C, Store D, Store E, and Store F |
 | Current months entered | 2026-02, 2026-03, and 2026-04 |
 | March source | Copied from existing Demo 2 source data |
-| Current purpose | Repeated-window panel extension |
-| Not current purpose | A new numbered demo, pairwise comparability gate, endpoint behavior, or generated memory facts |
+| Current purpose | Repeated-window coverage and descriptive summary for selected store-period fields |
 
-## Field Inclusion Rule
+## Panel Field Scope
 
-This panel keeps only fields that are clear enough to support the current operating-chain diagnostic.
+The panel uses selected dictionary-defined store-period fields that support the current repeated-window diagnostic.
 
 The operating chain is:
 
 ~~~text
+being seen -> being entered -> being ordered -> being selected again / maintaining share
 ~~~
 
-## Excluded Order-Status Fields
-
-The panel only uses fields whose meanings are documented clearly enough in `DATA_DICTIONARY.md` for diagnostic use.
-
-No alternative hidden definition is inferred.
-
-The following raw backend fields are retained for source completeness:
+Refund context fields retained in the current panel are:
 
 - `refund_amount`
 - `full_refund_orders`
 - `refund_orders_all_or_partial`
+
 ## Current Interpretation Boundary
 
-This panel supports repeated-window coverage inspection.
+This panel supports repeated-window coverage inspection and descriptive summary for Stores B-F across February-April 2026.
 
-It does not yet support:
-
-- final store ranking
-- cross-store strategy transfer
-- pairwise comparability decisions
-- market-area classification
-- causal attribution
-
-Coverage is based on dictionary-defined transaction, search, activity, and SKU fields.
+Stronger pairwise comparison should use the future comparability-gate contract after the relevant store-period evidence is available.

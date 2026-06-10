@@ -344,7 +344,7 @@ def main() -> int:
         "Checked generated Demo 1 and Demo 2 memory fact structure.",
         "Checked source_path existence and known source_fields.",
         "Checked critical metric-boundary phrases in DATA_DICTIONARY.md.",
-        "Checked current schema aliases and retained field boundaries.",
+        "Checked current schema aliases and dictionary-defined field boundaries.",
         f"Saved result path: {RESULT_PATH.relative_to(ROOT)}",
     ]
     write_report(report)

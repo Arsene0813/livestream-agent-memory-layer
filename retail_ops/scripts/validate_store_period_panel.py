@@ -87,7 +87,7 @@ if missing_fields:
 
 forbidden_present = sorted(forbidden_panel_aliases & panel_fields)
 if forbidden_present:
-    print("[FAIL] Forbidden ambiguous or non-canonical fields are present in panel header:")
+    print("[FAIL] Forbidden non-canonical fields are present in panel header:")
     for field in forbidden_present:
         print(f" - {field}")
     sys.exit(1)
@@ -155,8 +155,7 @@ for path in alias_scan_paths:
 
 notes = notes_path.read_text(encoding="utf-8")
 required_note_phrases = [
-    "Coverage is based on dictionary-defined transaction, search, activity, and SKU fields",
-    "No alternative hidden definition is inferred.",
+    "Coverage uses selected dictionary-defined store-period fields for repeated-window diagnostic coverage",
     "`refund_amount`",
     "`full_refund_orders`",
     "`refund_orders_all_or_partial`",
