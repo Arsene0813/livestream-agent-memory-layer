@@ -2,10 +2,6 @@
 """Validate Demo 2 cross-store comparability output.
 
 This validator checks that Demo 2 output stays within the current dictionary-defined comparison schema.
-unclear order-status interpretation fields.
-
-Those fields are not used in the current Demo 2 diagnostic output because
-their backend definitions are not clear enough for diagnostic interpretation.
 """
 
 from __future__ import annotations
@@ -65,9 +61,6 @@ REQUIRED_COLUMNS = [
     "comparison_limit_notes",
 ]
 
-FORBIDDEN_COLUMNS = [
-]
-
 
 def parse_float(row: dict[str, str], key: str) -> float:
     value = row.get(key, "")
@@ -103,12 +96,6 @@ def main() -> None:
     if missing:
         raise SystemExit(f"Missing expected columns: {missing}")
 
-    forbidden_visible = [col for col in FORBIDDEN_COLUMNS if col in headers]
-    if forbidden_visible:
-        raise SystemExit(
-            "Forbidden unclear order-status columns remain in Demo 2 output: "
-            f"{forbidden_visible}"
-        )
 
     if len(rows) != 5:
         raise SystemExit(f"Expected 5 Demo 2 store rows, found {len(rows)}")

@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Analyze Demo 2 guardrail sensitivity for current diagnostic guardrail notes.
 
-This script intentionally excludes unclear order-status interpretation fields. Demo 2 guardrail sensitivity is based only on
-fields that remain in the current field contract:
+The analysis compares current, stricter, and looser guardrail thresholds for:
 
 - activity_order_share_pct
 - top3_sku_transaction_amount_share_pct
