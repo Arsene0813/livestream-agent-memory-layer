@@ -101,7 +101,7 @@ Current derived outputs are separated into two layers.
 2. Memory-facing artifacts:
 
 
-Memory-facing slots are generated from multiple source fields and SQL-derived columns. They are not raw Meituan backend fields and should not be treated as SQL output headers. The SQL layer must not silently rename, redefine, or reverse-engineer Meituan backend metrics. It also must not turn one threshold into a fixed store-stage label. For example, `order_conversion_rate_pct` follows the backend definition and must not be recomputed from a project-side order-status proxy.
+Memory-facing slots are generated from multiple source fields and SQL-derived columns. They are not raw Meituan backend fields and should not be treated as SQL output headers. The SQL layer must not silently rename, redefine, or reverse-engineer Meituan backend metrics. It also must not turn one threshold into a fixed store-stage label. For example, `order_conversion_rate_pct` follows the backend definition and must not be recomputed from an alternative project-side numerator.
 
 Any new SQL-derived field must be explicitly documented before it is used in generated outputs or memory facts.
 
@@ -432,11 +432,11 @@ English definition: Number of users who entered the merchant page through other 
 
 English formula: `order_conversion_rate_pct = order_users / entry_users * 100`
 
-中文解释：本 demo 将 `order_conversion_rate_pct` 作为美团后台展示的下单转化率，不用项目侧订单状态口径反推。
+中文解释：本 demo 将 `order_conversion_rate_pct` 作为美团后台展示的下单转化率，不用项目侧替代分子反推。
 
-English interpretation: In this demo, `order_conversion_rate_pct` is treated as the backend-reported order conversion rate. It is not recomputed from project-side order-status proxies.
+English interpretation: In this demo, `order_conversion_rate_pct` is treated as the backend-reported order conversion rate. It is not recomputed from an alternative project-side numerator.
 
-It should not be recomputed from a project-side order-status proxy.
+It should not be recomputed from an alternative project-side numerator.
 
 Reason:
 
@@ -757,9 +757,9 @@ Therefore:
 
 ## 11. Metric Consistency Rules / 指标一致性规则
 
-### Rule 1: Do not recompute order conversion from project-side order-status proxies.
+### Rule 1: Do not recompute order conversion from alternative project-side numerators.
 
-规则 1：不要用项目侧订单状态口径反推下单转化率。
+规则 1：不要用项目侧替代分子反推下单转化率。
 
 `order_conversion_rate_pct` follows:
 
@@ -767,7 +767,7 @@ Therefore:
 
 It should not be recomputed as:
 
-project-side order-status proxy / entry_users
+alternative project-side numerator / entry_users
 
 because:
 
