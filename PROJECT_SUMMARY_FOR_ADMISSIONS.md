@@ -1,20 +1,5 @@
 # Project Summary for Admissions Review
 
-## Current Evidence Path
-
-The project is organized as a staged evidence path:
-
-| Layer | Current status | Review value |
-|---|---|---|
-| Metric dictionary | Implemented | Preserves selected Meituan backend metric meanings and canonical field names before analysis. |
-| Demo 1 | Implemented | Structures Store A February-April 2026 movement as a multi-metric operating profile. |
-| Demo 2 | Implemented | Structures Stores B-F March 2026 under one reporting window and one field contract. |
-| Repeated-window panel | Implemented | Adds B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04. |
-| Evaluation layer | Implemented | Checks whether answers preserve metric definitions, entity scope, period scope, and comparison boundaries. |
-| Pairwise comparability gate | Future work | Will judge whether two store-period records can be compared for one selected operating question. |
-
-This staged path reflects the business problem: the Meituan backend contains rich store-level metrics, but a 48-store operation needs a stricter way to decide which store-period records can be compared, under what evidence conditions, and for which operating question.
-
 ## Project Title
 
 Meituan Instant-Retail Decision Support Prototype
@@ -25,9 +10,9 @@ Repository: `livestream-agent-memory-layer`
 
 This staged local prototype grew from a real operating problem in a 48-store Meituan instant-retail business.
 
-The Meituan merchant backend gives detailed single-store metrics, but it does not directly answer the harder multi-store question: which store-period records can be compared, under what operating conditions, and what kind of operating judgment the available evidence can support.
+The Meituan merchant backend contains detailed single-store metrics, but it is mainly designed for reviewing one store at a time. As the store count increased, the harder question became how to compare store-period records without flattening different reporting windows, activity conditions, product structures, and market contexts into the same judgment.
 
-The current prototype organizes selected backend evidence into this path:
+The current prototype turns selected backend evidence into a decision-support evidence path:
 
 1. Meituan backend metric evidence
 2. `DATA_DICTIONARY.md` field contract
@@ -36,9 +21,10 @@ The current prototype organizes selected backend evidence into this path:
 5. boundary-preserving answer checks
 6. deterministic source-aware review scaffold
 
-The current retail path includes Demo 1, Demo 2, and a post-Demo2 repeated-window panel extension for Stores B-F across February-April 2026. Demo 2 structures selected store-period evidence under one reporting window and one field contract; the repeated-window panel checks whether same-store multi-month evidence exists before any stronger pairwise comparability decision is attempted.
+Demo 1 structures Store A February-April 2026 movement as a multi-metric operating profile. Demo 2 structures selected Stores B-F under one March 2026 reporting window and one field contract. The repeated-window panel then adds B-F coverage across 2026-02, 2026-03, and 2026-04 before stronger pairwise comparability rules are added.
 
-A future pairwise comparability gate should judge whether two store-period records can be compared for a specific operating question, using factors such as transaction order volume, transaction amount, activity evidence, store type, repeated reporting windows, region and market context, competition evidence, SKU structure, and fulfillment or stockout context.
+A future pairwise comparability gate should judge whether two store-period records can be compared for one selected operating question, using factors such as transaction order volume, transaction amount, activity evidence, store type, repeated reporting windows, region and market context, competition evidence, SKU structure, and fulfillment or stockout context.
+
 
 ## Review Note
 
