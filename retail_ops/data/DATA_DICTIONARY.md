@@ -804,7 +804,7 @@ High activity-order share or a low activity cost ratio does not prove that activ
 
 Manual recomputation is only valid when numerator, denominator, time window, deduplication rule, and order-status scope are explicitly aligned.
 
-只有在分子、分母、时间窗口、去重规则、订单状态口径全部明确一致时，才进行手动重算。
+只有在分子、分母、时间窗口、去重规则和后台统计口径全部明确一致时，才进行手动重算。
 
 ### Rule 6: Do not reuse store-level field names for SKU-level evidence.
 
