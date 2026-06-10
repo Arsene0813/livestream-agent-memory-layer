@@ -441,7 +441,7 @@ It should not be recomputed from a project-side order-status proxy.
 Reason:
 
 - `order_users` / 下单人数 is a user-count funnel metric;
-- project-side order-status fields are not used as conversion numerators;
+- project-side status-derived aliases are not used as conversion numerators;
 - `entry_users` / 入店人数 is a user-count traffic metric.
 
 ### `order_users` / 下单人数
@@ -772,7 +772,7 @@ project-side order-status proxy / entry_users
 because:
 
 - `order_users` / 下单人数 is a user-count funnel metric;
-- project-side order-status fields are not used as conversion numerators;
+- project-side status-derived aliases are not used as conversion numerators;
 - `entry_users` / 入店人数 is a user-count traffic metric;
 - the backend may use its own UV deduplication and reporting-window logic.
 

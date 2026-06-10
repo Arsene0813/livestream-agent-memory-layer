@@ -79,7 +79,7 @@ It is not derived from:
 project-side order-status proxy / entry_users
 ~~~
 
-Reason: backend order-status metrics and user-level funnel metrics should not be mixed into a substitute conversion formula.
+Reason: unsupported status-derived metrics and user-level funnel metrics should not be mixed into a substitute conversion formula.
 
 ### Traffic Source
 
@@ -107,7 +107,7 @@ For the transaction metric page:
 average_order_value = transaction_amount / transaction_orders
 ~~~
 
-If another backend page defines 单均价 using a different backend order-status denominator, it should be treated as a separate backend-reported metric rather than mixed with transaction fields.
+If another backend page defines 单均价 using a different backend-reported denominator, it should be treated as a separate backend-reported metric rather than mixed with transaction fields.
 
 ### Estimated Income
 

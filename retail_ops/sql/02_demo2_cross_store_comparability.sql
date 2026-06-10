@@ -12,7 +12,7 @@
 -- This SQL does not decide pairwise store comparability.
 -- It does not rank stores as better or worse.
 -- It keeps refund backend fields as raw source fields only and does not
--- turn raw refund fields into interpretive pressure metrics from unclear order-status fields.
+-- keep explicitly labeled refund evidence separate from unsupported status-derived pressure metrics.
 
 WITH top3_sku_amount AS (
     SELECT
