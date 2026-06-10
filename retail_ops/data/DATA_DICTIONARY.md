@@ -753,21 +753,12 @@ Therefore:
 
 ### Rule 1: Keep order conversion tied to the documented funnel grain.
 
-规则 1：不要用项目侧替代分子反推下单转化率。
-
 `order_conversion_rate_pct` follows:
 
 `order_conversion_rate_pct = order_users / entry_users * 100`
 
 It should be interpreted at the same user-count funnel grain as `order_users` and `entry_users`.
-alternative project-side numerator / entry_users
 
-because:
-
-- `order_users` / 下单人数 is a user-count funnel metric;
-- project-side status-derived aliases are not used as conversion numerators;
-- `entry_users` / 入店人数 is a user-count traffic metric;
-- the backend may use its own UV deduplication and reporting-window logic.
 
 ### Rule 2: Do not sum traffic-source users into total exposure users.
 
