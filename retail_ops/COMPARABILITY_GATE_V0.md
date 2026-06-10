@@ -20,9 +20,7 @@ For a 48-store operation, the harder problem is deciding:
 - what kind of operating question the comparison can support;
 - what limitation should stop the system from giving unsupported advice.
 
-The gate should not answer which store is best overall.
-
-It should answer a narrower question:
+The gate should answer one narrower question:
 
 - Can these two store-period records be compared for this specific operating question?
 
@@ -46,7 +44,7 @@ It does not yet encode:
 - competition context;
 - repeated-window stability;
 - data-supported market-area classification;
-- pairwise strategy-transfer approval.
+- pairwise operating-transfer evidence.
 
 ### Future Pairwise Comparability Gate
 
@@ -76,7 +74,7 @@ This matrix separates what the current evidence can support from what the future
 | Promotion or subsidy comparison | `activity_orders`, `activity_order_share_pct`, `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, `platform_subsidy_amount` | campaign calendar, campaign mechanism, competitor reaction, repeated activity windows | activity involvement and activity intensity only |
 | SKU-mix comparison | top-SKU transaction-amount evidence, top-SKU sales-volume evidence, `top3_sku_transaction_amount_share_pct` | full product-category classification, broader catalog structure, category-level share | lightweight product-mix constraint |
 | Market-context comparison | `region_type` | local consumption level, delivery-radius context, competitor density, broader store coverage | weak context only |
-| Strategy-transfer readiness | current diagnostic fields and `comparison_limit_notes` | repeated windows, pairwise decision output, activity mechanism, competition, market context, fulfillment and stockout evidence | insufficient for strategy-transfer approval |
+| Strategy-transfer readiness | current diagnostic fields and `comparison_limit_notes` | repeated windows, pairwise decision output, activity mechanism, competition, market context, fulfillment and stockout evidence | boundary-preserving answer until pairwise evidence is available |
 
 
 ## Activity Evidence Boundary
@@ -105,7 +103,7 @@ The future gate should not collapse activity evidence into a single yes/no label
 |---|---|---|---|
 | Reporting-window alignment | `period_start`, `period_end`, `period_month` | Demo 2 uses one March 2026 window only. | Repeated windows across more stores. |
 | Order volume | `transaction_orders` | One-period volume may be unstable. | Repeated order-volume bands. |
-| Transaction scale | `transaction_amount`, `average_order_value`, `estimated_income_proxy` | `estimated_income_proxy` is only a platform-displayed proxy. | Clearer income and cost evidence if available. |
+| Transaction scale | `transaction_amount`, `average_order_value`; `estimated_income_proxy` as weak supplementary backend context only | `estimated_income_proxy` lacks a full calculation breakdown in the current demo data and should not be used as a primary gate factor. | Clearer gross-revenue, cost, and settlement evidence if available. |
 | Activity status | Not directly implemented as a current source field. | Full campaign status should not be inferred from activity orders alone. | Campaign-calendar or explicit backend activity-status evidence. |
 | Activity involvement | `activity_orders`, `activity_order_share_pct` | Shows activity participation in the order structure, not causal lift. | Repeated windows and campaign mechanism evidence. |
 | Activity intensity | `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, `platform_subsidy_amount` | Current thresholds are diagnostic guardrails, not transfer rules. | Repeated activity windows and stronger evidence on activity mechanism. |
@@ -126,17 +124,15 @@ Future market-area classification should be added as new documented fields only 
 
 The future gate should not classify stores by subjective experience, intuition, or habitual labels.
 
-## Why This Should Not Be a Single Score
+## Question-Specific Comparability
 
-The future gate should not produce one global comparability score.
+A store pair may be comparable for search-entry structure while still requiring additional evidence for promotion transfer, pricing pressure, SKU strategy, refund interpretation, or fulfillment interpretation.
 
-A store pair may be comparable for search-entry structure but not comparable for promotion transfer, pricing pressure, SKU strategy, or fulfillment interpretation.
-
-The gate should return a decision only for the selected operating question.
+The gate should return a decision for the selected operating question and explain the supporting evidence, limiting factors, and blocking factors.
 
 ## Minimum Evidence Before Implementation
 
-A stronger pairwise comparability gate should not be implemented only because Demo 2 rows share one reporting window. The gate should wait until the evidence below is available, or until the missing evidence is explicitly marked as a blocking or limiting factor for the selected operating question.
+A stronger pairwise comparability gate should be implemented after Demo 2 evidence is expanded beyond one selected month, or after missing evidence is explicitly represented as a blocking or limiting factor for the selected operating question. The gate should wait until the evidence below is available, or until the missing evidence is explicitly marked as a blocking or limiting factor for the selected operating question.
 
 | Gate factor | Current Demo 2 support | Missing before gate | Future source |
 |---|---|---|---|
@@ -177,7 +173,7 @@ The gate should separate at least these comparison questions:
 - fulfillment or stockout comparability;
 - strategy-transfer readiness.
 
-This future flow should not produce a global store ranking, a universal comparability score, or a final operating recommendation.
+The future flow should return a question-specific decision for the selected record pair, with supporting evidence and blocking factors.
 
 ## Future Gate Input Triple
 
@@ -230,7 +226,7 @@ It is not a current Demo 2 output and does not change the canonical field
 definitions in `retail_ops/data/DATA_DICTIONARY.md`.
 
 The future gate should answer a narrow comparison question, not produce a
-global store ranking.
+question-specific comparability decision.
 
 | Future gate item | Example content |
 |---|---|

@@ -5,7 +5,7 @@
 Demo 2 supports same-period diagnostic reading across selected Stores B-F for March 2026.
 
 
-It does not approve pairwise strategy transfer, global store ranking, market-area classification, or promotion-setting transfer.
+It exposes same-period store-period diagnostic evidence and records the interpretation limits that should be carried into future pairwise comparison.
 
 The future pairwise comparability gate remains separate from Demo 2.
 

@@ -44,7 +44,7 @@ A future pairwise comparability gate would judge whether two store-period record
 | Livestream memory layer | Typed product facts, overwrite control, soft deactivation, active-state retrieval, fallback/refusal, scenario evaluation. | Local prototype for lifecycle-aware memory behavior. |
 | Data dictionary | Preserves Meituan-style backend metric meanings and canonical field names. | Manual normalization of selected backend evidence; field meanings follow `retail_ops/data/DATA_DICTIONARY.md`. |
 | Retail Demo 1 | Store A month-over-month diagnostic across February, March, and April 2026. | Multi-metric interpretation rather than single-cause monthly explanation. |
-| Retail Demo 2 | Same-period B-F diagnostic for March 2026. | Same-period diagnostic evidence before pairwise comparability gating; not peer selection, store ranking, or strategy-transfer approval. |
+| Retail Demo 2 | Same-period B-F diagnostic for March 2026. | Same-period diagnostic evidence with explicit interpretation limits before pairwise comparability rules. |
 | Repeated-window panel | B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04. | Descriptive repeated-window evidence before future pairwise comparability rules. |
 | Memory facts | Converts diagnostic outputs into source-bounded facts with observed values, source fields, source paths, confidence labels, and limitations. | File-backed evidence records for the implemented demos; not a replacement for raw backend evidence. |
 | Answer-boundary checks | Tests whether answers stay within entity, period, metric-definition, source, and interpretation boundaries. | Scenario-based checks tied to the current evidence path; not broad LLM robustness tests. |
@@ -143,7 +143,7 @@ The section exposes store-period operating profiles and points to the canonical 
 
 - Main file: `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md`
 - Future gate contract: `retail_ops/COMPARABILITY_GATE_V0.md`
-- Current boundary: same-period diagnostic evidence only; peer selection, store ranking, and strategy-transfer approval belong to the future gate stage.
+- Current boundary: same-period diagnostic evidence with documented interpretation limits; pairwise comparability rules are kept in the future gate contract.
 
 ## Appendix Ownership
 
@@ -266,7 +266,7 @@ The scaffold covers:
 - fact check
 - confidence and limitations
 
-It is deterministic only: it makes no LLM calls, uses no Qdrant retrieval, has no live Meituan backend access, implements no completed pairwise comparability gate, and provides no causal proof from observational store metrics.
+The scaffold is deterministic and local-evidence-based. It uses already structured project files to make factor coverage, missing evidence, critique, fact checks, and confidence updates inspectable before a grounded report is accepted.
 
 Current RAC evidence and scripts:
 
@@ -277,6 +277,6 @@ Current RAC evidence and scripts:
 - `rac/scripts/run_grounded_pipeline.py`
 - `rac/scripts/validate_grounded_quality_gate.py`
 
-Current implementation boundary: deterministic and local-evidence-based. It should be read as a review scaffold over the current project evidence, not as live backend ingestion or operating-decision automation.
+Current implementation boundary: deterministic and local-evidence-based. It should be read as a review scaffold over the current project evidence.
 
 <!-- RAC_EXTENSION_END -->

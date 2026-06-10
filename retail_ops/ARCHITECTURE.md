@@ -13,13 +13,14 @@ It should explain how evidence moves through the implemented prototype. It shoul
 | Layer responsibilities | `retail_ops/data/DATA_DICTIONARY.md` for field meanings |
 | Architecture-level boundaries | `retail_ops/COMPARABILITY_GATE_V0.md` for future gate design |
 
-## Current Demo Scope
+## Current Retail Evidence Layers
 
-| Demo | Status | Purpose |
-|---|---|---|
-| Demo 1 | Implemented | Store A month-over-month diagnostic. |
-| Demo 2 | Implemented | Stores B-F same-period diagnostic structure. |
-| Pairwise comparability gate | Future work | Planned gate for judging whether selected store-period records can be compared for a specific operating question. |
+| Layer | Status | Current role | Reviewer reading |
+|---|---|---|---|
+| Demo 1: Store A month-over-month diagnostic | Implemented | Structures one store's February-April 2026 backend metrics into SQL diagnostic output and memory facts. | A narrow single-store evidence path. |
+| Demo 2: Stores B-F same-period diagnostic | Implemented | Structures selected March 2026 store-period records under one field contract. | A same-period diagnostic layer before stronger cross-store comparability rules. |
+| Post-Demo2 repeated-window panel | Implemented | Adds February-April 2026 repeated-window coverage for Stores B-F. | Evidence for checking whether same-store signals persist across reporting windows. |
+| Pairwise comparability gate | Documented future work | Plans a question-specific decision contract for judging whether selected store-period records can be compared. | Future decision-support design built from broader evidence coverage. |
 
 ## Current Evidence Path
 
@@ -74,13 +75,13 @@ Both paths should preserve metric definitions, entity scope, period scope, sourc
 
 ## Responsibility Split
 
-| Layer | Responsibility | Must not do |
+| Layer | Responsibility | Boundary |
 |---|---|---|
-| Data dictionary | Preserve backend metric meanings and canonical field names. | Invent new meanings for existing fields. |
-| SQL diagnostics | Compute store-period diagnostic evidence under the documented field contract. | Decide transferable operating strategy or assign fixed store-stage labels. |
-| Generated memory facts | Store evidence, source fields, observed values, calculation notes, confidence labels, and limitations. | Replace raw backend definitions or create undocumented fields. |
-| Boundary checks | Prevent unsupported answers about entity scope, period scope, metric meanings, and comparison limits. | Prove causal business effects or general operating correctness. |
-| Future comparability gate | Decide whether two store-period records can be compared for one selected operating question. | Produce a universal store ranking or global comparability score. |
+| Data dictionary | Preserve backend metric meanings and canonical field names. | Existing Meituan backend metrics stay tied to documented definitions. |
+| SQL diagnostics | Compute store-period diagnostic evidence under the documented field contract. | SQL output remains diagnostic evidence, not a final operating decision. |
+| Generated memory facts | Store observed values, source fields, calculation notes, confidence labels, and limitations. | Memory facts summarize evidence without replacing raw backend definitions. |
+| Boundary checks | Check entity scope, period scope, metric meanings, and comparison limits before answers are accepted. | Evaluation focuses on evidence discipline and answer scope. |
+| Future comparability gate | Judge whether two store-period records can be compared for one selected operating question. | The gate is question-specific and depends on broader store-period evidence. |
 
 ## Layer Contract
 
@@ -94,9 +95,12 @@ Both paths should preserve metric definitions, entity scope, period scope, sourc
 
 ## Evidence Type Boundary
 
-| Evidence type | Examples | Current role | Not sufficient for |
+| Evidence type | Examples | Current role | Interpretation limit |
 |---|---|---|---|
-| Future gate fields | `comparison_question_type`, `comparison_decision`, `market_area_type` | Planned contract fields for future pairwise comparability work. | Current Demo 2 output or current source-table schema. |
+| Backend-derived fields | `transaction_amount`, `entry_users`, `order_users`, `activity_orders`, `refund_amount` | Preserve Meituan backend metric meanings under canonical field names. | Observed metrics need context before stronger operating interpretation. |
+| SQL-derived diagnostics | `search_entry_rate_pct`, `search_entry_share_pct`, `activity_order_share_pct`, `comparison_limit_notes` | Expose visibility-entry structure, activity involvement, order-quality pressure, and interpretation limits. | Diagnostic signals are not peer-selection rules. |
+| Retrieval-facing memory slots | `visibility_entry_profile`, `activity_lever_profile`, `transaction_conversion_profile`, `order_quality_pressure_profile` | Store evidence with source fields, observed values, calculation notes, confidence, and limitations. | Memory slots keep evidence traceable rather than creating undocumented fields. |
+| Future gate fields | `comparison_question_type`, `comparison_decision`, `market_area_type` | Planned contract fields for future pairwise comparability work. | These are future fields, not current Demo 2 output columns. |
 
 ## Implemented Source Files
 
@@ -114,7 +118,7 @@ Current source files include:
 - `retail_ops/sql/01_store_a_month_over_month_diagnostic.sql`
 - `retail_ops/sql/02_demo2_cross_store_comparability.sql`
 
-The second file keeps its historical path name for reference stability, but its current implemented meaning is a same-period cross-store diagnostic, not an implemented pairwise gate.
+The second file keeps its historical path name for reference stability; its current implemented meaning is a same-period cross-store diagnostic.
 
 ## Implemented Memory Outputs
 
@@ -131,9 +135,7 @@ The memory-facing facts record:
 - evidence-trace confidence
 - limitations
 
-## Current Boundary
 
-The implemented retail path now includes Demo 1, Demo 2, and the post-Demo2 repeated-window panel extension. Demo 1 covers Store A month-over-month evidence, Demo 2 covers same-period B-F diagnostic evidence, and the repeated-window panel checks B-F monthly evidence before future pairwise comparability-gate work.
 
 ## Current Retail Implementation Scope
 
@@ -145,7 +147,7 @@ The current retail path has three implemented evidence layers.
 | Demo 2: same-period cross-store diagnostic | Stores B-F, 2026-03 | Review selected stores under one reporting window and one field contract before stronger cross-store claims. | Cross-store diagnostic output, comparison-scope fields, and generated memory facts. |
 | Post-Demo2 repeated-window panel extension | Stores B-F, 2026-02 to 2026-04 | Check whether same-store repeated-window evidence exists before building a future pairwise comparability gate. | Panel coverage output, descriptive repeated-window summary, and validator result files. |
 
-The current system organizes backend evidence, preserves metric definitions, and records limitations. It does not decide that two stores are fully comparable for every business question.
+The current system organizes backend evidence, preserves metric definitions, records limitations, and prepares repeated-window evidence for future question-specific comparison.
 
 Post-Demo2 repeated-window panel files:
 

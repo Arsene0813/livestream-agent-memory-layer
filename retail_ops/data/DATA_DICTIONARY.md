@@ -556,7 +556,7 @@ These fields must not be treated as interchangeable.
 
 English definition: Platform-displayed estimated income after deducting merchant-side expenses such as merchant subsidies and platform service fees. It is for display only and should not be treated as settlement data.
 
-Interpretation: This metric is treated as a proxy only. It is not treated as audited profit because the platform does not provide a full calculation breakdown in the current demo data.
+Interpretation: This metric is treated as weak backend-reported context only. It should not be used as audited profit, settlement evidence, ROI, margin evidence, or a primary comparability factor because the current demo data does not include a full calculation breakdown.
 
 ---
 
