@@ -32,7 +32,7 @@ Use this order when reviewing the retail extension:
 
 | Step | File | What to check |
 |---:|---|---|
-| 1 | `../PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Why this prototype exists and where the current implementation stops. |
+| 1 | `../PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Why this prototype exists and how the current evidence path is staged. |
 | 2 | `data/DATA_DICTIONARY.md` | Canonical field names, Meituan backend metric meanings, and field boundaries. |
 | 3 | `demo/demo_1_store_a_month_over_month_diagnostic.md` | Store A month-over-month diagnostic evidence. |
 | 4 | `demo/demo_2_cross_store_comparability_diagnostic.md` | Same-period B-F diagnostic evidence and current comparison limits. |

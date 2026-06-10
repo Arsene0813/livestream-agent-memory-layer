@@ -35,7 +35,7 @@ The single source of truth for retail field names and metric meanings is:
 
 ## Current Implemented Scope
 
-Retail Demo 2 is the current same-period diagnostic stage. It structures selected Stores B-F records under a shared March 2026 reporting window, the `DATA_DICTIONARY.md` field contract, and diagnostic guardrails before any future pairwise comparability gate is attempted.
+The current retail decision-support path has three implemented evidence layers: Demo 1 for Store A month-over-month diagnosis, Demo 2 for selected Stores B-F under one March 2026 reporting window, and the repeated-window B-F panel across 2026-02, 2026-03, and 2026-04.
 
 A future pairwise comparability gate would judge whether two store-period records can be compared for a specific operating question. Naming note: existing Demo 2 paths keep `cross_store_comparability` for reference stability. In the current implementation, this means same-period diagnostic evidence and interpretation guardrails, not a completed pairwise comparability gate.
 
@@ -45,6 +45,7 @@ A future pairwise comparability gate would judge whether two store-period record
 | Data dictionary | Preserves Meituan-style backend metric meanings and canonical field names. | Manual normalization of selected backend evidence; field meanings follow `retail_ops/data/DATA_DICTIONARY.md`. |
 | Retail Demo 1 | Store A month-over-month diagnostic across February, March, and April 2026. | Multi-metric interpretation rather than single-cause monthly explanation. |
 | Retail Demo 2 | Same-period B-F diagnostic for March 2026. | Same-period diagnostic evidence before pairwise comparability gating; not peer selection, store ranking, or strategy-transfer approval. |
+| Repeated-window panel | B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04. | Descriptive repeated-window evidence before future pairwise comparability rules. |
 | Memory facts | Converts diagnostic outputs into source-bounded facts with observed values, source fields, source paths, confidence labels, and limitations. | File-backed evidence records for the implemented demos; not a replacement for raw backend evidence. |
 | Answer-boundary checks | Tests whether answers stay within entity, period, metric-definition, source, and interpretation boundaries. | Scenario-based checks tied to the current evidence path; not broad LLM robustness tests. |
 | RAC scaffold | Provides deterministic factor expansion, evidence routing, critique, fact checking, evidence-coverage update, and grounded report generation over local project evidence. | Local-evidence scaffold for reviewability; not live backend ingestion, autonomous cognition, or operating-decision automation. |
@@ -72,7 +73,7 @@ For admissions review, use this path first. It keeps the retail decision-support
 
 | Step | File | What to check |
 |---:|---|---|
-| 1 | `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Business origin, 48-store decision-support problem, staged prototype scope, and current Demo 2 boundary. |
+| 1 | `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Business origin, 48-store decision-support problem, staged prototype scope, and repeated-window evidence path. |
 | 2 | `retail_ops/data/DATA_DICTIONARY.md` | Canonical Meituan metric meanings, implemented field names, and naming boundaries. |
 | 3 | `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` | Store A month-over-month diagnostic path across February, March, and April 2026. |
 | 4 | `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` | Same-period B-F diagnostic reading under one reporting window and one field contract. |
