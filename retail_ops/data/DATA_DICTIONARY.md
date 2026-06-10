@@ -759,8 +759,7 @@ Therefore:
 
 `order_conversion_rate_pct = order_users / entry_users * 100`
 
-It should not be recomputed as:
-
+It should be interpreted at the same user-count funnel grain as `order_users` and `entry_users`.
 alternative project-side numerator / entry_users
 
 because:
