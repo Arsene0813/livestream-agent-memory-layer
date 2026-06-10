@@ -76,10 +76,10 @@ order_conversion_rate_pct = order_users / entry_users * 100
 It is not derived from:
 
 ~~~text
-project-side order-status proxy / entry_users
+alternative project-side numerator / entry_users
 ~~~
 
-Reason: unsupported status-derived metrics and user-level funnel metrics should not be mixed into a substitute conversion formula.
+Reason: backend-reported order conversion should not be recomputed from an alternative project-side numerator and then mixed with user-level funnel metrics.
 
 ### Traffic Source
 

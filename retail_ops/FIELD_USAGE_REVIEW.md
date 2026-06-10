@@ -87,7 +87,7 @@ This rule is intentionally conservative. The project should prefer adding clearl
 | `order_users` | Backend order-user metric used in the backend order-conversion formula. | Source CSVs, SQL output, transaction/conversion facts. | No. |
 | `order_times` | Backend order-submission/action-count metric. It is not the same as `order_users`. | Source CSVs and funnel evidence. | No. |
 | `order_amount` | Backend order-submission amount field. It belongs to the order-submission funnel and must not be merged with `transaction_amount`. | Demo 2 source metrics, SQL output, generated facts, lineage. | No. |
-| `order_conversion_rate_pct` | Backend formula field: `order_users / entry_users * 100`. It must not be recomputed from project-side order-status proxies. | Source CSVs, SQL output, lineage, transaction/conversion facts. | No. |
+| `order_conversion_rate_pct` | Backend formula field: `order_users / entry_users * 100`. It must not be recomputed from an alternative project-side numerator. | Source CSVs, SQL output, lineage, transaction/conversion facts. | No. |
 | `payment_users` | Backend successful-payment-user metric. | Source CSVs, SQL output, transaction/conversion facts. | No. |
 | `payment_amount` | Backend paid-order commodity amount field. It belongs to the payment funnel and must not be merged with `transaction_amount`. | Demo 2 source metrics, SQL output, generated facts, lineage. | No. |
 | `payment_conversion_rate_pct` | Backend payment-conversion metric. | Source CSVs, SQL output, transaction/conversion facts. | No. |
