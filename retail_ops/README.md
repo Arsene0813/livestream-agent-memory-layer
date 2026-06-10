@@ -15,7 +15,8 @@ The authoritative source for retail field names and metric meanings is:
 
 - `retail_ops/data/DATA_DICTIONARY.md`
 
-This README is intentionally a folder map. Detailed field definitions, evidence lineage, and future-gate rules are kept in the files listed below.
+Use this README as the retail folder map. Detailed field definitions, evidence lineage, and future-gate rules are kept in the files listed below.
+
 ## Folder Scope
 
 | Component | Purpose |
@@ -41,7 +42,8 @@ Use this order when reviewing the retail extension:
 | 7 | `EXPERIMENT_RESULTS.md` | Current validation outcomes and evidence-boundary behavior. |
 | 8 | `COMPARABILITY_GATE_V0.md` | Future pairwise comparability-gate contract. |
 
-This file is only the retail folder entry point. Detailed field boundaries belong in `data/DATA_DICTIONARY.md`; future gate boundaries belong in `COMPARABILITY_GATE_V0.md`; experiment meaning and results belong in `EXPERIMENTS.md` and `EXPERIMENT_RESULTS.md`.
+This file is the retail folder entry point. Detailed field boundaries belong in `data/DATA_DICTIONARY.md`; future-gate boundaries belong in `COMPARABILITY_GATE_V0.md`; experiment meaning and results belong in `EXPERIMENTS.md` and `EXPERIMENT_RESULTS.md`.
+
 ## Technical Appendices
 
 These files are retained for auditability, but they are not separate reviewer entry points.
