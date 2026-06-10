@@ -348,28 +348,6 @@ def main() -> int:
         f"Saved result path: {RESULT_PATH.relative_to(ROOT)}",
     ]
     write_report(report)
-    # Unclear backend order-status fields are excluded from the current
-    # implemented diagnostic contract. Refund fields remain available.
-    forbidden_order_status_files = [
-        "retail_ops/data/store_a_monthly_metrics.csv",
-        "retail_ops/data/demo2_store_period_metrics.csv",
-        "retail_ops/outputs/store_a_demo1_sql_output.csv",
-        "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-        "retail_ops/outputs/demo2_guardrail_sensitivity_summary.csv",
-        "retail_ops/sql/02_demo2_cross_store_comparability.sql",
-    ]
-
-    forbidden_order_status_terms = [
-    ]
-
-    for rel_path in forbidden_order_status_files:
-        check_path = ROOT / rel_path
-        if not check_path.exists():
-            continue
-        content = check_path.read_text(encoding="utf-8")
-        for forbidden in forbidden_order_status_terms:
-            if forbidden in content:
-                fail(f"Forbidden unclear order-status field remains in {rel_path}: {forbidden}")
 
     return 0
 

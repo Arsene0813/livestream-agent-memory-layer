@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Analyze Demo 2 guardrail sensitivity without unclear order-status fields.
+"""Analyze Demo 2 guardrail sensitivity for current diagnostic guardrail notes.
 
 This script intentionally excludes unclear order-status interpretation fields. Demo 2 guardrail sensitivity is based only on
 fields that remain in the current field contract:
@@ -86,7 +86,7 @@ def main() -> None:
     present_forbidden = [col for col in forbidden if col in headers]
     if present_forbidden:
         raise SystemExit(
-            "Forbidden unclear order-status fields remain in Demo 2 output: "
+            "Unsupported legacy diagnostic fields remain in Demo 2 output: "
             f"{present_forbidden}"
         )
 

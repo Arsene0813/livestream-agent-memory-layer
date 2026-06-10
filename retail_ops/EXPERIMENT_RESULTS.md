@@ -284,7 +284,7 @@ The repeated-window panel extension currently covers Store B through Store F acr
 | Descriptive summary validator | `python3 retail_ops/scripts/validate_repeated_window_panel_summary.py` |
 | Descriptive summary validator result | PASS |
 | Descriptive summary flag | `summary_ready_for_descriptive_review` for B-F |
-| Excluded fields | Unclear backend order-status fields. |
+| Field contract | Current repeated-window source and output schema. |
 | Interpretation boundary | Repeated-window coverage and descriptive summary only; not a new numbered demo, pairwise comparability gate, endpoint behavior, generated memory facts, store ranking, operating recommendation, or causal analysis. |
 
 The panel extension strengthens the data foundation after the current Demo 2 same-period diagnostic by adding repeated reporting windows and a descriptive SQL summary while preserving the existing field-boundary discipline.
