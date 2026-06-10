@@ -253,7 +253,7 @@ Current implemented artifacts remain:
 - answer-boundary evaluations for the implemented evidence path.
 
 <!-- COMPARABILITY_GATE_FUTURE_PLAN_START -->
-## Future Implementation Plan: Pairwise Gate Before Strategy Transfer
+## Future Implementation Plan: Question-Specific Pairwise Gate
 
 The future gate should remain question-specific. It should not decide whether two stores are generally comparable. It should decide whether two store-period records can support one selected comparison question.
 

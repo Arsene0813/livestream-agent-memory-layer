@@ -98,15 +98,15 @@ Additional endpoint-level check:
 | Pass condition | The calibration makes retrieval behavior inspectable across supported, unsupported, hard-negative, entity/period mismatch, and ambiguous comparison queries.                                                                                                                           |
 | Failure mode  | Treating a high retrieval score as sufficient evidence for an operating conclusion, or claiming a production-level threshold from the current small file-backed corpus.                                                                                                                      |
 
-## Next Data Science Experiment: Repeated-Window Comparability Evidence
+## Current Repeated-Window Evidence Check
 
-The next analytical step is to add repeated reporting windows for more stores before implementing a stronger pairwise comparability gate.
+The current panel adds B-F store-period records across 2026-02, 2026-03, and 2026-04.
 
 Question:
 
 Can the current guardrail signals remain stable across repeated months, or are they mostly one-period artifacts?
 
-Required additional evidence:
+Evidence still missing for a stronger gate:
 
 - repeated store-period records;
 - activity calendar or campaign-status evidence where available;
@@ -151,9 +151,9 @@ These literal thresholds are deliberately simple at the current stage.
 
 A future comparability gate should test their stability and sensitivity across more store-period records before treating them as peer-group or strategy-transfer rules.
 
-## Proposed Repeated-Window Test Design
+## Repeated-Window Test Design
 
-The next comparability experiment should use repeated store-period windows before turning Demo 2 guardrails into any reusable peer-comparison rule.
+The current repeated-window panel is used to check whether Demo 2 guardrails are persistent signals or one-period warnings.
 
 | Test target | Added evidence needed | What to check | Failure condition |
 |---|---|---|---|
@@ -201,11 +201,11 @@ This map makes the current experiment structure easier to read without changing 
 
 The main point is that the project is not trying to jump directly from limited backend metrics to final recommendations. It first tests whether metric definitions, reporting windows, source paths, and interpretation limits can survive SQL processing, memory-fact generation, retrieval, and answer review.
 
-## Next Experimental Direction
+## Current Experimental Direction
 
-The next data-science step should be repeated-window evidence before implementing a stronger pairwise comparability gate.
+The current data-science step is repeated-window stability review before implementing a stronger pairwise comparability gate.
 
-The repeated-window check should test whether order volume, transaction amount, activity involvement, activity intensity, and top-SKU concentration remain stable across more store-period records, or whether the current March 2026 guardrail signals are mostly one-period artifacts.
+The repeated-window check tests whether order volume, transaction amount, activity involvement, activity intensity, and top-SKU concentration remain stable across repeated store-period records, or whether the current March 2026 guardrail signals are mostly one-period artifacts.
 
 Only after that should a future gate return question-specific decisions such as `comparable`, `comparable_with_limits`, `not_comparable`, or `insufficient_evidence`.
 
