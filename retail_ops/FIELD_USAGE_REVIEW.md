@@ -83,7 +83,7 @@ This rule is intentionally conservative. The project should prefer adding clearl
 | `entry_conversion_rate_pct` | Backend-style entry conversion rate, interpreted with exposure and entry scope. | Source CSVs, SQL outputs. | No. |
 | `search_entry_users` | Backend-reported users entering from search during the selected period. | Source CSVs, SQL output, visibility facts. | No. |
 | `search_entry_rate_pct` | SQL-derived search exposure-to-entry diagnostic. | Demo 2 SQL output and lineage. | No. |
-| `search_entry_share_pct` | SQL-derived directional structure metric for search-driven entry share. Source-level users may overlap. | Demo 2 SQL output, generated facts, lineage. | No. |
+| `search_entry_share_pct` | SQL-derived directional structure metric for the share of store entry attributed to the search source. Source-level users may overlap. | Demo 2 SQL output, generated facts, lineage. | No. |
 | `order_users` | Backend order-user metric used in the backend order-conversion formula. | Source CSVs, SQL output, transaction/conversion facts. | No. |
 | `order_times` | Backend order-submission/action-count metric. It is not the same as `order_users`. | Source CSVs and funnel evidence. | No. |
 | `order_amount` | Backend order-submission amount field. It belongs to the order-submission funnel and must not be merged with `transaction_amount`. | Demo 2 source metrics, SQL output, generated facts, lineage. | No. |
