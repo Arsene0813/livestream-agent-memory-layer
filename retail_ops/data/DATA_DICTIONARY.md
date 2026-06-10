@@ -101,7 +101,7 @@ Current derived outputs are separated into two layers.
 2. Memory-facing artifacts:
 
 
-Memory-facing slots are generated from multiple source fields and SQL-derived columns. They are not raw Meituan backend fields and should not be treated as SQL output headers. The SQL layer must not silently rename, redefine, or reverse-engineer Meituan backend metrics. It also must not turn one threshold into a fixed store-stage label. For example, `order_conversion_rate_pct` follows the backend definition and must not be recomputed from an alternative project-side numerator.
+Memory-facing slots are generated from multiple source fields and SQL-derived columns. They are not raw Meituan backend fields and should not be treated as SQL output headers. The SQL layer must not silently rename, redefine, or reverse-engineer Meituan backend metrics. It also must not turn one threshold into a fixed store-stage label. For example, `order_conversion_rate_pct` follows the documented backend funnel definition: `order_users / entry_users`.
 
 Any new SQL-derived field must be explicitly documented before it is used in generated outputs or memory facts.
 
@@ -432,17 +432,11 @@ English definition: Number of users who entered the merchant page through other 
 
 English formula: `order_conversion_rate_pct = order_users / entry_users * 100`
 
-中文解释：本 demo 将 `order_conversion_rate_pct` 作为美团后台展示的下单转化率，不用项目侧替代分子反推。
+中文解释：本 demo 将 `order_conversion_rate_pct` 作为美团后台展示的下单转化率，按 `order_users / entry_users` 的漏斗口径解释。
 
-English interpretation: In this demo, `order_conversion_rate_pct` is treated as the backend-reported order conversion rate. It is not recomputed from an alternative project-side numerator.
+English interpretation: In this demo, `order_conversion_rate_pct` is treated as the backend-reported order conversion rate at the documented user-funnel grain.
 
-It should not be recomputed from an alternative project-side numerator.
-
-Reason:
-
-- `order_users` / 下单人数 is a user-count funnel metric;
-- project-side status-derived aliases are not used as conversion numerators;
-- `entry_users` / 入店人数 is a user-count traffic metric.
+It should be read together with `order_users` / 下单人数 and `entry_users` / 入店人数 because both are user-count funnel metrics in the documented reporting window.
 
 ### `order_users` / 下单人数
 
@@ -757,7 +751,7 @@ Therefore:
 
 ## 11. Metric Consistency Rules / 指标一致性规则
 
-### Rule 1: Do not recompute order conversion from alternative project-side numerators.
+### Rule 1: Keep order conversion tied to the documented funnel grain.
 
 规则 1：不要用项目侧替代分子反推下单转化率。
 

@@ -67,19 +67,13 @@ Main output files:
 
 ### Conversion Rate
 
-`order_conversion_rate_pct` follows the backend business definition:
+`order_conversion_rate_pct` is the store-period backend funnel metric used with `entry_users` and `order_users`.
 
 ~~~text
 order_conversion_rate_pct = order_users / entry_users * 100
 ~~~
 
-It is not derived from:
-
-~~~text
-alternative project-side numerator / entry_users
-~~~
-
-Reason: backend-reported order conversion should not be recomputed from an alternative project-side numerator and then mixed with user-level funnel metrics.
+This keeps the conversion metric tied to its documented denominator and reporting grain.
 
 ### Traffic Source
 
