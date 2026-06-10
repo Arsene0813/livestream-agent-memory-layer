@@ -300,11 +300,11 @@ Repeated-window summary lineage:
 
 This panel does not create a pairwise comparability gate. It checks whether Stores B-F have repeated monthly evidence across 2026-02, 2026-03, and 2026-04, then summarizes movement descriptively.
 
-The panel keeps the dictionary names `full_refund_orders` and `refund_orders_all_or_partial`. It also keeps `store_type` values aligned with the existing source data: `self-operated` and `partner`.
+The panel keeps selected dictionary-defined refund context fields. It also keeps `store_type` values aligned with the existing source data: `self-operated` and `partner`.
 
-## Raw Backend Refund Fields
+## Panel Refund Field Trace
 
-The following backend fields are retained for source completeness:
+The repeated-window panel retains these dictionary-defined refund context fields:
 
 - `refund_amount`
 - `full_refund_orders`

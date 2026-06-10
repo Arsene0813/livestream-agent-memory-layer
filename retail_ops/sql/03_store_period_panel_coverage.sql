@@ -7,7 +7,7 @@
 -- Boundary:
 --   This is not a new numbered demo.
 --   This is not a pairwise comparability gate.
---   Coverage is based on dictionary-defined transaction, search, activity, and SKU fields.
+--   Coverage uses selected dictionary-defined store-period fields for repeated-window diagnostic coverage.
 
 .mode csv
 .headers on
