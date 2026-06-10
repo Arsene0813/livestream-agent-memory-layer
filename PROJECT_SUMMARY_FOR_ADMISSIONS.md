@@ -38,7 +38,7 @@ The current prototype organizes selected backend evidence into this path:
 
 The current retail path includes Demo 1, Demo 2, and a post-Demo2 repeated-window panel extension for Stores B-F across February-April 2026. Demo 2 structures selected store-period evidence under one reporting window and one field contract; the repeated-window panel checks whether same-store multi-month evidence exists before any stronger pairwise comparability decision is attempted.
 
-A future pairwise comparability gate should judge whether two store-period records can be compared for a specific operating question. It should not produce a global store ranking or universal comparability score.
+A future pairwise comparability gate should judge whether two store-period records can be compared for a specific operating question, using factors such as transaction order volume, transaction amount, activity evidence, store type, repeated reporting windows, region and market context, competition evidence, SKU structure, and fulfillment or stockout context.
 
 ## Review Note
 
@@ -74,13 +74,13 @@ A new store may use activity support to gain first exposure and first orders. A 
 
 
 
-The practical question is therefore not whether one store looks better in isolation. The useful question is whether the available evidence is strong enough to compare records and transfer any operating interpretation.
+The practical question is whether the available evidence is strong enough to compare records and decide which operating interpretation is actually usable.
 
 ## Why This Became a Data-Science Problem
 
 The backend data is detailed, but it is mainly organized for single-store monitoring. In a 48-store operation, detailed single-store metrics do not automatically become reliable cross-store decision evidence.
 
-A cross-store decision should preserve metric definitions, align reporting windows, expose comparison limits, and separate observed evidence from unsupported strategy transfer.
+A cross-store decision should preserve metric definitions, align reporting windows, expose comparison limits, and separate observed evidence from operating interpretations that the current data cannot yet support.
 
 The current prototype treats SQL as the structuring layer and the memory layer as the evidence-retention layer. SQL organizes selected backend metrics into diagnostic outputs. Generated memory facts then preserve the store, period, source fields, observed values, calculation notes, confidence labels, and limitations so that later retrieval or answer generation does not lose the boundary around the evidence.
 
@@ -94,7 +94,7 @@ The current prototype treats SQL as the structuring layer and the memory layer a
 | Boundary evaluations | Checks whether later answers preserve entity scope, period scope, metric definitions, and comparison limits. |
 | Future comparability gate | Planned pairwise gate for deciding whether two store-period records can be compared for a specific operating question. |
 
-The memory layer does not replace the data. It records evidence and limitations so that different stores, periods, activity conditions, product structures, and regional contexts are not collapsed into the same comparison.
+The memory layer records evidence and limitations so that different stores, periods, activity conditions, product structures, and regional contexts are not collapsed into the same comparison.
 
 ## Current Implemented Retail Path
 
@@ -141,7 +141,8 @@ These are the main fields that are easy to misread in application review. Full d
 | `region_type` | Weak region or market-context evidence only. It is not a peer-grouping field, market-area classification, consumption-level label, or store-stage label. |
 | `activity_cost_ratio_pct` | Activity cost divided by activity original transaction amount. It is not traditional ROI, profit margin, or audited return. |
 | `comparison_scope_flag` | Row-level diagnostic-readiness flag for the current Demo 2 evidence layer. It is not a pairwise comparability decision. |
-| `comparison_limit_notes` | Interpretation-limit notes for current diagnostic evidence. They are not optimized business cutoffs, peer-selection rules, or strategy-transfer approvals. |
+| `comparison_limit_notes` | Interpretation-limit notes that document how far the current diagnostic evidence can be used. |
+| `estimated_income_proxy` | Platform-displayed estimated income proxy. It is retained as weak backend-reported context only and should not be used as audited profit, settlement evidence, ROI, or a primary comparability factor. |
 | `top3_sku_transaction_amount_share_pct` | Lightweight top-SKU concentration evidence from selected ranking views. It is not full product-category sales share. |
 
 ## Factor-Aware Grounded Review Scaffold

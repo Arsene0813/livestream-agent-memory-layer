@@ -2,9 +2,7 @@
 
 ## Purpose
 
-This demo uses one real Meituan-style retail store as a narrow diagnostic example.
-
-The goal is not to prove that one factor caused growth or decline. The goal is to show how detailed merchant-backend metrics, originally designed for single-store review, can be structured into a consistent, traceable decision-support prototype.
+This demo uses Store A as a narrow month-over-month diagnostic example. It shows how selected Meituan backend metrics can be structured into a field-consistent SQL output and then converted into traceable memory facts.
 
 The current demo covers Store A from February 2026 to April 2026.
 
@@ -22,20 +20,11 @@ A store may use activity subsidy, pricing, ranking optimization, SKU mix, and fu
 
 
 
-## Current Demo Boundary
+## Reading Boundary
 
-This is a single-store month-over-month diagnostic.
+This is a single-store month-over-month diagnostic for Store A. It supports cautious interpretation of observed metric movement inside February-April 2026.
 
-It does not implement:
-
-- cross-store comparison;
-- store-stage diagnosis;
-- causal attribution;
-- margin-aware recommendation;
-- full SKU category-share analysis;
-- automated ingestion from the Meituan backend.
-
-The current demo only supports cautious interpretation of Store A's observed metrics.
+Cross-store comparison, store-stage classification, causal attribution, margin-aware recommendation, full SKU category-share analysis, and automated Meituan ingestion require additional evidence outside this demo.
 
 ## Source Files
 
@@ -102,7 +91,7 @@ Interpretation:
 - March had weaker exposure, weaker average rank, fewer entry users, and fewer search-entry users.
 - April recovered in exposure, rank, entry users, and search-entry users.
 - These metrics describe whether the store was being seen and entered.
-- They do not prove that visibility alone caused transaction recovery.
+- By themselves, they are not enough to explain the full transaction recovery.
 
 ## Activity-Lever Profile
 
@@ -117,8 +106,7 @@ Activity metrics are interpreted as operating-lever evidence.
 Interpretation:
 
 - Activity orders accounted for a high share of transaction orders in all three months.
-- This does not mean activity alone caused growth.
-- It means activity was an important operating lever during the observed period.
+- Activity was an important operating lever during the observed period.
 - The meaning of this lever depends on operating context, competition, price pressure, ranking pressure,.
 
 ## Transaction and Conversion Profile
@@ -178,7 +166,7 @@ April 2026 showed:
 - activity-order share still high;
 - top-SKU evidence still limited.
 
-This is exactly why the project uses a memory layer with traceable facts and limitations. The system should remember observed signals, source fields, and caveats instead of producing a one-factor explanation.
+This is why the project uses a memory layer with traceable facts and limitations. The memory facts preserve observed signals, source fields, and caveats so later answers do not collapse the month-over-month movement into a one-factor explanation.
 
 ## Current Retail Memory Slots
 
@@ -198,26 +186,24 @@ This demo supports:
 
 - consistent field naming;
 - SQL-derived diagnostic metrics;
-- cautious month-over-month comparison;
+- cautious month-over-month interpretation for Store A;
 - traceable retail memory facts;
-- refusal of unsupported cross-store claims;
-- refusal of unsupported causal attribution.
+- answer-boundary checks for entity scope, period scope, metric definitions, and causal attribution.
 
-## What This Demo Does Not Support
+## Next Evidence Needed
 
-This demo does not support:
+Stronger operating interpretation would require additional evidence such as:
 
-- deciding which of 48 stores should receive more subsidy;
-- claiming that a strategy from Store A transfers to another store;
-- judging another store's operating stage;
-- proving that activity caused growth;
-- claiming that visibility alone explains growth;
-- proving full SKU-category sales structure;
-- calculating actual profit or margin.
+- repeated windows across more stores;
+- broader SKU classification or category mapping;
+- promotion-cycle and campaign-mechanism evidence;
+- competition and price-pressure context;
+- fulfillment, stockout, delivery-condition, rating, and review signals;
+- clearer financial evidence before profit, margin, or settlement interpretation.
 
 ## Future Work
 
-Demo 1 has already led into the current Demo 2 same-period diagnostic path. The next step is not to turn Store A into a transfer rule. It is to expand repeated store-period evidence under the same field contract, then use a future pairwise comparability gate to decide whether selected store-period records can support one specific operating question.
+Demo 1 already feeds the current Demo 2 same-period diagnostic path. The next step is to expand repeated store-period evidence under the same field contract, then use a future pairwise comparability gate to judge whether selected records can support one specific operating question.
 
 Future expansion should check whether candidate records are comparable by:
 
@@ -229,8 +215,9 @@ Future expansion should check whether candidate records are comparable by:
 - visibility and ranking profile;
 - entry and order-conversion profile;
 - activity involvement and activity intensity;
+- refund and invalid-order pressure;
 - top-SKU evidence;
 - data completeness;
 - repeated reporting-window stability.
 
-Only after this kind of comparability check should the system attempt stronger cross-store interpretation. Store-stage diagnosis should remain out of scope until the project has stronger evidence on promotion cycles, competition, fulfillment conditions, rating/review signals, and stockout history.
+Stronger cross-store interpretation should come after this evidence check. Store-stage diagnosis would require stronger evidence on promotion cycles, competition, fulfillment conditions, rating/review signals, and stockout history.
