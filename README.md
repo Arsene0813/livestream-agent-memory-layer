@@ -62,7 +62,7 @@ This prototype emphasizes:
 
 ## Fast Reading Path
 
-For admissions review, use the `Admissions Review Path` table below. It keeps the business problem, current Demo 2 boundary, field dictionary, experiment results, and future comparability-gate contract in one stable order.
+For admissions review, use the `Admissions Review Path` table below. It keeps the business problem, field dictionary, implemented diagnostics, repeated-window evidence, experiment results, and future comparability-gate contract in one stable order.
 
 For technical audit, use the same table first. Architecture, lineage, field-change review, and future-gate details are kept as appendices under `retail_ops/` so that the main reviewer path stays short.
 
