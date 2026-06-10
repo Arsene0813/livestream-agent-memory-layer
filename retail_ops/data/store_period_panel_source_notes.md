@@ -17,6 +17,8 @@ The current panel contains Store B, Store C, Store D, Store E, and Store F for F
 
 The panel uses selected dictionary-defined store-period fields that support the current repeated-window diagnostic.
 
+Coverage uses selected dictionary-defined store-period fields for repeated-window diagnostic coverage.
+
 The operating chain is:
 
 ~~~text
