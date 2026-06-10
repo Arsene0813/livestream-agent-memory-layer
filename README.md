@@ -66,6 +66,22 @@ For admissions review, use the `Admissions Review Path` table below. It keeps th
 
 For technical audit, use the same table first. Architecture, lineage, field-change review, and future-gate details are kept as appendices under `retail_ops/` so that the main reviewer path stays short.
 
+## Admissions Review Path
+
+For admissions review, use this path first. It keeps the retail decision-support story in one order: business problem, field contract, implemented diagnostics, repeated-window evidence, experiment results, and future comparability-gate design.
+
+| Step | File | What to check |
+|---:|---|---|
+| 1 | `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Business origin, 48-store decision-support problem, staged prototype scope, and current Demo 2 boundary. |
+| 2 | `retail_ops/data/DATA_DICTIONARY.md` | Canonical Meituan metric meanings, implemented field names, and naming boundaries. |
+| 3 | `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` | Store A month-over-month diagnostic path across February, March, and April 2026. |
+| 4 | `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` | Same-period B-F diagnostic reading under one reporting window and one field contract. |
+| 5 | `retail_ops/outputs/store_period_panel_coverage_output.csv` and `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Repeated-window B-F evidence coverage and descriptive summary for 2026-02 to 2026-04. This is the preparation layer before future pairwise comparability rules. |
+| 6 | `retail_ops/EXPERIMENTS.md` | What each current analytical check is designed to test. |
+| 7 | `retail_ops/EXPERIMENT_RESULTS.md` | Current validation outcomes and evidence-boundary behavior. |
+| 8 | `retail_ops/COMPARABILITY_GATE_V0.md` | Future question-specific pairwise comparability-gate contract. |
+
+Technical appendices remain available under `retail_ops/ARCHITECTURE.md`, `retail_ops/LINEAGE.md`, and `retail_ops/FIELD_USAGE_REVIEW.md`, but they are not required for the first admissions reading path.
 ## Architecture
 
 The prototype has two connected layers.
@@ -127,23 +143,6 @@ The section exposes store-period operating profiles and points to the canonical 
 - Main file: `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md`
 - Future gate contract: `retail_ops/COMPARABILITY_GATE_V0.md`
 - Current boundary: same-period diagnostic evidence only; peer selection, store ranking, and strategy-transfer approval belong to the future gate stage.
-
-## Admissions Review Path
-
-For admissions review, use this path first. It keeps the retail decision-support story in one order: business problem, field contract, implemented diagnostics, repeated-window evidence, experiment results, and future comparability-gate design.
-
-| Step | File | What to check |
-|---:|---|---|
-| 1 | `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Business origin, 48-store decision-support problem, staged prototype scope, and current Demo 2 boundary. |
-| 2 | `retail_ops/data/DATA_DICTIONARY.md` | Canonical Meituan metric meanings, implemented field names, and naming boundaries. |
-| 3 | `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` | Store A month-over-month diagnostic path across February, March, and April 2026. |
-| 4 | `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` | Same-period B-F diagnostic reading under one reporting window and one field contract. |
-| 5 | `retail_ops/outputs/store_period_panel_coverage_output.csv` and `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Repeated-window B-F evidence coverage and descriptive summary for 2026-02 to 2026-04. This is the preparation layer before future pairwise comparability rules. |
-| 6 | `retail_ops/EXPERIMENTS.md` | What each current analytical check is designed to test. |
-| 7 | `retail_ops/EXPERIMENT_RESULTS.md` | Current validation outcomes and evidence-boundary behavior. |
-| 8 | `retail_ops/COMPARABILITY_GATE_V0.md` | Future question-specific pairwise comparability-gate contract. |
-
-Technical appendices remain available under `retail_ops/ARCHITECTURE.md`, `retail_ops/LINEAGE.md`, and `retail_ops/FIELD_USAGE_REVIEW.md`, but they are not required for the first admissions reading path.
 
 ## Appendix Ownership
 
