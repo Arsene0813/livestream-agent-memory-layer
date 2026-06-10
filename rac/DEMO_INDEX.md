@@ -70,10 +70,10 @@ Expected quality-gate result:
 
   [OK] RAC grounded quality gate passed
   [OK] Cases checked: 4
-  [OK] Total grounded packets: 32
-  [OK] Keyword matched packets: 29
+  [OK] Total grounded packets: 29
+  [OK] Keyword matched packets: 27
   [OK] Boundary matched packets: 2
-  [OK] Fallback packets: 1
+  [OK] Fallback packets: 0
   [OK] Missing source files: 0
 
 ## Demo Cases
@@ -91,8 +91,8 @@ The cross-store structured-reasoning case was hardened to avoid weak generic fal
 
 Current result for rac_cross_store_comparability_001:
 
-- Total evidence packets: 10
-- Keyword matched packets: 8
+- Total evidence packets: 9
+- Keyword matched packets: 7
 - Boundary matched packets: 2
 - Fallback packets: 0
 - Missing source files: 0
