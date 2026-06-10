@@ -28,16 +28,15 @@ A future pairwise comparability gate should judge whether two store-period recor
 
 ## Review Note
 
-For admissions review, start with:
+This file is the application-facing summary. For full repository review after this summary, use:
 
-1. `README.md` - admissions review path and current implementation boundary.
-2. `PROJECT_SUMMARY_FOR_ADMISSIONS.md` - short application-facing project summary.
-3. `retail_ops/data/DATA_DICTIONARY.md` - authoritative field names and metric definitions.
-4. `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` - current single-store month-over-month diagnostic.
-5. `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` - current same-period B-F diagnostic.
-6. `retail_ops/outputs/store_period_panel_coverage_output.csv` and `retail_ops/outputs/repeated_window_panel_summary_output.csv` - repeated-window B-F coverage and descriptive summary.
-7. `retail_ops/EXPERIMENT_RESULTS.md` - implemented checks and validation outcomes.
-8. `retail_ops/COMPARABILITY_GATE_V0.md` - future pairwise comparability-gate contract.
+1. `README.md` - repository-level review path and current implementation boundary.
+2. `retail_ops/data/DATA_DICTIONARY.md` - authoritative field names and metric definitions.
+3. `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` - current single-store month-over-month diagnostic.
+4. `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` - current same-period B-F diagnostic.
+5. `retail_ops/outputs/store_period_panel_coverage_output.csv` and `retail_ops/outputs/repeated_window_panel_summary_output.csv` - repeated-window B-F coverage and descriptive summary.
+6. `retail_ops/EXPERIMENT_RESULTS.md` - implemented checks and validation outcomes.
+7. `retail_ops/COMPARABILITY_GATE_V0.md` - future pairwise comparability-gate contract.
 
 ## Operating Step Summary
 
