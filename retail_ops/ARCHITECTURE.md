@@ -55,7 +55,7 @@ The repository contains more than one retrieval path. They should not be read as
 | Path | Current mode | Current role | Boundary |
 |---|---|---|---|
 | `/chat_livestream_kb` | Qdrant-backed retrieval over livestream/product memory facts. | Tests lifecycle-aware memory behavior, including typed facts, active-state filtering, and fallback/refusal behavior. | Original memory-layer path, not the Meituan multi-store diagnostic system. |
-| `/chat_retail_ops_kb` | Retail memory retrieval path for implemented Store A facts. | Tests whether retail memory facts can be retrieved with source fields and limitations. | Limited to the implemented retail facts; not full 48-store automation. |
+| `/chat_retail_ops_kb` | Retail memory retrieval path for implemented Store A facts. | Tests whether retail memory facts can be retrieved with source fields and limitations. | Limited to the implemented retail facts and current retail evidence path. |
 | `/chat_retail_ops_demo2_kb` | File-backed generated Demo 2 retail memory facts. | Tests whether B-F same-period diagnostic facts can be returned or refused inside the current evidence boundary. | Not retrieval-score evaluation, production Meituan API integration, or a pairwise comparability gate. |
 | Future pairwise comparability gate | Not implemented. | Planned gate for judging whether two store-period records can be compared for a specific operating question. | Should be implemented only after broader store-period coverage, repeated windows, and stronger market-context evidence exist. |
 
