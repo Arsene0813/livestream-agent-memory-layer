@@ -197,7 +197,7 @@ It traces how selected Meituan backend metrics move from source CSV files into S
 | Source-to-SQL-to-memory lineage | the Architecture section above for architecture structure |
 | Claim-to-field support | `retail_ops/data/DATA_DICTIONARY.md` for field meanings |
 | Metric interpretation rules | `retail_ops/data/DATA_DICTIONARY.md` for full definitions |
-| Current diagnostic boundaries | `retail_ops/EXPERIMENTS.md` and `retail_ops/EXPERIMENT_RESULTS.md` for test meaning and outcomes |
+| Current diagnostic boundaries | `retail_ops/EXPERIMENT_RESULTS.md` for experiment map, validation outcomes, and boundary checks |
 | Future pairwise comparability lineage | `retail_ops/COMPARABILITY_GATE_V0.md` for the future gate contract |
 
 Path names that include `cross_store_comparability` are retained for reference stability. In the current implementation, Demo 2 means same-period diagnostic evidence and guardrails. The future pairwise comparability gate is documented separately.

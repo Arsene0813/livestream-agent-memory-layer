@@ -76,8 +76,7 @@ For admissions review, use this path first. It keeps the retail decision-support
 | 3 | `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` | Store A month-over-month diagnostic path across February, March, and April 2026. |
 | 4 | `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` | Same-period B-F diagnostic reading under one reporting window and one field contract. |
 | 5 | `retail_ops/outputs/store_period_panel_coverage_output.csv` and `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Repeated-window B-F evidence coverage and descriptive summary for 2026-02 to 2026-04. This is the preparation layer before future pairwise comparability rules. |
-| 6 | `retail_ops/EXPERIMENTS.md` | What each current analytical check is designed to test. |
-| 7 | `retail_ops/EXPERIMENT_RESULTS.md` | Current validation outcomes and evidence-boundary behavior. |
+| 6 | `retail_ops/EXPERIMENT_RESULTS.md` | Experiment map, validation outcomes, and evidence-boundary behavior. |
 | 8 | `retail_ops/COMPARABILITY_GATE_V0.md` | Future question-specific pairwise comparability-gate contract. |
 
 Technical appendix material is consolidated under `retail_ops/TECHNICAL_APPENDIX.md`, but it is not required for the first admissions reading path.
@@ -213,7 +212,7 @@ These retrieval checks inspect score distribution and wording-variation behavior
 | `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Admissions-facing summary of the real business problem and prototype scope. |
 | `retail_ops/data/DATA_DICTIONARY.md` | Canonical backend metric definitions and naming boundaries. |
 | `retail_ops/TECHNICAL_APPENDIX.md` | Consolidated architecture, source-to-claim lineage, and field-usage review. |
-| `retail_ops/EXPERIMENTS.md` | Experiment questions, inputs, transformations, pass conditions, and failure modes. |
+| `retail_ops/EXPERIMENT_RESULTS.md` | Experiment map, validation outcomes, pass conditions, and failure modes. |
 | `retail_ops/COMPARABILITY_GATE_V0.md` | Future pairwise comparability-gate design note. |
 | `retail_ops/sql/` | SQL transformations for Demo 1 and Demo 2. |
 | `retail_ops/outputs/` | Generated diagnostic outputs and generated memory facts. |
