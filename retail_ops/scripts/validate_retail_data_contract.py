@@ -308,7 +308,6 @@ def main() -> int:
         "activity_original_transaction_amount",
         "estimated_income_proxy",
         "order_conversion_rate_pct",
-        "refund_amount",
         "activity_cost_ratio_pct",
         "top3_sku_transaction_amount_share_pct",
     ]

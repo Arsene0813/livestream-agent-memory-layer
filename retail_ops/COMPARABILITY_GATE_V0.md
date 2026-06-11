@@ -126,7 +126,7 @@ The future gate should not classify stores by subjective experience, intuition, 
 
 ## Question-Specific Comparability
 
-A store pair may be comparable for search-entry structure while still requiring additional evidence for promotion transfer, pricing pressure, SKU strategy, refund interpretation, or fulfillment interpretation.
+A store pair may be comparable for search-entry structure while still requiring additional evidence for promotion transfer, pricing pressure, SKU strategy, or fulfillment/stockout interpretation.
 
 The gate should return a decision for the selected operating question and explain the supporting evidence, limiting factors, and blocking factors.
 

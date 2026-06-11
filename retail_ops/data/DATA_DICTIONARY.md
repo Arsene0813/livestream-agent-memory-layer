@@ -777,7 +777,6 @@ High activity-order share or a low activity cost ratio does not prove that activ
 高活动订单占比或较低活动成本率，不证明增长一定由活动导致。活动、补贴、价格、SKU 结构、排名和履约信号应结合门店阶段与竞争环境一起解释。
 
 
-规则 4：将退款金额解释为商品结构上下文，而不是原订单 cohort 的精确退款率。
 
 
 退款金额按退款成功日期统计。
