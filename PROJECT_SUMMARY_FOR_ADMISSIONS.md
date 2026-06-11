@@ -21,7 +21,7 @@ The current prototype turns selected backend evidence into a decision-support ev
 5. boundary-preserving answer checks
 6. deterministic source-aware review scaffold
 
-Demo 1 structures Store A February-April 2026 movement as a multi-metric operating profile. Demo 2 structures selected Stores B-F under one March 2026 reporting window and one field contract. The repeated-window panel then adds B-F coverage across 2026-02, 2026-03, and 2026-04 before stronger pairwise comparability rules are added. This panel is an evidence-preparation layer, not a completed pairwise comparability gate.
+Demo 1 structures Store A February-April 2026 movement as a multi-metric operating profile. Demo 2 structures selected Stores B-F under one March 2026 reporting window and one field contract. The repeated-window panel then adds B-F coverage across 2026-02, 2026-03, and 2026-04 as preparation for stronger pairwise comparability rules.
 
 A future pairwise comparability gate should judge whether two store-period records can be compared for one selected operating question, using factors such as transaction order volume, transaction amount, activity evidence, store type, repeated reporting windows, region and market context, competition evidence, SKU structure, and fulfillment or stockout context.
 
