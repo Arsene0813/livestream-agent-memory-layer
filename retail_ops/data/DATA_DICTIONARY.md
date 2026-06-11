@@ -173,7 +173,7 @@ rank_change = current_rank - previous_rank
 
 Because lower ranking numbers indicate better position, a negative value means the average position improved, while a positive value means the average position worsened.
 
-Interpretation limit: ranking change should be read together with exposure, entry, conversion, activity,. It should not be treated as a standalone explanation for transaction change.
+Interpretation limit: ranking change should be read together with exposure, entry, conversion, activity involvement, SKU evidence, and fulfillment context where available. It should not be treated as a standalone explanation for transaction change.
 
 #### Boolean supporting diagnostics
 
@@ -725,7 +725,6 @@ Interpretation: This is a platform-displayed income proxy ratio, not audited pro
 
 
 
-Interpretation: This is an order-count-based .
 
 
 ### `activity_order_share_pct` / 活动订单占比
@@ -792,7 +791,11 @@ High activity-order share or a low activity cost ratio does not prove that activ
 
 
 
-退款金额按退款成功日期统计。
+### Rule 4: Keep refund metrics tied to refund-success date.
+
+规则 4：退款金额按退款成功日期统计。
+
+Refund amount should be interpreted according to the backend refund-success-date reporting rule. It should not be used as direct evidence of the original transaction-period order quality unless the reporting window is explicitly aligned.
 
 ### Rule 5: Use backend-reported metrics as source of truth when scope is unclear.
 

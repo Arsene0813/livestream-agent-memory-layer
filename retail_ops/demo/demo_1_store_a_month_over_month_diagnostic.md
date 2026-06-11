@@ -138,11 +138,6 @@ This supports a cautious operating-signal reading: the store recovered scale, bu
 | ---------------------- | ------: | ------: | --------- |
 
 Interpretation:
-
-This is a source-field signal.
-
-
-
 ## Top-SKU Evidence
 
 The top-SKU evidence is mainly care-solution-heavy.

@@ -76,10 +76,9 @@ For admissions review, use this path first. It keeps the retail decision-support
 | 3 | `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` | Store A month-over-month diagnostic path across February, March, and April 2026. |
 | 4 | `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` | Same-period B-F diagnostic reading under one reporting window and one field contract. |
 | 5 | `retail_ops/outputs/store_period_panel_coverage_output.csv` and `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Repeated-window B-F evidence coverage and descriptive summary for 2026-02 to 2026-04. This is the preparation layer before future pairwise comparability rules. |
-| 6 | `retail_ops/EXPERIMENTS.md` | What each current analytical check is designed to test. |
-| 7 | `retail_ops/EXPERIMENT_RESULTS.md` | Current validation outcomes, experiment dependency, and evidence-boundary behavior. |
-| 8 | `retail_ops/COMPARABILITY_GATE_V0.md` | Future question-specific pairwise comparability-gate contract. |
-| 9 | `rac/DEMO_INDEX.md` | Optional deterministic grounded-review scaffold for factor routing, critique, fact checking, and evidence-coverage reporting. |
+| 6 | `retail_ops/EXPERIMENT_RESULTS.md` | Experiment questions, implemented checks, validation outcomes, failure modes, and evidence-boundary behavior. |
+| 7 | `retail_ops/COMPARABILITY_GATE_V0.md` | Future question-specific pairwise comparability-gate contract. |
+| 8 | `rac/DEMO_INDEX.md` | Optional deterministic grounded-review scaffold for factor routing, critique, fact checking, and evidence-coverage reporting. |
 
 Technical appendix material is consolidated under `retail_ops/TECHNICAL_APPENDIX.md`, but it is not required for the first admissions reading path.
 
