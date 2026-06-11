@@ -48,10 +48,10 @@ Weighting limitations:
 
 | Factor | Source | Role | Status | Lines | Matched Terms | Local Evidence Snippet |
 |---|---|---|---|---|---|---|
-| search_exposure | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 91-93 | search | Store A's visibility and entry structure can be described from exposure, ranking, entry, and search-entry metrics. |
-| entry_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 60-62 | entry | ```text order_conversion_rate_pct = order_users / entry_users * 100 ``` |
-| order_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 83-85 | order conversion | \| Month \| Transaction Amount \| Transaction Orders \| Entry Users \| Order Conversion Rate \| Average Order Value \| \| ------- \| -----------------: \| -----------------: \| ----------: \| --------------------: \| ------------------: \| |
-| promotion_intensity | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 20-22 | activity | A store may use activity subsidy, pricing, ranking optimization, SKU mix, and fulfillment control as operating levers inside this chain. |
+| search_exposure | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 80-82 | search | Store A's visibility and entry structure can be described from exposure, ranking, entry, and search-entry metrics. |
+| entry_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 49-51 | entry | ```text order_conversion_rate_pct = order_users / entry_users * 100 ``` |
+| order_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 72-74 | order conversion | \| Month \| Transaction Amount \| Transaction Orders \| Entry Users \| Order Conversion Rate \| Average Order Value \| \| ------- \| -----------------: \| -----------------: \| ----------: \| --------------------: \| ------------------: \| |
+| promotion_intensity | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 18-20 | activity | A store may use activity subsidy, pricing, ranking optimization, SKU mix, and fulfillment control as operating levers inside this chain. |
 
 ## 5. Competing Hypotheses
 

@@ -7,15 +7,15 @@
       "summary": {
         "question": "Can Store A's April growth be attributed to search exposure?",
         "question_type": "causal_diagnostic",
-        "total_packets": 7,
+        "total_packets": 4,
         "status_counts": {
-          "keyword_matched": 7
+          "keyword_matched": 4
         },
         "role_counts": {
-          "default_evidence": 7
+          "default_evidence": 4
         },
         "source_missing_count": 0,
-        "keyword_matched_count": 7,
+        "keyword_matched_count": 4,
         "boundary_matched_count": 0,
         "fallback_count": 0
       },
@@ -41,25 +41,25 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 93,
-              "line_end": 95,
+              "line_start": 80,
+              "line_end": 82,
               "matched_terms": [
                 "search"
               ],
               "text": "Store A's visibility and entry structure can be described from exposure, ranking, entry, and search-entry metrics."
             },
             {
-              "line_start": 95,
-              "line_end": 97,
+              "line_start": 82,
+              "line_end": 84,
               "matched_terms": [
                 "search",
                 "search entry"
               ],
-              "text": "| Month   | Exposure Users | Store Average Rank | Entry Users | Search Entry Users | Search Entry Share |\n| ------- | -------------: | -----------------: | ----------: | -----------------: | -----------------: |"
+              "text": "| Month  | Exposure Users | Store Average Rank | Entry Users | Search Entry Users | Search Entry Share |\n| ------- | -------------: | -----------------: | ----------: | -----------------: | -----------------: |"
             },
             {
-              "line_start": 103,
-              "line_end": 105,
+              "line_start": 90,
+              "line_end": 92,
               "matched_terms": [
                 "search"
               ],
@@ -96,24 +96,24 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 62,
-              "line_end": 64,
+              "line_start": 49,
+              "line_end": 51,
               "matched_terms": [
                 "entry"
               ],
               "text": "```text\n   order_conversion_rate_pct = order_users / entry_users * 100\n   ```"
             },
             {
-              "line_start": 68,
-              "line_end": 70,
+              "line_start": 55,
+              "line_end": 57,
               "matched_terms": [
                 "entry"
               ],
-              "text": "```text\n   transaction_orders / entry_users\n   ```"
+              "text": "```text\n   order-status counts / entry_users\n   ```"
             },
             {
-              "line_start": 79,
-              "line_end": 81,
+              "line_start": 66,
+              "line_end": 68,
               "matched_terms": [
                 "entry",
                 "entry users"
@@ -151,24 +151,24 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 85,
-              "line_end": 87,
+              "line_start": 72,
+              "line_end": 74,
               "matched_terms": [
                 "order conversion"
               ],
-              "text": "| Month   | Transaction Amount | Transaction Orders | Entry Users | Order Conversion Rate | Average Order Value | Refund Amount |\n| ------- | -----------------: | -----------------: | ----------: | --------------------: | ------------------: | ------------: |"
+              "text": "| Month   | Transaction Amount | Transaction Orders | Entry Users | Order Conversion Rate | Average Order Value |\n| ------- | -----------------: | -----------------: | ----------: | --------------------: | ------------------: |"
             },
             {
-              "line_start": 135,
-              "line_end": 137,
+              "line_start": 121,
+              "line_end": 123,
               "matched_terms": [
                 "order conversion"
               ],
-              "text": "| Search Entry Users    |     445 |     839 | Up        |\n| Order Conversion Rate |  42.34% |  37.42% | Down      |\n| Average Order Value   |   31.18 |   26.95 | Down      |"
+              "text": "| Search Entry Users  |   445 |   839 | Up    |\n| Order Conversion Rate | 42.34% | 37.42% | Down   |\n| Average Order Value  |  31.18 |  26.95 | Down   |"
             },
             {
-              "line_start": 142,
-              "line_end": 144,
+              "line_start": 128,
+              "line_end": 130,
               "matched_terms": [
                 "order conversion"
               ],
@@ -209,163 +209,31 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 20,
-              "line_end": 22,
+              "line_start": 18,
+              "line_end": 20,
               "matched_terms": [
                 "activity"
               ],
               "text": "A store may use activity subsidy, pricing, ranking optimization, SKU mix, and fulfillment control as operating levers inside this chain."
             },
             {
-              "line_start": 24,
-              "line_end": 26,
-              "matched_terms": [
-                "activity"
-              ],
-              "text": ""
-            },
-            {
-              "line_start": 71,
-              "line_end": 73,
+              "line_start": 58,
+              "line_end": 60,
               "matched_terms": [
                 "activity"
               ],
               "text": "2. `activity_cost_ratio_pct` follows the backend-style formula:"
+            },
+            {
+              "line_start": 61,
+              "line_end": 63,
+              "matched_terms": [
+                "activity"
+              ],
+              "text": "```text\n   activity_cost_ratio_pct = activity_cost / activity_original_transaction_amount * 100\n   ```"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: promotion_intensity.",
-          "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
-          ],
-          "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
-          ]
-        },
-        {
-          "factor_id": "",
-          "evidence_id": "evidence_",
-          "source_type": "markdown",
-          "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
-          "source_exists": true,
-          "grounding_role": "default_evidence",
-          "keywords_used": [
-            "refund",
-            "refund amount",
-            "refund orders",
-            "退款",
-            "退款金额",
-            "退款订单"
-          ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
-            {
-              "line_start": 24,
-              "line_end": 26,
-              "matched_terms": [
-                "refund"
-              ],
-              "text": ""
-            },
-            {
-              "line_start": 85,
-              "line_end": 87,
-              "matched_terms": [
-                "refund",
-                "refund amount"
-              ],
-              "text": "| Month   | Transaction Amount | Transaction Orders | Entry Users | Order Conversion Rate | Average Order Value | Refund Amount |\n| ------- | -----------------: | -----------------: | ----------: | --------------------: | ------------------: | ------------: |"
-            },
-            {
-              "line_start": 148,
-              "line_end": 150,
-              "matched_terms": [
-                "refund"
-              ],
-              "text": "Refund and post-order source-field evidence improved in April compared with March."
-            }
-          ],
-          "original_claim_supported": "Provides context needed to evaluate factor: .",
-          "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
-          ],
-          "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
-          ]
-        },
-        {
-          "factor_id": "transaction_orders",
-          "evidence_id": "evidence_transaction_orders",
-          "source_type": "markdown",
-          "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
-          "source_exists": true,
-          "grounding_role": "default_evidence",
-          "keywords_used": [
-            "transaction_orders",
-            "transaction orders"
-          ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
-            {
-              "line_start": 68,
-              "line_end": 70,
-              "matched_terms": [
-                "transaction_orders"
-              ],
-              "text": "```text\n   transaction_orders / entry_users\n   ```"
-            },
-            {
-              "line_start": 154,
-              "line_end": 156,
-              "matched_terms": [
-                "transaction orders"
-              ],
-              "text": "| Refund Pressure        |  17.01% |   6.63% | Down      |"
-            }
-          ],
-          "original_claim_supported": "Provides context needed to evaluate factor: transaction_orders.",
-          "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
-          ],
-          "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
-          ]
-        },
-        {
-          "factor_id": "intransaction_orders",
-          "evidence_id": "evidence_intransaction_orders",
-          "source_type": "markdown",
-          "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
-          "source_exists": true,
-          "grounding_role": "default_evidence",
-          "keywords_used": [
-            "intransaction_orders",
-            "intransaction orders",
-            "refund order",
-            "cancelled",
-            "canceled"
-          ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
-            {
-              "line_start": 154,
-              "line_end": 156,
-              "matched_terms": [
-                "intransaction orders",
-                "refund order"
-              ],
-              "text": "| Refund Pressure        |  17.01% |   6.63% | Down      |"
-            }
-          ],
-          "original_claim_supported": "Provides context needed to evaluate factor: intransaction_orders.",
           "original_limitations": [
             "Deterministic mock pipeline only.",
             "No live retrieval is performed in this step."
@@ -387,19 +255,19 @@
       "summary": {
         "question": "Are Stores B-F directly comparable in March 2026?",
         "question_type": "comparability_judgment",
-        "total_packets": 11,
+        "total_packets": 9,
         "status_counts": {
-          "keyword_matched": 9,
+          "keyword_matched": 7,
           "boundary_matched": 2
         },
         "role_counts": {
           "context_evidence": 1,
-          "quantitative_evidence": 7,
+          "quantitative_evidence": 5,
           "definition_evidence": 1,
           "boundary_evidence": 2
         },
         "source_missing_count": 0,
-        "keyword_matched_count": 9,
+        "keyword_matched_count": 7,
         "boundary_matched_count": 2,
         "fallback_count": 0
       },
@@ -488,7 +356,7 @@
               "matched_terms": [
                 "store_type"
               ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,transaction_orders,intransaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,_pct,_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_; compare_with_region_store_type_activity_refund_limits"
+              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
             },
             {
               "line_start": 2,
@@ -497,7 +365,7 @@
                 "store_type",
                 "self-operated"
               ],
-              "text": "B,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_; compare_with_region_store_type_activity_refund_limits\nC,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,7064.09,175,174,11,5049.65,40.37,2982,15598,16.0,516,1481,17.3,169,188,32.75,7656.92,166,7554.39,98.22,2416,13.0,355,14.69,68.8,230,24.0,5,5187.3,124,490.21,463.21,27.0,9.45,70.86,529.6,11,11,7.5,5.95,1,2004.84,28.38,same_period_diagnostic_ready,moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_refund_limits\nD,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,402,33,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,8.95,7.59,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_refund_limits"
+              "text": "B,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits\nC,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,7064.09,175,5049.65,40.37,2982,15598,16.0,516,1481,17.3,169,188,32.75,7656.92,166,7554.39,98.22,2416,13.0,355,14.69,68.8,230,24.0,5,5187.3,124,490.21,463.21,27.0,9.45,70.86,529.6,11,11,1,2004.84,28.38,same_period_diagnostic_ready,moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_product_mix_limits\nD,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
             },
             {
               "line_start": 4,
@@ -506,7 +374,7 @@
                 "store_type",
                 "partner"
               ],
-              "text": "D,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,402,33,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,8.95,7.59,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_refund_limits\nE,2026-03,2026-03-01,2026-03-31,Yantai,partner,5784.87,158,155,25,5337.95,36.61,3347,15667,14.0,408,1400,12.19,161,185,39.46,6828.37,159,6693.27,98.76,2784,13.0,355,12.75,87.01,306,16.0,3,5365.63,109,1576.26,1542.26,34.0,29.38,68.99,1105.05,25,29,19.1,13.89,1,726.25,12.55,same_period_diagnostic_ready,moderate_activity_involvement; high_; high_; compare_with_region_store_type_activity_refund_limits\nF,2026-03,2026-03-01,2026-03-31,Yantai,partner,9301.8,266,266,30,5937.09,34.97,3543,18142,13.0,541,1946,15.27,269,305,49.72,10498.2,267,10227.8,99.26,2699,13.0,481,17.82,88.91,481,13.0,8,8291.5,217,1008.3,975.3,33.0,12.16,81.58,987.89,30,33,10.62,10.14,1,1798.4,19.33,same_period_diagnostic_ready,high_activity_involvement; moderate_; moderate_; compare_with_region_store_type_activity_refund_limits"
+              "text": "D,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits\nE,2026-03,2026-03-01,2026-03-31,Yantai,partner,5784.87,158,5337.95,36.61,3347,15667,14.0,408,1400,12.19,161,185,39.46,6828.37,159,6693.27,98.76,2784,13.0,355,12.75,87.01,306,16.0,3,5365.63,109,1576.26,1542.26,34.0,29.38,68.99,1105.05,25,29,1,726.25,12.55,same_period_diagnostic_ready,moderate_activity_involvement; compare_with_region_store_type_activity_product_mix_limits\nF,2026-03,2026-03-01,2026-03-31,Yantai,partner,9301.8,266,5937.09,34.97,3543,18142,13.0,541,1946,15.27,269,305,49.72,10498.2,267,10227.8,99.26,2699,13.0,481,17.82,88.91,481,13.0,8,8291.5,217,1008.3,975.3,33.0,12.16,81.58,987.89,30,33,1,1798.4,19.33,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: store_type.",
@@ -562,7 +430,7 @@
                 "transaction_orders",
                 "orders"
               ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,transaction_orders,intransaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,_pct,_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_; compare_with_region_store_type_activity_refund_limits"
+              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: order_volume.",
@@ -600,7 +468,7 @@
                 "transaction_amount",
                 "transaction"
               ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,transaction_orders,intransaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,_pct,_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_; compare_with_region_store_type_activity_refund_limits"
+              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: transaction_amount.",
@@ -643,7 +511,7 @@
                 "activity_order_share_pct",
                 "activity_cost_ratio_pct"
               ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,transaction_orders,intransaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,_pct,_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_; compare_with_region_store_type_activity_refund_limits"
+              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
             },
             {
               "line_start": 2,
@@ -651,7 +519,7 @@
               "matched_terms": [
                 "activity"
               ],
-              "text": "B,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_; compare_with_region_store_type_activity_refund_limits\nC,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,7064.09,175,174,11,5049.65,40.37,2982,15598,16.0,516,1481,17.3,169,188,32.75,7656.92,166,7554.39,98.22,2416,13.0,355,14.69,68.8,230,24.0,5,5187.3,124,490.21,463.21,27.0,9.45,70.86,529.6,11,11,7.5,5.95,1,2004.84,28.38,same_period_diagnostic_ready,moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_refund_limits\nD,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,402,33,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,8.95,7.59,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_refund_limits"
+              "text": "B,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits\nC,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,7064.09,175,5049.65,40.37,2982,15598,16.0,516,1481,17.3,169,188,32.75,7656.92,166,7554.39,98.22,2416,13.0,355,14.69,68.8,230,24.0,5,5187.3,124,490.21,463.21,27.0,9.45,70.86,529.6,11,11,1,2004.84,28.38,same_period_diagnostic_ready,moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_product_mix_limits\nD,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
             },
             {
               "line_start": 4,
@@ -659,7 +527,7 @@
               "matched_terms": [
                 "activity"
               ],
-              "text": "D,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,402,33,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,8.95,7.59,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_refund_limits\nE,2026-03,2026-03-01,2026-03-31,Yantai,partner,5784.87,158,155,25,5337.95,36.61,3347,15667,14.0,408,1400,12.19,161,185,39.46,6828.37,159,6693.27,98.76,2784,13.0,355,12.75,87.01,306,16.0,3,5365.63,109,1576.26,1542.26,34.0,29.38,68.99,1105.05,25,29,19.1,13.89,1,726.25,12.55,same_period_diagnostic_ready,moderate_activity_involvement; high_; high_; compare_with_region_store_type_activity_refund_limits\nF,2026-03,2026-03-01,2026-03-31,Yantai,partner,9301.8,266,266,30,5937.09,34.97,3543,18142,13.0,541,1946,15.27,269,305,49.72,10498.2,267,10227.8,99.26,2699,13.0,481,17.82,88.91,481,13.0,8,8291.5,217,1008.3,975.3,33.0,12.16,81.58,987.89,30,33,10.62,10.14,1,1798.4,19.33,same_period_diagnostic_ready,high_activity_involvement; moderate_; moderate_; compare_with_region_store_type_activity_refund_limits"
+              "text": "D,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits\nE,2026-03,2026-03-01,2026-03-31,Yantai,partner,5784.87,158,5337.95,36.61,3347,15667,14.0,408,1400,12.19,161,185,39.46,6828.37,159,6693.27,98.76,2784,13.0,355,12.75,87.01,306,16.0,3,5365.63,109,1576.26,1542.26,34.0,29.38,68.99,1105.05,25,29,1,726.25,12.55,same_period_diagnostic_ready,moderate_activity_involvement; compare_with_region_store_type_activity_product_mix_limits\nF,2026-03,2026-03-01,2026-03-31,Yantai,partner,9301.8,266,5937.09,34.97,3543,18142,13.0,541,1946,15.27,269,305,49.72,10498.2,267,10227.8,99.26,2699,13.0,481,17.82,88.91,481,13.0,8,8291.5,217,1008.3,975.3,33.0,12.16,81.58,987.89,30,33,1,1798.4,19.33,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: activity_intensity.",
@@ -769,28 +637,28 @@
           "grounding_status": "boundary_matched",
           "snippets": [
             {
-              "line_start": 45,
-              "line_end": 47,
+              "line_start": 43,
+              "line_end": 45,
               "matched_terms": [
                 "competition"
               ],
               "text": "- transaction-scale bands;\n- competition context;\n- repeated-window stability;"
             },
             {
-              "line_start": 65,
-              "line_end": 67,
+              "line_start": 72,
+              "line_end": 74,
               "matched_terms": [
                 "competition"
               ],
-              "text": ""
+              "text": "|---|---|---|---|\n| Search-entry structure comparison | `search_exposure_users`, `search_average_rank`, `search_entry_users`, `search_entry_rate_pct`, `search_entry_share_pct`, `entry_conversion_rate_pct`, `order_conversion_rate_pct` | repeated windows, competition context, stronger market context | cautious same-period diagnostic comparison |\n| Promotion or subsidy comparison | `activity_orders`, `activity_order_share_pct`, `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, `platform_subsidy_amount` | campaign calendar, campaign mechanism, competitor reaction, repeated activity windows | activity involvement and activity intensity only |"
             },
             {
-              "line_start": 87,
-              "line_end": 89,
+              "line_start": 75,
+              "line_end": 77,
               "matched_terms": [
                 "competitor"
               ],
-              "text": "| Activity involvement | `activity_orders`, `activity_order_share_pct` | Shows how much of the transaction-order structure involved activity orders; it does not prove activity caused demand. |\n| Activity intensity | `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, `platform_subsidy_amount` | Shows subsidy and cost structure, but not full campaign mechanism, competitor response, or activity calendar. |"
+              "text": "| SKU-mix comparison | top-SKU transaction-amount evidence, top-SKU sales-volume evidence, `top3_sku_transaction_amount_share_pct` | full product-category classification, broader catalog structure, category-level share | lightweight product-mix constraint |\n| Market-context comparison | `region_type` | local consumption level, delivery-radius context, competitor density, broader store coverage | weak context only |\n| Strategy-transfer readiness | current diagnostic fields and `comparison_limit_notes` | repeated windows, pairwise decision output, activity mechanism, competition, market context, fulfillment and stockout evidence | boundary-preserving answer until pairwise evidence is available |"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: competition.",
@@ -833,7 +701,7 @@
                 "top3_sku",
                 "top3_sku_transaction_amount"
               ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,transaction_orders,intransaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,_pct,_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_; compare_with_region_store_type_activity_refund_limits"
+              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
             },
             {
               "line_start": 2,
@@ -842,7 +710,7 @@
                 "sku",
                 "top3_sku"
               ],
-              "text": "B,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_; compare_with_region_store_type_activity_refund_limits\nC,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,7064.09,175,174,11,5049.65,40.37,2982,15598,16.0,516,1481,17.3,169,188,32.75,7656.92,166,7554.39,98.22,2416,13.0,355,14.69,68.8,230,24.0,5,5187.3,124,490.21,463.21,27.0,9.45,70.86,529.6,11,11,7.5,5.95,1,2004.84,28.38,same_period_diagnostic_ready,moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_refund_limits\nD,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,402,33,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,8.95,7.59,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_refund_limits"
+              "text": "B,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits\nC,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,7064.09,175,5049.65,40.37,2982,15598,16.0,516,1481,17.3,169,188,32.75,7656.92,166,7554.39,98.22,2416,13.0,355,14.69,68.8,230,24.0,5,5187.3,124,490.21,463.21,27.0,9.45,70.86,529.6,11,11,1,2004.84,28.38,same_period_diagnostic_ready,moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_product_mix_limits\nD,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: sku_structure.",
@@ -874,100 +742,6 @@
               "grounding_status": "keyword_matched",
               "source_exists": true
             }
-          ]
-        },
-        {
-          "factor_id": "",
-          "evidence_id": "evidence_",
-          "source_type": "markdown",
-          "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-          "source_exists": true,
-          "grounding_role": "quantitative_evidence",
-          "keywords_used": [
-            "refund",
-            "refund amount",
-            "refund orders",
-            "退款",
-            "退款金额",
-            "退款订单"
-          ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
-            {
-              "line_start": 1,
-              "line_end": 2,
-              "matched_terms": [
-                "refund"
-              ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,transaction_orders,intransaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,_pct,_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_; compare_with_region_store_type_activity_refund_limits"
-            },
-            {
-              "line_start": 2,
-              "line_end": 4,
-              "matched_terms": [
-                "refund"
-              ],
-              "text": "B,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_; compare_with_region_store_type_activity_refund_limits\nC,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,7064.09,175,174,11,5049.65,40.37,2982,15598,16.0,516,1481,17.3,169,188,32.75,7656.92,166,7554.39,98.22,2416,13.0,355,14.69,68.8,230,24.0,5,5187.3,124,490.21,463.21,27.0,9.45,70.86,529.6,11,11,7.5,5.95,1,2004.84,28.38,same_period_diagnostic_ready,moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_refund_limits\nD,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,402,33,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,8.95,7.59,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_refund_limits"
-            },
-            {
-              "line_start": 4,
-              "line_end": 6,
-              "matched_terms": [
-                "refund"
-              ],
-              "text": "D,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,402,33,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,8.95,7.59,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_refund_limits\nE,2026-03,2026-03-01,2026-03-31,Yantai,partner,5784.87,158,155,25,5337.95,36.61,3347,15667,14.0,408,1400,12.19,161,185,39.46,6828.37,159,6693.27,98.76,2784,13.0,355,12.75,87.01,306,16.0,3,5365.63,109,1576.26,1542.26,34.0,29.38,68.99,1105.05,25,29,19.1,13.89,1,726.25,12.55,same_period_diagnostic_ready,moderate_activity_involvement; high_; high_; compare_with_region_store_type_activity_refund_limits\nF,2026-03,2026-03-01,2026-03-31,Yantai,partner,9301.8,266,266,30,5937.09,34.97,3543,18142,13.0,541,1946,15.27,269,305,49.72,10498.2,267,10227.8,99.26,2699,13.0,481,17.82,88.91,481,13.0,8,8291.5,217,1008.3,975.3,33.0,12.16,81.58,987.89,30,33,10.62,10.14,1,1798.4,19.33,same_period_diagnostic_ready,high_activity_involvement; moderate_; moderate_; compare_with_region_store_type_activity_refund_limits"
-            }
-          ],
-          "original_claim_supported": "Provides context needed to evaluate factor: .",
-          "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
-          ],
-          "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
-          ]
-        },
-        {
-          "factor_id": "",
-          "evidence_id": "evidence_",
-          "source_type": "markdown",
-          "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-          "source_exists": true,
-          "grounding_role": "quantitative_evidence",
-          "keywords_used": [
-            "intransaction_orders",
-            "refund order",
-            "intransaction orders",
-            "取消"
-          ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
-            {
-              "line_start": 1,
-              "line_end": 2,
-              "matched_terms": [
-                "intransaction_orders"
-              ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,transaction_orders,intransaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,_pct,_pct,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,299,23,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,10.76,7.14,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; moderate_; compare_with_region_store_type_activity_refund_limits"
-            },
-            {
-              "line_start": 4,
-              "line_end": 6,
-              "matched_terms": [],
-              "text": "D,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,402,33,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,8.95,7.59,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_refund_limits\nE,2026-03,2026-03-01,2026-03-31,Yantai,partner,5784.87,158,155,25,5337.95,36.61,3347,15667,14.0,408,1400,12.19,161,185,39.46,6828.37,159,6693.27,98.76,2784,13.0,355,12.75,87.01,306,16.0,3,5365.63,109,1576.26,1542.26,34.0,29.38,68.99,1105.05,25,29,19.1,13.89,1,726.25,12.55,same_period_diagnostic_ready,moderate_activity_involvement; high_; high_; compare_with_region_store_type_activity_refund_limits\nF,2026-03,2026-03-01,2026-03-31,Yantai,partner,9301.8,266,266,30,5937.09,34.97,3543,18142,13.0,541,1946,15.27,269,305,49.72,10498.2,267,10227.8,99.26,2699,13.0,481,17.82,88.91,481,13.0,8,8291.5,217,1008.3,975.3,33.0,12.16,81.58,987.89,30,33,10.62,10.14,1,1798.4,19.33,same_period_diagnostic_ready,high_activity_involvement; moderate_; moderate_; compare_with_region_store_type_activity_refund_limits"
-            }
-          ],
-          "original_claim_supported": "Provides context needed to evaluate factor: .",
-          "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
-          ],
-          "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
           ]
         },
         {
@@ -1008,8 +782,8 @@
               "text": "The next stage is a pairwise comparability gate. It is documented here as future work."
             },
             {
-              "line_start": 46,
-              "line_end": 48,
+              "line_start": 44,
+              "line_end": 46,
               "matched_terms": [
                 "repeated"
               ],
@@ -1038,15 +812,15 @@
       "summary": {
         "question": "What should be checked before changing promotions for a store?",
         "question_type": "strategic_recommendation",
-        "total_packets": 10,
+        "total_packets": 8,
         "status_counts": {
-          "keyword_matched": 10
+          "keyword_matched": 8
         },
         "role_counts": {
-          "default_evidence": 10
+          "default_evidence": 8
         },
         "source_missing_count": 0,
-        "keyword_matched_count": 10,
+        "keyword_matched_count": 8,
         "boundary_matched_count": 0,
         "fallback_count": 0
       },
@@ -1068,16 +842,16 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 120,
-              "line_end": 122,
+              "line_start": 116,
+              "line_end": 118,
               "matched_terms": [
                 "activity_orders"
               ],
               "text": "- explicit activity status, only if campaign-calendar or backend status evidence exists;\n- activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`;\n- activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`."
             },
             {
-              "line_start": 194,
-              "line_end": 196,
+              "line_start": 187,
+              "line_end": 189,
               "matched_terms": [
                 "activity_orders",
                 "activity orders",
@@ -1086,8 +860,8 @@
               "text": "| `search_entry_share_pct` | `search_entry_users / entry_users * 100` | Directional structure metric for the share of store entry attributed to the search source in the current reporting window. | Source-level traffic users may overlap, so this should not be interpreted as perfect user-level attribution. |\n| `activity_order_share_pct` | `activity_orders / transaction_orders * 100` | Measures the share of transaction orders associated with activity orders in the current reporting window. | Indicates activity involvement, not full activity status, campaign mechanism, causal demand lift, or promotion-transfer readiness. |"
             },
             {
-              "line_start": 234,
-              "line_end": 236,
+              "line_start": 225,
+              "line_end": 227,
               "matched_terms": [
                 "activity orders",
                 "activity order"
@@ -1121,24 +895,24 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 121,
-              "line_end": 123,
+              "line_start": 117,
+              "line_end": 119,
               "matched_terms": [
                 "activity_cost"
               ],
               "text": "- activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`;\n- activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`."
             },
             {
-              "line_start": 278,
-              "line_end": 280,
+              "line_start": 265,
+              "line_end": 267,
               "matched_terms": [
                 "activity cost"
               ],
-              "text": "| `visibility_entry_profile`        | Exposure, ranking, entry, and search-entry structure.                                              | Understanding whether the store was being seen and entered during the reporting window.                         | Claiming visibility alone caused transaction growth.                        |\n| `activity_lever_profile`          | Activity orders, activity cost, subsidy, and activity-cost ratio.                                  | Understanding how promotional tools were used in the store's operating context.                                 | Treating activity as a standalone cause or traditional ROI result.          |\n| `transaction_conversion_profile`  | Transaction scale, order conversion, payment, and average order value.                             | Reading transaction recovery or decline together with funnel quality.                                           | Calling a period good or bad from one transaction metric alone.             |"
+              "text": "| `visibility_entry_profile`    | Exposure, ranking, entry, and search-entry structure.                       | Understanding whether the store was being seen and entered during the reporting window.             | Claiming visibility alone caused transaction growth.            |\n| `activity_lever_profile`     | Activity orders, activity cost, subsidy, and activity-cost ratio.                 | Understanding how promotional tools were used in the store's operating context.                 | Treating activity as a standalone cause or traditional ROI result.     |\n| `transaction_conversion_profile` | Transaction scale, order conversion, payment, and average order value.               | Reading transaction recovery or decline together with funnel quality.                      | Calling a period good or bad from one transaction metric alone.       |"
             },
             {
-              "line_start": 592,
-              "line_end": 594,
+              "line_start": 570,
+              "line_end": 572,
               "matched_terms": [
                 "activity_cost",
                 "活动成本"
@@ -1172,24 +946,24 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 121,
-              "line_end": 123,
+              "line_start": 117,
+              "line_end": 119,
               "matched_terms": [
                 "merchant_subsidy"
               ],
               "text": "- activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`;\n- activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`."
             },
             {
-              "line_start": 570,
-              "line_end": 572,
+              "line_start": 548,
+              "line_end": 550,
               "matched_terms": [
                 "商家补贴"
               ],
               "text": "中文定义：平台展示的预计收入或预计订单收入类指标。预计订单收入通常指营业额扣除商家支出（包括商家补贴、平台服务费等）后的净收入，仅做数据展示，不做结算使用。"
             },
             {
-              "line_start": 594,
-              "line_end": 596,
+              "line_start": 572,
+              "line_end": 574,
               "matched_terms": [
                 "商家补贴"
               ],
@@ -1222,24 +996,24 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 121,
-              "line_end": 123,
+              "line_start": 117,
+              "line_end": 119,
               "matched_terms": [
                 "platform_subsidy"
               ],
               "text": "- activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`;\n- activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`."
             },
             {
-              "line_start": 594,
-              "line_end": 596,
+              "line_start": 572,
+              "line_end": 574,
               "matched_terms": [
                 "平台补贴"
               ],
               "text": "中文公式：活动成本 = 商家补贴金额 + 平台补贴金额"
             },
             {
-              "line_start": 596,
-              "line_end": 598,
+              "line_start": 574,
+              "line_end": 576,
               "matched_terms": [
                 "platform_subsidy"
               ],
@@ -1281,19 +1055,19 @@
               "matched_terms": [
                 "order conversion"
               ],
-              "text": "In the current project, `region_type` can only be used as weak context alongside period alignment, store type, order volume, visibility and ranking signals, entry and order conversion, activity profile, post-order source-field evidence, SKU evidence, data completeness, and future external market evidence. The current Demo 2 sample is too small to support a reliable regional classification."
+              "text": "In the current project, `region_type` can only be used as weak context alongside period alignment, store type, order volume, visibility and ranking signals, entry and order conversion, activity profile, SKU evidence, data completeness, and future external market evidence. The current Demo 2 sample is too small to support a reliable regional classification."
             },
             {
-              "line_start": 279,
-              "line_end": 281,
+              "line_start": 266,
+              "line_end": 268,
               "matched_terms": [
                 "order conversion"
               ],
-              "text": ""
+              "text": "| `activity_lever_profile`     | Activity orders, activity cost, subsidy, and activity-cost ratio.                 | Understanding how promotional tools were used in the store's operating context.                 | Treating activity as a standalone cause or traditional ROI result.     |\n| `transaction_conversion_profile` | Transaction scale, order conversion, payment, and average order value.               | Reading transaction recovery or decline together with funnel quality.                      | Calling a period good or bad from one transaction metric alone.       |\n| `single_metric_attribution_guard` | Guardrail against explaining performance from one metric alone.                  | Preventing unsupported attribution from exposure, ranking, activity, conversion, or SKU evidence alone. | Rejecting those metrics as irrelevant.                   |"
             },
             {
-              "line_start": 440,
-              "line_end": 442,
+              "line_start": 426,
+              "line_end": 428,
               "matched_terms": [
                 "下单"
               ],
@@ -1330,24 +1104,24 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 486,
-              "line_end": 488,
+              "line_start": 466,
+              "line_end": 468,
               "matched_terms": [
                 "支付人数"
               ],
               "text": "### `payment_users` / 支付人数"
             },
             {
-              "line_start": 494,
-              "line_end": 496,
+              "line_start": 474,
+              "line_end": 476,
               "matched_terms": [
                 "支付金额"
               ],
               "text": "### `payment_amount` / 支付金额"
             },
             {
-              "line_start": 500,
-              "line_end": 502,
+              "line_start": 480,
+              "line_end": 482,
               "matched_terms": [
                 "payment_conversion",
                 "支付转化"
@@ -1356,104 +1130,6 @@
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: payment_conversion.",
-          "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
-          ],
-          "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
-          ]
-        },
-        {
-          "factor_id": "",
-          "evidence_id": "evidence_",
-          "source_type": "markdown",
-          "source_path": "retail_ops/data/DATA_DICTIONARY.md",
-          "source_exists": true,
-          "grounding_role": "default_evidence",
-          "keywords_used": [
-            "refund",
-            "refund amount",
-            "refund orders",
-            "退款",
-            "退款金额",
-            "退款订单"
-          ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
-            {
-              "line_start": 77,
-              "line_end": 79,
-              "matched_terms": [
-                "refund"
-              ],
-              "text": "In the current project, `region_type` can only be used as weak context alongside period alignment, store type, order volume, visibility and ranking signals, entry and order conversion, activity profile, post-order source-field evidence, SKU evidence, data completeness, and future external market evidence. The current Demo 2 sample is too small to support a reliable regional classification."
-            },
-            {
-              "line_start": 99,
-              "line_end": 101,
-              "matched_terms": [
-                "refund"
-              ],
-              "text": "- share / ratio diagnostics, such as `search_entry_share_pct`, `_pct`, `_pct`, and `top3_sku_transaction_amount_share_pct`;\n- month-over-month diagnostics, such as `transaction_amount_mom_pct`, `entry_users_mom_pct`, and `refund_amount_mom_pct`;"
-            },
-            {
-              "line_start": 101,
-              "line_end": 103,
-              "matched_terms": [
-                "refund"
-              ],
-              "text": "- month-over-month diagnostics, such as `transaction_amount_mom_pct`, `entry_users_mom_pct`, and `refund_amount_mom_pct`;\n- ranking-change and boolean supporting diagnostics, such as `store_average_rank_change`, `search_average_rank_change`, `transaction_recovered_with_conversion_aov_tradeoff`, and `_improved`."
-            }
-          ],
-          "original_claim_supported": "Provides context needed to evaluate factor: .",
-          "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
-          ],
-          "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
-          ]
-        },
-        {
-          "factor_id": "",
-          "evidence_id": "evidence_",
-          "source_type": "markdown",
-          "source_path": "retail_ops/data/DATA_DICTIONARY.md",
-          "source_exists": true,
-          "grounding_role": "default_evidence",
-          "keywords_used": [
-            "intransaction_orders",
-            "refund order",
-            "intransaction orders",
-            "取消"
-          ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
-            {
-              "line_start": 99,
-              "line_end": 101,
-              "matched_terms": [],
-              "text": "- share / ratio diagnostics, such as `search_entry_share_pct`, `_pct`, `_pct`, and `top3_sku_transaction_amount_share_pct`;\n- month-over-month diagnostics, such as `transaction_amount_mom_pct`, `entry_users_mom_pct`, and `refund_amount_mom_pct`;"
-            },
-            {
-              "line_start": 227,
-              "line_end": 229,
-              "matched_terms": [],
-              "text": "| `missing_transaction_amount` | `transaction_amount` is missing. | Amount-based ratios such as `_pct` and `top3_sku_transaction_amount_share_pct` should not be interpreted as comparable evidence. |\n| `missing_transaction_orders` | `transaction_orders` is missing. | `_pct` should not be interpreted as comparable evidence. |\n| `missing_top3_sku_amount_evidence` | Top-SKU transaction-amount evidence is missing. | Missing product-mix evidence must not be treated as zero concentration. |"
-            },
-            {
-              "line_start": 238,
-              "line_end": 240,
-              "matched_terms": [],
-              "text": ""
-            }
-          ],
-          "original_claim_supported": "Provides context needed to evaluate factor: .",
           "original_limitations": [
             "Deterministic mock pipeline only.",
             "No live retrieval is performed in this step."
@@ -1543,16 +1219,16 @@
               "text": "In Demo 2, `region_type` may contain coarse available labels such as city-level region labels. These values are retained for data-contract stability and source traceability, but they are not market-area types, consumption-level groups, maturity labels, or peer-store groups; in short, `region_type` is not a hard market-area classification. Stores with similar visible region labels may still differ in purchasing power, delivery radius, local competition, rent structure, promotion pressure, customer behavior, stockout risk, and fulfillment constraints."
             },
             {
-              "line_start": 115,
-              "line_end": 117,
+              "line_start": 111,
+              "line_end": 113,
               "matched_terms": [
                 "competition"
               ],
-              "text": ""
+              "text": "A future pairwise comparability gate should use broader multi-store evidence to decide whether two store-period records can be compared for a specific operating question. Reliable store comparability should be judged from transaction order volume, transaction amount, store type, region and market context, competition environment, SKU structure, fulfillment or stockout evidence where available, repeated reporting windows, and activity evidence."
             },
             {
-              "line_start": 245,
-              "line_end": 247,
+              "line_start": 232,
+              "line_end": 234,
               "matched_terms": [
                 "price"
               ],
@@ -1625,15 +1301,15 @@
               "matched_terms": [
                 "fact"
               ],
-              "text": "* which factors are relevant,\n  * which assumptions are unsupported,"
+              "text": "* which factors are relevant,\n * which assumptions are unsupported,"
             },
             {
-              "line_start": 42,
-              "line_end": 44,
+              "line_start": 27,
+              "line_end": 29,
               "matched_terms": [
                 "fact"
               ],
-              "text": "* QuestionAnalyzer\n  * FactorExpander\n  * FactorWeighter"
+              "text": "* a shared review-state schema,\n* deterministic question analysis and factor expansion,\n* deterministic factor-weight buckets,"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: typed_memory.",
@@ -1731,15 +1407,16 @@
               "matched_terms": [
                 "competing"
               ],
-              "text": "* which evidence was actually used,\n  * which competing explanations remain possible,\n  * which conclusion should be downgraded because evidence is incomplete."
+              "text": "* which evidence was actually used,\n * which competing explanations remain possible,\n * which conclusion should be downgraded because evidence is incomplete."
             },
             {
-              "line_start": 45,
-              "line_end": 47,
+              "line_start": 30,
+              "line_end": 32,
               "matched_terms": [
-                "hypothesis"
+                "hypothesis",
+                "competing"
               ],
-              "text": "* EvidenceRouter\n  * HypothesisGenerator\n  * Critic"
+              "text": "* local file-based evidence routing,\n* competing-hypothesis templates,\n* critique and fact-check stages,"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: hypotheses.",
@@ -1771,28 +1448,28 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 48,
-              "line_end": 50,
-              "matched_terms": [
-                "belief"
-              ],
-              "text": "* FactChecker\n  * BeliefUpdater / evidence-coverage and limitation updater\n  * FinalReportWriter"
-            },
-            {
-              "line_start": 51,
-              "line_end": 53,
-              "matched_terms": [
-                "belief"
-              ],
-              "text": "The internal `belief_updater` name is retained for compatibility with existing prompt, schema, and output files. Reviewer-facing wording should describe this stage as evidence-coverage and limitation update, not Bayesian belief modeling."
-            },
-            {
-              "line_start": 66,
-              "line_end": 68,
+              "line_start": 62,
+              "line_end": 64,
               "matched_terms": [
                 "confidence"
               ],
               "text": "* critique unsupported assumptions before writing the final answer,\n* update confidence and limitations only when the evidence supports the change."
+            },
+            {
+              "line_start": 88,
+              "line_end": 90,
+              "matched_terms": [
+                "belief"
+              ],
+              "text": "evidence_packets\nbelief_records\nretrieval_trace"
+            },
+            {
+              "line_start": 101,
+              "line_end": 103,
+              "matched_terms": [
+                "confidence"
+              ],
+              "text": "hypotheses\nconfidence\nlimitations"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: belief_records.",
@@ -1822,24 +1499,24 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 66,
-              "line_end": 68,
+              "line_start": 62,
+              "line_end": 64,
               "matched_terms": [
                 "confidence"
               ],
               "text": "* critique unsupported assumptions before writing the final answer,\n* update confidence and limitations only when the evidence supports the change."
             },
             {
-              "line_start": 106,
-              "line_end": 108,
+              "line_start": 101,
+              "line_end": 103,
               "matched_terms": [
                 "confidence"
               ],
               "text": "hypotheses\nconfidence\nlimitations"
             },
             {
-              "line_start": 132,
-              "line_end": 134,
+              "line_start": 127,
+              "line_end": 129,
               "matched_terms": [
                 "confidence"
               ],
@@ -1937,21 +1614,21 @@
               "text": "The `rac/` directory name is retained for path stability. In reviewer-facing wording, this should be read as a deterministic, source-grounded reasoning scaffold with explicit evidence and boundary checks."
             },
             {
-              "line_start": 94,
-              "line_end": 96,
+              "line_start": 44,
+              "line_end": 46,
+              "matched_terms": [
+                "source"
+              ],
+              "text": "* carry typed state between stages,\n* require source references for evidence claims,\n* keep boundary evidence separate from direct metric evidence,"
+            },
+            {
+              "line_start": 89,
+              "line_end": 91,
               "matched_terms": [
                 "retrieval",
                 "trace"
               ],
               "text": "belief_records\nretrieval_trace"
-            },
-            {
-              "line_start": 132,
-              "line_end": 134,
-              "matched_terms": [
-                "trace"
-              ],
-              "text": "This scaffold makes LLM-assisted reasoning more traceable by decomposing a question into relevant factors, retrieving evidence by factor, generating competing hypotheses, checking unsupported assumptions, and producing grounded reports with a formula-based evidence-coverage score and mock reports with scenario-template confidence.\n## Example use cases"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: retrieval_trace.",
@@ -1985,20 +1662,12 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 28,
-              "line_end": 30,
+              "line_start": 26,
+              "line_end": 28,
               "matched_terms": [
                 "state"
               ],
-              "text": "1. A shared reasoning-state schema.\n  2. Prompt contracts for each reasoning stage."
-            },
-            {
-              "line_start": 37,
-              "line_end": 39,
-              "matched_terms": [
-                "state"
-              ],
-              "text": "The next implementation step is to connect these contracts to a graph workflow, likely using LangGraph's shared-state node design."
+              "text": "* a shared review-state schema,\n* deterministic question analysis and factor expansion,"
             },
             {
               "line_start": 39,
@@ -2006,7 +1675,15 @@
               "matched_terms": [
                 "state"
               ],
-              "text": "Each node should read from and write to the same reasoning state:"
+              "text": "A future implementation could connect these contracts to a graph workflow, such as a LangGraph-style shared-state node design. That would be an extension of the current deterministic scaffold, not a capability claimed by the current implementation."
+            },
+            {
+              "line_start": 43,
+              "line_end": 45,
+              "matched_terms": [
+                "state"
+              ],
+              "text": "* carry typed state between stages,\n* require source references for evidence claims,"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: active_state_filtering.",

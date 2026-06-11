@@ -263,6 +263,16 @@ The scaffold covers:
 
 The scaffold is deterministic and local-evidence-based. It uses already structured project files to make factor coverage, missing evidence, critique, fact checks, and confidence updates inspectable before a grounded report is accepted.
 
+
+Current RAC execution boundary:
+
+- deterministic only
+- no LLM calls
+- no Qdrant retrieval
+- no live Meituan backend access
+- no completed pairwise comparability gate
+- no causal proof from observational store metrics
+
 Current RAC evidence and scripts:
 
 - `rac/DEMO_INDEX.md`
