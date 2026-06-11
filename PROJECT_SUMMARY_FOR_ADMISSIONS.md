@@ -33,9 +33,10 @@ This file is the application-facing summary. For full repository review after th
 3. `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` - current single-store month-over-month diagnostic.
 4. `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` - current same-period B-F diagnostic.
 5. `retail_ops/outputs/store_period_panel_coverage_output.csv` and `retail_ops/outputs/repeated_window_panel_summary_output.csv` - repeated-window B-F coverage and descriptive summary.
-6. `retail_ops/EXPERIMENT_RESULTS.md` - experiment map, validation outcomes, pass conditions, and failure modes.
+6. `retail_ops/EXPERIMENTS.md` - experiment questions, inputs, transformations, pass conditions, and failure modes.
+7. `retail_ops/EXPERIMENT_RESULTS.md` - implemented checks, experiment dependency, and validation outcomes.
 8. `retail_ops/COMPARABILITY_GATE_V0.md` - future pairwise comparability-gate contract.
-9. `rac/DEMO_INDEX.md` - deterministic grounded-review scaffold cases.
+9. `rac/DEMO_INDEX.md` - optional deterministic grounded-review scaffold cases.
 
 ## Operating Step Summary
 
@@ -108,7 +109,7 @@ A query-robustness inspection is also included to test whether supported, unsupp
 
 ### Repeated-Window B-F Panel
 
-The repeated-window panel adds selected Stores B-F across 2026-02, 2026-03, and 2026-04. Its role is to make repeated store-period coverage visible before any future question-specific pairwise comparability gate is implemented.
+The repeated-window panel adds selected Stores B-F across 2026-02, 2026-03, and 2026-04. Its role is to make repeated store-period coverage visible before the future question-specific pairwise comparability gate exists.
 
 The panel is descriptive evidence preparation. It is not a completed comparability gate, not a store ranking system, and not a strategy-transfer approval mechanism.
 

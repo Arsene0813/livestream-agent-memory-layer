@@ -2,6 +2,18 @@
 
 This file records the retail experiment map, validation results, and boundary checks for the current decision-support prototype.
 
+## Experiment Dependency Map
+
+The experiment chain should be read in this order:
+
+1. Field-contract validation protects metric names, meanings, and generated-fact structure.
+2. Demo 1 tests whether one store can be described across repeated months without reducing the result to one metric.
+3. Demo 2 tests whether selected B-F store-period rows can be staged under one March 2026 reporting window and one field contract.
+4. Demo 2 fact and answer-boundary checks test whether generated evidence preserves entity, period, source, metric, and comparison limits.
+5. Retrieval score and query-robustness inspections make retrieval behavior inspectable; they do not prove business truth.
+6. The repeated-window B-F panel checks whether selected evidence exists across 2026-02, 2026-03, and 2026-04 before stronger pairwise rules are attempted.
+7. The future comparability-gate contract documents the next decision layer without claiming that it already exists.
+
 The checks follow the current retail evidence path:
 
 ```text
@@ -27,6 +39,7 @@ The purpose is to verify that selected store-period evidence remains interpretab
 | Demo 2 endpoint behavior | Checks whether the file-backed Demo 2 endpoint answers supported B-F questions and keeps unsupported requests outside current scope. | Passed current endpoint-level checks. |
 | Retrieval threshold inspection | Makes score behavior inspectable across supported, unsupported, mismatch, and ambiguous retail queries. | Completed as offline inspection. |
 | Query robustness inspection | Inspects whether small wording changes still retrieve the expected evidence path. | Completed as offline inspection. |
+| Repeated-window panel | Checks whether selected B-F evidence exists across 2026-02, 2026-03, and 2026-04 before stronger pairwise rules are attempted. | Implemented as coverage and descriptive summary evidence. |
 | Future comparability-gate contract | Documents the planned pairwise gate as a question-specific future stage. | Documented and checked by contract stub. |
 | RAC grounded review | Makes factor expansion, evidence routing, critique, fact checking, and confidence updates visible over local project evidence. | Completed as deterministic local-evidence scaffold. |
 
