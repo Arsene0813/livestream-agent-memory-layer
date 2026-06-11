@@ -106,8 +106,8 @@ Activity metrics are interpreted as operating-lever evidence.
 Interpretation:
 
 - Activity orders accounted for a high share of transaction orders in all three months.
-- Activity was an important operating lever during the observed period.
-- The meaning of this lever depends on operating context, competition, price pressure, ranking pressure,.
+- Activity-order structure shows high activity involvement during the observed period.
+- The meaning of this activity involvement depends on operating context, competition, price pressure, and ranking pressure.
 
 ## Transaction and Conversion Profile
 

@@ -293,7 +293,6 @@ If another backend page defines 单均价 using a different backend-reported den
 
 `estimated_income_proxy` is treated as a platform-displayed income proxy. It should not be interpreted as audited profit because the current demo does not contain the full platform calculation breakdown.
 
-### Refund
 
 
 ### Ranking
