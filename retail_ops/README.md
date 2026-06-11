@@ -1,78 +1,90 @@
 # Retail Operations Extension
 
-This folder contains the retail-operations evidence layer for the Meituan instant-retail decision-support prototype.
+This folder contains the Meituan instant-retail evidence path used by the current decision-support prototype.
 
-The current retail implementation has three implemented evidence layers and one planned future stage:
+It is not the main project narrative file.
 
-| Stage | Current status | Main purpose |
-|---|---|---|
-| Demo 1 | Implemented | Store A month-over-month diagnostic across February, March, and April 2026. |
-| Demo 2 | Implemented | Stores B-F same-period March 2026 diagnostic under one reporting window and one field contract. |
-| Repeated-window panel | Implemented | Stores B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04. |
-| Pairwise comparability gate | Future work | Decide whether two store-period records can be compared for one selected operating question. |
+It is the folder entry point for retail data, SQL, generated facts, outputs, checks, and appendices.
 
-The authoritative source for retail field names and metric meanings is:
+## Folder Workflow
 
-- `retail_ops/data/DATA_DICTIONARY.md`
+The retail folder follows one practical workflow:
 
-Use this README as the retail folder map. Detailed field definitions, evidence lineage, and future-gate rules are kept in the files listed below.
+1. preserve backend metric definitions;
+2. structure selected store-period data with SQL;
+3. generate source-aware retail memory facts;
+4. evaluate whether answers preserve entity, period, metric, and scope boundaries;
+5. prepare repeated-window evidence for a future question-specific comparability gate.
 
-## Folder Scope
+## Folder Map
 
-| Component | Purpose |
+| Path | Role |
 |---|---|
-| `data/` | Selected Meituan-style source tables, source notes, and metric definitions. |
-| `sql/` | Diagnostic SQL for Demo 1 and Demo 2. |
-| `outputs/` | Generated SQL outputs, validation results, retrieval-inspection outputs, and memory facts. |
-| `scripts/` | Local validation, generation, sensitivity, and loading scripts. |
-| `demo/` | Diagnostic review documents for implemented retail stages. |
+| `data/DATA_DICTIONARY.md` | Canonical field names, backend metric definitions, derived-field formulas, and field-boundary rules. |
+| `data/` | Current selected source data and source notes. |
+| `sql/` | SQL transformations for Demo 1, Demo 2, store-period panel coverage, and repeated-window summary. |
+| `outputs/` | Generated SQL outputs, generated memory facts, retrieval inspection outputs, and validation result files. |
+| `demo/` | Human-readable Demo 1 and Demo 2 diagnostic reports. |
+| `scripts/` | Export, generation, validation, and inspection scripts for the retail evidence path. |
+| `EXPERIMENT_RESULTS.md` | Experiment map, validation outcomes, pass conditions, and failure modes. |
+| `COMPARABILITY_GATE_V0.md` | Future pairwise comparability-gate contract. |
+| `TECHNICAL_APPENDIX.md` | Technical lineage, field-usage notes, and architecture-level retail evidence details. |
 
-## Retail Review Path
+## Current Retail Evidence
 
-Use this order when reviewing the retail extension:
-
-| Step | File | What to check |
-|---:|---|---|
-| 1 | `../PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Why this prototype exists and how the current evidence path is staged. |
-| 2 | `data/DATA_DICTIONARY.md` | Canonical field names, Meituan backend metric meanings, and field boundaries. |
-| 3 | `demo/demo_1_store_a_month_over_month_diagnostic.md` | Store A month-over-month diagnostic evidence. |
-| 4 | `demo/demo_2_cross_store_comparability_diagnostic.md` | Same-period B-F diagnostic evidence and current comparison limits. |
-| 5 | `outputs/store_period_panel_coverage_output.csv` and `outputs/repeated_window_panel_summary_output.csv` | Repeated-window B-F evidence coverage and descriptive summary across 2026-02 to 2026-04. |
-| 6 | `EXPERIMENT_RESULTS.md` | Experiment map, validation outcomes, and evidence-boundary behavior. |
-| 8 | `COMPARABILITY_GATE_V0.md` | Future pairwise comparability-gate contract. |
-
-This file is the retail folder entry point. Detailed field boundaries belong in `data/DATA_DICTIONARY.md`; future-gate boundaries belong in `COMPARABILITY_GATE_V0.md`; experiment meaning and results belong in `EXPERIMENT_RESULTS.md`.
-
-## Technical Appendices
-
-These files are retained for auditability, but they are not separate reviewer entry points.
-
-| Appendix | Owns |
+| Layer | Current evidence |
 |---|---|
-| `TECHNICAL_APPENDIX.md` | Consolidated architecture, source-to-claim lineage, and field-usage review. |
+| Demo 1 | Store A month-over-month diagnostic across 2026-02, 2026-03, and 2026-04. |
+| Demo 2 | Same-period B-F diagnostic under the March 2026 reporting window. |
+| Repeated-window panel | B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04. |
+| Generated memory facts | Source-aware retail facts with observed values, source fields, confidence labels, and limitations. |
+| Evaluation | Data-contract, Demo 2 output, generated-fact, answer-boundary, retrieval-inspection, and future-gate contract checks. |
 
-## Current Demos
+## Reading Order
 
-| Demo | Main file | Core evidence |
-|---|---|---|
-| Demo 1 | `demo/demo_1_store_a_month_over_month_diagnostic.md` | `data/store_a_monthly_metrics.csv`, `data/store_a_top_skus.csv`, `sql/01_store_a_month_over_month_diagnostic.sql`, `outputs/store_a_demo1_sql_output.csv`, `outputs/generated_retail_memory_facts.json` |
-| Demo 2 | `demo/demo_2_cross_store_comparability_diagnostic.md` | `data/demo2_store_period_metrics.csv`, `data/demo2_top_search_terms.csv`, `data/demo2_top_skus_by_sales_volume.csv`, `data/demo2_top_skus_by_transaction_amount.csv`, `sql/02_demo2_cross_store_comparability.sql`, `outputs/demo2_cross_store_comparability_output.csv`, `outputs/generated_demo2_retail_memory_facts.json` |
+| Step | File |
+|---:|---|
+| 1 | `../PROJECT_SUMMARY_FOR_ADMISSIONS.md` |
+| 2 | `../README.md` |
+| 3 | `data/DATA_DICTIONARY.md` |
+| 4 | `demo/demo_1_store_a_month_over_month_diagnostic.md` |
+| 5 | `demo/demo_2_cross_store_comparability_diagnostic.md` |
+| 6 | `EXPERIMENT_RESULTS.md` |
+| 7 | `COMPARABILITY_GATE_V0.md` |
+| 8 | `TECHNICAL_APPENDIX.md` |
 
-## Repeated-Window Panel Extension
+## Main Outputs
 
-The repeated-window panel extension adds a small multi-month evidence layer after the current Demo 2 same-period diagnostic.
-
-Its role is to make B-F store-period coverage visible before future question-specific pairwise comparability rules are added.
-
-| Item | Current status |
+| Output | Purpose |
 |---|---|
-| Current coverage | Stores B-F across 2026-02, 2026-03, and 2026-04 |
-| Source table | `data/store_period_panel_metrics.csv` |
-| Source notes | `data/store_period_panel_source_notes.md` |
-| Coverage SQL | `sql/03_store_period_panel_coverage.sql` |
-| Coverage output | `outputs/store_period_panel_coverage_output.csv` |
-| Coverage validator | `scripts/validate_store_period_panel.py` |
-| Descriptive summary SQL | `sql/04_repeated_window_panel_summary.sql` |
-| Descriptive summary output | `outputs/repeated_window_panel_summary_output.csv` |
-| Descriptive summary validator | `scripts/validate_repeated_window_panel_summary.py` |
-| Current use | Coverage and descriptive summary for repeated store-period evidence before future pairwise comparability decisions. |
+| `outputs/store_a_demo1_sql_output.csv` | Demo 1 SQL diagnostic output. |
+| `outputs/demo2_cross_store_comparability_output.csv` | Demo 2 same-period diagnostic output. |
+| `outputs/generated_retail_memory_facts.json` | Demo 1 generated memory facts. |
+| `outputs/generated_demo2_retail_memory_facts.json` | Demo 2 generated memory facts. |
+| `outputs/store_period_panel_coverage_output.csv` | Repeated-window B-F coverage output. |
+| `outputs/repeated_window_panel_summary_output.csv` | Repeated-window descriptive summary output. |
+| `outputs/retrieval_score_distribution.csv` | Retrieval score inspection output. |
+| `outputs/retrieval_query_robustness.csv` | Query robustness inspection output. |
+
+## Local Checks
+
+| Check | Command |
+|---|---|
+| Markdown readability | `python3 ../scripts/validate_markdown_readability.py` |
+| CSV physical rows | `python3 scripts/validate_csv_physical_rows.py` |
+| Retail data contract | `python3 scripts/validate_retail_data_contract.py` |
+| Demo 2 output | `python3 scripts/validate_demo2_comparability_output.py` |
+| Guardrail sensitivity | `python3 scripts/analyze_demo2_guardrail_sensitivity.py` |
+| Store-period panel | `python3 scripts/validate_store_period_panel.py` |
+| Repeated-window summary | `python3 scripts/validate_repeated_window_panel_summary.py` |
+
+## Ownership
+
+| Topic | Owner file |
+|---|---|
+| Field names and metric definitions | `data/DATA_DICTIONARY.md` |
+| Retail experiment map and validation outcomes | `EXPERIMENT_RESULTS.md` |
+| Future pairwise-gate contract | `COMPARABILITY_GATE_V0.md` |
+| Technical lineage and architecture notes | `TECHNICAL_APPENDIX.md` |
+| Admissions-facing project summary | `../PROJECT_SUMMARY_FOR_ADMISSIONS.md` |
+| Repository-level architecture and run path | `../README.md` |
