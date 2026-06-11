@@ -288,7 +288,7 @@
             "matched_terms": [
               "entry"
             ],
-            "text": "```text\n   order-status counts / entry_users\n   ```"
+            "text": "```text\n   refund_amount\n   full_refund_orders\n   refund_orders_all_or_partial\n   ```"
           },
           {
             "line_start": 66,
