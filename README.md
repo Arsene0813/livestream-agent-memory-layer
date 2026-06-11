@@ -80,7 +80,7 @@ For admissions review, use this path first. It keeps the retail decision-support
 | 7 | `retail_ops/EXPERIMENT_RESULTS.md` | Current validation outcomes and evidence-boundary behavior. |
 | 8 | `retail_ops/COMPARABILITY_GATE_V0.md` | Future question-specific pairwise comparability-gate contract. |
 
-Technical appendices remain available under `retail_ops/ARCHITECTURE.md`, `retail_ops/LINEAGE.md`, and `retail_ops/FIELD_USAGE_REVIEW.md`, but they are not required for the first admissions reading path.
+Technical appendix material is consolidated under `retail_ops/TECHNICAL_APPENDIX.md`, but it is not required for the first admissions reading path.
 ## Architecture
 
 The prototype has two connected layers.
@@ -149,9 +149,7 @@ The first review path should stay short. These files are retained for technical 
 
 | Appendix | Owns | Should not repeat |
 |---|---|---|
-| `retail_ops/ARCHITECTURE.md` | System structure, evidence path, retrieval mode, and endpoint responsibility. | Admissions summary, field dictionary, or future gate rationale. |
-| `retail_ops/LINEAGE.md` | Source-to-SQL-to-memory lineage and claim traceability. | Full architecture explanation or repeated business narrative. |
-| `retail_ops/FIELD_USAGE_REVIEW.md` | Field-name and semantic-change review before future expansion. | General project summary or experiment results. |
+| `retail_ops/TECHNICAL_APPENDIX.md` | Consolidated architecture, source-to-claim lineage, and field-usage review. | Admissions summary, field dictionary, future gate rationale, or experiment results. |
 
 ## Evaluation Snapshot
 
@@ -214,8 +212,7 @@ These retrieval checks inspect score distribution and wording-variation behavior
 | --- | --- |
 | `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Admissions-facing summary of the real business problem and prototype scope. |
 | `retail_ops/data/DATA_DICTIONARY.md` | Canonical backend metric definitions and naming boundaries. |
-| `retail_ops/LINEAGE.md` | How source fields support SQL diagnostics and memory facts. |
-| `retail_ops/FIELD_USAGE_REVIEW.md` | Field-name review before future comparability-gate expansion. |
+| `retail_ops/TECHNICAL_APPENDIX.md` | Consolidated architecture, source-to-claim lineage, and field-usage review. |
 | `retail_ops/EXPERIMENTS.md` | Experiment questions, inputs, transformations, pass conditions, and failure modes. |
 | `retail_ops/COMPARABILITY_GATE_V0.md` | Future pairwise comparability-gate design note. |
 | `retail_ops/sql/` | SQL transformations for Demo 1 and Demo 2. |
@@ -241,7 +238,7 @@ The next development step is to add more repeated store-period evidence and test
 
 Retail field names and metric meanings must follow `retail_ops/data/DATA_DICTIONARY.md`.
 
-Future field-name or semantic changes must follow `retail_ops/FIELD_USAGE_REVIEW.md` before source CSVs, SQL outputs, generated facts, README/admissions wording, or evaluation cases are changed.
+Future field-name or semantic changes must follow the field-usage review section in `retail_ops/TECHNICAL_APPENDIX.md` before source CSVs, SQL outputs, generated facts, README/admissions wording, or evaluation cases are changed.
 
 Future pairwise comparability-gate wording must follow `retail_ops/COMPARABILITY_GATE_V0.md`.
 

@@ -8,7 +8,7 @@ DOC_PATHS = [
     "README.md",
     "PROJECT_SUMMARY_FOR_ADMISSIONS.md",
     "retail_ops/README.md",
-    "retail_ops/ARCHITECTURE.md",
+    "retail_ops/TECHNICAL_APPENDIX.md",
     "retail_ops/EXPERIMENT_RESULTS.md",
     "retail_ops/COMPARABILITY_GATE_V0.md",
 ]

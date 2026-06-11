@@ -73,7 +73,7 @@
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
       "retail_ops/data/demo2_top_search_terms.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
@@ -119,7 +119,7 @@
     "supporting_source_paths": [
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "activity mechanism details are not included",
@@ -173,7 +173,7 @@
     "supporting_source_paths": [
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
@@ -231,7 +231,7 @@
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
       "retail_ops/data/demo2_top_skus_by_transaction_amount.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "top-3 SKU evidence only",
       "not full SKU category-share analysis",
@@ -285,7 +285,7 @@
     "supporting_source_paths": [
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
@@ -370,7 +370,7 @@
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
       "retail_ops/data/demo2_top_search_terms.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
@@ -416,7 +416,7 @@
     "supporting_source_paths": [
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "activity mechanism details are not included",
@@ -470,7 +470,7 @@
     "supporting_source_paths": [
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
@@ -528,7 +528,7 @@
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
       "retail_ops/data/demo2_top_skus_by_transaction_amount.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "top-3 SKU evidence only",
       "not full SKU category-share analysis",
@@ -582,7 +582,7 @@
     "supporting_source_paths": [
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
@@ -667,7 +667,7 @@
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
       "retail_ops/data/demo2_top_search_terms.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
@@ -713,7 +713,7 @@
     "supporting_source_paths": [
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "activity mechanism details are not included",
@@ -767,7 +767,7 @@
     "supporting_source_paths": [
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
@@ -825,7 +825,7 @@
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
       "retail_ops/data/demo2_top_skus_by_transaction_amount.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "top-3 SKU evidence only",
       "not full SKU category-share analysis",
@@ -879,7 +879,7 @@
     "supporting_source_paths": [
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
@@ -964,7 +964,7 @@
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
       "retail_ops/data/demo2_top_search_terms.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
@@ -1010,7 +1010,7 @@
     "supporting_source_paths": [
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "activity mechanism details are not included",
@@ -1064,7 +1064,7 @@
     "supporting_source_paths": [
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
@@ -1122,7 +1122,7 @@
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
       "retail_ops/data/demo2_top_skus_by_transaction_amount.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "top-3 SKU evidence only",
       "not full SKU category-share analysis",
@@ -1176,7 +1176,7 @@
     "supporting_source_paths": [
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
@@ -1261,7 +1261,7 @@
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
       "retail_ops/data/demo2_top_search_terms.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
@@ -1307,7 +1307,7 @@
     "supporting_source_paths": [
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "activity mechanism details are not included",
@@ -1361,7 +1361,7 @@
     "supporting_source_paths": [
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
@@ -1419,7 +1419,7 @@
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
       "retail_ops/data/demo2_top_skus_by_transaction_amount.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "top-3 SKU evidence only",
       "not full SKU category-share analysis",
@@ -1473,7 +1473,7 @@
     "supporting_source_paths": [
       "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     ],
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
       "same-period March 2026 comparison only",
