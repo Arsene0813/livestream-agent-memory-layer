@@ -8,14 +8,14 @@ Reviewer-facing companion: `retail_ops/EXPERIMENTS.md` explains the purpose of e
 |---|---|---|
 | Metric contract | Checks whether selected Meituan backend fields keep canonical names, documented meanings, and generated-fact structure. | Passed. |
 | Demo 1 diagnostic | Shows that Store A monthly movement can be structured as a multi-metric operating profile. | Implemented. |
-| Demo 2 diagnostic SQL | Places selected B-F March 2026 store-period records under one reporting window and one field contract. | Implemented. |
-| Demo 2 memory facts | Converts SQL diagnostic evidence into retrieval-facing facts with source fields, observed values, and limitation notes. | Implemented. |
-| Answer-boundary behavior | Checks whether answers preserve metric definitions, entity scope, period scope, and comparison limits. | Implemented as offline scenario checks. |
-| Demo 2 endpoint behavior | Checks whether the file-backed Demo 2 endpoint answers supported B-F questions and keeps unsupported requests outside current scope. | Implemented as endpoint-level checks. |
+| Demo 2 diagnostic SQL | Places selected B-F March 2026 store-period records under one reporting window and one field contract. | Passed current scope-boundary validation. |
+| Demo 2 memory facts | Converts SQL diagnostic evidence into retrieval-facing facts with source fields, observed values, and limitation notes. | Passed current generated-fact evaluation. |
+| Answer-boundary behavior | Checks whether answers preserve metric definitions, entity scope, period scope, and comparison limits. | Passed current offline scenario checks. |
+| Demo 2 endpoint behavior | Checks whether the file-backed Demo 2 endpoint answers supported B-F questions and keeps unsupported requests outside current scope. | Passed current endpoint-level checks. |
 | Retrieval threshold inspection | Makes score behavior inspectable across supported, unsupported, mismatch, and ambiguous retail queries. | Completed as offline inspection. |
 | Query robustness inspection | Inspects whether small wording changes still retrieve the expected evidence path. | Completed as offline inspection. |
-| Future comparability-gate contract | Documents the planned pairwise gate as a question-specific future stage. | Contract documented. |
-| RAC grounded review | Makes factor expansion, evidence routing, critique, fact checking, and confidence updates visible over local project evidence. | Implemented as deterministic local-evidence scaffold. |
+| Future comparability-gate contract | Documents the planned pairwise gate as a question-specific future stage. | Documented and checked by contract stub. |
+| RAC grounded review | Makes factor expansion, evidence routing, critique, fact checking, and confidence updates visible over local project evidence. | Completed as deterministic local-evidence scaffold. |
 
 These checks are designed for a staged decision-support prototype. They show whether the current data path preserves field meanings, source scope, diagnostic boundaries, and reviewer-traceable evidence.
 
@@ -36,7 +36,7 @@ Expected behavior:
 
 The output may describe observed month-over-month movement, but it should not attribute performance change to one metric alone.
 
-Current result: Implemented.
+Current result: Passed current validation check.
 
 Checked by:
 
@@ -56,7 +56,7 @@ Expected behavior:
 
 The SQL output should include `comparison_scope_flag` and `comparison_limit_notes`, while staying at row-level same-period diagnostic scope.
 
-Current result: Implemented.
+Current result: Passed current Demo 2 scope-boundary validation.
 
 Checked by:
 
@@ -81,7 +81,7 @@ Expected behavior:
 
 The check should not optimize thresholds or turn them into peer-selection rules. It should only show whether the current threshold-based guardrail notes are sensitive to small threshold shifts.
 
-Current result: Implemented.
+Current result: Completed current guardrail sensitivity inspection.
 
 In the current B-F sample, all five stores have guardrail notes that change under at least one +/- 5 percentage-point sensitivity scenario. This means the current thresholds should be treated as diagnostic warnings, not stable peer-comparison rules.
 
@@ -109,7 +109,7 @@ Generated facts should preserve canonical field names and expose the main eviden
 - `top3_sku_product_mix_note`
 - `single_metric_attribution_guard`
 
-Current result: Implemented.
+Current result: Passed current generated-fact evaluation.
 
 Checked by:
 
@@ -140,7 +140,7 @@ The answer-boundary contract should preserve these rules:
 - `same_period_diagnostic_ready` is not a finished pairwise comparability decision.
 - `region_type` is weak context only.
 
-Current result: Implemented as offline scenario checks.
+Current result: Passed current offline scenario checks.
 
 Checked by:
 
@@ -169,7 +169,7 @@ Expected behavior:
 - best-store ranking and final operating recommendations are refused;
 - out-of-Demo-2 entities are refused.
 
-Current result: Implemented as endpoint-level boundary checks.
+Current result: Passed current endpoint-level boundary checks.
 
 Checked by:
 
@@ -197,7 +197,7 @@ The analysis should make retrieval behavior inspectable across supported, unsupp
 
 A high retrieval score should not be treated as sufficient evidence for an operating conclusion.
 
-Current result: Implemented as an offline small-corpus retrieval inspection.
+Current result: Completed as an offline small-corpus retrieval inspection.
 
 Boundary:
 
@@ -220,7 +220,7 @@ Supported cases should generally retain expected evidence in top-k under small w
 
 Unsupported, hard-negative, entity/period-mismatch, and ambiguous comparison cases should still require entity, period, slot, source-path, and interpretation-boundary checks.
 
-Current result: Implemented as an offline small-corpus robustness inspection.
+Current result: Completed as an offline small-corpus robustness inspection.
 
 Boundary:
 
@@ -241,7 +241,7 @@ The future gate may define planned factors such as transaction order volume, tra
 
 It should not appear as a current implemented gate in Demo 2 outputs.
 
-Current result: Contract documented as future work.
+Current result: Documented and checked by the future-gate contract stub.
 
 Checked by:
 
@@ -262,7 +262,7 @@ Expected behavior:
 
 The data contract should keep canonical field names aligned across source CSV files, SQL outputs, generated memory facts, and dictionary boundary notes.
 
-Current result: Implemented.
+Current result: Passed current retail data-contract validation.
 
 Checked by:
 
