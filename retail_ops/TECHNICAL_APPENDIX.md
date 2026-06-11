@@ -2,7 +2,7 @@
 
 This file consolidates the technical appendix material for the retail decision-support prototype.
 
-The first reviewer path should remain short: project summary, root README, retail README, and `retail_ops/data/DATA_DICTIONARY.md`.
+This appendix is the technical audit layer for the retail evidence path.
 
 This appendix is for later audit of architecture, lineage, and field-usage consistency.
 
@@ -10,9 +10,9 @@ This appendix is for later audit of architecture, lineage, and field-usage consi
 
 | Section | Source merged here |
 |---|---|
-| Architecture | Consolidated from the former architecture appendix. |
-| Source-to-Claim Lineage | Consolidated from the former lineage appendix. |
-| Field-Usage Review | Consolidated from the former field-usage review appendix. |
+| Architecture | Describes the current local retail evidence path and retrieval boundaries. |
+| Source-to-Claim Lineage | Traces selected backend fields through SQL outputs, generated facts, and answer-boundary checks. |
+| Field-Usage Review | Tracks field-name and semantic-change risk across source CSVs, SQL outputs, generated facts, reviewer-facing docs, and eval cases. |
 
 
 ---
@@ -497,12 +497,10 @@ It should answer one narrow question: if a field name or field meaning changes, 
 | Future field-addition caution | `retail_ops/COMPARABILITY_GATE_V0.md` for future pairwise gate fields |
 | Rename decision tracking | The field review tables in this file |
 
-This file should not repeat the full admissions narrative, the full architecture path, or the future comparability-gate design. It should keep the review narrow: field meaning, field location, rename risk, and whether a change is allowed.
 
+This section records field-name and semantic-change review for the retail evidence path.
 
-This file records the field-name review before expanding the retail comparability narrative.
-
-Current decision: **no existing source CSV field, SQL output field, generated memory slot, or evaluation field is renamed in this patch**.
+Current decision: **no existing source CSV field, SQL output field, generated memory slot, or evaluation field is renamed.**
 
 The purpose of this review is to protect the Meituan backend metric contract before future comparability-gate work. Backend-derived fields, SQL-derived diagnostic fields, and retrieval-facing memory slots should not be mixed, renamed, or promoted into new meanings without an explicit mapping review.
 
@@ -611,4 +609,4 @@ Possible future fields such as `activity_status`, `market_area_type`, `market_ar
 
 ## Current Decision
 
-No current source CSV field, SQL output field, generated memory slot, or evaluation field is renamed in this patch.
+Current decision: no current source CSV field, SQL output field, generated memory slot, or evaluation field is renamed.
