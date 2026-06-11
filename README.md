@@ -125,22 +125,16 @@ Retrieval-score inspection is kept as a separate offline analysis and is not the
 | `/chat_retail_ops_kb` | Retail memory retrieval over implemented Store A facts. | Retail extension path for source-bounded Store A diagnostic facts. |
 | `/chat_retail_ops_demo2_kb` | File-backed generated Demo 2 retail memory facts. | Boundary test for B-F same-period diagnostic facts; not retrieval-score evaluation and not a pairwise comparability gate. |
 
-## Retail Demo 1: Store A Month-over-Month Diagnostic
+## Retail Evidence Files
 
-Demo 1 analyzes one self-operated Qingdao store across February, March, and April 2026.
+Retail demo details are kept under `retail_ops/`.
 
-- Main file: `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md`
-- Role in the project: preserve a careful month-over-month operating profile before any cross-store interpretation is attempted.
-
-## Retail Demo 2: Same-Period B-F Diagnostic
-
-Demo 2 is the current cross-store diagnostic stage. It uses selected Stores B-F under the same March 2026 reporting window and the same `retail_ops/data/DATA_DICTIONARY.md` field contract.
-
-This section exposes store-period operating profiles and points detailed pairwise-comparison rules to the future-gate contract.
-
-- Main file: `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md`
-- Future gate contract: `retail_ops/COMPARABILITY_GATE_V0.md`
-- Current scope: same-period diagnostic evidence with documented interpretation limits; pairwise comparability rules are kept in the future gate contract.
+| Evidence layer | Primary file |
+|---|---|
+| Store A month-over-month diagnostic | `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` |
+| B-F same-period diagnostic | `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` |
+| Retail experiment map and validation outcomes | `retail_ops/EXPERIMENT_RESULTS.md` |
+| Future comparability-gate contract | `retail_ops/COMPARABILITY_GATE_V0.md` |
 
 ## Appendix Ownership
 
@@ -207,16 +201,9 @@ These retrieval checks inspect score distribution and wording-variation behavior
 
 ## Key Evidence Files
 
-| File | Why it matters |
-| --- | --- |
-| `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Admissions-facing summary of the real business problem and prototype scope. |
-| `retail_ops/data/DATA_DICTIONARY.md` | Canonical backend metric definitions and naming boundaries. |
-| `retail_ops/TECHNICAL_APPENDIX.md` | Consolidated architecture, source-to-claim lineage, and field-usage review. |
-| `retail_ops/EXPERIMENT_RESULTS.md` | Experiment map, validation outcomes, pass conditions, and failure modes. |
-| `retail_ops/COMPARABILITY_GATE_V0.md` | Future pairwise comparability-gate design note. |
-| `retail_ops/sql/` | SQL transformations for Demo 1 and Demo 2. |
-| `retail_ops/outputs/` | Generated diagnostic outputs and generated memory facts. |
-| `eval/` | Scenario-based evaluation scripts and reports. |
+Use the Admissions Review Path above for the first-pass file order.
+
+Detailed retail file ownership is kept in `retail_ops/README.md`.
 
 ## Review Takeaway and Next Step
 
@@ -237,11 +224,9 @@ The next development step is to add more repeated store-period evidence and test
 
 Retail field names and metric meanings must follow `retail_ops/data/DATA_DICTIONARY.md`.
 
-Future field-name or semantic changes must follow the field-usage review section in `retail_ops/TECHNICAL_APPENDIX.md` before source CSVs, SQL outputs, generated facts, README/admissions wording, or evaluation cases are changed.
+Retail experiment wording and validation claims should stay aligned with `retail_ops/EXPERIMENT_RESULTS.md`.
 
 Future pairwise comparability-gate wording must follow `retail_ops/COMPARABILITY_GATE_V0.md`.
-
-<!-- RAC_EXTENSION_START -->
 
 ## Structured Reasoning Scaffold: Factor-Aware Grounded Review
 
