@@ -108,7 +108,7 @@ Can the current guardrail signals remain stable across repeated months, or are t
 
 Evidence still missing for a stronger gate:
 
-- repeated store-period records;
+- broader repeated store-period records beyond the current B-F three-month panel;
 - activity calendar or campaign-status evidence where available;
 - repeated transaction-order and transaction-amount bands;
 - local competition or price-pressure notes where available;
@@ -162,9 +162,9 @@ The current repeated-window panel is used to check whether Demo 2 guardrails are
 | Activity involvement stability | Repeated `activity_orders`, `activity_order_share_pct`, and `activity_cost_ratio_pct` | Whether activity-heavy rows remain activity-heavy across months | One campaign month creates a false peer group |
 | Region / market-context evidence | More stores plus local consumption, competition, or delivery-radius notes where available | Whether `region_type` is enough as weak context or new `market_area_type` fields are justified | Region labels alone explain too little |
 | SKU-structure comparability | Broader SKU evidence beyond top-3 ranking views | Whether top-SKU concentration is stable enough to constrain comparison | Top-3 evidence changes too much or misses category structure |
-| Source-field stability | Repeated | Whether observed diagnostic guardrails are persistent or one-period noise | One-period diagnostic signals create misleading store comparison |
+| Source-field stability | Repeated source files, SQL outputs, and generated memory facts | Whether observed diagnostic guardrails remain traceable across months | One-period diagnostic signals appear stable because source coverage is not checked |
 
-## Reviewer Experiment Map
+## Compact Reviewer Experiment Map
 
 | Check | Business / data question | Data used | Saved output | What it supports | Boundary |
 |---|---|---|---|---|---|
@@ -182,7 +182,10 @@ Meituan backend metric evidence
 -> boundary-preserving answer checks
 -> deterministic source-aware review scaffold
 
-## Reviewer Map
+## Detailed Reviewer Experiment Map
+
+The table below expands the compact reviewer map into analytical questions, evidence paths, methods, current results, and interpretation boundaries.
+
 
 | Analytical question | Evidence used | Method | Current result | Interpretation boundary |
 |---|---|---|---|---|

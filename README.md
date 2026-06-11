@@ -61,11 +61,9 @@ This prototype emphasizes:
 - checking whether generated answers remain tied to entity, period, metric definitions, and documented evidence boundaries;
 - returning boundary-preserving answers when the evidence does not support an operating conclusion.
 
-## Fast Reading Path
+## Reviewer Orientation
 
-For admissions review, use the `Admissions Review Path` table below. It keeps the business problem, field dictionary, implemented diagnostics, repeated-window evidence, experiment results, and future comparability-gate contract in one stable order.
-
-For technical audit, use the same table first. Architecture, lineage, field-change review, and future-gate details are kept as appendices under `retail_ops/` so that the main reviewer path stays short.
+Use the `Admissions Review Path` table below as the first pass. It keeps the business problem, field dictionary, implemented diagnostics, repeated-window evidence, experiment results, and future comparability-gate contract in one stable order. Technical appendices remain available after the first pass.
 
 ## Admissions Review Path
 
