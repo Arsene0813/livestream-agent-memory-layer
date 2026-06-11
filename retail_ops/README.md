@@ -63,7 +63,7 @@ These files are retained for auditability, but they are not separate reviewer en
 
 The repeated-window panel extension adds a small multi-month evidence layer after the current Demo 2 same-period diagnostic.
 
-Its role is to make B-F store-period coverage visible before future question-specific pairwise comparability rules are added.
+Its role is to make B-F store-period coverage visible before future question-specific pairwise comparability rules are added. It is an evidence-preparation layer, not a completed pairwise comparability gate.
 
 | Item | Current status |
 |---|---|

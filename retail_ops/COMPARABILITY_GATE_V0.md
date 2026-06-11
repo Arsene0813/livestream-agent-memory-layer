@@ -2,12 +2,15 @@
 
 This note records the next planned stage of the retail operations prototype.
 
-The current implemented retail scope stops at:
+The current implemented retail scope includes:
 
 1. Demo 1: Store A month-over-month diagnostic.
 2. Demo 2: Stores B-F same-period diagnostic structure.
+3. Repeated-window panel: Stores B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04.
 
-The next stage is a pairwise comparability gate. It is documented here as future work.
+The repeated-window panel is an evidence-preparation layer for coverage and stability inspection before a future pairwise comparability gate. It is not a completed pairwise comparability gate.
+
+The next stage is a question-specific pairwise comparability gate. It is documented here as future work.
 
 ## Why This Gate Matters
 
@@ -162,7 +165,7 @@ A future gate should be implemented as a question-specific decision flow, not as
 5. Check whether transaction order volume and transaction amount are within a reasonable comparison band.
 6. Check activity involvement and activity intensity, without inferring full activity status unless campaign-calendar evidence exists.
 7. Check store type and market-context evidence, while keeping `region_type` as weak context only.
-9. Return a question-specific `comparison_decision` with supporting fields, limiting factors, allowed interpretation, and unsupported interpretation.
+8. Return a question-specific `comparison_decision` with supporting fields, limiting factors, allowed interpretation, and unsupported interpretation.
 
 The gate should separate at least these comparison questions:
 
@@ -225,8 +228,7 @@ This section is a contract example only. It describes intended future behavior.
 It is not a current Demo 2 output and does not change the canonical field
 definitions in `retail_ops/data/DATA_DICTIONARY.md`.
 
-The future gate should answer a narrow comparison question, not produce a
-question-specific comparability decision.
+The future gate should answer a narrow comparison question by producing a question-specific comparability decision. It should not produce a global store score, a best-store ranking, or a strategy-transfer approval.
 
 | Future gate item | Example content |
 |---|---|

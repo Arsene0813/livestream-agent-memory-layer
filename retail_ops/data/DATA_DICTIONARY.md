@@ -87,6 +87,19 @@ Possible future fields:
 
 Until those fields are defined, the system should treat market-area classification as an unresolved comparability issue rather than a hard label.
 
+### `store_type`
+
+Current status: `store_type` is the implemented store-operating-model metadata field used in current retail source CSV files, SQL diagnostics, generated outputs, and future comparability-gate planning.
+
+Current demo values include:
+
+- `self-operated`
+- `partner`
+
+Correct use: `store_type` may be used as operating-model context when interpreting selected store-period evidence.
+
+Boundary: `store_type` is not a performance label, market-area classification, peer-store group, or sufficient comparability condition by itself. It should be interpreted together with reporting-window alignment, transaction order volume, transaction amount, activity involvement, activity intensity, region or market context, SKU evidence, data completeness, repeated reporting windows, and future competition or fulfillment evidence.
+
 ## Source Metrics vs SQL-Derived Diagnostics / 后台原始指标与 SQL 派生诊断边界
 
 Most canonical fields in this dictionary are normalized representations of metrics observed directly from the Meituan merchant backend.
