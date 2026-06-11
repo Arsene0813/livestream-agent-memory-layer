@@ -38,11 +38,10 @@ Use this order when reviewing the retail extension:
 | 3 | `demo/demo_1_store_a_month_over_month_diagnostic.md` | Store A month-over-month diagnostic evidence. |
 | 4 | `demo/demo_2_cross_store_comparability_diagnostic.md` | Same-period B-F diagnostic evidence and current comparison limits. |
 | 5 | `outputs/store_period_panel_coverage_output.csv` and `outputs/repeated_window_panel_summary_output.csv` | Repeated-window B-F evidence coverage and descriptive summary across 2026-02 to 2026-04. |
-| 6 | `EXPERIMENTS.md` | What each current analytical check is designed to test. |
-| 7 | `EXPERIMENT_RESULTS.md` | Current validation outcomes and evidence-boundary behavior. |
+| 6 | `EXPERIMENT_RESULTS.md` | Experiment map, validation outcomes, and evidence-boundary behavior. |
 | 8 | `COMPARABILITY_GATE_V0.md` | Future pairwise comparability-gate contract. |
 
-This file is the retail folder entry point. Detailed field boundaries belong in `data/DATA_DICTIONARY.md`; future-gate boundaries belong in `COMPARABILITY_GATE_V0.md`; experiment meaning and results belong in `EXPERIMENTS.md` and `EXPERIMENT_RESULTS.md`.
+This file is the retail folder entry point. Detailed field boundaries belong in `data/DATA_DICTIONARY.md`; future-gate boundaries belong in `COMPARABILITY_GATE_V0.md`; experiment meaning and results belong in `EXPERIMENT_RESULTS.md`.
 
 ## Technical Appendices
 
