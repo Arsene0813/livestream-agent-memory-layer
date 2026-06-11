@@ -101,13 +101,13 @@ Required source routing:
 
 | Factor | Required Source | Grounding Role |
 |---|---|---|
-| order_volume | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence |
-| transaction_amount | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence |
+| order_volume | `retail_ops/outputs/demo2_cross_store_comparability_output.csv` | quantitative_evidence |
+| transaction_amount | `retail_ops/outputs/demo2_cross_store_comparability_output.csv` | quantitative_evidence |
+| current_b_f_repeated_window_panel | `retail_ops/outputs/store_period_panel_coverage_output.csv` and `retail_ops/outputs/repeated_window_panel_summary_output.csv` | descriptive_evidence |
+| competition | `retail_ops/COMPARABILITY_GATE_V0.md` | boundary_evidence |
+| broader_repeated_window_stability | `retail_ops/COMPARABILITY_GATE_V0.md` | boundary_evidence |
 
-| competition | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence |
-| repeated_reporting_windows | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence |
-
-This is not a completed comparability engine. The grounded report shows which factors have current structured evidence and which factors remain explicit boundaries for future implementation.
+This is not a completed comparability engine. The grounded report should be read as a factor-routing audit: current B-F repeated-window panel evidence exists for 2026-02 to 2026-04, while broader repeated-window stability across more stores, months, activity conditions, and market contexts remains future evidence for a pairwise comparability gate.
 
 ## Recommended Review Order
 
