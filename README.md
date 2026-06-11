@@ -37,7 +37,7 @@ The single source of truth for retail field names and metric meanings is:
 
 The current retail decision-support path has three implemented evidence layers: Demo 1 for Store A month-over-month diagnosis, Demo 2 for selected Stores B-F under one March 2026 reporting window, and the repeated-window B-F panel across 2026-02, 2026-03, and 2026-04.
 
-A future pairwise comparability gate would judge whether two store-period records can be compared for a specific operating question. Naming note: existing Demo 2 paths keep `cross_store_comparability` for reference stability. In the current implementation, this means same-period diagnostic evidence and interpretation guardrails, not a completed pairwise comparability gate.
+A future pairwise comparability gate would judge whether two store-period records can be compared for a specific operating question. Demo 2 keeps the historical `cross_store_comparability` path wording for reference stability, but the implemented output remains same-period B-F diagnostic evidence rather than a pairwise gate decision.
 
 | Area | Current implementation | Current boundary |
 | --- | --- | --- |
@@ -114,7 +114,7 @@ The local FastAPI prototype includes general chat, memory, and retrieval endpoin
 - `/chat_retail_ops_kb`
 - `/chat_retail_ops_demo2_kb`
 
-The retail endpoints are local prototype endpoints. Demo 2 currently uses file-backed generated retail memory facts; it is not a production Meituan API integration.
+The retail endpoints are local prototype endpoints over file-backed generated retail memory facts. Demo 2 endpoint checks are used to inspect evidence behavior before any live Meituan integration.
 
 Retrieval-score inspection is kept as a separate offline analysis and is not the runtime selection logic of the Demo 2 endpoint.
 
@@ -137,11 +137,11 @@ Demo 1 analyzes one self-operated Qingdao store across February, March, and Apri
 
 Demo 2 is the current cross-store diagnostic stage. It uses selected Stores B-F under the same March 2026 reporting window and the same `retail_ops/data/DATA_DICTIONARY.md` field contract.
 
-The section exposes store-period operating profiles and points to the canonical future-gate contract instead of repeating the full boundary in this README.
+This section exposes store-period operating profiles and points detailed pairwise-comparison rules to the future-gate contract.
 
 - Main file: `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md`
 - Future gate contract: `retail_ops/COMPARABILITY_GATE_V0.md`
-- Current boundary: same-period diagnostic evidence with documented interpretation limits; pairwise comparability rules are kept in the future gate contract.
+- Current scope: same-period diagnostic evidence with documented interpretation limits; pairwise comparability rules are kept in the future gate contract.
 
 ## Appendix Ownership
 
@@ -282,6 +282,6 @@ Current RAC evidence and scripts:
 - `rac/scripts/run_grounded_pipeline.py`
 - `rac/scripts/validate_grounded_quality_gate.py`
 
-Current implementation boundary: deterministic and local-evidence-based. It should be read as a review scaffold over the current project evidence.
+Current implementation scope: deterministic review over local project evidence.
 
 <!-- RAC_EXTENSION_END -->
