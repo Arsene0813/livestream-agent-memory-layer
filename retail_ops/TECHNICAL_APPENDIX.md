@@ -113,7 +113,7 @@ Both paths should preserve metric definitions, entity scope, period scope, sourc
 
 | Evidence type | Examples | Current role | Interpretation limit |
 |---|---|---|---|
-| Backend-derived fields | `transaction_amount`, `entry_users`, `order_users`, `activity_orders`, `refund_amount` | Preserve Meituan backend metric meanings under canonical field names. | Observed metrics need context before stronger operating interpretation. |
+| Backend-derived fields | `transaction_amount`, `entry_users`, `order_users`, `activity_orders` | Preserve Meituan backend metric meanings under canonical field names. | Observed metrics need context before stronger operating interpretation. |
 | SQL-derived diagnostics | `search_entry_rate_pct`, `search_entry_share_pct`, `activity_order_share_pct`, `comparison_limit_notes` | Expose visibility-entry structure, activity involvement, product-mix signals, and interpretation limits. | Diagnostic signals are not peer-selection rules. |
 | Retrieval-facing memory slots | `visibility_entry_profile`, `activity_lever_profile`, `transaction_conversion_profile`, `single_metric_attribution_guard`, `top3_sku_product_mix_note` | Store evidence with source fields, observed values, calculation notes, confidence, and limitations. | Memory slots keep evidence traceable rather than creating undocumented fields. |
 | Future gate fields | `comparison_question_type`, `comparison_decision`, `market_area_type` | Planned contract fields for future pairwise comparability work. | These are future fields, not current Demo 2 output columns. |
@@ -480,18 +480,7 @@ Repeated-window summary lineage:
 
 This panel does not create a pairwise comparability gate. It checks whether Stores B-F have repeated monthly evidence across 2026-02, 2026-03, and 2026-04, then summarizes movement descriptively.
 
-The panel keeps selected dictionary-defined refund backend fields without interpreting refund reasons. It also keeps `store_type` values aligned with the existing source data: `self-operated` and `partner`.
-
-## Panel Refund Field Trace
-
-The repeated-window panel retains these dictionary-defined refund backend fields without interpreting refund reasons:
-
-- `refund_amount`
-- `full_refund_orders`
-- `refund_orders_all_or_partial`
-
-
----
+The panel keeps `store_type` values aligned with the existing source data: `self-operated` and `partner`.
 
 ## Field-Usage Review
 

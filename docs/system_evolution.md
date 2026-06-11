@@ -72,7 +72,7 @@ The same lifecycle-aware memory principle is now applied to Meituan instant-reta
 
 The practical problem is different from livestream product memory. Meituan's merchant backend provides rich single-store metrics, but multi-store operation requires a stricter question: which store-period records can be compared, under what limits, and which claims should be refused because the evidence is incomplete or not aligned.
 
-The retail extension therefore uses SQL and documented metric definitions before retrieval. The SQL layer organizes selected store-period, traffic, activity, refund, invalid-order, search-term, and top-SKU evidence into same-period, contract-aligned diagnostic outputs.
+The retail extension therefore uses SQL and documented metric definitions before retrieval. The SQL layer organizes selected store-period, traffic, activity, search-term, and top-SKU evidence into same-period, contract-aligned diagnostic outputs.
 
 The memory layer records store-period evidence, calculation notes, confidence, and limitations so that March data is not casually mixed with April data, activity-heavy stores are not treated like low-activity stores, and lightweight top-SKU evidence is not overstated as full category-share analysis.
 
