@@ -21,7 +21,7 @@ PERIOD_END = "2026-03-31"
 SOURCE_PATH = "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
 TOP_SEARCH_TERMS_SOURCE_PATH = "retail_ops/data/demo2_top_search_terms.csv"
 TOP_SKUS_BY_AMOUNT_SOURCE_PATH = "retail_ops/data/demo2_top_skus_by_transaction_amount.csv"
-LINEAGE_PATH = "retail_ops/LINEAGE.md"
+LINEAGE_PATH = "retail_ops/TECHNICAL_APPENDIX.md"
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:

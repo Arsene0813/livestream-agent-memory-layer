@@ -85,7 +85,7 @@ Activity evidence should be separated into:
 - activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`;
 - activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`.
 
-A future `activity_status` field should be added only if campaign-calendar or explicit backend activity-status evidence is available and documented in `retail_ops/data/DATA_DICTIONARY.md` and `retail_ops/LINEAGE.md`.
+A future `activity_status` field should be added only if campaign-calendar or explicit backend activity-status evidence is available and documented in `retail_ops/data/DATA_DICTIONARY.md` and the lineage section of `retail_ops/TECHNICAL_APPENDIX.md`.
 
 ## Activity Factor Boundary
 
@@ -188,7 +188,7 @@ These names describe a proposed future gate contract. They are not current imple
 Before any of them is used in CSV outputs, generated memory facts, or evaluation cases, the field must be documented in:
 
 - `retail_ops/data/DATA_DICTIONARY.md`
-- `retail_ops/LINEAGE.md`
+- `retail_ops/TECHNICAL_APPENDIX.md`
 
 ## Future Gate Output Contract
 

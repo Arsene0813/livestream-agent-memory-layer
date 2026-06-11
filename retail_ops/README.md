@@ -50,9 +50,7 @@ These files are retained for auditability, but they are not separate reviewer en
 
 | Appendix | Owns |
 |---|---|
-| `ARCHITECTURE.md` | Technical structure of the retail evidence path. |
-| `LINEAGE.md` | Source-to-SQL-to-memory lineage and claim traceability. |
-| `FIELD_USAGE_REVIEW.md` | Field-name and semantic-change review before future expansion. |
+| `TECHNICAL_APPENDIX.md` | Consolidated architecture, source-to-claim lineage, and field-usage review. |
 
 ## Current Demos
 

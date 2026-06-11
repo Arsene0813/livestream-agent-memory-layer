@@ -92,7 +92,7 @@ KNOWN_HELPER_FIELDS = {
 
 REQUIRED_FILES = [
     "retail_ops/data/DATA_DICTIONARY.md",
-    "retail_ops/LINEAGE.md",
+    "retail_ops/TECHNICAL_APPENDIX.md",
     "retail_ops/data/store_a_monthly_metrics.csv",
     "retail_ops/data/store_a_top_skus.csv",
     "retail_ops/data/demo2_store_period_metrics.csv",
@@ -240,7 +240,7 @@ def main() -> int:
         return 1
 
     dictionary = read_text("retail_ops/data/DATA_DICTIONARY.md")
-    lineage = read_text("retail_ops/LINEAGE.md")
+    lineage = read_text("retail_ops/TECHNICAL_APPENDIX.md")
     demo1_sql = read_text("retail_ops/sql/01_store_a_month_over_month_diagnostic.sql")
     demo2_sql = read_text("retail_ops/sql/02_demo2_cross_store_comparability.sql")
 
@@ -314,7 +314,7 @@ def main() -> int:
     ]
     for field in critical_lineage_fields:
         if field not in lineage:
-            failures.append(f"Critical lineage field `{field}` missing from LINEAGE.md")
+            failures.append(f"Critical lineage field `{field}` missing from TECHNICAL_APPENDIX.md")
 
     validate_generated_facts(
         relative_path="retail_ops/outputs/generated_retail_memory_facts.json",
