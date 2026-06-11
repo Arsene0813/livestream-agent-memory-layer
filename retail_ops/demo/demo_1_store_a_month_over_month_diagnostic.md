@@ -215,7 +215,6 @@ Future expansion should check whether candidate records are comparable by:
 - visibility and ranking profile;
 - entry and order-conversion profile;
 - activity involvement and activity intensity;
-- refund context using `refund_amount`, `full_refund_orders`, and `refund_orders_all_or_partial`;
 - top-SKU evidence;
 - data completeness;
 - repeated reporting-window stability.
