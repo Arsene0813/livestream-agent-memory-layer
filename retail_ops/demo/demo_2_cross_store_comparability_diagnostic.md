@@ -165,7 +165,7 @@ These values are diagnostic signals used to explain comparison limits. They are 
 
 The current output should be read as row-level diagnostic evidence, not as a pairwise store-comparability decision.
 
-The saved output keeps `comparison_limit_notes` for traceability, but this demo does not use those notes to classify or rank stores. The selected table above is limited to numeric operating signals and keeps interpretation tied to visibility, entry, order conversion, activity context, refund context, and product-mix context.
+The saved output keeps `comparison_limit_notes` for traceability, but this demo does not use those notes to classify or rank stores. The selected table above is limited to numeric operating signals and keeps interpretation tied to visibility, entry, order conversion, activity context, and product-mix context.
 
 ## Derived-Metric Scope Note
 

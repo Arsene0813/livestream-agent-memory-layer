@@ -25,7 +25,7 @@ The operating chain is:
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ~~~
 
-Refund context fields retained in the current panel are:
+Refund backend fields retained in the current panel are:
 
 - `refund_amount`
 - `full_refund_orders`
