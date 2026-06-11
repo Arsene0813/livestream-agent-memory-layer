@@ -149,7 +149,8 @@ The memory facts are currently file-backed for Demo 2. This is enough to test th
 
 The table below shows selected numeric signals from the current Demo 2 SQL output. It is ordered by anonymized store ID, not by performance rank.
 
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Store | transaction_orders | transaction_amount | search_exposure_users | search_average_rank | search_entry_users | search_entry_rate_pct | search_entry_share_pct | entry_conversion_rate_pct | order_conversion_rate_pct | activity_order_share_pct | activity_cost_ratio_pct | top3_sku_transaction_amount_share_pct |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | B | 299 | 11665.5 | 4390 | 15 | 683 | 15.56 | 88.7 | 15.12 | 36.88 | 88.63 | 10.76 | 11.15 |
 | C | 175 | 7064.09 | 2416 | 13 | 355 | 14.69 | 68.8 | 17.3 | 32.75 | 70.86 | 7.5 | 28.38 |
 | D | 404 | 18078.7 | 2663 | 13 | 738 | 27.71 | 87.65 | 13.88 | 46.56 | 83.42 | 8.95 | 16.9 |
@@ -164,16 +165,7 @@ These values are diagnostic signals used to explain comparison limits. They are 
 
 The current output should be read as row-level diagnostic evidence, not as a pairwise store-comparability decision.
 
-The raw `comparison_limit_notes` column below uses the contract strings produced by the SQL output and documented in `DATA_DICTIONARY.md`.
-
-The readable summary is only a human-facing explanation.
-
-| Store | Raw `comparison_limit_notes` from current output                                                              | Readable summary                                                                                                            |
-| ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| C   | `moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_product_mix_limits`                            | Activity involvement is moderate; top-3 SKU transaction amount is concentrated; comparison should stay limited by region, store type, activity, product-mix context.                     |
-| D   | `high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits`                              | Activity involvement is high; comparison should stay limited by region, store type, activity, product-mix context.                             |
-
-This table does not rank stores. It only makes the SQL-derived interpretation limits easier to read before future pairwise gate work is added.
+The saved output keeps `comparison_limit_notes` for traceability, but this demo does not use those notes to classify or rank stores. The selected table above is limited to numeric operating signals and keeps interpretation tied to visibility, entry, order conversion, activity context, refund context, and product-mix context.
 
 ## Derived-Metric Scope Note
 

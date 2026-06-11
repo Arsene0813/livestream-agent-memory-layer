@@ -36,7 +36,7 @@ Cross-store comparison, store-stage classification, causal attribution, margin-a
 | `retail_ops/sql/01_store_a_month_over_month_diagnostic.sql` | Offline SQL diagnostic query. |
 | `retail_ops/outputs/store_a_demo1_sql_output.csv` | SQL output used by this demo. |
 | `retail_ops/outputs/generated_retail_memory_facts.json` | Generated retail memory facts for retrieval. |
-| `retail_ops/LINEAGE.md` | Claim-to-data lineage and metric consistency rules. |
+| `retail_ops/TECHNICAL_APPENDIX.md` | Consolidated source-to-claim lineage and field-usage review. |
 
 ## Metric Definition Rules
 
@@ -215,7 +215,7 @@ Future expansion should check whether candidate records are comparable by:
 - visibility and ranking profile;
 - entry and order-conversion profile;
 - activity involvement and activity intensity;
-- refund and invalid-order pressure;
+- refund context using `refund_amount`, `full_refund_orders`, and `refund_orders_all_or_partial`;
 - top-SKU evidence;
 - data completeness;
 - repeated reporting-window stability.

@@ -45,7 +45,7 @@
     ],
     "confidence": "high",
     "source_path": "retail_ops/outputs/store_a_demo1_sql_output.csv",
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "single-store demo",
       "traffic-source users may overlap",
@@ -97,7 +97,7 @@
     ],
     "confidence": "high",
     "source_path": "retail_ops/outputs/store_a_demo1_sql_output.csv",
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "single-store demo",
       "promotion cycle dates are unknown",
@@ -146,7 +146,7 @@
     ],
     "confidence": "high",
     "source_path": "retail_ops/outputs/store_a_demo1_sql_output.csv",
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "single-store demo",
       "not causal attribution",
@@ -189,7 +189,7 @@
     ],
     "confidence": "high",
     "source_path": "retail_ops/outputs/store_a_demo1_sql_output.csv",
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "single-store demo",
       "not causal attribution",
@@ -219,7 +219,7 @@
     ],
     "confidence": "medium",
     "source_path": "retail_ops/data/store_a_top_skus.csv",
-    "lineage_path": "retail_ops/LINEAGE.md",
+    "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
       "top-3 SKU evidence only",
       "not full SKU category-share analysis",
