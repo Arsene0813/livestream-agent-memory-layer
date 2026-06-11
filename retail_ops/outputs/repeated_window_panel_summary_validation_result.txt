@@ -1,0 +1,4 @@
+[PASS] Repeated-window panel summary validation passed.
+[PASS] Summary output contains Stores B-F with 3 observed months each.
+[PASS] Summary uses canonical store_type values.
+[PASS] Summary remains descriptive and boundary-preserving.

@@ -1,0 +1,248 @@
+{
+  "case_id": "rac_store_a_attribution_001",
+  "question": "Can Store A's April growth be attributed to search exposure?",
+  "question_type": "causal_diagnostic",
+  "resolver_result": {
+    "summary": {
+      "question": "Can Store A's April growth be attributed to search exposure?",
+      "question_type": "causal_diagnostic",
+      "total_packets": 4,
+      "status_counts": {
+        "keyword_matched": 4
+      },
+      "role_counts": {
+        "default_evidence": 4
+      },
+      "source_missing_count": 0,
+      "keyword_matched_count": 4,
+      "boundary_matched_count": 0,
+      "fallback_count": 0
+    },
+    "resolved_packets": [
+      {
+        "factor_id": "search_exposure",
+        "evidence_id": "evidence_search_exposure",
+        "source_type": "markdown",
+        "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+        "source_exists": true,
+        "grounding_role": "default_evidence",
+        "keywords_used": [
+          "search",
+          "search exposure",
+          "search entry",
+          "search average rank",
+          "搜索",
+          "曝光",
+          "搜索曝光",
+          "搜索入店",
+          "平均排名"
+        ],
+        "grounding_status": "keyword_matched",
+        "snippets": [
+          {
+            "line_start": 80,
+            "line_end": 82,
+            "matched_terms": [
+              "search"
+            ],
+            "text": "Store A's visibility and entry structure can be described from exposure, ranking, entry, and search-entry metrics."
+          },
+          {
+            "line_start": 82,
+            "line_end": 84,
+            "matched_terms": [
+              "search",
+              "search entry"
+            ],
+            "text": "| Month  | Exposure Users | Store Average Rank | Entry Users | Search Entry Users | Search Entry Share |\n| ------- | -------------: | -----------------: | ----------: | -----------------: | -----------------: |"
+          },
+          {
+            "line_start": 90,
+            "line_end": 92,
+            "matched_terms": [
+              "search"
+            ],
+            "text": "- March had weaker exposure, weaker average rank, fewer entry users, and fewer search-entry users.\n- April recovered in exposure, rank, entry users, and search-entry users."
+          }
+        ],
+        "original_claim_supported": "Provides context needed to evaluate factor: search_exposure.",
+        "original_limitations": [
+          "Deterministic mock pipeline only.",
+          "No live retrieval is performed in this step."
+        ],
+        "resolver_limitations": [
+          "Local text matching only.",
+          "No semantic embedding retrieval is used in this step.",
+          "No causality is inferred from matched snippets."
+        ]
+      },
+      {
+        "factor_id": "entry_conversion",
+        "evidence_id": "evidence_entry_conversion",
+        "source_type": "markdown",
+        "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+        "source_exists": true,
+        "grounding_role": "default_evidence",
+        "keywords_used": [
+          "entry",
+          "entry conversion",
+          "entry users",
+          "入店",
+          "入店转化",
+          "入店人数",
+          "入店次数"
+        ],
+        "grounding_status": "keyword_matched",
+        "snippets": [
+          {
+            "line_start": 49,
+            "line_end": 51,
+            "matched_terms": [
+              "entry"
+            ],
+            "text": "```text\n   order_conversion_rate_pct = order_users / entry_users * 100\n   ```"
+          },
+          {
+            "line_start": 55,
+            "line_end": 57,
+            "matched_terms": [
+              "entry"
+            ],
+            "text": "```text\n   refund_amount\n   full_refund_orders\n   refund_orders_all_or_partial\n   ```"
+          },
+          {
+            "line_start": 66,
+            "line_end": 68,
+            "matched_terms": [
+              "entry",
+              "entry users"
+            ],
+            "text": "3. Traffic-source users may overlap. Source-level users should not be summed into total exposure users or total entry users."
+          }
+        ],
+        "original_claim_supported": "Provides context needed to evaluate factor: entry_conversion.",
+        "original_limitations": [
+          "Deterministic mock pipeline only.",
+          "No live retrieval is performed in this step."
+        ],
+        "resolver_limitations": [
+          "Local text matching only.",
+          "No semantic embedding retrieval is used in this step.",
+          "No causality is inferred from matched snippets."
+        ]
+      },
+      {
+        "factor_id": "order_conversion",
+        "evidence_id": "evidence_order_conversion",
+        "source_type": "markdown",
+        "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+        "source_exists": true,
+        "grounding_role": "default_evidence",
+        "keywords_used": [
+          "order conversion",
+          "order users",
+          "order times",
+          "下单",
+          "下单转化",
+          "下单人数",
+          "下单次数"
+        ],
+        "grounding_status": "keyword_matched",
+        "snippets": [
+          {
+            "line_start": 72,
+            "line_end": 74,
+            "matched_terms": [
+              "order conversion"
+            ],
+            "text": "| Month   | Transaction Amount | Transaction Orders | Entry Users | Order Conversion Rate | Average Order Value |\n| ------- | -----------------: | -----------------: | ----------: | --------------------: | ------------------: |"
+          },
+          {
+            "line_start": 121,
+            "line_end": 123,
+            "matched_terms": [
+              "order conversion"
+            ],
+            "text": "| Search Entry Users  |   445 |   839 | Up    |\n| Order Conversion Rate | 42.34% | 37.42% | Down   |\n| Average Order Value  |  31.18 |  26.95 | Down   |"
+          },
+          {
+            "line_start": 128,
+            "line_end": 130,
+            "matched_terms": [
+              "order conversion"
+            ],
+            "text": "The store had more exposure, more entry users, more transaction orders, and higher transaction amount, but order conversion rate and average order value declined."
+          }
+        ],
+        "original_claim_supported": "Provides context needed to evaluate factor: order_conversion.",
+        "original_limitations": [
+          "Deterministic mock pipeline only.",
+          "No live retrieval is performed in this step."
+        ],
+        "resolver_limitations": [
+          "Local text matching only.",
+          "No semantic embedding retrieval is used in this step.",
+          "No causality is inferred from matched snippets."
+        ]
+      },
+      {
+        "factor_id": "promotion_intensity",
+        "evidence_id": "evidence_promotion_intensity",
+        "source_type": "markdown",
+        "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+        "source_exists": true,
+        "grounding_role": "default_evidence",
+        "keywords_used": [
+          "promotion",
+          "activity",
+          "activity orders",
+          "activity cost",
+          "merchant subsidy",
+          "platform subsidy",
+          "活动",
+          "活动订单",
+          "活动成本",
+          "商家补贴",
+          "平台补贴"
+        ],
+        "grounding_status": "keyword_matched",
+        "snippets": [
+          {
+            "line_start": 18,
+            "line_end": 20,
+            "matched_terms": [
+              "activity"
+            ],
+            "text": "A store may use activity subsidy, pricing, ranking optimization, SKU mix, and fulfillment control as operating levers inside this chain."
+          },
+          {
+            "line_start": 58,
+            "line_end": 60,
+            "matched_terms": [
+              "activity"
+            ],
+            "text": "2. `activity_cost_ratio_pct` follows the backend-style formula:"
+          },
+          {
+            "line_start": 61,
+            "line_end": 63,
+            "matched_terms": [
+              "activity"
+            ],
+            "text": "```text\n   activity_cost_ratio_pct = activity_cost / activity_original_transaction_amount * 100\n   ```"
+          }
+        ],
+        "original_claim_supported": "Provides context needed to evaluate factor: promotion_intensity.",
+        "original_limitations": [
+          "Deterministic mock pipeline only.",
+          "No live retrieval is performed in this step."
+        ],
+        "resolver_limitations": [
+          "Local text matching only.",
+          "No semantic embedding retrieval is used in this step.",
+          "No causality is inferred from matched snippets."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+store_id,period_month,period_start,period_end,sku_rank,sku_name,sku_name_en,sku_transaction_amount,sales_volume,sku_category_note
+B,2026-03,2026-03-01,2026-03-31,1,隐形眼镜护理液（海俪恩）隐形眼镜多功能护理液（清润）（舒适型）120ml/瓶/盒,"Hailien Qingrun comfort-type multi-purpose contact lens solution, 120ml bottle/box",678.45,,not_classified
+B,2026-03,2026-03-01,2026-03-31,2,（博士伦）透明隐形眼镜（清朗）（日抛）（每日抛弃型）10片/盒,"Bausch + Lomb Qinglang clear daily disposable contact lenses, 10 lenses/box",320.95,,not_classified
+B,2026-03,2026-03-01,2026-03-31,3,（博士伦）透明隐形眼镜（奥澈）（月抛）（硅水凝胶）3片/盒保湿新科技 强烈推荐,"Bausch + Lomb Aoche clear monthly silicone hydrogel contact lenses, 3 lenses/box, moisturizing technology",301.50,,not_classified
+C,2026-03,2026-03-01,2026-03-31,1,（傲滴）隐形眼镜多功能护理液（清洁舒适）（无菌）120ml/瓶/盒,"Aodi cleaning-and-comfort sterile multi-purpose contact lens solution, 120ml bottle/box",785.38,,not_classified
+C,2026-03,2026-03-01,2026-03-31,2,（海俪恩）隐形眼镜多功能护理液（海俪恩清润）120ml/瓶,"Hailien Qingrun multi-purpose contact lens solution, 120ml bottle",694.96,,not_classified
+C,2026-03,2026-03-01,2026-03-31,3,（博士伦）硬性角膜接触镜护理液（博视顿新洁）120ml/瓶/盒,"Bausch + Lomb Boston Xinjie hard contact lens care solution, 120ml bottle/box",524.50,,not_classified
+D,2026-03,2026-03-01,2026-03-31,1,（爱尔康）隐形眼镜多功能护理液（傲滴）120ml/瓶/盒,"Alcon Aodi multi-purpose contact lens solution, 120ml bottle/box",1619.79,,not_classified
+D,2026-03,2026-03-01,2026-03-31,2,（爱尔康）隐形眼镜多功能护理液（傲滴）（内含镜盒）355ml/瓶/盒,"Alcon Aodi multi-purpose contact lens solution with lens case included, 355ml bottle/box",832.77,,not_classified
+D,2026-03,2026-03-01,2026-03-31,3,（海俪恩）隐形眼镜多功能护理液（全视）360ml/瓶/盒,"Hailien Quanshi multi-purpose contact lens solution, 360ml bottle/box",603.22,,not_classified
+E,2026-03,2026-03-01,2026-03-31,1,（海俪恩）隐形眼镜多功能护理液（清润）（舒适型）120ml/瓶/盒,"Hailien Qingrun comfort-type multi-purpose contact lens solution, 120ml bottle/box",256.97,,not_classified
+E,2026-03,2026-03-01,2026-03-31,2,（爱尔康）隐形眼镜多功能护理液（傲滴）120ml/瓶/盒,"Alcon Aodi multi-purpose contact lens solution, 120ml bottle/box",243.78,,not_classified
+E,2026-03,2026-03-01,2026-03-31,3,（博士伦）隐形眼镜多功能护理液（300ml/瓶+120ml/瓶）/盒,"Bausch + Lomb multi-purpose contact lens solution set, 300ml bottle + 120ml bottle/box",225.50,,not_classified
+F,2026-03,2026-03-01,2026-03-31,1,（海俪恩）隐形眼镜多功能护理液（清润）（舒适型）120ml/瓶/盒,"Hailien Qingrun comfort-type multi-purpose contact lens solution, 120ml bottle/box",809.34,,not_classified
+F,2026-03,2026-03-01,2026-03-31,2,（爱尔康）隐形眼镜多功能护理液（傲滴）120ml/瓶/盒,"Alcon Aodi multi-purpose contact lens solution, 120ml bottle/box",715.00,,not_classified
+F,2026-03,2026-03-01,2026-03-31,3,（博士伦）隐形眼镜多功能护理液（润明）120ml/瓶/盒,"Bausch + Lomb Runming multi-purpose contact lens solution, 120ml bottle/box",274.06,,not_classified

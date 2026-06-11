@@ -1,0 +1,837 @@
+{
+  "question": "How should the RAC system be connected to the existing memory layer?",
+  "question_type": "technical_design",
+  "domain": "ai_system_design",
+  "factors": [
+    {
+      "factor_id": "typed_memory",
+      "name": "Typed memory",
+      "description": "Preserve existing typed facts.",
+      "evidence_needed": [
+        "memory schema"
+      ]
+    },
+    {
+      "factor_id": "evidence_packets",
+      "name": "Evidence packets",
+      "description": "Pass structured evidence rather than free-form context.",
+      "evidence_needed": [
+        "source path",
+        "claim supported",
+        "limitations"
+      ]
+    },
+    {
+      "factor_id": "hypotheses",
+      "name": "Hypotheses",
+      "description": "Preserve competing explanations before final synthesis.",
+      "evidence_needed": [
+        "hypothesis records"
+      ]
+    },
+    {
+      "factor_id": "belief_records",
+      "name": "Belief records",
+      "description": "Store conclusions with confidence and validity conditions.",
+      "evidence_needed": [
+        "belief update schema"
+      ]
+    },
+    {
+      "factor_id": "confidence",
+      "name": "Confidence",
+      "description": "Expose uncertainty explicitly.",
+      "evidence_needed": [
+        "confidence field"
+      ]
+    },
+    {
+      "factor_id": "limitations",
+      "name": "Limitations",
+      "description": "State what cannot be concluded.",
+      "evidence_needed": [
+        "limitations field"
+      ]
+    },
+    {
+      "factor_id": "retrieval_trace",
+      "name": "Retrieval trace",
+      "description": "Make evidence traceable to sources.",
+      "evidence_needed": [
+        "source metadata"
+      ]
+    },
+    {
+      "factor_id": "active_state_filtering",
+      "name": "Active-state filtering",
+      "description": "Avoid stale or deprecated memory records.",
+      "evidence_needed": [
+        "active flag",
+        "freshness policy"
+      ]
+    }
+  ],
+  "factor_weights": [
+    {
+      "factor_id": "typed_memory",
+      "weight": 0.72,
+      "weight_bucket": "medium",
+      "weight_reason": "Important context but not sufficient on its own.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "evidence_packets",
+      "weight": 0.85,
+      "weight_bucket": "high",
+      "weight_reason": "Central to avoiding overconfident or misleading conclusions.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "hypotheses",
+      "weight": 0.72,
+      "weight_bucket": "medium",
+      "weight_reason": "Important context but not sufficient on its own.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "belief_records",
+      "weight": 0.85,
+      "weight_bucket": "high",
+      "weight_reason": "Central to avoiding overconfident or misleading conclusions.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "confidence",
+      "weight": 0.72,
+      "weight_bucket": "medium",
+      "weight_reason": "Important context but not sufficient on its own.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "limitations",
+      "weight": 0.72,
+      "weight_bucket": "medium",
+      "weight_reason": "Important context but not sufficient on its own.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "retrieval_trace",
+      "weight": 0.85,
+      "weight_bucket": "high",
+      "weight_reason": "Central to avoiding overconfident or misleading conclusions.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "active_state_filtering",
+      "weight": 0.72,
+      "weight_bucket": "medium",
+      "weight_reason": "Important context but not sufficient on its own.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    }
+  ],
+  "evidence_packets": [
+    {
+      "evidence_id": "evidence_typed_memory",
+      "source_type": "markdown",
+      "source_path": "rac/README.md",
+      "claim_supported": "Provides context needed to evaluate factor: typed_memory.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_evidence_packets",
+      "source_type": "markdown",
+      "source_path": "rac/README.md",
+      "claim_supported": "Provides context needed to evaluate factor: evidence_packets.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_hypotheses",
+      "source_type": "markdown",
+      "source_path": "rac/README.md",
+      "claim_supported": "Provides context needed to evaluate factor: hypotheses.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_belief_records",
+      "source_type": "markdown",
+      "source_path": "rac/README.md",
+      "claim_supported": "Provides context needed to evaluate factor: belief_records.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_confidence",
+      "source_type": "markdown",
+      "source_path": "rac/README.md",
+      "claim_supported": "Provides context needed to evaluate factor: confidence.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_limitations",
+      "source_type": "markdown",
+      "source_path": "rac/README.md",
+      "claim_supported": "Provides context needed to evaluate factor: limitations.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_retrieval_trace",
+      "source_type": "markdown",
+      "source_path": "rac/README.md",
+      "claim_supported": "Provides context needed to evaluate factor: retrieval_trace.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_active_state_filtering",
+      "source_type": "markdown",
+      "source_path": "rac/README.md",
+      "claim_supported": "Provides context needed to evaluate factor: active_state_filtering.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "hypothesis_id": "H1",
+      "claim": "RAC should be implemented as a reasoning layer above the existing typed memory layer.",
+      "confidence": 0.86,
+      "supporting_factors": [
+        "typed_memory",
+        "evidence_packets",
+        "hypotheses",
+        "belief_records",
+        "retrieval_trace",
+        "active_state_filtering"
+      ],
+      "weaknesses": [
+        "This mock pipeline does not call the existing API or vector database."
+      ],
+      "status": "strong"
+    },
+    {
+      "hypothesis_id": "H2",
+      "claim": "The first implementation should remain deterministic before adding LLM calls.",
+      "confidence": 0.8,
+      "supporting_factors": [
+        "confidence",
+        "limitations",
+        "retrieval_trace"
+      ],
+      "weaknesses": [
+        "Deterministic logic is less flexible than model-based reasoning."
+      ],
+      "status": "strong"
+    }
+  ],
+  "critic_findings": [
+    {
+      "issue": "The mock pipeline must not claim causal proof from observational evidence.",
+      "severity": "high",
+      "recommendation": "Use cautious language and state that attribution is not proven."
+    },
+    {
+      "issue": "The mock pipeline uses structured placeholder evidence rather than live retrieval.",
+      "severity": "medium",
+      "recommendation": "State this limitation clearly."
+    }
+  ],
+  "fact_check": {
+    "status": "pass",
+    "unsupported_claims": [],
+    "definition_conflicts": []
+  },
+  "belief_update": {
+    "belief_id": "rac_should_layer_above_existing_memory",
+    "claim": "RAC should be implemented as a reasoning layer above the existing typed memory system before replacing any endpoint.",
+    "confidence": 0.84,
+    "status": "active",
+    "validity_conditions": [
+      "Current project architecture stage."
+    ],
+    "limitations": [
+      "The mock pipeline does not call Qdrant, FastAPI, Ollama, or external LLMs yet."
+    ]
+  },
+  "final_report": "# Grounded RAC Report\n\n## 1. Direct Answer\n\nRAC should be implemented as a reasoning layer above the existing typed memory system before replacing any endpoint.\n\nThis report is generated by the deterministic RAC pipeline with local evidence grounding. It does not call an LLM, vector database, or live backend service.\n\n## 2. Question Type\n\n- Question type: technical_design\n- Domain: ai_system_design\n\n## 3. Factor Weights\n\n## 3a. How Factor Weights Are Generated\n\nFactor weights are generated by deterministic heuristic bucket assignment inside `rac/src/mock_pipeline.py`: not by a learned model, not by direct calculation from observed metric tables, not as probabilities, and not as optimized business thresholds.\n\n| Bucket | Weight | Rule | Factors in This Report |\n|---|---:|---|---|\n| high | 0.85 | Central to avoiding overconfident or misleading conclusions. | evidence_packets, belief_records, retrieval_trace |\n| medium | 0.72 | Important context but not sufficient on its own. | typed_memory, hypotheses, confidence, limitations, active_state_filtering |\n| default | 0.60 | Potentially relevant but requires stronger evidence. | none |\n\nWeighting limitations:\n- Weights are assigned by deterministic factor-id buckets.\n- Weights are not learned from historical data.\n- Weights are not calculated directly from observed metric tables.\n- Weights are not probabilities.\n- Weights are not optimized business thresholds.\n- Weights only indicate review priority inside the current evidence-bounded RAC scaffold.\n\n| Factor | Weight | Bucket | Evidence Status | Why It Matters |\n|---|---:|---|---|\n| typed_memory | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |\n| evidence_packets | 0.85 | high | partially_supported | Central to avoiding overconfident or misleading conclusions. |\n| hypotheses | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |\n| belief_records | 0.85 | high | partially_supported | Central to avoiding overconfident or misleading conclusions. |\n| confidence | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |\n| limitations | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |\n| retrieval_trace | 0.85 | high | partially_supported | Central to avoiding overconfident or misleading conclusions. |\n| active_state_filtering | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |\n\n## 4. Local Evidence Grounding\n\n- Total evidence packets: 8\n- Keyword matched packets: 8\n- Boundary matched packets: 0\n- Fallback packets: 0\n- Missing source files: 0\n\n| Factor | Source | Role | Status | Lines | Matched Terms | Local Evidence Snippet |\n|---|---|---|---|---|---|---|\n| typed_memory | rac/README.md | default_evidence | keyword_matched | 8-10 | fact | question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-coverage and limitation update -> final report |\n| evidence_packets | rac/README.md | default_evidence | keyword_matched | 2-4 | evidence | This module is a structured reasoning scaffold for question decomposition, evidence routing, critique, and evidence-coverage and limitation update. |\n| hypotheses | rac/README.md | default_evidence | keyword_matched | 8-10 | hypothesis | question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-coverage and limitation update -> final report |\n| belief_records | rac/README.md | default_evidence | keyword_matched | 62-64 | confidence | * critique unsupported assumptions before writing the final answer, * update confidence and limitations only when the evidence supports the change. |\n| confidence | rac/README.md | default_evidence | keyword_matched | 62-64 | confidence | * critique unsupported assumptions before writing the final answer, * update confidence and limitations only when the evidence supports the change. |\n| limitations | rac/README.md | default_evidence | keyword_matched | 2-4 | limitation | This module is a structured reasoning scaffold for question decomposition, evidence routing, critique, and evidence-coverage and limitation update. |\n| retrieval_trace | rac/README.md | default_evidence | keyword_matched | 4-6 | source | The `rac/` directory name is retained for path stability. In reviewer-facing wording, this should be read as a deterministic, source-grounded reasoning scaffold with explicit evidence and boundary checks. |\n| active_state_filtering | rac/README.md | default_evidence | keyword_matched | 26-28 | state | * a shared review-state schema, * deterministic question analysis and factor expansion, |\n\n## 5. Competing Hypotheses\n\nHypothesis confidence values are deterministic scenario-template values assigned by `generate_hypotheses(question_type)` in `rac/src/mock_pipeline.py`. They are not learned probabilities, calibrated likelihoods, or direct calculations from observed Meituan metric tables.\n\n| Hypothesis | Confidence | Status | Weakness |\n|---|---:|---|---|\n| RAC should be implemented as a reasoning layer above the existing typed memory layer. | 0.86 | strong | This mock pipeline does not call the existing API or vector database. |\n| The first implementation should remain deterministic before adding LLM calls. | 0.80 | strong | Deterministic logic is less flexible than model-based reasoning. |\n\n## 6. Critic Findings\n\n- [high] The mock pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.\n- [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.\n\n## 7. Fact Check\n\n- Status: pass\n- Unsupported claims: none\n- Definition conflicts: none\n\n## 8. Final Judgment\n\nRAC should be implemented as a reasoning layer above the existing typed memory system before replacing any endpoint.\n\nThe judgment remains conservative because local snippet matching grounds the evidence, but it does not prove causality or replace a full retrieval system.\n\n## 9. Evidence-Coverage Score\n\n1.00\n\nHow this score is calculated:\n\n```text\nevidence_coverage_score =\n  0.45 * direct_evidence_rate\n+ 0.25 * supported_or_boundary_rate\n+ 0.15 * no_missing_source_file_score\n+ 0.15 * no_fallback_score\n```\n\nWeight rationale:\n\n| Component | Weight | Why |\n|---|---:|---|\n| `direct_evidence_rate` | 0.45 | Highest priority because actual local evidence should matter more than boundary-only evidence. |\n| `supported_or_boundary_rate` | 0.25 | Boundary evidence is valuable because it explicitly records missing requirements instead of hiding them. |\n| `no_missing_source_file_score` | 0.15 | Source files must exist, but this is a basic traceability check rather than evidence strength. |\n| `no_fallback_score` | 0.15 | Fallback evidence is acceptable as a warning, but should reduce confidence in coverage. |\n\nFormula limitation:\n\n- These weights are fixed prototype heuristics.\n- They are not learned parameters, optimized thresholds, calibrated probabilities, or business-performance predictors.\n- The score is intended to make evidence-routing coverage inspectable, not to prove that a business conclusion is correct.\n\nFuture sensitivity check:\n\n- A future version should run a small sensitivity check over alternative weight settings, similar to the Demo 2 guardrail sensitivity check.\n- If the final report interpretation changes sharply under small weight changes, the score should be treated as weight-sensitive evidence rather than a stable review signal.\n\nCurrent report inputs:\n\n- total_packets = 8\n- keyword_matched_packets = 8\n- boundary_matched_packets = 0\n- fallback_packets = 0\n- missing_source_files = 0\n- direct_evidence_rate = keyword_matched_packets / total_packets = 1.00\n- supported_or_boundary_rate = (keyword_matched_packets + boundary_matched_packets) / total_packets = 1.00\n- no_missing_source_file_score = 1.00\n- no_fallback_score = 1.00\n\nInterpretation boundary:\n\n- This is a deterministic evidence-routing coverage score for the current local report.\n- It is not a learned probability, Bayesian posterior, causal confidence score, or business-success probability.\n- Boundary-matched evidence can increase coverage because it explicitly records missing requirements instead of hiding them.\n- A high score means the report is well-covered by local evidence and explicit boundaries; it does not mean the business conclusion is certain.\n\n## 10. What Cannot Be Concluded\n\n- The mock pipeline does not call Qdrant, FastAPI, Ollama, or external LLMs yet.\n\n## 11. Review-State Update\n\n- review_state_id: rac_should_layer_above_existing_memory\n- status: active\n- validity_conditions:\n  - Current project architecture stage.\n",
+  "grounded_evidence": {
+    "summary": {
+      "question": "How should the RAC system be connected to the existing memory layer?",
+      "question_type": "technical_design",
+      "total_packets": 8,
+      "status_counts": {
+        "keyword_matched": 8
+      },
+      "role_counts": {
+        "default_evidence": 8
+      },
+      "source_missing_count": 0,
+      "keyword_matched_count": 8,
+      "boundary_matched_count": 0,
+      "fallback_count": 0
+    },
+    "resolved_packets": [
+      {
+        "factor_id": "typed_memory",
+        "evidence_id": "evidence_typed_memory",
+        "source_type": "markdown",
+        "source_path": "rac/README.md",
+        "source_exists": true,
+        "grounding_role": "default_evidence",
+        "keywords_used": [
+          "typed memory",
+          "memory",
+          "structured memory",
+          "fact",
+          "记忆",
+          "结构化"
+        ],
+        "grounding_status": "keyword_matched",
+        "snippets": [
+          {
+            "line_start": 8,
+            "line_end": 10,
+            "matched_terms": [
+              "fact"
+            ],
+            "text": "question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-coverage and limitation update -> final report"
+          },
+          {
+            "line_start": 14,
+            "line_end": 16,
+            "matched_terms": [
+              "fact"
+            ],
+            "text": "* which factors are relevant,\n * which assumptions are unsupported,"
+          },
+          {
+            "line_start": 27,
+            "line_end": 29,
+            "matched_terms": [
+              "fact"
+            ],
+            "text": "* a shared review-state schema,\n* deterministic question analysis and factor expansion,\n* deterministic factor-weight buckets,"
+          }
+        ],
+        "original_claim_supported": "Provides context needed to evaluate factor: typed_memory.",
+        "original_limitations": [
+          "Deterministic mock pipeline only.",
+          "No live retrieval is performed in this step."
+        ],
+        "resolver_limitations": [
+          "Local text matching only.",
+          "No semantic embedding retrieval is used in this step.",
+          "No causality is inferred from matched snippets."
+        ]
+      },
+      {
+        "factor_id": "evidence_packets",
+        "evidence_id": "evidence_evidence_packets",
+        "source_type": "markdown",
+        "source_path": "rac/README.md",
+        "source_exists": true,
+        "grounding_role": "default_evidence",
+        "keywords_used": [
+          "evidence",
+          "evidence packet",
+          "source",
+          "claim supported",
+          "证据",
+          "来源"
+        ],
+        "grounding_status": "keyword_matched",
+        "snippets": [
+          {
+            "line_start": 2,
+            "line_end": 4,
+            "matched_terms": [
+              "evidence"
+            ],
+            "text": "This module is a structured reasoning scaffold for question decomposition, evidence routing, critique, and evidence-coverage and limitation update."
+          },
+          {
+            "line_start": 4,
+            "line_end": 6,
+            "matched_terms": [
+              "evidence",
+              "source"
+            ],
+            "text": "The `rac/` directory name is retained for path stability. In reviewer-facing wording, this should be read as a deterministic, source-grounded reasoning scaffold with explicit evidence and boundary checks."
+          },
+          {
+            "line_start": 8,
+            "line_end": 10,
+            "matched_terms": [
+              "evidence"
+            ],
+            "text": "question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-coverage and limitation update -> final report"
+          }
+        ],
+        "original_claim_supported": "Provides context needed to evaluate factor: evidence_packets.",
+        "original_limitations": [
+          "Deterministic mock pipeline only.",
+          "No live retrieval is performed in this step."
+        ],
+        "resolver_limitations": [
+          "Local text matching only.",
+          "No semantic embedding retrieval is used in this step.",
+          "No causality is inferred from matched snippets."
+        ]
+      },
+      {
+        "factor_id": "hypotheses",
+        "evidence_id": "evidence_hypotheses",
+        "source_type": "markdown",
+        "source_path": "rac/README.md",
+        "source_exists": true,
+        "grounding_role": "default_evidence",
+        "keywords_used": [
+          "hypothesis",
+          "hypotheses",
+          "competing",
+          "假设",
+          "竞争解释"
+        ],
+        "grounding_status": "keyword_matched",
+        "snippets": [
+          {
+            "line_start": 8,
+            "line_end": 10,
+            "matched_terms": [
+              "hypothesis"
+            ],
+            "text": "question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-coverage and limitation update -> final report"
+          },
+          {
+            "line_start": 17,
+            "line_end": 19,
+            "matched_terms": [
+              "competing"
+            ],
+            "text": "* which evidence was actually used,\n * which competing explanations remain possible,\n * which conclusion should be downgraded because evidence is incomplete."
+          },
+          {
+            "line_start": 30,
+            "line_end": 32,
+            "matched_terms": [
+              "hypothesis",
+              "competing"
+            ],
+            "text": "* local file-based evidence routing,\n* competing-hypothesis templates,\n* critique and fact-check stages,"
+          }
+        ],
+        "original_claim_supported": "Provides context needed to evaluate factor: hypotheses.",
+        "original_limitations": [
+          "Deterministic mock pipeline only.",
+          "No live retrieval is performed in this step."
+        ],
+        "resolver_limitations": [
+          "Local text matching only.",
+          "No semantic embedding retrieval is used in this step.",
+          "No causality is inferred from matched snippets."
+        ]
+      },
+      {
+        "factor_id": "belief_records",
+        "evidence_id": "evidence_belief_records",
+        "source_type": "markdown",
+        "source_path": "rac/README.md",
+        "source_exists": true,
+        "grounding_role": "default_evidence",
+        "keywords_used": [
+          "belief",
+          "belief update",
+          "confidence",
+          "validity",
+          "信念",
+          "置信度"
+        ],
+        "grounding_status": "keyword_matched",
+        "snippets": [
+          {
+            "line_start": 62,
+            "line_end": 64,
+            "matched_terms": [
+              "confidence"
+            ],
+            "text": "* critique unsupported assumptions before writing the final answer,\n* update confidence and limitations only when the evidence supports the change."
+          },
+          {
+            "line_start": 88,
+            "line_end": 90,
+            "matched_terms": [
+              "belief"
+            ],
+            "text": "evidence_packets\nbelief_records\nretrieval_trace"
+          },
+          {
+            "line_start": 101,
+            "line_end": 103,
+            "matched_terms": [
+              "confidence"
+            ],
+            "text": "hypotheses\nconfidence\nlimitations"
+          }
+        ],
+        "original_claim_supported": "Provides context needed to evaluate factor: belief_records.",
+        "original_limitations": [
+          "Deterministic mock pipeline only.",
+          "No live retrieval is performed in this step."
+        ],
+        "resolver_limitations": [
+          "Local text matching only.",
+          "No semantic embedding retrieval is used in this step.",
+          "No causality is inferred from matched snippets."
+        ]
+      },
+      {
+        "factor_id": "confidence",
+        "evidence_id": "evidence_confidence",
+        "source_type": "markdown",
+        "source_path": "rac/README.md",
+        "source_exists": true,
+        "grounding_role": "default_evidence",
+        "keywords_used": [
+          "confidence",
+          "uncertainty",
+          "置信度",
+          "不确定"
+        ],
+        "grounding_status": "keyword_matched",
+        "snippets": [
+          {
+            "line_start": 62,
+            "line_end": 64,
+            "matched_terms": [
+              "confidence"
+            ],
+            "text": "* critique unsupported assumptions before writing the final answer,\n* update confidence and limitations only when the evidence supports the change."
+          },
+          {
+            "line_start": 101,
+            "line_end": 103,
+            "matched_terms": [
+              "confidence"
+            ],
+            "text": "hypotheses\nconfidence\nlimitations"
+          },
+          {
+            "line_start": 127,
+            "line_end": 129,
+            "matched_terms": [
+              "confidence"
+            ],
+            "text": "This scaffold makes LLM-assisted reasoning more traceable by decomposing a question into relevant factors, retrieving evidence by factor, generating competing hypotheses, checking unsupported assumptions, and producing grounded reports with a formula-based evidence-coverage score and mock reports with scenario-template confidence.\n## Example use cases"
+          }
+        ],
+        "original_claim_supported": "Provides context needed to evaluate factor: confidence.",
+        "original_limitations": [
+          "Deterministic mock pipeline only.",
+          "No live retrieval is performed in this step."
+        ],
+        "resolver_limitations": [
+          "Local text matching only.",
+          "No semantic embedding retrieval is used in this step.",
+          "No causality is inferred from matched snippets."
+        ]
+      },
+      {
+        "factor_id": "limitations",
+        "evidence_id": "evidence_limitations",
+        "source_type": "markdown",
+        "source_path": "rac/README.md",
+        "source_exists": true,
+        "grounding_role": "default_evidence",
+        "keywords_used": [
+          "limitation",
+          "limitations",
+          "cannot be concluded",
+          "boundary",
+          "限制",
+          "边界"
+        ],
+        "grounding_status": "keyword_matched",
+        "snippets": [
+          {
+            "line_start": 2,
+            "line_end": 4,
+            "matched_terms": [
+              "limitation"
+            ],
+            "text": "This module is a structured reasoning scaffold for question decomposition, evidence routing, critique, and evidence-coverage and limitation update."
+          },
+          {
+            "line_start": 4,
+            "line_end": 6,
+            "matched_terms": [
+              "boundary"
+            ],
+            "text": "The `rac/` directory name is retained for path stability. In reviewer-facing wording, this should be read as a deterministic, source-grounded reasoning scaffold with explicit evidence and boundary checks."
+          },
+          {
+            "line_start": 8,
+            "line_end": 10,
+            "matched_terms": [
+              "limitation"
+            ],
+            "text": "question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-coverage and limitation update -> final report"
+          }
+        ],
+        "original_claim_supported": "Provides context needed to evaluate factor: limitations.",
+        "original_limitations": [
+          "Deterministic mock pipeline only.",
+          "No live retrieval is performed in this step."
+        ],
+        "resolver_limitations": [
+          "Local text matching only.",
+          "No semantic embedding retrieval is used in this step.",
+          "No causality is inferred from matched snippets."
+        ]
+      },
+      {
+        "factor_id": "retrieval_trace",
+        "evidence_id": "evidence_retrieval_trace",
+        "source_type": "markdown",
+        "source_path": "rac/README.md",
+        "source_exists": true,
+        "grounding_role": "default_evidence",
+        "keywords_used": [
+          "retrieval",
+          "trace",
+          "source",
+          "retrieval trace",
+          "检索",
+          "追踪",
+          "来源"
+        ],
+        "grounding_status": "keyword_matched",
+        "snippets": [
+          {
+            "line_start": 4,
+            "line_end": 6,
+            "matched_terms": [
+              "source"
+            ],
+            "text": "The `rac/` directory name is retained for path stability. In reviewer-facing wording, this should be read as a deterministic, source-grounded reasoning scaffold with explicit evidence and boundary checks."
+          },
+          {
+            "line_start": 44,
+            "line_end": 46,
+            "matched_terms": [
+              "source"
+            ],
+            "text": "* carry typed state between stages,\n* require source references for evidence claims,\n* keep boundary evidence separate from direct metric evidence,"
+          },
+          {
+            "line_start": 89,
+            "line_end": 91,
+            "matched_terms": [
+              "retrieval",
+              "trace"
+            ],
+            "text": "belief_records\nretrieval_trace"
+          }
+        ],
+        "original_claim_supported": "Provides context needed to evaluate factor: retrieval_trace.",
+        "original_limitations": [
+          "Deterministic mock pipeline only.",
+          "No live retrieval is performed in this step."
+        ],
+        "resolver_limitations": [
+          "Local text matching only.",
+          "No semantic embedding retrieval is used in this step.",
+          "No causality is inferred from matched snippets."
+        ]
+      },
+      {
+        "factor_id": "active_state_filtering",
+        "evidence_id": "evidence_active_state_filtering",
+        "source_type": "markdown",
+        "source_path": "rac/README.md",
+        "source_exists": true,
+        "grounding_role": "default_evidence",
+        "keywords_used": [
+          "active",
+          "state",
+          "filter",
+          "freshness",
+          "deprecated",
+          "stale",
+          "活跃",
+          "过期"
+        ],
+        "grounding_status": "keyword_matched",
+        "snippets": [
+          {
+            "line_start": 26,
+            "line_end": 28,
+            "matched_terms": [
+              "state"
+            ],
+            "text": "* a shared review-state schema,\n* deterministic question analysis and factor expansion,"
+          },
+          {
+            "line_start": 39,
+            "line_end": 41,
+            "matched_terms": [
+              "state"
+            ],
+            "text": "A future implementation could connect these contracts to a graph workflow, such as a LangGraph-style shared-state node design. That would be an extension of the current deterministic scaffold, not a capability claimed by the current implementation."
+          },
+          {
+            "line_start": 43,
+            "line_end": 45,
+            "matched_terms": [
+              "state"
+            ],
+            "text": "* carry typed state between stages,\n* require source references for evidence claims,"
+          }
+        ],
+        "original_claim_supported": "Provides context needed to evaluate factor: active_state_filtering.",
+        "original_limitations": [
+          "Deterministic mock pipeline only.",
+          "No live retrieval is performed in this step."
+        ],
+        "resolver_limitations": [
+          "Local text matching only.",
+          "No semantic embedding retrieval is used in this step.",
+          "No causality is inferred from matched snippets."
+        ]
+      }
+    ]
+  },
+  "grounded_evidence_rows": [
+    {
+      "factor_id": "typed_memory",
+      "evidence_id": "evidence_typed_memory",
+      "source_path": "rac/README.md",
+      "grounding_role": "default_evidence",
+      "grounding_status": "keyword_matched",
+      "line_range": "8-10",
+      "matched_terms": [
+        "fact"
+      ],
+      "snippet": "question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-coverage and limitation update -> final report"
+    },
+    {
+      "factor_id": "evidence_packets",
+      "evidence_id": "evidence_evidence_packets",
+      "source_path": "rac/README.md",
+      "grounding_role": "default_evidence",
+      "grounding_status": "keyword_matched",
+      "line_range": "2-4",
+      "matched_terms": [
+        "evidence"
+      ],
+      "snippet": "This module is a structured reasoning scaffold for question decomposition, evidence routing, critique, and evidence-coverage and limitation update."
+    },
+    {
+      "factor_id": "hypotheses",
+      "evidence_id": "evidence_hypotheses",
+      "source_path": "rac/README.md",
+      "grounding_role": "default_evidence",
+      "grounding_status": "keyword_matched",
+      "line_range": "8-10",
+      "matched_terms": [
+        "hypothesis"
+      ],
+      "snippet": "question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-coverage and limitation update -> final report"
+    },
+    {
+      "factor_id": "belief_records",
+      "evidence_id": "evidence_belief_records",
+      "source_path": "rac/README.md",
+      "grounding_role": "default_evidence",
+      "grounding_status": "keyword_matched",
+      "line_range": "62-64",
+      "matched_terms": [
+        "confidence"
+      ],
+      "snippet": "* critique unsupported assumptions before writing the final answer, * update confidence and limitations only when the evidence supports the change."
+    },
+    {
+      "factor_id": "confidence",
+      "evidence_id": "evidence_confidence",
+      "source_path": "rac/README.md",
+      "grounding_role": "default_evidence",
+      "grounding_status": "keyword_matched",
+      "line_range": "62-64",
+      "matched_terms": [
+        "confidence"
+      ],
+      "snippet": "* critique unsupported assumptions before writing the final answer, * update confidence and limitations only when the evidence supports the change."
+    },
+    {
+      "factor_id": "limitations",
+      "evidence_id": "evidence_limitations",
+      "source_path": "rac/README.md",
+      "grounding_role": "default_evidence",
+      "grounding_status": "keyword_matched",
+      "line_range": "2-4",
+      "matched_terms": [
+        "limitation"
+      ],
+      "snippet": "This module is a structured reasoning scaffold for question decomposition, evidence routing, critique, and evidence-coverage and limitation update."
+    },
+    {
+      "factor_id": "retrieval_trace",
+      "evidence_id": "evidence_retrieval_trace",
+      "source_path": "rac/README.md",
+      "grounding_role": "default_evidence",
+      "grounding_status": "keyword_matched",
+      "line_range": "4-6",
+      "matched_terms": [
+        "source"
+      ],
+      "snippet": "The `rac/` directory name is retained for path stability. In reviewer-facing wording, this should be read as a deterministic, source-grounded reasoning scaffold with explicit evidence and boundary checks."
+    },
+    {
+      "factor_id": "active_state_filtering",
+      "evidence_id": "evidence_active_state_filtering",
+      "source_path": "rac/README.md",
+      "grounding_role": "default_evidence",
+      "grounding_status": "keyword_matched",
+      "line_range": "26-28",
+      "matched_terms": [
+        "state"
+      ],
+      "snippet": "* a shared review-state schema, * deterministic question analysis and factor expansion,"
+    }
+  ]
+}

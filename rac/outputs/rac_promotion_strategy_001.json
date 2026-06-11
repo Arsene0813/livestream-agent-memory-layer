@@ -1,0 +1,351 @@
+{
+  "question": "What should be checked before changing promotions for a store?",
+  "question_type": "strategic_recommendation",
+  "domain": "retail_operations",
+  "factors": [
+    {
+      "factor_id": "activity_orders",
+      "name": "Activity orders",
+      "description": "Shows how much order volume is tied to promotions.",
+      "evidence_needed": [
+        "activity order count"
+      ]
+    },
+    {
+      "factor_id": "activity_cost",
+      "name": "Activity cost",
+      "description": "Shows promotional cost burden.",
+      "evidence_needed": [
+        "activity cost"
+      ]
+    },
+    {
+      "factor_id": "merchant_subsidy",
+      "name": "Merchant subsidy",
+      "description": "Merchant-borne subsidy affects economics.",
+      "evidence_needed": [
+        "merchant subsidy amount"
+      ]
+    },
+    {
+      "factor_id": "platform_subsidy",
+      "name": "Platform subsidy",
+      "description": "Platform-borne subsidy changes cost interpretation.",
+      "evidence_needed": [
+        "platform subsidy amount"
+      ]
+    },
+    {
+      "factor_id": "order_conversion",
+      "name": "Order conversion",
+      "description": "Promotion should be checked against conversion.",
+      "evidence_needed": [
+        "order conversion rate"
+      ]
+    },
+    {
+      "factor_id": "payment_conversion",
+      "name": "Payment conversion",
+      "description": "Checks whether submitted orders become paid orders.",
+      "evidence_needed": [
+        "payment conversion rate"
+      ]
+    },
+    {
+      "factor_id": "",
+      "name": "",
+      "description": "High refunds weaken promotional growth quality.",
+      "evidence_needed": [
+        "refund amount",
+        "refund order count"
+      ]
+    },
+    {
+      "factor_id": "",
+      "name": "Refund order pressure",
+      "description": "Intransaction orders may indicate fulfillment or operational issues.",
+      "evidence_needed": [
+        "refund order count"
+      ]
+    },
+    {
+      "factor_id": "sku_margin_structure",
+      "name": "SKU margin structure",
+      "description": "Promotion decisions require margin context.",
+      "evidence_needed": [
+        "SKU margin",
+        "SKU activity participation"
+      ]
+    },
+    {
+      "factor_id": "competitor_context",
+      "name": "Competitor context",
+      "description": "Competitor pricing can change promotion effectiveness.",
+      "evidence_needed": [
+        "competitor prices",
+        "competitor order trend"
+      ]
+    }
+  ],
+  "factor_weights": [
+    {
+      "factor_id": "activity_orders",
+      "weight": 0.6,
+      "weight_bucket": "default",
+      "weight_reason": "Potentially relevant but requires stronger evidence.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "activity_cost",
+      "weight": 0.6,
+      "weight_bucket": "default",
+      "weight_reason": "Potentially relevant but requires stronger evidence.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "merchant_subsidy",
+      "weight": 0.6,
+      "weight_bucket": "default",
+      "weight_reason": "Potentially relevant but requires stronger evidence.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "platform_subsidy",
+      "weight": 0.6,
+      "weight_bucket": "default",
+      "weight_reason": "Potentially relevant but requires stronger evidence.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "order_conversion",
+      "weight": 0.85,
+      "weight_bucket": "high",
+      "weight_reason": "Central to avoiding overconfident or misleading conclusions.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "payment_conversion",
+      "weight": 0.72,
+      "weight_bucket": "medium",
+      "weight_reason": "Important context but not sufficient on its own.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "",
+      "weight": 0.85,
+      "weight_bucket": "high",
+      "weight_reason": "Central to avoiding overconfident or misleading conclusions.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "",
+      "weight": 0.6,
+      "weight_bucket": "default",
+      "weight_reason": "Potentially relevant but requires stronger evidence.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "sku_margin_structure",
+      "weight": 0.85,
+      "weight_bucket": "high",
+      "weight_reason": "Central to avoiding overconfident or misleading conclusions.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "competitor_context",
+      "weight": 0.6,
+      "weight_bucket": "default",
+      "weight_reason": "Potentially relevant but requires stronger evidence.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    }
+  ],
+  "evidence_packets": [
+    {
+      "evidence_id": "evidence_activity_orders",
+      "source_type": "markdown",
+      "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+      "claim_supported": "Provides context needed to evaluate factor: activity_orders.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_activity_cost",
+      "source_type": "markdown",
+      "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+      "claim_supported": "Provides context needed to evaluate factor: activity_cost.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_merchant_subsidy",
+      "source_type": "markdown",
+      "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+      "claim_supported": "Provides context needed to evaluate factor: merchant_subsidy.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_platform_subsidy",
+      "source_type": "markdown",
+      "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+      "claim_supported": "Provides context needed to evaluate factor: platform_subsidy.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_order_conversion",
+      "source_type": "markdown",
+      "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+      "claim_supported": "Provides context needed to evaluate factor: order_conversion.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_payment_conversion",
+      "source_type": "markdown",
+      "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+      "claim_supported": "Provides context needed to evaluate factor: payment_conversion.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "",
+      "source_type": "markdown",
+      "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+      "claim_supported": "",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "",
+      "source_type": "markdown",
+      "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+      "claim_supported": "",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_sku_margin_structure",
+      "source_type": "markdown",
+      "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+      "claim_supported": "Provides context needed to evaluate factor: sku_margin_structure.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_competitor_context",
+      "source_type": "markdown",
+      "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+      "claim_supported": "Provides context needed to evaluate factor: competitor_context.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "hypothesis_id": "H1",
+      "claim": "Promotion decisions should be checked against cost, conversion, SKU structure, margin, and competitor context.",
+      "confidence": 0.84,
+      "supporting_factors": [
+        "activity_orders",
+        "activity_cost",
+        "order_conversion",
+        "payment_conversion",
+        "sku_margin_structure"
+      ],
+      "weaknesses": [
+        "Final action still requires real margin and competitor evidence."
+      ],
+      "status": "strong"
+    },
+    {
+      "hypothesis_id": "H2",
+      "claim": "",
+      "confidence": 0.68,
+      "supporting_factors": [
+        "activity_cost"
+      ],
+      "weaknesses": [
+        "The mock pipeline does not calculate real cost trend."
+      ],
+      "status": "plausible"
+    }
+  ],
+  "critic_findings": [
+    {
+      "issue": "The mock pipeline must not claim causal proof from observational evidence.",
+      "severity": "high",
+      "recommendation": "Use cautious language and state that attribution is not proven."
+    },
+    {
+      "issue": "The mock pipeline uses structured placeholder evidence rather than live retrieval.",
+      "severity": "medium",
+      "recommendation": "State this limitation clearly."
+    },
+    {
+      "issue": "Promotion recommendations require margin and competitor context.",
+      "severity": "high",
+      "recommendation": "Avoid final action recommendations without these checks."
+    }
+  ],
+  "fact_check": {
+    "status": "pass",
+    "unsupported_claims": [],
+    "definition_conflicts": []
+  },
+  "belief_update": {
+    "belief_id": "promotion_changes_require_multi_factor_check",
+    "claim": "Promotion changes should be checked against cost, conversion, SKU structure, margin, and competitor context.",
+    "confidence": 0.8,
+    "status": "active",
+    "validity_conditions": [
+      "Retail operations decision-support questions."
+    ],
+    "limitations": [
+      "The mock pipeline does not compute real margins.",
+      "Competitor data may be incomplete.",
+      "One reporting window is insufficient for robust action attribution."
+    ]
+  },
+  "final_report": ""
+}

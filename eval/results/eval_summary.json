@@ -1,0 +1,24 @@
+{
+  "project": "livestream-agent-memory-layer",
+  "evaluation_name": "livestream_memory_behavior_eval",
+  "evaluation_type": "scenario_based_behavior_evaluation",
+  "summary": {
+    "total_cases": 11,
+    "passed_cases": 11,
+    "failed_cases": 0,
+    "pass_rate": 1.0
+  },
+  "behavior_groups": [
+    "retrieval",
+    "lifecycle_update",
+    "entity_control",
+    "unsupported_query_handling",
+    "noise_filtering"
+  ],
+  "limitations": [
+    "Small-scale scenario-based evaluation.",
+    "Not a broad language-model benchmark.",
+    "Does not yet include timestamp-controlled stale-fact tests.",
+    "Does not yet include multi-store retail operations decision-support evaluation."
+  ]
+}

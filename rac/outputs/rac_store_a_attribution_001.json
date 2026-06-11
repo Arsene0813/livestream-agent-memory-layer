@@ -1,0 +1,287 @@
+{
+  "question": "Can Store A's April growth be attributed to search exposure?",
+  "question_type": "causal_diagnostic",
+  "domain": "retail_operations",
+  "factors": [
+    {
+      "factor_id": "search_exposure",
+      "name": "Search exposure",
+      "description": "Search visibility may contribute to traffic but cannot prove attribution alone.",
+      "evidence_needed": [
+        "search exposure users",
+        "search entry users",
+        "search average rank"
+      ]
+    },
+    {
+      "factor_id": "entry_conversion",
+      "name": "Entry conversion",
+      "description": "Shows whether exposure translated into store visits.",
+      "evidence_needed": [
+        "entry users",
+        "exposure users",
+        "entry conversion rate"
+      ]
+    },
+    {
+      "factor_id": "order_conversion",
+      "name": "Order conversion",
+      "description": "Shows whether store visits translated into order submissions.",
+      "evidence_needed": [
+        "order users",
+        "entry users",
+        "order conversion rate"
+      ]
+    },
+    {
+      "factor_id": "promotion_intensity",
+      "name": "Promotion intensity",
+      "description": "Promotion activity may affect orders, transaction amount, and attribution.",
+      "evidence_needed": [
+        "activity orders",
+        "activity cost",
+        "activity original transaction amount"
+      ]
+    },
+    {
+      "factor_id": "",
+      "name": "",
+      "description": "",
+      "evidence_needed": [
+        "refund amount",
+        "refund orders"
+      ]
+    },
+    {
+      "factor_id": "transaction_orders",
+      "name": "Transaction orders",
+      "description": "Accepted and not-cancelled orders indicate usable demand.",
+      "evidence_needed": [
+        "transaction orders"
+      ]
+    },
+    {
+      "factor_id": "intransaction_orders",
+      "name": "Intransaction orders",
+      "description": "Cancelled or intransaction orders weaken performance interpretation.",
+      "evidence_needed": [
+        "intransaction orders"
+      ]
+    }
+  ],
+  "factor_weights": [
+    {
+      "factor_id": "search_exposure",
+      "weight": 0.72,
+      "weight_bucket": "medium",
+      "weight_reason": "Important context but not sufficient on its own.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "entry_conversion",
+      "weight": 0.72,
+      "weight_bucket": "medium",
+      "weight_reason": "Important context but not sufficient on its own.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "order_conversion",
+      "weight": 0.85,
+      "weight_bucket": "high",
+      "weight_reason": "Central to avoiding overconfident or misleading conclusions.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "promotion_intensity",
+      "weight": 0.85,
+      "weight_bucket": "high",
+      "weight_reason": "Central to avoiding overconfident or misleading conclusions.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "",
+      "weight": 0.85,
+      "weight_bucket": "high",
+      "weight_reason": "Central to avoiding overconfident or misleading conclusions.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "transaction_orders",
+      "weight": 0.6,
+      "weight_bucket": "default",
+      "weight_reason": "Potentially relevant but requires stronger evidence.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    },
+    {
+      "factor_id": "intransaction_orders",
+      "weight": 0.6,
+      "weight_bucket": "default",
+      "weight_reason": "Potentially relevant but requires stronger evidence.",
+      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weight_source": "rac/src/mock_pipeline.py",
+      "evidence_status": "partially_supported"
+    }
+  ],
+  "evidence_packets": [
+    {
+      "evidence_id": "evidence_search_exposure",
+      "source_type": "markdown",
+      "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+      "claim_supported": "Provides context needed to evaluate factor: search_exposure.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_entry_conversion",
+      "source_type": "markdown",
+      "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+      "claim_supported": "Provides context needed to evaluate factor: entry_conversion.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_order_conversion",
+      "source_type": "markdown",
+      "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+      "claim_supported": "Provides context needed to evaluate factor: order_conversion.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_promotion_intensity",
+      "source_type": "markdown",
+      "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+      "claim_supported": "Provides context needed to evaluate factor: promotion_intensity.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "",
+      "source_type": "markdown",
+      "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+      "claim_supported": "",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_transaction_orders",
+      "source_type": "markdown",
+      "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+      "claim_supported": "Provides context needed to evaluate factor: transaction_orders.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    },
+    {
+      "evidence_id": "evidence_intransaction_orders",
+      "source_type": "markdown",
+      "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+      "claim_supported": "Provides context needed to evaluate factor: intransaction_orders.",
+      "limitations": [
+        "Deterministic mock pipeline only.",
+        "No live retrieval is performed in this step."
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "hypothesis_id": "H1",
+      "claim": "Search exposure may have contributed to Store A's April performance, but it is not sufficient as a single explanation.",
+      "confidence": 0.52,
+      "supporting_factors": [
+        "search_exposure",
+        "entry_conversion"
+      ],
+      "weaknesses": [
+        "Does not isolate promotion effects.",
+        "Does not isolate all post-order effects."
+      ],
+      "status": "plausible"
+    },
+    {
+      "hypothesis_id": "H2",
+      "claim": "",
+      "confidence": 0.74,
+      "supporting_factors": [
+        "search_exposure",
+        "promotion_intensity",
+        "order_conversion",
+        "transaction_orders",
+        "intransaction_orders"
+      ],
+      "weaknesses": [
+        "Observational evidence cannot establish strict causality."
+      ],
+      "status": "strong"
+    },
+    {
+      "hypothesis_id": "H3",
+      "claim": "The available evidence is insufficient for single-cause attribution.",
+      "confidence": 0.82,
+      "supporting_factors": [
+        "promotion_intensity",
+        "intransaction_orders"
+      ],
+      "weaknesses": [
+        "Conservative rather than complete causal explanation."
+      ],
+      "status": "strong"
+    }
+  ],
+  "critic_findings": [
+    {
+      "issue": "The mock pipeline must not claim causal proof from observational evidence.",
+      "severity": "high",
+      "recommendation": "Use cautious language and state that attribution is not proven."
+    },
+    {
+      "issue": "The mock pipeline uses structured placeholder evidence rather than live retrieval.",
+      "severity": "medium",
+      "recommendation": "State this limitation clearly."
+    }
+  ],
+  "fact_check": {
+    "status": "pass",
+    "unsupported_claims": [],
+    "definition_conflicts": []
+  },
+  "belief_update": {
+    "belief_id": "store_a_april_growth_not_search_only",
+    "claim": "Store A's April performance should not be attributed to search exposure alone.",
+    "confidence": 0.82,
+    "status": "active",
+    "validity_conditions": [
+      "Store A Demo 1 context.",
+      "Available month-over-month evidence only."
+    ],
+    "limitations": [
+      "No randomized experiment.",
+      "No live backend retrieval in this mock pipeline.",
+      "No complete competitor-side evidence."
+    ]
+  },
+  "final_report": ""
+}

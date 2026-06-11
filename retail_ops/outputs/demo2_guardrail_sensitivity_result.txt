@@ -1,0 +1,10 @@
+Demo 2 guardrail sensitivity check completed.
+Input: retail_ops/outputs/demo2_cross_store_comparability_output.csv
+Output CSV: retail_ops/outputs/demo2_guardrail_sensitivity_summary.csv
+
+Interpretation:
+- This check does not optimize thresholds.
+- It tests whether current Demo 2 guardrail notes are fragile under +/- 5 percentage-point threshold shifts.
+- Any changed store should be treated as threshold-sensitive evidence, not as a stable peer-comparison rule.
+
+Stores with changed guardrail notes under sensitivity scenarios: B, C, D, E, F

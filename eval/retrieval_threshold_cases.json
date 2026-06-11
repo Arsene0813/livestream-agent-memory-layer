@@ -1,0 +1,347 @@
+[
+  {
+    "case_id": "positive_demo2_region_type_boundary",
+    "case_type": "positive_supported",
+    "query": "What is the boundary of region_type in Demo 2?",
+    "expected_entity": null,
+    "expected_slot": null,
+    "expected_period_terms": [],
+    "expected_terms": [
+      "region_type",
+      "weak",
+      "market"
+    ]
+  },
+  {
+    "case_id": "positive_demo2_activity_cost_ratio_definition",
+    "case_type": "positive_supported",
+    "query": "How should activity_cost_ratio_pct be interpreted?",
+    "expected_entity": null,
+    "expected_slot": null,
+    "expected_period_terms": [],
+    "expected_terms": [
+      "activity_cost_ratio_pct",
+      "activity_cost",
+      "activity_original_transaction_amount"
+    ]
+  },
+  {
+    "case_id": "positive_store_b_visibility_entry",
+    "case_type": "positive_supported",
+    "query": "What does Store B's March 2026 visibility and search-entry profile show?",
+    "expected_entity": "store_B",
+    "expected_slot": "visibility_entry_profile",
+    "expected_period_terms": [
+      "2026-03",
+      "March 2026"
+    ],
+    "expected_terms": [
+      "search_entry_rate_pct",
+      "search_entry_share_pct"
+    ]
+  },
+  {
+    "case_id": "positive_store_c_top_sku_note",
+    "case_type": "positive_supported",
+    "query": "What does Store C's top3_sku_transaction_amount_share_pct mean?",
+    "expected_entity": "store_C",
+    "expected_slot": "top3_sku_product_mix_note",
+    "expected_period_terms": [
+      "2026-03",
+      "March 2026"
+    ],
+    "expected_terms": [
+      "top3_sku_transaction_amount_share_pct"
+    ]
+  },
+  {
+    "case_id": "positive_store_d_activity_profile",
+    "case_type": "positive_supported",
+    "query": "What does Store D's activity_lever_profile say?",
+    "expected_entity": "store_D",
+    "expected_slot": "activity_lever_profile",
+    "expected_period_terms": [
+      "2026-03",
+      "March 2026"
+    ],
+    "expected_terms": [
+      "activity_order_share_pct",
+      "activity_cost_ratio_pct"
+    ]
+  },
+  {
+    "case_id": "",
+    "case_type": "positive_supported",
+    "query": "",
+    "expected_entity": "store_E",
+    "expected_slot": "",
+    "expected_period_terms": [
+      "2026-03",
+      "March 2026"
+    ],
+    "expected_terms": []
+  },
+  {
+    "case_id": "positive_store_f_estimated_income_proxy",
+    "case_type": "positive_supported",
+    "query": "How should Store F's estimated_income_proxy be interpreted?",
+    "expected_entity": "store_F",
+    "expected_slot": "transaction_conversion_profile",
+    "expected_period_terms": [
+      "2026-03",
+      "March 2026"
+    ],
+    "expected_terms": [
+      "estimated_income_proxy"
+    ]
+  },
+  {
+    "case_id": "positive_store_a_april_order_conversion",
+    "case_type": "positive_supported",
+    "query": "What was Store A's order conversion rate in April 2026?",
+    "expected_entity": "store_A",
+    "expected_slot": null,
+    "expected_period_terms": [
+      "2026-04",
+      "April 2026"
+    ],
+    "expected_terms": [
+      "order_conversion"
+    ]
+  },
+  {
+    "case_id": "negative_customer_lifetime_value",
+    "case_type": "negative_unsupported",
+    "query": "Which store has the highest customer lifetime value?",
+    "expected_entity": null,
+    "expected_slot": null,
+    "expected_period_terms": [],
+    "expected_terms": []
+  },
+  {
+    "case_id": "negative_repeat_purchase_rate",
+    "case_type": "negative_unsupported",
+    "query": "Which Demo 2 store has the strongest repeat purchase rate?",
+    "expected_entity": null,
+    "expected_slot": null,
+    "expected_period_terms": [],
+    "expected_terms": []
+  },
+  {
+    "case_id": "negative_competitor_density",
+    "case_type": "negative_unsupported",
+    "query": "What was the competitor density around Store C in March 2026?",
+    "expected_entity": null,
+    "expected_slot": null,
+    "expected_period_terms": [],
+    "expected_terms": []
+  },
+  {
+    "case_id": "negative_next_week_subsidy",
+    "case_type": "negative_unsupported",
+    "query": "Which store should receive the largest subsidy next week?",
+    "expected_entity": null,
+    "expected_slot": null,
+    "expected_period_terms": [],
+    "expected_terms": []
+  },
+  {
+    "case_id": "negative_profit_margin",
+    "case_type": "negative_unsupported",
+    "query": "Which store had the best profit margin?",
+    "expected_entity": null,
+    "expected_slot": null,
+    "expected_period_terms": [],
+    "expected_terms": []
+  },
+  {
+    "case_id": "negative_delivery_stability",
+    "case_type": "negative_unsupported",
+    "query": "Which store had the most stable delivery performance in March 2026?",
+    "expected_entity": null,
+    "expected_slot": null,
+    "expected_period_terms": [],
+    "expected_terms": []
+  },
+  {
+    "case_id": "hard_negative_activity_roi",
+    "case_type": "hard_negative_boundary",
+    "query": "Does activity_cost_ratio_pct show activity ROI?",
+    "expected_entity": null,
+    "expected_slot": null,
+    "expected_period_terms": [],
+    "expected_terms": [
+      "activity_cost_ratio_pct"
+    ]
+  },
+  {
+    "case_id": "hard_negative_region_type_grouping",
+    "case_type": "hard_negative_boundary",
+    "query": "Can region_type be used as a hard peer-grouping rule?",
+    "expected_entity": null,
+    "expected_slot": null,
+    "expected_period_terms": [],
+    "expected_terms": [
+      "region_type"
+    ]
+  },
+  {
+    "case_id": "hard_negative_top_sku_category_share",
+    "case_type": "hard_negative_boundary",
+    "query": "Does top3_sku_transaction_amount_share_pct prove the full category sales structure?",
+    "expected_entity": null,
+    "expected_slot": "top3_sku_product_mix_note",
+    "expected_period_terms": [],
+    "expected_terms": [
+      "top3_sku_transaction_amount_share_pct"
+    ]
+  },
+  {
+    "case_id": "hard_negative_direct_promotion_transfer",
+    "case_type": "hard_negative_boundary",
+    "query": "Can Store B's promotion strategy be copied directly to Store C?",
+    "expected_entity": "store_B",
+    "expected_slot": "activity_lever_profile",
+    "expected_period_terms": [
+      "2026-03",
+      "March 2026"
+    ],
+    "expected_terms": [
+      "activity_order_share_pct",
+      "activity_cost_ratio_pct"
+    ]
+  },
+  {
+    "case_id": "hard_negative_best_store_ranking",
+    "case_type": "hard_negative_boundary",
+    "query": "Which Demo 2 store is the best overall?",
+    "expected_entity": null,
+    "expected_slot": null,
+    "expected_period_terms": [],
+    "expected_terms": [
+      "comparison_scope_flag",
+      "comparison_limit_notes"
+    ]
+  },
+  {
+    "case_id": "hard_negative_search_entry_proves_performance",
+    "case_type": "hard_negative_boundary",
+    "query": "Does a higher search_entry_rate_pct prove better overall store performance?",
+    "expected_entity": null,
+    "expected_slot": "visibility_entry_profile",
+    "expected_period_terms": [],
+    "expected_terms": [
+      "search_entry_rate_pct"
+    ]
+  },
+  {
+    "case_id": "hard_negative_estimated_income_profit",
+    "case_type": "hard_negative_boundary",
+    "query": "Can estimated_income_proxy be treated as audited profit?",
+    "expected_entity": null,
+    "expected_slot": null,
+    "expected_period_terms": [],
+    "expected_terms": [
+      "estimated_income_proxy"
+    ]
+  },
+  {
+    "case_id": "mismatch_store_b_april",
+    "case_type": "entity_period_mismatch",
+    "query": "What was Store B's April 2026 order_conversion_rate_pct?",
+    "expected_entity": "store_B",
+    "expected_slot": "transaction_conversion_profile",
+    "expected_period_terms": [
+      "2026-04",
+      "April 2026"
+    ],
+    "expected_terms": [
+      "order_conversion_rate_pct"
+    ]
+  },
+  {
+    "case_id": "mismatch_store_a_demo2_top3_sku",
+    "case_type": "entity_period_mismatch",
+    "query": "What was Store A's Demo 2 top3_sku_transaction_amount_share_pct?",
+    "expected_entity": "store_A",
+    "expected_slot": "top3_sku_product_mix_note",
+    "expected_period_terms": [
+      "Demo 2",
+      "2026-03"
+    ],
+    "expected_terms": [
+      "top3_sku_transaction_amount_share_pct"
+    ]
+  },
+  {
+    "case_id": "mismatch_store_d_february_refund",
+    "case_type": "entity_period_mismatch",
+    "query": "",
+    "expected_entity": "store_D",
+    "expected_slot": "",
+    "expected_period_terms": [
+      "2026-02",
+      "February 2026"
+    ],
+    "expected_terms": []
+  },
+  {
+    "case_id": "mismatch_store_a_store_d_promotion_transfer",
+    "case_type": "entity_period_mismatch",
+    "query": "Compare Store A April 2026 with Store D March 2026 for promotion transfer.",
+    "expected_entity": null,
+    "expected_slot": "activity_lever_profile",
+    "expected_period_terms": [
+      "2026-04",
+      "2026-03"
+    ],
+    "expected_terms": [
+      "activity"
+    ]
+  },
+  {
+    "case_id": "ambiguous_compare_search_performance",
+    "case_type": "ambiguous_comparison",
+    "query": "Which store has stronger search performance?",
+    "expected_entity": null,
+    "expected_slot": "visibility_entry_profile",
+    "expected_period_terms": [],
+    "expected_terms": [
+      "search_entry_rate_pct",
+      "search_entry_share_pct"
+    ]
+  },
+  {
+    "case_id": "ambiguous_compare_promotion_heavy",
+    "case_type": "ambiguous_comparison",
+    "query": "Which store is more promotion-heavy?",
+    "expected_entity": null,
+    "expected_slot": "activity_lever_profile",
+    "expected_period_terms": [],
+    "expected_terms": [
+      "activity_order_share_pct",
+      "activity_cost_ratio_pct"
+    ]
+  },
+  {
+    "case_id": "",
+    "case_type": "ambiguous_comparison",
+    "query": "",
+    "expected_entity": null,
+    "expected_slot": "",
+    "expected_period_terms": [],
+    "expected_terms": []
+  },
+  {
+    "case_id": "ambiguous_compare_activity_transfer",
+    "case_type": "ambiguous_comparison",
+    "query": "Which store is better for activity transfer?",
+    "expected_entity": null,
+    "expected_slot": "activity_lever_profile",
+    "expected_period_terms": [],
+    "expected_terms": [
+      "activity_order_share_pct",
+      "activity_cost_ratio_pct"
+    ]
+  }
+]

@@ -1,0 +1,46 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: oc_qdrant
+    volumes:
+      - qdrant_data:/qdrant/storage
+    ports:
+      - "127.0.0.1:${QDRANT_PORT:-6333}:6333"
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: oc_ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "127.0.0.1:${OLLAMA_PORT:-11434}:11434"
+    restart: unless-stopped
+
+  api:
+    build: ./api
+    container_name: oc_api
+    environment:
+      - OLLAMA_BASE_URL=http://oc_ollama:11434
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-qwen2.5:14b}
+      - EMBED_MODEL=${EMBED_MODEL:-bge-m3}
+      - QDRANT_BASE_URL=http://oc_qdrant:6333
+      - QDRANT_KB_COLLECTION=${QDRANT_KB_COLLECTION:-mem_kb}
+      - QDRANT_CHAT_COLLECTION=${QDRANT_CHAT_COLLECTION:-mem_chat}
+      - KB_TOP_K=${KB_TOP_K:-3}
+      - CHAT_TOP_K=${CHAT_TOP_K:-5}
+      - CHAT_SCORE_THRESHOLD=${CHAT_SCORE_THRESHOLD:-0.75}
+      - KB_SCORE_THRESHOLD=${KB_SCORE_THRESHOLD:-0.75}
+      - CHAT_BASE_THRESHOLD=${CHAT_BASE_THRESHOLD:-0.60}
+      - CHAT_GAP_THRESHOLD=${CHAT_GAP_THRESHOLD:-0.05}
+      - DEBUG_ROUTES_ENABLED=${DEBUG_ROUTES_ENABLED:-true}
+    depends_on:
+      - ollama
+      - qdrant
+    ports:
+      - "127.0.0.1:8000:8000"
+    restart: unless-stopped
+
+volumes:
+  qdrant_data:
+  ollama_data:
