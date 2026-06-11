@@ -147,15 +147,15 @@ The memory facts are currently file-backed for Demo 2. This is enough to test th
 
 ### Selected Diagnostic Signals
 
-The table below shows selected numeric signals from the current Demo 2 SQL output. It is ordered by anonymized store ID, not by performance rank.
+The table below shows selected numeric signals from the current Demo 2 SQL output. It is ordered by anonymized store ID, not by performance rank. The generated CSV output remains the numeric source of truth for this table.
 
 | Store | transaction_orders | transaction_amount | search_exposure_users | search_average_rank | search_entry_users | search_entry_rate_pct | search_entry_share_pct | entry_conversion_rate_pct | order_conversion_rate_pct | activity_order_share_pct | activity_cost_ratio_pct | top3_sku_transaction_amount_share_pct |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| B | 299 | 11665.5 | 4390 | 15 | 683 | 15.56 | 88.7 | 15.12 | 36.88 | 88.63 | 10.76 | 11.15 |
-| C | 175 | 7064.09 | 2416 | 13 | 355 | 14.69 | 68.8 | 17.3 | 32.75 | 70.86 | 7.5 | 28.38 |
-| D | 404 | 18078.7 | 2663 | 13 | 738 | 27.71 | 87.65 | 13.88 | 46.56 | 83.42 | 8.95 | 16.9 |
-| E | 158 | 5784.87 | 2784 | 13 | 355 | 12.75 | 87.01 | 12.19 | 39.46 | 68.99 | 19.1 | 12.55 |
-| F | 266 | 9301.8 | 2699 | 13 | 481 | 17.82 | 88.91 | 15.27 | 49.72 | 81.58 | 10.62 | 19.33 |
+| B | 299 | 11665.5 | 4390 | 15 | 683 | 15.56 | 88.7 | 15.12 | 36.88 | 88.63 | 24.12 | 11.15 |
+| C | 175 | 7064.09 | 2416 | 13 | 355 | 14.69 | 68.8 | 17.3 | 32.75 | 70.86 | 9.45 | 28.38 |
+| D | 404 | 18078.7 | 2663 | 13 | 738 | 27.71 | 87.65 | 13.88 | 46.56 | 83.42 | 14.92 | 16.9 |
+| E | 158 | 5784.87 | 2784 | 13 | 355 | 12.75 | 87.01 | 12.19 | 39.46 | 68.99 | 29.38 | 12.55 |
+| F | 266 | 9301.8 | 2699 | 13 | 481 | 17.82 | 88.91 | 15.27 | 49.72 | 81.58 | 12.16 | 19.33 |
 
 Search-entry structure should be read as a group: `search_exposure_users`, `search_average_rank`, `search_entry_users`, `search_entry_rate_pct`, and `search_entry_share_pct` describe different parts of visibility and entry.
 
