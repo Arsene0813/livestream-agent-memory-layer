@@ -53,7 +53,7 @@ After modifying retail memory slots or generated facts, rerun:
 python eval/eval_retail.py
 ```
 
-Then update this report and `eval/results/eval_retail_result.txt` if the case names or outputs change.
+Then update this report and `eval/retail_decision_support_eval_results/eval_retail_result.txt` if the case names or outputs change.
 
 ## Limitation
 

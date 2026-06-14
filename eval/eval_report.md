@@ -25,8 +25,8 @@ The goal is not to claim broad benchmark performance. Instead, the evaluation ve
 
 Saved machine-readable summaries:
 
-- `eval/results/eval_summary.csv`
-- `eval/results/eval_summary.json`
+- `eval/original_livestream_eval_results/eval_summary.csv`
+- `eval/original_livestream_eval_results/eval_summary.json`
 
 ## Data-Science-Oriented Framing
 
@@ -46,4 +46,4 @@ The current evaluation does not yet measure large-scale product coverage, noisy 
 2. Add stale promotion and stale stock cases.
 3. Add ambiguous product-name cases.
 4. Add similar-product separation cases.
-5. Update the evaluation runner so it automatically regenerates `eval/results/eval_summary.csv` and `eval/results/eval_summary.json` after each run.
+5. Update the evaluation runner so it automatically regenerates `eval/original_livestream_eval_results/eval_summary.csv` and `eval/original_livestream_eval_results/eval_summary.json` after each run.

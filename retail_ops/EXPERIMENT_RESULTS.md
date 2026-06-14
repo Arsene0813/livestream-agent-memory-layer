@@ -79,7 +79,7 @@ The current experiments do not claim full 48-store automation, causal attributio
 | Expected behavior | The SQL output should include `comparison_scope_flag` and `comparison_limit_notes`, while staying at row-level same-period diagnostic scope. |
 | Current result | Passed current Demo 2 scope-boundary validation. |
 | Checked by | `python3 eval/eval_retail_demo2_scope_boundary.py` |
-| Result path | `eval/results/eval_retail_demo2_scope_boundary_result.txt` |
+| Result path | `eval/retail_decision_support_eval_results/eval_retail_demo2_scope_boundary_result.txt` |
 | Failure mode | Ranking stores globally, treating same-period diagnostic readiness as pairwise comparability, treating `activity_cost_ratio_pct` as ROI, or transferring a promotion, price, or SKU action without checking limits. |
 
 ## Experiment 2A: Demo 2 Guardrail Sensitivity Check
@@ -106,7 +106,7 @@ The current experiments do not claim full 48-store automation, causal attributio
 | Expected behavior | Generated facts should preserve store entity, period, slot, observed values, calculation notes, source fields, primary source path, supporting source paths, lineage path, confidence, limitations, active status, and period granularity. |
 | Current result | Passed current generated-fact evaluation. |
 | Checked by | `python3 eval/eval_retail_demo2_facts.py` |
-| Result path | `eval/results/eval_retail_demo2_facts_result.txt` |
+| Result path | `eval/retail_decision_support_eval_results/eval_retail_demo2_facts_result.txt` |
 | Failure mode | Mixing store-level and SKU-level fields, dropping source evidence, introducing undocumented fields, or letting top-search or top-SKU evidence appear without supporting source paths. |
 
 Implemented Demo 2 evidence slots:
@@ -130,7 +130,7 @@ Implemented Demo 2 evidence slots:
 | Expected behavior | The system qualifies or refuses unsupported claims about causal attribution, audited profit, full 48-store generalization, final store ranking, promotion decisions, pairwise store comparability, or full product-category share. |
 | Current result | Passed current offline scenario checks. |
 | Checked by | `python3 eval/eval_retail_demo2_answer_behavior.py` |
-| Result path | `eval/results/eval_retail_demo2_answer_behavior_result.txt` |
+| Result path | `eval/retail_decision_support_eval_results/eval_retail_demo2_answer_behavior_result.txt` |
 | Failure mode | Producing fluent but unsupported advice from isolated metrics, treating current Demo 2 as a completed pairwise decision system, or ignoring `comparison_limit_notes`. |
 
 Answer-boundary rules checked here:
@@ -151,7 +151,7 @@ Answer-boundary rules checked here:
 | Question | Does the implemented `/chat_retail_ops_demo2_kb` endpoint preserve the same evidence boundaries when answering from file-backed Demo 2 memory facts? |
 | Input | `/chat_retail_ops_demo2_kb`; `api/main.py`; `retail_ops/outputs/generated_demo2_retail_memory_facts.json`. |
 | Transformation | Endpoint-level evaluation checks supported Store B-F questions, unsupported all-48-store questions, best-store ranking requests, final operating-recommendation requests, and out-of-Demo-2 entity questions. |
-| Output | `eval/results/eval_retail_demo2_endpoint_behavior_result.txt`. |
+| Output | `eval/retail_decision_support_eval_results/eval_retail_demo2_endpoint_behavior_result.txt`. |
 | Expected behavior | Supported Store B-F questions return file-backed Demo 2 facts; cross-store B-F questions stay at same-period diagnostic scope; unsupported scope or final-decision requests are refused or qualified. |
 | Current result | Passed current endpoint-level boundary checks. |
 | Checked by | `python3 eval/eval_retail_demo2_endpoint_behavior.py` |
@@ -209,7 +209,7 @@ Evidence still missing for a stronger gate:
 | Question | Can the project document a future pairwise comparability gate without accidentally exposing it as a finished current feature? |
 | Input | `retail_ops/COMPARABILITY_GATE_V0.md`. |
 | Transformation | `eval/eval_future_comparability_gate_contract.py` checks that the planned input triple, output enum, and blocking-factor list are documented. |
-| Output | `eval/results/eval_future_comparability_gate_contract_result.txt`. |
+| Output | `eval/retail_decision_support_eval_results/eval_future_comparability_gate_contract_result.txt`. |
 | Expected behavior | The future gate may define planned factors such as transaction order volume, transaction amount, activity status, activity intensity, store type, region and market context, SKU structure, and repeated reporting windows. It should not appear as a current implemented gate in Demo 2 outputs. |
 | Current result | Documented and checked by the future-gate contract stub. |
 | Checked by | `python3 eval/eval_future_comparability_gate_contract.py` |

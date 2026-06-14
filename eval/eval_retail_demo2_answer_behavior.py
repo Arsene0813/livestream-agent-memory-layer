@@ -8,7 +8,7 @@ from pathlib import Path
 ROOT = Path(".")
 CSV_PATH = ROOT / "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
 FACTS_PATH = ROOT / "retail_ops/outputs/generated_demo2_retail_memory_facts.json"
-RESULT_PATH = ROOT / "eval/results/eval_retail_demo2_answer_behavior_result.txt"
+RESULT_PATH = ROOT / "eval/retail_decision_support_eval_results/eval_retail_demo2_answer_behavior_result.txt"
 
 EXPECTED_STORES = ["B", "C", "D", "E", "F"]
 EXPECTED_CASE_COUNT = 6

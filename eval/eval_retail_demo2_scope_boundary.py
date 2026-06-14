@@ -10,7 +10,7 @@ import csv
 from pathlib import Path
 
 OUTPUT_PATH = Path("retail_ops/outputs/demo2_cross_store_comparability_output.csv")
-RESULTS_PATH = Path("eval/results/eval_retail_demo2_scope_boundary_result.txt")
+RESULTS_PATH = Path("eval/retail_decision_support_eval_results/eval_retail_demo2_scope_boundary_result.txt")
 
 REQUIRED_FIELDS = [
     "store_id",
