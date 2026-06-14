@@ -1,12 +1,12 @@
-case_id,category,behavior_group,expected_behavior,result
-price_retrieval_001,product_price,retrieval,"Retrieve the stored product price.",pass
-price_overwrite_001,price_overwrite,lifecycle_update,"Use the newer price instead of the older price.",pass
-fallback_unknown_product_001,fallback_refusal,unsupported_query_handling,"Refuse an unsupported product query.",pass
-entity_separation_001,entity_separation,entity_control,"Keep Product A and Product B separate.",pass
-stock_status_001,stock_status,retrieval,"Retrieve the stored stock status.",pass
-stock_overwrite_001,stock_overwrite,lifecycle_update,"Use the newer stock status.",pass
-promo_retrieval_001,promo,retrieval,"Retrieve the stored promotion.",pass
-promo_overwrite_001,promo_overwrite,lifecycle_update,"Use the newer promotion.",pass
-shipping_policy_001,shipping_policy,retrieval,"Retrieve the stored delivery policy.",pass
-product_feature_001,product_feature,retrieval,"Retrieve the stored product feature.",pass
-non_fact_filtering_001,non_fact_filtering,noise_filtering,"Avoid treating greetings as factual knowledge.",pass
+case_id,category,behavior_group,expected_behavior,result,project_stage,scope_note
+price_retrieval_001,product_price,retrieval,Retrieve the stored product price.,pass,original_livestream_memory_layer,Historical lifecycle eval for product-memory behavior; not a retail_ops Meituan metric eval.
+price_overwrite_001,price_overwrite,lifecycle_update,Use the newer price instead of the older price.,pass,original_livestream_memory_layer,Historical lifecycle eval for product-memory behavior; not a retail_ops Meituan metric eval.
+fallback_unknown_product_001,fallback_refusal,unsupported_query_handling,Refuse an unsupported product query.,pass,original_livestream_memory_layer,Historical lifecycle eval for product-memory behavior; not a retail_ops Meituan metric eval.
+entity_separation_001,entity_separation,entity_control,Keep Product A and Product B separate.,pass,original_livestream_memory_layer,Historical lifecycle eval for product-memory behavior; not a retail_ops Meituan metric eval.
+stock_status_001,stock_status,retrieval,Retrieve the stored stock status.,pass,original_livestream_memory_layer,Historical lifecycle eval for product-memory behavior; not a retail_ops Meituan metric eval.
+stock_overwrite_001,stock_overwrite,lifecycle_update,Use the newer stock status.,pass,original_livestream_memory_layer,Historical lifecycle eval for product-memory behavior; not a retail_ops Meituan metric eval.
+promo_retrieval_001,promo,retrieval,Retrieve the stored promotion.,pass,original_livestream_memory_layer,Historical lifecycle eval for product-memory behavior; not a retail_ops Meituan metric eval.
+promo_overwrite_001,promo_overwrite,lifecycle_update,Use the newer promotion.,pass,original_livestream_memory_layer,Historical lifecycle eval for product-memory behavior; not a retail_ops Meituan metric eval.
+shipping_policy_001,shipping_policy,retrieval,Retrieve the stored delivery policy.,pass,original_livestream_memory_layer,Historical lifecycle eval for product-memory behavior; not a retail_ops Meituan metric eval.
+product_feature_001,product_feature,retrieval,Retrieve the stored product feature.,pass,original_livestream_memory_layer,Historical lifecycle eval for product-memory behavior; not a retail_ops Meituan metric eval.
+non_fact_filtering_001,non_fact_filtering,noise_filtering,Avoid treating greetings as factual knowledge.,pass,original_livestream_memory_layer,Historical lifecycle eval for product-memory behavior; not a retail_ops Meituan metric eval.
