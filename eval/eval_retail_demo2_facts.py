@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 FACTS_PATH = Path("retail_ops/outputs/generated_demo2_retail_memory_facts.json")
-RESULTS_PATH = Path("eval/results/eval_retail_demo2_facts_result.txt")
+RESULTS_PATH = Path("eval/retail_decision_support_eval_results/eval_retail_demo2_facts_result.txt")
 
 EXPECTED_CASES = [
     {

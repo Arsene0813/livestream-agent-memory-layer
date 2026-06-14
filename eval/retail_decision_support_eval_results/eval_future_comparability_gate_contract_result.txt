@@ -1,4 +1,4 @@
 [SKIP] Future comparability gate is documented but not implemented.
 [PASS] Planned input triple, output enum, and output fields are present in COMPARABILITY_GATE_V0.md.
 [PASS] This stub freezes the future contract without claiming an implemented pairwise gate.
-[PASS] Result written to eval/results/eval_future_comparability_gate_contract_result.txt.
+[PASS] Result written to eval/retail_decision_support_eval_results/eval_future_comparability_gate_contract_result.txt.

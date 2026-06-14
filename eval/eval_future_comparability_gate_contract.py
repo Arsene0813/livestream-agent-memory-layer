@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 SPEC_PATH = Path("retail_ops/COMPARABILITY_GATE_V0.md")
-RESULT_PATH = Path("eval/results/eval_future_comparability_gate_contract_result.txt")
+RESULT_PATH = Path("eval/retail_decision_support_eval_results/eval_future_comparability_gate_contract_result.txt")
 
 REQUIRED_SPEC_TERMS = [
     "reference_store_id",

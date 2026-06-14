@@ -18,8 +18,8 @@ REQUIRED_FILES = [
     "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "eval/eval_retail_demo2_facts.py",
     "eval/eval_retail_demo2_answer_behavior.py",
-    "eval/results/eval_retail_demo2_facts_result.txt",
-    "eval/results/eval_retail_demo2_answer_behavior_result.txt",
+    "eval/retail_decision_support_eval_results/eval_retail_demo2_facts_result.txt",
+    "eval/retail_decision_support_eval_results/eval_retail_demo2_answer_behavior_result.txt",
 ]
 
 REQUIRED_API_PATTERNS = [

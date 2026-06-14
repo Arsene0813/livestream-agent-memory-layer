@@ -6,7 +6,7 @@ from pathlib import Path
 
 API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000")
 CASES_PATH = Path("eval/eval_retail_cases.json")
-RESULTS_PATH = Path("eval/results/eval_retail_result.txt")
+RESULTS_PATH = Path("eval/retail_decision_support_eval_results/eval_retail_result.txt")
 
 
 def post_json(url: str, payload: dict) -> dict:
