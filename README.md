@@ -37,7 +37,9 @@ The single source of truth for retail field names and metric meanings is:
 
 The current retail decision-support path has three implemented evidence layers: Demo 1 for Store A month-over-month diagnosis, Demo 2 for selected Stores B-F under one March 2026 reporting window, and the repeated-window B-F panel across 2026-02, 2026-03, and 2026-04.
 
-A future pairwise comparability gate would judge whether two store-period records can be compared for a specific operating question. Demo 2 keeps the historical `cross_store_comparability` path wording for reference stability, but the implemented output remains same-period B-F diagnostic evidence rather than a pairwise gate decision.
+The current retail decision-support path has three implemented evidence layers: Demo 1 for Store A month-over-month diagnosis, Demo 2 for selected Stores B-F under one March 2026 reporting window, and the repeated-window B-F panel across 2026-02, 2026-03, and 2026-04.
+
+Demo 2 uses the `cross_store_comparability` file-path term for reference stability, but in the current implementation it means same-period B-F diagnostic evidence with interpretation guardrails. The future pairwise comparability gate remains question-specific: it should judge whether two store-period records can be compared for one selected operating question.
 
 | Area | Current implementation | Current boundary |
 | --- | --- | --- |
