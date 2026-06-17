@@ -2,9 +2,9 @@
 
 Repository: `livestream-agent-memory-layer`
 
-A local evidence-bounded decision-support prototype for multi-store Meituan instant-retail operations, built with SQL diagnostics, metric-boundary preservation, and lifecycle-aware retrieval.
+A local evidence-bounded decision-support prototype for multi-store Meituan instant-retail operations, built with SQL diagnostics, metric-boundary preservation, lifecycle-aware retrieval, and deterministic grounded review.
 
-The repository name is historical. The project began as a lifecycle-aware memory layer for commerce interaction, and the current implemented extension applies the same evidence-boundary design to Meituan instant-retail decision support.
+The title keeps the lifecycle-aware memory-layer framing used in the application materials. The current implemented retail path applies that evidence-boundary design to Meituan backend metrics, SQL diagnostic outputs, generated retail memory facts, answer-boundary checks, and RAC grounded review.
 
 ## Core Research Question
 
