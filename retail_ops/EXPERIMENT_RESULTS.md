@@ -2,6 +2,19 @@
 
 This file records the retail experiment map, validation results, and boundary checks for the current decision-support prototype.
 
+## First-Pass Reviewer Matrix
+
+| Experiment                          | Question                                                                                                   | Input                                                                    | Output                                                                                | What it prevents                                                                       |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Field-contract validation           | Are field names and metric meanings stable across the retail path?                                         | `DATA_DICTIONARY.md`, source CSV files, SQL outputs, generated facts     | Pass/fail validation of names, meanings, and fact structure                           | Alias drift, silent metric redefinition, unsupported generated-fact fields             |
+| Demo 1 month-over-month diagnostic  | Can one store be described across repeated months without reducing the result to one metric?               | Store A February-April 2026 backend-derived metrics                      | Multi-metric diagnostic output and memory facts                                       | Single-metric attribution, causal overclaim, month-as-good-or-bad labeling             |
+| Demo 2 same-period diagnostic       | Can selected B-F store-period rows be staged under one March 2026 reporting window and one field contract? | Stores B-F March 2026 metric records, top search terms, top-SKU evidence | Row-level diagnostic output with `comparison_scope_flag` and `comparison_limit_notes` | Store ranking, premature pairwise comparability, strategy-transfer claims              |
+| Answer-boundary checks              | Do later answers preserve entity, period, metric-definition, source, and comparison limits?                | Generated retail memory facts and boundary test cases                    | Scenario-level pass/fail behavior                                                     | Unsupported recommendations, period mismatch, entity mismatch, ROI/profit overclaim    |
+| Retrieval and robustness inspection | Does wording variation still retrieve the intended evidence path?                                          | Local file-backed retail evidence corpus and query variants              | Score-distribution and query-robustness inspection                                    | Fluent answers hiding weak or mismatched evidence                                      |
+| Repeated-window B-F panel           | Is there enough repeated store-period coverage to prepare future question-specific comparison rules?       | Stores B-F February-April 2026 panel records                             | Coverage output and descriptive repeated-window summary                               | Premature gate claims, store ranking, causal interpretation from short-window evidence |
+| Future comparability-gate contract  | What should the next pairwise decision layer decide, and what should it refuse?                            | Current evidence boundaries and planned gate design                      | Question-specific future gate contract                                                | Treating current Demo 2 as a completed pairwise gate                                   |
+
+
 ## Experiment Dependency Map
 
 The experiment chain should be read in this order:
