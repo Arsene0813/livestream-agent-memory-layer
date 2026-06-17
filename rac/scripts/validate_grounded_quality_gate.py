@@ -21,7 +21,7 @@ REQUIRED_REPORT_SECTIONS = [
     "### 3b. Factor Weights Used in This Report",
     "## 4. Local Evidence Grounding",
     "### 4a. Evidence Index",
-    "### 4b. Snippet Previews",
+    "### 4b. Source Review Pointers",
     "## 5. Competing Hypotheses",
     "## 6. Critic Findings",
     "## 7. Fact Check",
@@ -298,8 +298,8 @@ def validate_state(case: dict[str, Any], state: dict[str, Any]) -> dict[str, Any
         if "weight_source" not in row:
             issues.append(f"factor weight row missing weight_source: {row.get('factor_id')}")
 
-    if "### 4b. Snippet Previews" not in report:
-        issues.append("report does not expose Snippet Previews section")
+    if "### 4b. Source Review Pointers" not in report:
+        issues.append("report does not expose Source Review Pointers section")
 
     if "Missing source files: 0" not in report:
         issues.append("report does not explicitly show Missing source files: 0")

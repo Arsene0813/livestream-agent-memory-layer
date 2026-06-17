@@ -202,21 +202,30 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append(f"- Fallback packets: {summary['fallback_count']}")
     lines.append(f"- Missing source files: {summary['source_missing_count']}")
     lines.append("")
-    lines.append("The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence snippet. It is not a business metric. Snippet previews are listed below the compact evidence index to keep the table readable.")
+    lines.append("The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence row. It is not a business metric. Long raw snippets are not expanded inside the table, because source pointers are more readable and more stable for review.")
     lines.append("")
     lines.append("### 4a. Evidence Index")
     lines.append("")
-    lines.append("| Factor | Source | Role | Status | Source Lines | Matched Terms |")
+    lines.append("| Factor | Source | Evidence Type | Status | Source Lines | Matched Terms |")
     lines.append("|---|---|---|---|---|---|")
 
+    report_evidence_type_overrides = {
+        "store_type": "context_evidence",
+        "sku_structure": "product_mix_evidence",
+    }
+
     for row in rows:
+        evidence_type = report_evidence_type_overrides.get(
+            row["factor_id"],
+            row["grounding_role"],
+        )
         lines.append(
             "| "
             + markdown_escape(row["factor_id"])
             + " | "
             + markdown_escape(row["source_path"])
             + " | "
-            + markdown_escape(row["grounding_role"])
+            + markdown_escape(evidence_type)
             + " | "
             + markdown_escape(row["grounding_status"])
             + " | "
@@ -227,21 +236,20 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
         )
 
     lines.append("")
-    lines.append("### 4b. Snippet Previews")
+    lines.append("### 4b. Source Review Pointers")
+    lines.append("")
+    lines.append("Use the `Source` and `Source Lines` columns above to inspect the local evidence. CSV headers or long source rows are intentionally not expanded in this report section.")
     lines.append("")
     for row in rows:
-        snippet_preview = str(row["snippet"])
-        if len(snippet_preview) > 180:
-            snippet_preview = snippet_preview[:177].rstrip() + "..."
         lines.append(
             "- `"
             + markdown_escape(row["factor_id"])
-            + "` — "
+            + "` — review `"
             + markdown_escape(row["source_path"])
-            + " lines "
+            + "` source lines "
             + markdown_escape(row["line_range"])
-            + ": "
-            + markdown_escape(snippet_preview)
+            + "; matched terms: "
+            + markdown_escape(", ".join(row["matched_terms"]))
         )
 
     lines.append("")

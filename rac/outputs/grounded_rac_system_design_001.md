@@ -53,11 +53,11 @@ Weighting limitations:
 - Fallback packets: 0
 - Missing source files: 0
 
-The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence snippet. It is not a business metric. Snippet previews are listed below the compact evidence index to keep the table readable.
+The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence row. It is not a business metric. Long raw snippets are not expanded inside the table, because source pointers are more readable and more stable for review.
 
 ### 4a. Evidence Index
 
-| Factor | Source | Role | Status | Source Lines | Matched Terms |
+| Factor | Source | Evidence Type | Status | Source Lines | Matched Terms |
 |---|---|---|---|---|---|
 | typed_memory | rac/README.md | default_evidence | keyword_matched | 8-10 | fact |
 | evidence_packets | rac/README.md | default_evidence | keyword_matched | 2-4 | evidence |
@@ -68,16 +68,18 @@ The `Source Lines` column is an audit pointer to the local source-file line rang
 | retrieval_trace | rac/README.md | default_evidence | keyword_matched | 4-6 | source |
 | active_state_filtering | rac/README.md | default_evidence | keyword_matched | 26-28 | state |
 
-### 4b. Snippet Previews
+### 4b. Source Review Pointers
 
-- `typed_memory` — rac/README.md lines 8-10: question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-cover...
-- `evidence_packets` — rac/README.md lines 2-4: This module is a structured reasoning scaffold for question decomposition, evidence routing, critique, and evidence-coverage and limitation update.
-- `hypotheses` — rac/README.md lines 8-10: question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-cover...
-- `belief_records` — rac/README.md lines 62-64: * critique unsupported assumptions before writing the final answer, * update confidence and limitations only when the evidence supports the change.
-- `confidence` — rac/README.md lines 62-64: * critique unsupported assumptions before writing the final answer, * update confidence and limitations only when the evidence supports the change.
-- `limitations` — rac/README.md lines 2-4: This module is a structured reasoning scaffold for question decomposition, evidence routing, critique, and evidence-coverage and limitation update.
-- `retrieval_trace` — rac/README.md lines 4-6: The `rac/` directory name is retained for path stability. In reviewer-facing wording, this should be read as a deterministic, source-grounded reasoning scaffold with explicit ev...
-- `active_state_filtering` — rac/README.md lines 26-28: * a shared review-state schema, * deterministic question analysis and factor expansion,
+Use the `Source` and `Source Lines` columns above to inspect the local evidence. CSV headers or long source rows are intentionally not expanded in this report section.
+
+- `typed_memory` — review `rac/README.md` source lines 8-10; matched terms: fact
+- `evidence_packets` — review `rac/README.md` source lines 2-4; matched terms: evidence
+- `hypotheses` — review `rac/README.md` source lines 8-10; matched terms: hypothesis
+- `belief_records` — review `rac/README.md` source lines 62-64; matched terms: confidence
+- `confidence` — review `rac/README.md` source lines 62-64; matched terms: confidence
+- `limitations` — review `rac/README.md` source lines 2-4; matched terms: limitation
+- `retrieval_trace` — review `rac/README.md` source lines 4-6; matched terms: source
+- `active_state_filtering` — review `rac/README.md` source lines 26-28; matched terms: state
 
 ## 5. Competing Hypotheses
 

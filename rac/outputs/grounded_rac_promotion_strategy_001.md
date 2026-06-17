@@ -53,11 +53,11 @@ Weighting limitations:
 - Fallback packets: 0
 - Missing source files: 0
 
-The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence snippet. It is not a business metric. Snippet previews are listed below the compact evidence index to keep the table readable.
+The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence row. It is not a business metric. Long raw snippets are not expanded inside the table, because source pointers are more readable and more stable for review.
 
 ### 4a. Evidence Index
 
-| Factor | Source | Role | Status | Source Lines | Matched Terms |
+| Factor | Source | Evidence Type | Status | Source Lines | Matched Terms |
 |---|---|---|---|---|---|
 | activity_orders | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 129-131 | activity_orders |
 | activity_cost | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 130-132 | activity_cost |
@@ -68,16 +68,18 @@ The `Source Lines` column is an audit pointer to the local source-file line rang
 | sku_margin_structure | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 13-15 | sku |
 | competitor_context | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 75-77 | competition |
 
-### 4b. Snippet Previews
+### 4b. Source Review Pointers
 
-- `activity_orders` — retail_ops/data/DATA_DICTIONARY.md lines 129-131: - explicit activity status, only if campaign-calendar or backend status evidence exists; - activity involvement, currently proxied by `activity_orders` and `activity_order_share...
-- `activity_cost` — retail_ops/data/DATA_DICTIONARY.md lines 130-132: - activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`; - activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_p...
-- `merchant_subsidy` — retail_ops/data/DATA_DICTIONARY.md lines 130-132: - activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`; - activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_p...
-- `platform_subsidy` — retail_ops/data/DATA_DICTIONARY.md lines 130-132: - activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`; - activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_p...
-- `order_conversion` — retail_ops/data/DATA_DICTIONARY.md lines 77-79: In the current project, `region_type` can only be used as weak context alongside period alignment, store type, order volume, visibility and ranking signals, entry and order conv...
-- `payment_conversion` — retail_ops/data/DATA_DICTIONARY.md lines 479-481: ### `payment_users` / 支付人数
-- `sku_margin_structure` — retail_ops/data/DATA_DICTIONARY.md lines 13-15: - `retail_ops/data/store_a_monthly_metrics.csv` - `retail_ops/data/store_a_top_skus.csv` - `retail_ops/sql/01_store_a_month_over_month_diagnostic.sql`
-- `competitor_context` — retail_ops/data/DATA_DICTIONARY.md lines 75-77: In Demo 2, `region_type` may contain coarse available labels such as city-level region labels. These values are retained for data-contract stability and source traceability, but...
+Use the `Source` and `Source Lines` columns above to inspect the local evidence. CSV headers or long source rows are intentionally not expanded in this report section.
+
+- `activity_orders` — review `retail_ops/data/DATA_DICTIONARY.md` source lines 129-131; matched terms: activity_orders
+- `activity_cost` — review `retail_ops/data/DATA_DICTIONARY.md` source lines 130-132; matched terms: activity_cost
+- `merchant_subsidy` — review `retail_ops/data/DATA_DICTIONARY.md` source lines 130-132; matched terms: merchant_subsidy
+- `platform_subsidy` — review `retail_ops/data/DATA_DICTIONARY.md` source lines 130-132; matched terms: platform_subsidy
+- `order_conversion` — review `retail_ops/data/DATA_DICTIONARY.md` source lines 77-79; matched terms: order conversion
+- `payment_conversion` — review `retail_ops/data/DATA_DICTIONARY.md` source lines 479-481; matched terms: 支付人数
+- `sku_margin_structure` — review `retail_ops/data/DATA_DICTIONARY.md` source lines 13-15; matched terms: sku
+- `competitor_context` — review `retail_ops/data/DATA_DICTIONARY.md` source lines 75-77; matched terms: competition
 
 ## 5. Competing Hypotheses
 
