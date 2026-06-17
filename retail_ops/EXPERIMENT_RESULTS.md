@@ -3,7 +3,7 @@
 This file records the retail experiment map, validation results, and boundary checks for the current decision-support prototype.
 
 ## First-Pass Reviewer Matrix
-<<<<<<< HEAD
+
 
 | Experiment                          | Question                                                                                                   | Input                                                                    | Output                                                                                | What it prevents                                                                       |
 | ----------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
@@ -17,8 +17,8 @@ This file records the retail experiment map, validation results, and boundary ch
 
 
 ## Experiment Dependency Map
-=======
->>>>>>> 1bdced6 (Refine retail experiment narrative and dictionary boundaries)
+
+
 
 | Layer | Review question | Evidence output | Boundary protected |
 |---|---|---|---|
