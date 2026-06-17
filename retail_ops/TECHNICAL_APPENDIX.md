@@ -78,6 +78,28 @@ The repository contains more than one retrieval path. They should not be read as
 
 The retrieval-threshold calibration is a separate offline inspection over the file-backed evidence corpus. It should not be read as the runtime selection logic of `/chat_retail_ops_demo2_kb`.
 
+### Retail Retrieval Boundary Pattern
+
+The current retail retrieval path should not treat semantic similarity as sufficient evidence for an operating answer.
+
+A retail answer must still preserve:
+
+- entity scope;
+- reporting-period scope;
+- metric definition;
+- source-field support;
+- comparison limits.
+
+Typical refusal or qualification cases include:
+
+- the query asks for a metric outside the current evidence;
+- the query mixes stores, months, or demo scopes;
+- the query asks for strategy transfer or final operating action;
+- the retrieved metric has a documented interpretation boundary;
+- multiple candidate facts are semantically close but the comparison question is underspecified.
+
+This pattern is consistent with the offline retrieval-threshold and query-robustness inspections summarized in `retail_ops/EXPERIMENT_RESULTS.md`.
+
 ## Endpoint Evidence Modes
 
 The current retail endpoints do not use one identical evidence path.
