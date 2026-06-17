@@ -110,7 +110,7 @@ A query-robustness inspection is also included to test whether supported, unsupp
 
 The repeated-window panel adds selected Stores B-F across 2026-02, 2026-03, and 2026-04. Its role is to make repeated store-period coverage visible before the future question-specific pairwise comparability gate exists.
 
-The panel is descriptive evidence preparation. It is not a completed comparability gate, not a store ranking system, and not a strategy-transfer approval mechanism.
+The panel is descriptive evidence preparation for future question-specific comparison rules. It supports coverage and stability inspection, while leaving pairwise comparability decisions, store ranking, and strategy-transfer approval outside the current implemented scope.
 
 Main outputs:
 
