@@ -53,7 +53,9 @@ Weighting limitations:
 - Fallback packets: 0
 - Missing source files: 0
 
-| Factor | Source | Role | Status | Lines | Matched Terms | Local Evidence Snippet |
+The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence snippet. It is not a business metric.
+
+| Factor | Source | Role | Status | Source Lines | Matched Terms | Local Evidence Snippet |
 |---|---|---|---|---|---|---|
 | activity_orders | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 129-131 | activity_orders | - explicit activity status, only if campaign-calendar or backend status evidence exists; - activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`; - activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsi... |
 | activity_cost | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 130-132 | activity_cost | - activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`; - activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`. |

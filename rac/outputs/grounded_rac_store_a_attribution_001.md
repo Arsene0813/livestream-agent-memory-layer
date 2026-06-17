@@ -49,7 +49,9 @@ Weighting limitations:
 - Fallback packets: 0
 - Missing source files: 0
 
-| Factor | Source | Role | Status | Lines | Matched Terms | Local Evidence Snippet |
+The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence snippet. It is not a business metric.
+
+| Factor | Source | Role | Status | Source Lines | Matched Terms | Local Evidence Snippet |
 |---|---|---|---|---|---|---|
 | search_exposure | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 82-84 | search | Store A's visibility and entry structure can be described from exposure, ranking, entry, and search-entry metrics. |
 | entry_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 49-51 | entry | ```text order_conversion_rate_pct = order_users / entry_users * 100 ``` |

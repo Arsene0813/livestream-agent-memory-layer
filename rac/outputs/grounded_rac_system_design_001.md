@@ -53,7 +53,9 @@ Weighting limitations:
 - Fallback packets: 0
 - Missing source files: 0
 
-| Factor | Source | Role | Status | Lines | Matched Terms | Local Evidence Snippet |
+The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence snippet. It is not a business metric.
+
+| Factor | Source | Role | Status | Source Lines | Matched Terms | Local Evidence Snippet |
 |---|---|---|---|---|---|---|
 | typed_memory | rac/README.md | default_evidence | keyword_matched | 8-10 | fact | question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-coverage and limitation update -> final report |
 | evidence_packets | rac/README.md | default_evidence | keyword_matched | 2-4 | evidence | This module is a structured reasoning scaffold for question decomposition, evidence routing, critique, and evidence-coverage and limitation update. |

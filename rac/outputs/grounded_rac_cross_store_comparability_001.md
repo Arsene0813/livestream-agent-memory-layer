@@ -54,7 +54,9 @@ Weighting limitations:
 - Fallback packets: 0
 - Missing source files: 0
 
-| Factor | Source | Role | Status | Lines | Matched Terms | Local Evidence Snippet |
+The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence snippet. It is not a business metric.
+
+| Factor | Source | Role | Status | Source Lines | Matched Terms | Local Evidence Snippet |
 |---|---|---|---|---|---|---|
 | same_reporting_period | retail_ops/data/demo2_source_notes.md | context_evidence | keyword_matched | 6-8 | reporting window | All included stores use the same reporting window: |
 | store_type | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | store_type | store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payme... |

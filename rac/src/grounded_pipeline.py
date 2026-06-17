@@ -202,7 +202,9 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append(f"- Fallback packets: {summary['fallback_count']}")
     lines.append(f"- Missing source files: {summary['source_missing_count']}")
     lines.append("")
-    lines.append("| Factor | Source | Role | Status | Lines | Matched Terms | Local Evidence Snippet |")
+    lines.append("The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence snippet. It is not a business metric.")
+    lines.append("")
+    lines.append("| Factor | Source | Role | Status | Source Lines | Matched Terms | Local Evidence Snippet |")
     lines.append("|---|---|---|---|---|---|---|")
 
     for row in rows:
