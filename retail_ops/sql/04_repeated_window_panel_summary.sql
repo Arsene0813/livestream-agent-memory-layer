@@ -148,7 +148,7 @@ summary AS (
             ELSE 'insufficient_repeated_window_coverage'
         END AS repeated_window_summary_flag,
 
-        'Descriptive February-to-April movement summary only; not a ranking, causal test, pairwise comparability gate, or operating recommendation.' AS summary_boundary_note
+        'Descriptive repeated-window summary only; not a store ranking, pairwise comparability gate, operating recommendation, endpoint behavior, generated memory fact, or causal analysis.' AS summary_boundary_note
     FROM monthly_pivot
 )
 SELECT *

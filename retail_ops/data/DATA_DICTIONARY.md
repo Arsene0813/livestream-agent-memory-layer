@@ -932,3 +932,64 @@ Boundary: these columns support descriptive coverage review only. They should
 not be interpreted as store rankings, pairwise comparability decisions,
 strategy-transfer approvals, causal explanations, or generated memory facts
 by themselves.
+
+## Panel Coverage Derived Column Convention
+
+The following panel-coverage fields are report-derived output fields for `retail_ops/outputs/store_period_panel_coverage_output.csv`. They are not raw Meituan backend export fields.
+
+### Panel coverage metadata fields
+
+- `observed_month_count`: number of distinct `period_month` values observed for the store in the current repeated-window panel.
+- `first_observed_month`: earliest observed `period_month` for the store in the current repeated-window panel.
+- `last_observed_month`: latest observed `period_month` for the store in the current repeated-window panel.
+- `observed_months`: pipe-separated list of observed `period_month` values used for coverage inspection.
+
+These fields support repeated-window coverage review only. They do not prove store comparability, store quality, market maturity, or operating-transfer readiness.
+
+### Average-value coverage fields
+
+Fields with the `avg_` prefix are arithmetic averages of already reported store-period values across the included repeated-window panel rows. They are not raw Meituan backend fields and they are not recomputed funnel ratios.
+
+- `avg_transaction_amount`: arithmetic average of `transaction_amount` across the included store-period rows.
+- `avg_transaction_orders`: arithmetic average of `transaction_orders` across the included store-period rows.
+- `avg_exposure_users`: arithmetic average of `exposure_users` across the included store-period rows.
+- `avg_entry_users`: arithmetic average of `entry_users` across the included store-period rows.
+- `avg_order_conversion_rate_pct`: arithmetic average of the already reported `order_conversion_rate_pct` values. It is not recomputed from summed `order_users` and summed `entry_users`.
+- `avg_payment_conversion_rate_pct`: arithmetic average of the already reported `payment_conversion_rate_pct` values. It is not recomputed from summed `payment_users` and summed `order_users`.
+- `avg_activity_cost_ratio_pct`: arithmetic average of the already reported `activity_cost_ratio_pct` values. It is not ROI, profit, margin, or audited activity efficiency.
+
+Correct use: these fields make repeated-window panel coverage easier to inspect before later diagnostic work.
+
+Boundary: these fields must not be used as store rankings, causal evidence, operating recommendations, pairwise comparability decisions, or strategy-transfer approvals.
+
+## Output Boundary / Guardrail Fields
+
+The following fields are report-derived guardrail fields. They are not raw Meituan backend metrics.
+
+- `panel_coverage_flag`: output-level coverage status for descriptive repeated-window panel review.
+- `panel_scope_note`: plain-language boundary note for the panel coverage output.
+- `repeated_window_summary_flag`: output-level flag indicating whether a store has enough repeated-window observations for descriptive summary review.
+- `summary_boundary_note`: plain-language boundary note for the repeated-window summary output.
+
+Correct use: these fields help preserve the difference between descriptive diagnostic readiness and stronger operating interpretation.
+
+Boundary: these fields must not introduce ranking, causal, endpoint-behavior, generated-memory, or operating-recommendation claims.
+
+## Repeated-Window Delta / Percentage Column Convention
+
+Fields ending in `_feb_to_apr_delta` and `_feb_to_apr_pct` are report-derived movement fields for the February-to-April repeated-window summary.
+
+- `*_feb_to_apr_delta`: April value minus February value for the same canonical metric.
+- `*_feb_to_apr_pct`: February-to-April delta divided by the February value, multiplied by 100, when the February denominator is available and non-zero.
+
+Examples:
+
+- `transaction_amount_feb_to_apr_delta`
+- `transaction_amount_feb_to_apr_pct`
+- `entry_users_feb_to_apr_delta`
+- `entry_users_feb_to_apr_pct`
+- `activity_cost_ratio_pct_feb_to_apr_delta`
+
+Correct use: these fields describe directional movement within the selected repeated-window output.
+
+Boundary: they do not explain why the movement happened, and they do not prove cross-store comparability, causal impact, customer satisfaction, product quality, or operating recommendation readiness.
