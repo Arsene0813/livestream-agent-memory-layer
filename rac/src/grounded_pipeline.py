@@ -202,10 +202,12 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append(f"- Fallback packets: {summary['fallback_count']}")
     lines.append(f"- Missing source files: {summary['source_missing_count']}")
     lines.append("")
-    lines.append("The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence snippet. It is not a business metric.")
+    lines.append("The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence snippet. It is not a business metric. Snippet previews are listed below the compact evidence index to keep the table readable.")
     lines.append("")
-    lines.append("| Factor | Source | Role | Status | Source Lines | Matched Terms | Local Evidence Snippet |")
-    lines.append("|---|---|---|---|---|---|---|")
+    lines.append("### 4a. Evidence Index")
+    lines.append("")
+    lines.append("| Factor | Source | Role | Status | Source Lines | Matched Terms |")
+    lines.append("|---|---|---|---|---|---|")
 
     for row in rows:
         lines.append(
@@ -221,9 +223,25 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
             + markdown_escape(row["line_range"])
             + " | "
             + markdown_escape(", ".join(row["matched_terms"]))
-            + " | "
-            + markdown_escape(row["snippet"])
             + " |"
+        )
+
+    lines.append("")
+    lines.append("### 4b. Snippet Previews")
+    lines.append("")
+    for row in rows:
+        snippet_preview = str(row["snippet"])
+        if len(snippet_preview) > 180:
+            snippet_preview = snippet_preview[:177].rstrip() + "..."
+        lines.append(
+            "- `"
+            + markdown_escape(row["factor_id"])
+            + "` — "
+            + markdown_escape(row["source_path"])
+            + " lines "
+            + markdown_escape(row["line_range"])
+            + ": "
+            + markdown_escape(snippet_preview)
         )
 
     lines.append("")

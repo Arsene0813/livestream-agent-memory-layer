@@ -54,19 +54,33 @@ Weighting limitations:
 - Fallback packets: 0
 - Missing source files: 0
 
-The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence snippet. It is not a business metric.
+The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence snippet. It is not a business metric. Snippet previews are listed below the compact evidence index to keep the table readable.
 
-| Factor | Source | Role | Status | Source Lines | Matched Terms | Local Evidence Snippet |
-|---|---|---|---|---|---|---|
-| same_reporting_period | retail_ops/data/demo2_source_notes.md | context_evidence | keyword_matched | 6-8 | reporting window | All included stores use the same reporting window: |
-| store_type | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | store_type | store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payme... |
-| order_volume | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | transaction_orders, transaction_order, transaction_orders, orders | store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payme... |
-| transaction_amount | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | transaction_amount, transaction | store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payme... |
-| activity_intensity | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | activity, activity_order_share_pct, activity_cost_ratio_pct | store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payme... |
-| region_context | retail_ops/data/DATA_DICTIONARY.md | definition_evidence | keyword_matched | 69-71 | region, market, 区域 | ## Region / Market Context Field Status / 区域与经营环境字段状态 |
-| competition | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | 46-48 | competition | - transaction-scale bands; - competition context; - repeated-window stability; |
-| sku_structure | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | sku, top3_sku, top3_sku_transaction_amount | store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payme... |
-| repeated_reporting_windows | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | 1-2 | future work | # Future Work: Pairwise Comparability Gate |
+### 4a. Evidence Index
+
+| Factor | Source | Role | Status | Source Lines | Matched Terms |
+|---|---|---|---|---|---|
+| same_reporting_period | retail_ops/data/demo2_source_notes.md | context_evidence | keyword_matched | 6-8 | reporting window |
+| store_type | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | store_type |
+| order_volume | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | transaction_orders, transaction_order, transaction_orders, orders |
+| transaction_amount | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | transaction_amount, transaction |
+| activity_intensity | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | activity, activity_order_share_pct, activity_cost_ratio_pct |
+| region_context | retail_ops/data/DATA_DICTIONARY.md | definition_evidence | keyword_matched | 69-71 | region, market, 区域 |
+| competition | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | 46-48 | competition |
+| sku_structure | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | sku, top3_sku, top3_sku_transaction_amount |
+| repeated_reporting_windows | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | 1-2 | future work |
+
+### 4b. Snippet Previews
+
+- `same_reporting_period` — retail_ops/data/demo2_source_notes.md lines 6-8: All included stores use the same reporting window:
+- `store_type` — retail_ops/outputs/demo2_cross_store_comparability_output.csv lines 1-2: store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_tim...
+- `order_volume` — retail_ops/outputs/demo2_cross_store_comparability_output.csv lines 1-2: store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_tim...
+- `transaction_amount` — retail_ops/outputs/demo2_cross_store_comparability_output.csv lines 1-2: store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_tim...
+- `activity_intensity` — retail_ops/outputs/demo2_cross_store_comparability_output.csv lines 1-2: store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_tim...
+- `region_context` — retail_ops/data/DATA_DICTIONARY.md lines 69-71: ## Region / Market Context Field Status / 区域与经营环境字段状态
+- `competition` — retail_ops/COMPARABILITY_GATE_V0.md lines 46-48: - transaction-scale bands; - competition context; - repeated-window stability;
+- `sku_structure` — retail_ops/outputs/demo2_cross_store_comparability_output.csv lines 1-2: store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_tim...
+- `repeated_reporting_windows` — retail_ops/COMPARABILITY_GATE_V0.md lines 1-2: # Future Work: Pairwise Comparability Gate
 
 ## 5. Competing Hypotheses
 

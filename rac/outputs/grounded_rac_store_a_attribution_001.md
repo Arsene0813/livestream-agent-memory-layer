@@ -49,14 +49,23 @@ Weighting limitations:
 - Fallback packets: 0
 - Missing source files: 0
 
-The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence snippet. It is not a business metric.
+The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence snippet. It is not a business metric. Snippet previews are listed below the compact evidence index to keep the table readable.
 
-| Factor | Source | Role | Status | Source Lines | Matched Terms | Local Evidence Snippet |
-|---|---|---|---|---|---|---|
-| search_exposure | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 82-84 | search | Store A's visibility and entry structure can be described from exposure, ranking, entry, and search-entry metrics. |
-| entry_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 49-51 | entry | ```text order_conversion_rate_pct = order_users / entry_users * 100 ``` |
-| order_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 74-76 | order conversion | \| Month \| Transaction Amount \| Transaction Orders \| Entry Users \| Order Conversion Rate \| Average Order Value \| \| ------- \| -----------------: \| -----------------: \| ----------: \| --------------------: \| ------------------: \| |
-| promotion_intensity | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 18-20 | activity | A store may use activity subsidy, pricing, ranking optimization, SKU mix, and fulfillment control as operating levers inside this chain. |
+### 4a. Evidence Index
+
+| Factor | Source | Role | Status | Source Lines | Matched Terms |
+|---|---|---|---|---|---|
+| search_exposure | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 82-84 | search |
+| entry_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 49-51 | entry |
+| order_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 74-76 | order conversion |
+| promotion_intensity | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 18-20 | activity |
+
+### 4b. Snippet Previews
+
+- `search_exposure` — retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md lines 82-84: Store A's visibility and entry structure can be described from exposure, ranking, entry, and search-entry metrics.
+- `entry_conversion` — retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md lines 49-51: ```text order_conversion_rate_pct = order_users / entry_users * 100 ```
+- `order_conversion` — retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md lines 74-76: \| Month \| Transaction Amount \| Transaction Orders \| Entry Users \| Order Conversion Rate \| Average Order Value \| \| ------- \| -----------------: \| -----------------: \| ----------:...
+- `promotion_intensity` — retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md lines 18-20: A store may use activity subsidy, pricing, ranking optimization, SKU mix, and fulfillment control as operating levers inside this chain.
 
 ## 5. Competing Hypotheses
 
