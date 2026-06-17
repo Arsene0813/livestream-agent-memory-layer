@@ -908,3 +908,27 @@ These exact boundary phrases are intentionally preserved for consistency checks:
 - `region_type remains weak context only`
 - `activity_cost_ratio_pct` is not traditional ROI.
 - `top3_sku_transaction_amount_share_pct` is not full product-category share.
+
+## Repeated-Window Summary Column Convention
+
+Repeated-window summary columns are report-derived columns created for the
+B-F repeated-window review.
+
+Columns such as `feb_transaction_amount`, `mar_transaction_amount`, and
+`apr_transaction_amount` preserve the canonical metric name after a month
+prefix. For example, `feb_transaction_amount` means the February value of
+the canonical `transaction_amount` field in the repeated-window summary
+output.
+
+These month-prefixed columns are not raw Meituan backend fields. They should
+not be used as standalone metric definitions outside the repeated-window
+summary output, and they must not replace the canonical base fields documented
+in this dictionary.
+
+Correct use: these columns make repeated store-period coverage easier to
+inspect across February, March, and April 2026.
+
+Boundary: these columns support descriptive coverage review only. They should
+not be interpreted as store rankings, pairwise comparability decisions,
+strategy-transfer approvals, causal explanations, or generated memory facts
+by themselves.

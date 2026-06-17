@@ -3,6 +3,7 @@
 This file records the retail experiment map, validation results, and boundary checks for the current decision-support prototype.
 
 ## First-Pass Reviewer Matrix
+<<<<<<< HEAD
 
 | Experiment                          | Question                                                                                                   | Input                                                                    | Output                                                                                | What it prevents                                                                       |
 | ----------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
@@ -16,58 +17,54 @@ This file records the retail experiment map, validation results, and boundary ch
 
 
 ## Experiment Dependency Map
+=======
+>>>>>>> 1bdced6 (Refine retail experiment narrative and dictionary boundaries)
 
-The experiment chain should be read in this order:
+| Layer | Review question | Evidence output | Boundary protected |
+|---|---|---|---|
+| Field contract | Are field names and metric meanings stable? | Dictionary, source headers, SQL outputs, generated-fact structure | Alias drift and silent metric redefinition |
+| SQL diagnostics | Can selected store-period records be structured without changing backend meanings? | Demo 1 month-over-month output and Demo 2 same-period B-F output | Single-metric attribution, store ranking, premature comparison |
+| Memory facts and answer boundaries | Can later answers preserve entity, period, source, metric, and limitation fields? | Generated retail memory facts, answer-behavior checks, endpoint checks | Unsupported advice, ROI/profit overclaim, scope mismatch |
+| Retrieval and robustness inspection | Does wording variation still route to the intended evidence path? | Score-distribution and query-robustness outputs | Fluent answers hiding weak or mismatched evidence |
+| Repeated-window panel | Is there repeated B-F evidence before stronger comparison rules are attempted? | February-April 2026 coverage and descriptive summary outputs | Premature gate claims, causal interpretation, strategy-transfer approval |
+| RAC grounded review | Can multi-factor reasoning remain inspectable over local evidence? | Grounded review outputs with confidence, limitations, source paths, and evidence snippets | Hidden evidence jumps and overconfident synthesis |
+| Future gate contract | What should the next pairwise decision layer decide or refuse? | Future comparability-gate contract stub | Treating current Demo 2 as a completed pairwise gate |
 
-1. Field-contract validation protects metric names, meanings, and generated-fact structure.
-2. Demo 1 tests whether one store can be described across repeated months without reducing the result to one metric.
-3. Demo 2 tests whether selected B-F store-period rows can be staged under one March 2026 reporting window and one field contract.
-4. Demo 2 fact and answer-boundary checks test whether generated evidence preserves entity, period, source, metric, and comparison limits.
-5. Retrieval score and query-robustness inspections make retrieval behavior inspectable; they do not prove business truth.
-6. The repeated-window B-F panel checks whether selected evidence exists across 2026-02, 2026-03, and 2026-04 before stronger pairwise rules are attempted.
-7. The future comparability-gate contract documents the next decision layer without claiming that it already exists.
+## How to Read the Experiments
 
-The checks follow the current retail evidence path:
+The experiments should be read as one staged evidence path rather than as
+separate engineering features:
 
 ```text
 selected Meituan backend metrics
 -> canonical field dictionary
--> SQL diagnostic output
--> generated memory facts
+-> SQL diagnostic outputs
+-> generated retail memory facts
 -> answer-boundary checks
 -> retrieval and robustness inspection
+-> repeated-window evidence review
+-> RAC grounded review over local evidence
 ```
 
-The purpose is to verify that selected store-period evidence remains interpretable as the project moves from single-store diagnosis toward future cross-store comparability analysis.
+The early checks protect field names, metric meanings, source paths, and
+generated-fact structure. Demo 1 and Demo 2 then test whether selected
+store-period evidence can be turned into diagnostic outputs without changing
+backend metric definitions.
 
-## Compact Validation Summary
+The answer-boundary, endpoint-boundary, retrieval, and robustness checks test
+whether later answers preserve entity, period, source, metric-definition, and
+comparison limits.
 
-| Validation target | Review value | Current result |
-|---|---|---|
-| Metric contract | Checks whether selected Meituan backend fields keep canonical names, documented meanings, and generated-fact structure. | Passed. |
-| Demo 1 diagnostic | Shows that Store A monthly movement can be structured as a multi-metric operating profile. | Implemented. |
-| Demo 2 diagnostic SQL | Places selected B-F March 2026 store-period records under one reporting window and one field contract. | Passed current scope-boundary validation. |
-| Demo 2 memory facts | Converts SQL diagnostic evidence into retrieval-facing facts with source fields, observed values, and limitation notes. | Passed current generated-fact evaluation. |
-| Answer-boundary behavior | Checks whether answers preserve metric definitions, entity scope, period scope, and comparison limits. | Passed current offline scenario checks. |
-| Demo 2 endpoint behavior | Checks whether the file-backed Demo 2 endpoint answers supported B-F questions and keeps unsupported requests outside current scope. | Passed current endpoint-level checks. |
-| Retrieval threshold inspection | Makes score behavior inspectable across supported, unsupported, mismatch, and ambiguous retail queries. | Completed as offline inspection. |
-| Query robustness inspection | Inspects whether small wording changes still retrieve the expected evidence path. | Completed as offline inspection. |
-| Repeated-window panel | Checks whether selected B-F evidence exists across 2026-02, 2026-03, and 2026-04 before stronger pairwise rules are attempted. | Implemented as coverage and descriptive summary evidence. |
-| Future comparability-gate contract | Documents the planned pairwise gate as a question-specific future stage. | Documented and checked by contract stub. |
-| RAC grounded review | Makes factor expansion, evidence routing, critique, fact checking, and confidence updates visible over local project evidence. | Completed as deterministic local-evidence scaffold. |
+The repeated-window B-F panel extends the evidence base across February,
+March, and April 2026. It supports coverage and stability inspection for
+future question-specific comparison rules, while leaving pairwise
+comparability decisions, store ranking, strategy-transfer approval, causal
+attribution, and all-48-store rollout outside the current implemented scope.
 
-These checks are designed for a staged decision-support prototype. They show whether the current data path preserves field meanings, source scope, diagnostic boundaries, and reviewer-traceable evidence.
-
-## Current Experiment Scope
-
-The current experiments check whether selected Meituan backend metrics can be:
-
-1. preserved under canonical field names;
-2. structured through SQL diagnostics;
-3. converted into retrieval-facing memory facts;
-4. retrieved and discussed without losing entity, period, source, or metric boundaries.
-
-The current experiments do not claim full 48-store automation, causal attribution, final store ranking, promotion-transfer approval, or a completed pairwise comparability gate.
+RAC remains an important technical part of the project. Its role here is to
+make multi-factor operating reasoning inspectable over local evidence through
+factor expansion, evidence routing, critique, fact checks, confidence updates,
+limitations, source paths, and local evidence snippets.
 
 ## Experiment 1: Store A Month-over-Month Diagnostic
 
@@ -179,7 +176,7 @@ Answer-boundary rules checked here:
 | Output | `retail_ops/outputs/retrieval_score_distribution.csv`; `retail_ops/outputs/retrieval_threshold_summary.md`; `retail_ops/outputs/retrieval_score_distribution.png`. |
 | Expected behavior | The calibration makes retrieval behavior inspectable across supported, unsupported, hard-negative, entity/period mismatch, and ambiguous comparison queries. |
 | Current result | Completed as an offline small-corpus retrieval inspection. |
-| Boundary | This is not the runtime threshold logic for `/chat_retail_ops_demo2_kb`, not a production-level retrieval benchmark, and not proof that retrieved evidence is sufficient for final operating advice. |
+| Boundary | Offline calibration reference only. Retrieval scores make evidence routing inspectable, but final operating claims still require entity, period, source-path, metric-definition, and interpretation-boundary checks. |
 | Failure mode | Treating a high retrieval score as sufficient evidence for an operating conclusion, or claiming a production-level threshold from the current small file-backed corpus. |
 
 ## Experiment 6: Query Robustness Inspection
