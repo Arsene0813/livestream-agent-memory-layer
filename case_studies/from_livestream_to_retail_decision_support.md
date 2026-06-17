@@ -1,33 +1,28 @@
-# From Livestream Product Memory to Retail Decision Support
+# Appendix: From Product Memory to Retail Decision Support
 
-This case study explains how the same memory-layer design can be extended from customer-facing livestream product interaction to internal retail operations decision support.
+This appendix records the earlier project evolution. The admissions-facing project narrative starts from the retail operations decision-support problem: selected Meituan merchant-backend evidence needs to be structured, checked, and reused without turning weak diagnostic signals into unsupported operating conclusions.
 
-In the original livestream setting, the system manages changing product knowledge such as price, promotion, stock status, shipping policy, and product features. In a multi-store retail setting, similar lifecycle problems appear in store-performance observations. These observations are tied to specific reporting periods and may become outdated when reused without context.
+## Why the Retail Setting Required Stricter Evidence Boundaries
 
-The shared problem is managing information that changes over time: deciding what information should be stored, when it should be updated, when it becomes stale, how it should be retrieved, and when it should not be reused.
+In livestream product interaction, a memory layer mainly needs to manage changing product knowledge, such as price, promotion, stock status, shipping policy, and product features.
 
-This is why the livestream memory-layer design can be adapted to the current Meituan decision-support prototype. The memory layer is used to preserve store-period records together with their source fields, reporting window, calculation logic, and interpretation limits. 
+In instant-retail operations, the lifecycle problem is stricter. Store-level metrics also change over time, but they are tied to reporting windows, store type, activity involvement, activity intensity, SKU structure, ranking context, refund pressure, and weak market context. A metric that is useful for one store-period record may not be safe to reuse for another store or another month.
 
-In this retail version, SQL first structures selected Meituan backend metrics into diagnostic store-period records. The memory layer then stores supporting evidence and interpretation boundaries so later questions can retrieve not only a metric value, but also the context needed to interpret it: which store it came from, which month it belongs to, which source fields support it, and what conclusions it does or does not support.
-
-The shared design idea is therefore lifecycle-aware memory. In livestream commerce, the lifecycle problem appears in product knowledge. In multi-store instant retail, it appears in recurring operating data and cross-store interpretation. The same memory-layer principle helps both settings avoid using outdated or context-mismatched information.
-
+The shared technical problem is knowledge lifecycle management: deciding what information should be stored, when it should be updated, when it becomes stale, how it should be retrieved, and when it should not be reused.
 
 ## Connection to This Memory Layer
 
-The same memory-layer design can support retail operations by preserving store-performance observations as structured records.
+The memory-layer idea is useful in retail operations because store-level findings need to be retained with their evidence boundaries. A generated memory fact should preserve the store, period, source fields, observed values, confidence label, and limitations.
 
-In practice, store-level retail data is often uneven and difficult to compare directly. Some stores have strong performance across most metrics, while others have low order volume. Therefore, the first step is not to force a strong interpretation of the data, but to determine whether the available observations are complete, aligned, and recent enough for cautious diagnostic review.
+For example, if one store has higher search exposure and another store has lower orders, the system should not immediately conclude that search exposure caused the difference. It should first check whether the records are aligned by reporting window and whether the current evidence covers transaction volume, transaction amount, store type, weak region context, SKU structure, observed activity-related metrics, repeated-window stability, competition context, and fulfillment or stockout context.
 
-For example, if one store has higher search exposure and another has lower orders, the system should not immediately treat the exposure difference as a sufficient explanation for the order difference. It should first check whether the observations are aligned on time period, order volume, product mix, coarse market context, promotion status, and data completeness.
-
-This makes the memory layer useful not only for storing conclusions, but also for preventing weak or misleading conclusions from being reused in later analysis.
-
+The current project therefore treats cross-store discussion as boundary-aware diagnostic support. It does not treat same-period records as automatically comparable for pricing, promotion, SKU, ranking, fulfillment, or strategy-transfer decisions.
 
 ## Example: How Demo 2 Uses Evidence Boundaries
 
-In Demo 2, a store with stronger transaction scale should not automatically be treated as a better operating model. Instead, it should be considered together with the reporting period, order volume, activity status, store type, region, SKU structure, and other supporting observations.
+In Demo 2, a store with stronger transaction scale should not automatically be treated as a better operating model. Instead, it should be considered together with the reporting period, order volume, store type, weak region context, SKU structure, and observed activity-related metrics such as activity order share, activity cost, and activity cost ratio.
 
-That means a later answer can discuss the store's observed March 2026 profile, but it should not automatically treat the observation as applicable to another store without additional comparison.
+That means a later answer can discuss the store's observed March 2026 profile, but it should not automatically treat the observation as applicable to another store without additional comparison evidence.
 
 This is the practical role of the memory layer in the retail setting: it stores not only the metric value, but also the context needed to determine whether the observation should be reused in a cross-store comparison.
+
