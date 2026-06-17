@@ -78,6 +78,36 @@ The repository contains more than one retrieval path. They should not be read as
 
 The retrieval-threshold calibration is a separate offline inspection over the file-backed evidence corpus. It should not be read as the runtime selection logic of `/chat_retail_ops_demo2_kb`.
 
+### Retail Retrieval Flow
+
+The current retail retrieval path should not treat semantic similarity as sufficient evidence for an operating answer.
+
+```text
+User query
+  ↓
+Embedding with local bge-m3
+  ↓
+Top-k retail memory facts and field-contract notes
+  ↓
+Similarity threshold check
+  ↓
+Top-1 / top-2 margin check
+  ↓
+Entity / period / slot check
+  ↓
+Accepted context or strict refusal / qualified answer
+```
+
+This flow is meant to prevent retrieved facts from being reused outside their evidence boundary. A high-scoring retrieved fact may still be unsafe to use when:
+
+* the query asks for a metric that is not in the current evidence;
+* the query mixes stores, months, or demo scopes;
+* the query asks for a strategy-transfer decision;
+* the retrieved metric has a documented interpretation boundary;
+* several candidate facts have similar scores and the comparison question is too broad.
+
+This flow is a local prototype retrieval pattern. It is not a production monitoring dashboard, not live Meituan backend integration, and not a substitute for answer-boundary checks.
+
 ### Retail Retrieval Boundary Pattern
 
 The current retail retrieval path should not treat semantic similarity as sufficient evidence for an operating answer.
