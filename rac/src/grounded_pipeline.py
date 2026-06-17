@@ -202,11 +202,9 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append(f"- Fallback packets: {summary['fallback_count']}")
     lines.append(f"- Missing source files: {summary['source_missing_count']}")
     lines.append("")
-    lines.append("The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence row. It is not a business metric. Long raw snippets are not expanded inside the table, because source pointers are more readable and more stable for review.")
+    lines.append("The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence row. It is not a business metric. The `Evidence Fields` column lists the canonical fields or documented evidence concepts used for review; raw matched keywords are intentionally not shown.")
     lines.append("")
-    lines.append("### 4a. Evidence Index")
-    lines.append("")
-    lines.append("| Factor | Source | Evidence Type | Status | Source Lines | Matched Terms |")
+    lines.append("| Factor | Source | Evidence Type | Status | Source Lines | Evidence Fields |")
     lines.append("|---|---|---|---|---|---|")
 
     report_evidence_type_overrides = {
@@ -214,14 +212,31 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
         "sku_structure": "product_mix_evidence",
     }
 
+    report_evidence_fields = {
+        "same_reporting_period": "period_start, period_end, period_month",
+        "store_type": "store_type",
+        "order_volume": "transaction_orders",
+        "transaction_amount": "transaction_amount",
+        "activity_intensity": "activity_orders, activity_order_share_pct, activity_cost, activity_cost_ratio_pct",
+        "region_context": "region_type",
+        "competition": "future comparability-gate competition context",
+        "sku_structure": "top3_sku_transaction_amount, top3_sku_transaction_amount_share_pct, SKU source tables",
+        "repeated_reporting_windows": "store_period_panel_metrics, repeated reporting windows",
+    }
+
     for row in rows:
+        factor_id = row["factor_id"]
         evidence_type = report_evidence_type_overrides.get(
-            row["factor_id"],
+            factor_id,
             row["grounding_role"],
+        )
+        evidence_fields = report_evidence_fields.get(
+            factor_id,
+            ", ".join(row["matched_terms"]),
         )
         lines.append(
             "| "
-            + markdown_escape(row["factor_id"])
+            + markdown_escape(factor_id)
             + " | "
             + markdown_escape(row["source_path"])
             + " | "
@@ -231,27 +246,11 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
             + " | "
             + markdown_escape(row["line_range"])
             + " | "
-            + markdown_escape(", ".join(row["matched_terms"]))
+            + markdown_escape(evidence_fields)
             + " |"
         )
 
     lines.append("")
-    lines.append("### 4b. Source Review Pointers")
-    lines.append("")
-    lines.append("Use the `Source` and `Source Lines` columns above to inspect the local evidence. CSV headers or long source rows are intentionally not expanded in this report section.")
-    lines.append("")
-    for row in rows:
-        lines.append(
-            "- `"
-            + markdown_escape(row["factor_id"])
-            + "` — review `"
-            + markdown_escape(row["source_path"])
-            + "` source lines "
-            + markdown_escape(row["line_range"])
-            + "; matched terms: "
-            + markdown_escape(", ".join(row["matched_terms"]))
-        )
-
     lines.append("")
     lines.append("## 5. Competing Hypotheses")
     lines.append("")

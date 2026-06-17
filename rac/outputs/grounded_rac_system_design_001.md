@@ -53,11 +53,9 @@ Weighting limitations:
 - Fallback packets: 0
 - Missing source files: 0
 
-The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence row. It is not a business metric. Long raw snippets are not expanded inside the table, because source pointers are more readable and more stable for review.
+The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence row. It is not a business metric. The `Evidence Fields` column lists the canonical fields or documented evidence concepts used for review; raw matched keywords are intentionally not shown.
 
-### 4a. Evidence Index
-
-| Factor | Source | Evidence Type | Status | Source Lines | Matched Terms |
+| Factor | Source | Evidence Type | Status | Source Lines | Evidence Fields |
 |---|---|---|---|---|---|
 | typed_memory | rac/README.md | default_evidence | keyword_matched | 8-10 | fact |
 | evidence_packets | rac/README.md | default_evidence | keyword_matched | 2-4 | evidence |
@@ -68,18 +66,6 @@ The `Source Lines` column is an audit pointer to the local source-file line rang
 | retrieval_trace | rac/README.md | default_evidence | keyword_matched | 4-6 | source |
 | active_state_filtering | rac/README.md | default_evidence | keyword_matched | 26-28 | state |
 
-### 4b. Source Review Pointers
-
-Use the `Source` and `Source Lines` columns above to inspect the local evidence. CSV headers or long source rows are intentionally not expanded in this report section.
-
-- `typed_memory` — review `rac/README.md` source lines 8-10; matched terms: fact
-- `evidence_packets` — review `rac/README.md` source lines 2-4; matched terms: evidence
-- `hypotheses` — review `rac/README.md` source lines 8-10; matched terms: hypothesis
-- `belief_records` — review `rac/README.md` source lines 62-64; matched terms: confidence
-- `confidence` — review `rac/README.md` source lines 62-64; matched terms: confidence
-- `limitations` — review `rac/README.md` source lines 2-4; matched terms: limitation
-- `retrieval_trace` — review `rac/README.md` source lines 4-6; matched terms: source
-- `active_state_filtering` — review `rac/README.md` source lines 26-28; matched terms: state
 
 ## 5. Competing Hypotheses
 

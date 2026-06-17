@@ -53,11 +53,9 @@ Weighting limitations:
 - Fallback packets: 0
 - Missing source files: 0
 
-The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence row. It is not a business metric. Long raw snippets are not expanded inside the table, because source pointers are more readable and more stable for review.
+The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence row. It is not a business metric. The `Evidence Fields` column lists the canonical fields or documented evidence concepts used for review; raw matched keywords are intentionally not shown.
 
-### 4a. Evidence Index
-
-| Factor | Source | Evidence Type | Status | Source Lines | Matched Terms |
+| Factor | Source | Evidence Type | Status | Source Lines | Evidence Fields |
 |---|---|---|---|---|---|
 | activity_orders | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 129-131 | activity_orders |
 | activity_cost | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 130-132 | activity_cost |
@@ -68,18 +66,6 @@ The `Source Lines` column is an audit pointer to the local source-file line rang
 | sku_margin_structure | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 13-15 | sku |
 | competitor_context | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 75-77 | competition |
 
-### 4b. Source Review Pointers
-
-Use the `Source` and `Source Lines` columns above to inspect the local evidence. CSV headers or long source rows are intentionally not expanded in this report section.
-
-- `activity_orders` — review `retail_ops/data/DATA_DICTIONARY.md` source lines 129-131; matched terms: activity_orders
-- `activity_cost` — review `retail_ops/data/DATA_DICTIONARY.md` source lines 130-132; matched terms: activity_cost
-- `merchant_subsidy` — review `retail_ops/data/DATA_DICTIONARY.md` source lines 130-132; matched terms: merchant_subsidy
-- `platform_subsidy` — review `retail_ops/data/DATA_DICTIONARY.md` source lines 130-132; matched terms: platform_subsidy
-- `order_conversion` — review `retail_ops/data/DATA_DICTIONARY.md` source lines 77-79; matched terms: order conversion
-- `payment_conversion` — review `retail_ops/data/DATA_DICTIONARY.md` source lines 479-481; matched terms: 支付人数
-- `sku_margin_structure` — review `retail_ops/data/DATA_DICTIONARY.md` source lines 13-15; matched terms: sku
-- `competitor_context` — review `retail_ops/data/DATA_DICTIONARY.md` source lines 75-77; matched terms: competition
 
 ## 5. Competing Hypotheses
 
