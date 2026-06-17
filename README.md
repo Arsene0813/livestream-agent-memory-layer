@@ -148,7 +148,7 @@ The first review path should stay short. These files are retained for technical 
 
 ## Evaluation Snapshot
 
-For retail field names and metric meanings, `retail_ops/data/DATA_DICTIONARY.md` is authoritative. For generated diagnostic values and evaluation outcomes, use the saved files under `retail_ops/outputs/` and `eval/original_livestream_eval_results/`.
+For retail field names and metric meanings, `retail_ops/data/DATA_DICTIONARY.md` is authoritative. For generated retail diagnostic values and retail evaluation outcomes, use `retail_ops/outputs/` and `eval/retail_decision_support_eval_results/`.
 
 The evaluation layer checks whether the current prototype preserves metric definitions, source boundaries, entity/period scope, and comparison limits when selected retail evidence is retrieved.
 

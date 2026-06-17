@@ -128,6 +128,7 @@ Current source files include:
 - `retail_ops/data/demo2_top_search_terms.csv`
 - `retail_ops/data/demo2_top_skus_by_transaction_amount.csv`
 - `retail_ops/data/demo2_top_skus_by_sales_volume.csv`
+- `retail_ops/data/store_period_panel_metrics.csv`
 
 ## Implemented SQL Files
 

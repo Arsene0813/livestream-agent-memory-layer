@@ -132,12 +132,6 @@ The store had more exposure, more entry users, more transaction orders, and high
 
 This supports a cautious operating-signal reading: the store recovered scale, but the recovery coexisted with weaker conversion rate and lower average order value.
 
-
-
-| Metric         | 2026-03 | 2026-04 | Direction |
-| ---------------------- | ------: | ------: | --------- |
-
-Interpretation:
 ## Top-SKU Evidence
 
 The top-SKU evidence is mainly care-solution-heavy.
