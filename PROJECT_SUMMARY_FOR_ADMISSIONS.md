@@ -10,7 +10,7 @@ Repository: `livestream-agent-memory-layer`
 
 This staged local prototype grew from a real operating problem in a 48-store Meituan instant-retail business. The Meituan merchant backend contains detailed single-store metrics, but it is mainly designed for reviewing one store at a time. As the store count increased, the harder question became how to compare store-period records without flattening different reporting windows, activity conditions, product structures, store types, and market contexts into the same judgment.
 
-The current retail decision-support path turns selected backend evidence into a cautious evidence chain:
+The current retail decision-support path turns selected backend-derived evidence into a cautious evidence chain:
 
 1. Meituan backend metric evidence
 2. `DATA_DICTIONARY.md` field contract
@@ -41,7 +41,7 @@ This file is the application-facing summary. For full repository review after th
 
 | Operating step | Practical meaning |
 |---|---|
-| Backend metric evidence | Real Meituan merchant-backend values are the starting point rather than invented examples. |
+| Backend metric evidence | Selected operator-provided values were manually transcribed from the Meituan merchant-backend UI, anonymized at store level, and structured under the documented field contract. |
 | Metric dictionary | Backend metric meanings are preserved under canonical project field names. |
 | SQL diagnostics | Selected store-period records are structured into diagnostic outputs under one reporting window and one field contract. |
 | Generated memory facts | Diagnostic evidence is stored with source fields, observed values, confidence labels, and limitations. |
@@ -65,18 +65,18 @@ The practical question is whether the available evidence is strong enough to com
 
 ## Why This Became a Data-Science Problem
 
-The backend data is detailed, but it is mainly organized for single-store monitoring. In a 48-store operation, detailed single-store metrics do not automatically become reliable cross-store decision evidence.
+The merchant backend provides detailed metrics, but it is mainly organized for single-store monitoring. In a 48-store operation, detailed single-store metrics do not automatically become reliable cross-store decision evidence.
 
 A cross-store decision should preserve metric definitions, align reporting windows, expose comparison limits, and separate observed evidence from operating interpretations that the current data cannot yet support.
 
-The current prototype treats SQL as the structuring layer and the memory layer as the evidence-retention layer. SQL organizes selected backend metrics into diagnostic outputs. Generated memory facts then preserve the store, period, source fields, observed values, calculation notes, confidence labels, and limitations so that later retrieval or answer generation does not lose the boundary around the evidence.
+The current prototype treats SQL as the structuring layer and the memory layer as the evidence-retention layer. SQL organizes selected source records into diagnostic outputs. Generated memory facts then preserve the store, period, source fields, observed values, calculation notes, confidence labels, and limitations so that later retrieval or answer generation does not lose the boundary around the evidence.
 
 ## Current Prototype Layers
 
 | Layer | What it does |
 |---|---|
 | Metric dictionary | Preserves Meituan backend metric meanings and canonical project field names. |
-| SQL diagnostic layer | Converts selected store-period backend data into diagnostic outputs under one field contract. |
+| SQL diagnostic layer | Converts selected manually structured store-period records into diagnostic outputs under one field contract. |
 | Generated memory facts | Stores evidence with source paths, source fields, observed values, calculation notes, confidence labels, and limitations. |
 | Boundary evaluations | Checks whether later answers preserve entity scope, period scope, metric definitions, and comparison limits. |
 | RAC grounded review scaffold | Provides deterministic factor expansion, evidence routing, critique, fact checking, evidence-coverage update, and grounded report generation over local project evidence. |

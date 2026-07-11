@@ -25,9 +25,9 @@ The goal is to build a more reliable evidence-based framework for multi-store op
 
 ## Current Prototype Workflow
 
-The current prototype follows one evidence path: Meituan backend metric evidence -> canonical field dictionary -> SQL diagnostic output -> generated retail memory facts -> boundary-preserving answer checks.
+The current prototype follows one evidence path: selected backend-derived metric evidence -> canonical field dictionary -> SQL diagnostic output -> generated retail memory facts -> boundary-preserving answer checks.
 
-In practice, this means the project first preserves backend metric definitions, then uses SQL to structure selected store-period data, then converts diagnostic evidence into memory facts with source fields, observed values, source paths, and limitations. The final check is whether later answers stay inside the available evidence boundary.
+In practice, the project first preserves the documented metric definitions, then uses SQL to structure selected manually transcribed store-period records, and then converts diagnostic evidence into memory facts with source fields, observed values, source paths, and limitations. The final check is whether later answers stay inside the available evidence boundary.
 
 The single source of truth for retail field names and metric meanings is:
 
@@ -46,7 +46,7 @@ Demo 2 uses the `cross_store_comparability` file-path term for reference stabili
 | Retail Demo 1 | Store A month-over-month diagnostic across February, March, and April 2026. | Multi-metric interpretation rather than single-cause monthly explanation. |
 | Retail Demo 2 | Same-period B-F diagnostic for March 2026. | Same-period diagnostic evidence with explicit interpretation limits before pairwise comparability rules. |
 | Repeated-window panel | B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04. | Descriptive repeated-window evidence before future pairwise comparability rules. |
-| Memory facts | Converts diagnostic outputs into source-bounded facts with observed values, source fields, source paths, confidence labels, and limitations. | File-backed evidence records for the implemented demos; not a replacement for raw backend evidence. |
+| Memory facts | Converts diagnostic outputs into source-bounded facts with observed values, source fields, source paths, confidence labels, and limitations. | File-backed evidence records derived from manually structured source tables. |
 | Answer-boundary checks | Tests whether answers stay within entity, period, metric-definition, source, and interpretation boundaries. | Scenario-based checks tied to the current evidence path; not broad LLM robustness tests. |
 | RAC scaffold | Provides deterministic factor expansion, evidence routing, critique, fact checking, evidence-coverage update, and grounded report generation over local project evidence. | Local-evidence scaffold for reviewability; not live backend ingestion, autonomous cognition, or operating-decision automation. |
 
@@ -94,12 +94,7 @@ The prototype has two connected layers.
 Basic flow:
 
 ```text
-backend metrics / operator input
--> metric dictionary and data contract
--> SQL diagnostic output
--> generated memory facts
--> retrieval with source fields and limitations
--> qualified answer or refusal
+selected backend-derived metrics / operator input -> metric dictionary and data contract -> SQL diagnostic output -> generated memory facts -> retrieval with source fields and limitations -> qualified answer or refusal
 ```
 
 The important design choice is that memory facts are not just summaries. They carry source fields, observed values, calculation notes, source paths, supporting source paths, confidence labels, and limitations.
@@ -211,7 +206,7 @@ Detailed retail file ownership is kept in `retail_ops/README.md`.
 
 ## Review Takeaway and Next Step
 
-This repository demonstrates a staged decision-support prototype for a real Meituan multi-store operating problem. Selected backend metrics are preserved under documented definitions, structured with SQL, converted into retrieval-facing memory facts, and checked against evidence boundaries before later answers make operating claims.
+This repository demonstrates a staged decision-support prototype for a real Meituan multi-store operating problem. Selected backend-derived metrics are manually structured under documented definitions, transformed with SQL, converted into retrieval-facing memory facts, and checked against evidence boundaries before later answers make operating claims.
 
 | Area | Current role | Next use |
 | --- | --- | --- |
