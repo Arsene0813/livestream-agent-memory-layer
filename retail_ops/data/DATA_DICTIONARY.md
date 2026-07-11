@@ -254,7 +254,19 @@ They are retrieval-facing summaries grounded in canonical source fields, SQL out
 - `entity_id` is the retrieval-layer identifier derived from `store_id`.
 - `period_label` identifies the target period or comparison window of the memory fact.
 - `period_start` and `period_end` record the exact date range represented by the memory fact.
-- `period_granularity` records the time grain of the memory fact. In the current demos, the value is `month`. It is retrieval / interpretation metadata, not a direct Meituan backend metric.
+- `period_granularity` records the time grain of the memory fact.
+
+  Current allowed values:
+
+  - `month`: the fact represents one calendar month, and `period_label`
+    uses `YYYY-MM`.
+  - `month_range`: the fact represents a bounded window spanning more
+    than one calendar month, and `period_label` uses
+    `YYYY-MM_to_YYYY-MM`.
+
+  `period_granularity` is retrieval and interpretation metadata, not a
+  direct Meituan backend metric. It must agree with `period_start`,
+  `period_end`, and `period_label`.
 - `observed_values` may include baseline periods when the fact is comparative.
 - `source_fields` lists the canonical fields or SQL-derived diagnostics supporting the fact.
 - `source_path` records the primary generated output file supporting the memory fact.

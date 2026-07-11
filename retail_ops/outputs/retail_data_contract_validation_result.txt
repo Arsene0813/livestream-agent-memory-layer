@@ -3,7 +3,7 @@ Checked canonical field presence across dictionary and current source/output fil
 Checked Demo 1 source/output headers.
 Checked Demo 2 source/output headers.
 Checked Demo 2 diagnostic-scope and limitation fields.
-Checked generated Demo 1 and Demo 2 memory fact structure.
+Checked generated Demo 1 and Demo 2 memory fact structure and period metadata.
 Checked source_path existence and known source_fields.
 Checked critical metric-boundary phrases in DATA_DICTIONARY.md.
 Checked current schema aliases and dictionary-defined field boundaries.

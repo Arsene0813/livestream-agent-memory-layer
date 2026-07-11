@@ -4,6 +4,7 @@ import csv
 import json
 import re
 import subprocess
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -139,6 +140,77 @@ def source_exists(relative_path: str) -> bool:
     return (ROOT / relative_path).exists()
 
 
+ALLOWED_PERIOD_GRANULARITIES = {"month", "month_range"}
+
+
+def validate_period_metadata(
+    *,
+    relative_path: str,
+    index: int,
+    fact: dict[str, object],
+    failures: list[str],
+) -> None:
+    period_label = fact.get("period_label")
+    period_start = fact.get("period_start")
+    period_end = fact.get("period_end")
+    granularity = fact.get("period_granularity")
+    prefix = f"{relative_path} fact #{index}"
+
+    if granularity not in ALLOWED_PERIOD_GRANULARITIES:
+        failures.append(
+            f"{prefix} has unsupported period_granularity `{granularity}`"
+        )
+        return
+
+    if not isinstance(period_label, str) or not period_label.strip():
+        failures.append(f"{prefix} has missing period_label")
+        return
+
+    try:
+        start_date = date.fromisoformat(str(period_start))
+        end_date = date.fromisoformat(str(period_end))
+    except ValueError:
+        failures.append(
+            f"{prefix} has invalid ISO period dates: "
+            f"period_start={period_start!r}, period_end={period_end!r}"
+        )
+        return
+
+    if end_date < start_date:
+        failures.append(
+            f"{prefix} has period_end before period_start"
+        )
+        return
+
+    start_month = start_date.strftime("%Y-%m")
+    end_month = end_date.strftime("%Y-%m")
+
+    if granularity == "month":
+        if start_month != end_month:
+            failures.append(
+                f"{prefix} has period_granularity `month` but spans "
+                "multiple calendar months"
+            )
+        if period_label != start_month:
+            failures.append(
+                f"{prefix} month period_label `{period_label}` does not "
+                f"match `{start_month}`"
+            )
+        return
+
+    expected_label = f"{start_month}_to_{end_month}"
+    if start_month == end_month:
+        failures.append(
+            f"{prefix} has period_granularity `month_range` but does "
+            "not span multiple calendar months"
+        )
+    if period_label != expected_label:
+        failures.append(
+            f"{prefix} month_range period_label `{period_label}` does "
+            f"not match `{expected_label}`"
+        )
+
+
 def validate_generated_facts(
     *,
     relative_path: str,
@@ -163,8 +235,10 @@ def validate_generated_facts(
         "type",
         "entity_id",
         "slot",
+        "period_label",
         "period_start",
         "period_end",
+        "period_granularity",
         "value",
         "observed_values",
         "source_fields",
@@ -195,6 +269,13 @@ def validate_generated_facts(
         slot = fact.get("slot")
         if slot not in CANONICAL_MEMORY_SLOTS:
             failures.append(f"{relative_path} fact #{index} has non-canonical slot `{slot}`")
+
+        validate_period_metadata(
+            relative_path=relative_path,
+            index=index,
+            fact=fact,
+            failures=failures,
+        )
 
         source_path = fact.get("source_path")
         if not isinstance(source_path, str) or not source_path.strip():
@@ -340,7 +421,7 @@ def main() -> int:
         "Checked Demo 1 source/output headers.",
         "Checked Demo 2 source/output headers.",
         "Checked Demo 2 diagnostic-scope and limitation fields.",
-        "Checked generated Demo 1 and Demo 2 memory fact structure.",
+        "Checked generated Demo 1 and Demo 2 memory fact structure and period metadata.",
         "Checked source_path existence and known source_fields.",
         "Checked critical metric-boundary phrases in DATA_DICTIONARY.md.",
         "Checked current schema aliases and dictionary-defined field boundaries.",
