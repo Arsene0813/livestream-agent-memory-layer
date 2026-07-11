@@ -56,10 +56,7 @@ whether later answers preserve entity, period, source, metric-definition, and
 comparison limits.
 
 The repeated-window B-F panel extends the evidence base across February,
-March, and April 2026. It supports coverage and stability inspection for
-future question-specific comparison rules, while leaving pairwise
-comparability decisions, store ranking, strategy-transfer approval, causal
-attribution, and all-48-store rollout outside the current implemented scope.
+March, and April 2026. It verifies repeated store-period coverage and reports descriptive movement in selected metrics. Monthly guardrail stability is a separate future test because the current panel does not contain repeated top-SKU evidence or monthly recomputed `comparison_limit_notes`.
 
 RAC remains an important technical part of the project. Its role here is to
 make multi-factor operating reasoning inspectable over local evidence through
@@ -191,26 +188,29 @@ Answer-boundary rules checked here:
 | Current result | Completed as an offline small-corpus robustness inspection. |
 | Boundary | Retrieval score is only one signal and should be paired with answer-boundary checks. |
 
-## Experiment 7: Repeated-Window Evidence Check
+## Experiment 7: Repeated-Window Coverage and Descriptive Movement Check
 
 | Item | Content |
 |---|---|
-| Question | Can the current guardrail signals remain stable across repeated months, or are they mostly one-period artifacts? |
+| Question | Do Stores B-F have complete February-April 2026 coverage, and what descriptive movement is visible in selected store-period metrics? |
 | Input | B-F store-period records across 2026-02, 2026-03, and 2026-04. |
+| Transformation | `retail_ops/sql/03_store_period_panel_coverage.sql` checks observed-month coverage and selected averages. `retail_ops/sql/04_repeated_window_panel_summary.sql` reports February-to-April levels, deltas, and percentage changes for selected metrics. |
 | Output | `retail_ops/outputs/store_period_panel_coverage_output.csv`; `retail_ops/outputs/repeated_window_panel_summary_output.csv`. |
-| Current result | Implemented as coverage and descriptive summary evidence. |
-| Current use | Preparation for future question-specific pairwise comparability checks. |
-| Failure mode | Turning one March 2026 threshold result into a reusable peer-comparison rule. |
+| Expected behavior | Confirm repeated-window coverage and report descriptive movement without converting short-window changes into store rankings, causal explanations, pairwise comparability decisions, or guardrail-stability claims. |
+| Current result | Stores B-F each contain three observed months. The summary reports February-to-April movement in selected transaction, traffic, conversion, search-entry, and activity-cost-ratio fields. |
+| Current use | Evidence preparation for future question-specific comparison rules. |
+| Checked by | `python3 retail_ops/scripts/validate_store_period_panel.py`; `python3 retail_ops/scripts/validate_repeated_window_panel_summary.py` |
+| Failure mode | Treating the three-month descriptive panel as proof that March guardrail notes remain stable over time. |
 
-Evidence still missing for a stronger gate:
+Evidence required before a monthly guardrail-stability test:
 
 | Missing evidence | Why it matters |
 |---|---|
-| Broader repeated store-period records beyond the current B-F three-month panel | Needed before treating guardrails as stable across more stores and months. |
-| Activity calendar or campaign-status evidence | Needed before treating activity involvement as full campaign status. |
-| Repeated transaction-order and transaction-amount bands | Needed before robust question-specific peer comparison. |
-| Local competition or price-pressure notes | Needed before promotion, pricing, or market-share interpretations. |
-| Broader SKU evidence beyond top-3 rows | Needed before full product-mix or product-category claims. |
+| Repeated top-SKU evidence for each store-month | The current March guardrail logic includes top-3 SKU concentration, so monthly notes cannot be reproduced without monthly SKU evidence. |
+| Monthly recomputation of `comparison_limit_notes` under the implemented SQL contract | Stability must compare like-for-like monthly note sets rather than infer stability from unrelated store-level metrics. |
+| Broader repeated store-period records beyond the current B-F three-month panel | More stores and months are needed before treating a local sensitivity pattern as reusable. |
+| Activity calendar or campaign-condition evidence | Activity involvement should not be interpreted as full campaign status without operating context. |
+| Local competition, price-pressure, fulfillment, or stockout evidence | These factors are needed before promotion, pricing, market-share, or strategy-transfer interpretation. |
 
 ## Experiment 8: Future Gate Contract Check
 
