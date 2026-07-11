@@ -1,16 +1,24 @@
 #!/usr/bin/env python3
 import csv
 import sys
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 
 panel_path = ROOT / "retail_ops/data/store_period_panel_metrics.csv"
+demo2_source_path = ROOT / "retail_ops/data/demo2_store_period_metrics.csv"
 notes_path = ROOT / "retail_ops/data/store_period_panel_source_notes.md"
 sql_path = ROOT / "retail_ops/sql/03_store_period_panel_coverage.sql"
 output_path = ROOT / "retail_ops/outputs/store_period_panel_coverage_output.csv"
 
-required_files = [panel_path, notes_path, sql_path, output_path]
+required_files = [
+    panel_path,
+    demo2_source_path,
+    notes_path,
+    sql_path,
+    output_path,
+]
 missing = [str(path.relative_to(ROOT)) for path in required_files if not path.exists()]
 if missing:
     print("[FAIL] Missing repeated-window panel extension files:")
@@ -144,8 +152,139 @@ for store_id, expected_months in required_complete_stores.items():
         print(f"Observed: {observed_months}")
         sys.exit(1)
 
+
+# Verify that every Demo 2 source row matches the corresponding panel row.
+# Compare by field name rather than column position because the two CSV files
+# use different column ordering.
+panel_by_key = {
+    (row.get("store_id", ""), row.get("period_month", "")): row
+    for row in rows
+}
+
+with demo2_source_path.open(newline="", encoding="utf-8-sig") as f:
+    reader = csv.DictReader(f)
+    demo2_source_fields = reader.fieldnames or []
+    demo2_source_rows = list(reader)
+
+if not demo2_source_fields:
+    print("[FAIL] Demo 2 source CSV has no header.")
+    sys.exit(1)
+
+if not demo2_source_rows:
+    print("[FAIL] Demo 2 source CSV has no data rows.")
+    sys.exit(1)
+
+missing_source_fields_in_panel = sorted(
+    set(demo2_source_fields) - panel_fields
+)
+
+if missing_source_fields_in_panel:
+    print(
+        "[FAIL] Demo 2 source fields are missing from "
+        "the repeated-window panel:"
+    )
+    for field in missing_source_fields_in_panel:
+        print(f" - {field}")
+    sys.exit(1)
+
+text_fields = {
+    "store_id",
+    "period_month",
+    "period_start",
+    "period_end",
+    "region_type",
+    "store_type",
+}
+
+
+def clean_value(value: str | None) -> str:
+    return "" if value is None else value.strip()
+
+
+def values_match(
+    field: str,
+    source_value: str | None,
+    panel_value: str | None,
+) -> bool:
+    source_text = clean_value(source_value)
+    panel_text = clean_value(panel_value)
+
+    # Missingness is meaningful. A source value must not silently become
+    # blank or zero in the panel.
+    if source_text == "" or panel_text == "":
+        return source_text == panel_text
+
+    if field in text_fields:
+        return source_text == panel_text
+
+    try:
+        return Decimal(source_text) == Decimal(panel_text)
+    except InvalidOperation:
+        return source_text == panel_text
+
+
+source_seen = set()
+parity_failures = []
+
+for source_row in demo2_source_rows:
+    key = (
+        clean_value(source_row.get("store_id")),
+        clean_value(source_row.get("period_month")),
+    )
+
+    if key in source_seen:
+        print(f"[FAIL] Duplicate Demo 2 source row: {key}")
+        sys.exit(1)
+
+    source_seen.add(key)
+    panel_row = panel_by_key.get(key)
+
+    if panel_row is None:
+        parity_failures.append(
+            {
+                "key": key,
+                "field": "<row>",
+                "source_value": "present",
+                "panel_value": "missing",
+            }
+        )
+        continue
+
+    for field in demo2_source_fields:
+        source_value = source_row.get(field)
+        panel_value = panel_row.get(field)
+
+        if not values_match(field, source_value, panel_value):
+            parity_failures.append(
+                {
+                    "key": key,
+                    "field": field,
+                    "source_value": clean_value(source_value),
+                    "panel_value": clean_value(panel_value),
+                }
+            )
+
+if parity_failures:
+    print("[FAIL] Demo 2 source-to-panel parity check failed:")
+    for failure in parity_failures:
+        store_id, period_month = failure["key"]
+        print(
+            " - "
+            f"{store_id} {period_month} "
+            f"{failure['field']}: "
+            f"source={failure['source_value']!r}, "
+            f"panel={failure['panel_value']!r}"
+        )
+    sys.exit(1)
+
 # Check old aliases in data / SQL / output / notes, not in this validator file.
-alias_scan_paths = [panel_path, notes_path, sql_path, output_path]
+alias_scan_paths = [
+    panel_path,
+    demo2_source_path,
+    notes_path,
+    sql_path,
+    output_path,
+]
 for path in alias_scan_paths:
     text = path.read_text(encoding="utf-8")
     for alias in ["full_refund_order_count", "full_or_partial_refund_order_count", "self_operated"]:
@@ -159,6 +298,7 @@ required_note_phrases = [
     "`refund_amount`",
     "`full_refund_orders`",
     "`refund_orders_all_or_partial`",
+    "validated field-by-field against that source table",
 ]
 missing_note_phrases = [phrase for phrase in required_note_phrases if phrase not in notes]
 if missing_note_phrases:
@@ -192,4 +332,5 @@ print("[PASS] Repeated-window panel extension validation passed.")
 print("[PASS] Store B, Store C, Store D, Store E, and Store F each have 2026-02, 2026-03, and 2026-04.")
 print("[PASS] Canonical source field names are preserved where retained.")
 print("[PASS] Canonical store_type values are used: self-operated and partner.")
+print("[PASS] Demo 2 source rows match panel rows across all shared fields.")
 print("[PASS] Panel uses the current dictionary-defined source/output schema.")
