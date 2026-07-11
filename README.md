@@ -164,7 +164,7 @@ The evaluation layer checks whether the current prototype preserves metric defin
 | Retrieval score distribution inspection | Inspects score distributions over file-backed Demo 1 and Demo 2 retail evidence across supported, unsupported, hard-negative, entity/period mismatch, and ambiguous comparison queries. | Completed as offline inspection. |
 | Query robustness under wording variation | Tests retrieval behavior under shortened, paraphrased, typo/noise, and keyword-order query variants. | Completed. |
 
-Demo 2 guardrail sensitivity is also inspected. In the current B-F sample, all five store rows have `comparison_limit_notes` that change under at least one plus or minus 5 percentage-point threshold scenario. These rows remain useful as diagnostic evidence, while the threshold-sensitive notes should be reviewed again when broader repeated-window evidence is added.
+Demo 2 guardrail sensitivity is also inspected. In the current B-F sample, four of five store rows change under the harder-to-trigger plus-5-percentage-point scenario; Store B remains unchanged. The result shows local sensitivity in this small sample, not an optimized threshold or a peer-comparison rule.
 
 ## Optional Local Run
 

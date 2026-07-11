@@ -98,10 +98,10 @@ limitations, source paths, and local evidence snippets.
 |---|---|
 | Question | Are the current Demo 2 `comparison_limit_notes` stable under small threshold changes? |
 | Input | `retail_ops/outputs/demo2_cross_store_comparability_output.csv`. |
-| Transformation | `retail_ops/scripts/analyze_demo2_guardrail_sensitivity.py` recomputes current guardrail notes under baseline SQL thresholds, a looser minus-5-percentage-point setting, and a stricter plus-5-percentage-point setting. |
+| Transformation | `retail_ops/scripts/analyze_demo2_guardrail_sensitivity.py` reads the implemented thresholds from the current SQL, reproduces every current-row `comparison_limit_notes` value, then lowers and raises those thresholds by 5 percentage points. |
 | Output | `retail_ops/outputs/demo2_guardrail_sensitivity_summary.csv`; `retail_ops/outputs/demo2_guardrail_sensitivity_result.txt`. |
 | Expected behavior | The check should not optimize thresholds or turn them into peer-selection rules. It should only show whether the current threshold-based guardrail notes are sensitive to small threshold shifts. |
-| Current result | Completed current guardrail sensitivity inspection. In the current B-F sample, all five stores have guardrail notes that change under at least one +/- 5 percentage-point sensitivity scenario. |
+| Current result | Completed current guardrail sensitivity inspection. Baseline reproduction passes for all five rows. Four rows (C, D, E, and F) change under the harder-to-trigger +5 percentage-point scenario; the easier-to-trigger -5 percentage-point scenario produces no note changes, and Store B remains unchanged. |
 | Interpretation | The current thresholds should be treated as diagnostic warnings, not stable peer-comparison rules. |
 | Checked by | `python3 retail_ops/scripts/analyze_demo2_guardrail_sensitivity.py` |
 
@@ -233,9 +233,9 @@ The current sensitivity check exists because a future pairwise comparability gat
 
 | Item | Meaning |
 |---|---|
-| Baseline | Current SQL output values and current `comparison_limit_notes`. |
-| Looser threshold | Recomputed notes after making selected guardrails 5 percentage points easier to trigger. |
-| Stricter threshold | Recomputed notes after making selected guardrails 5 percentage points harder to trigger. |
+| SQL baseline | Current SQL output values and current `comparison_limit_notes`. |
+| Easier-to-trigger scenario | Recomputed notes after lowering each implemented threshold by 5 percentage points. |
+| Harder-to-trigger scenario | Recomputed notes after raising each implemented threshold by 5 percentage points. |
 | Threshold-sensitive row | A store row whose note set changes under at least one threshold scenario. |
 
-Current result: all current B-F rows are threshold-sensitive under at least one scenario. This supports the current decision to treat Demo 2 guardrails as diagnostic warnings rather than stable pairwise-comparison rules.
+Current result: four of five B-F rows are threshold-sensitive under the harder-to-trigger scenario, while Store B remains unchanged and the easier-to-trigger scenario changes no rows. This small-sample result supports treating the guardrails as diagnostic warnings rather than optimized pairwise-comparison rules.

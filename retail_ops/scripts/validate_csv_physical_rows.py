@@ -17,6 +17,7 @@ EXPECTED_MIN_PHYSICAL_LINES = {
     "retail_ops/data/demo2_top_skus_by_sales_volume.csv": 16,
     "retail_ops/data/demo2_top_skus_by_transaction_amount.csv": 16,
     "retail_ops/outputs/demo2_cross_store_comparability_output.csv": 6,
+    "retail_ops/outputs/demo2_guardrail_sensitivity_summary.csv": 16,
 }
 
 errors = []

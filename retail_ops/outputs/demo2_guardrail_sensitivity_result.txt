@@ -1,10 +1,18 @@
 Demo 2 guardrail sensitivity check completed.
 Input: retail_ops/outputs/demo2_cross_store_comparability_output.csv
+SQL source: retail_ops/sql/02_demo2_cross_store_comparability.sql
 Output CSV: retail_ops/outputs/demo2_guardrail_sensitivity_summary.csv
-
+SQL-derived baseline: PASSED. Extracted activity high/moderate thresholds 80/65 and top-3 concentration threshold 25; recomputed notes match every current comparison_limit_notes value.
+Threshold scenarios:
+- baseline_sql: activity high/moderate 80/65; top-3 concentration 25.
+- easier_to_trigger_minus_5pp: each implemented threshold is lowered by 5 percentage points.
+- harder_to_trigger_plus_5pp: each implemented threshold is raised by 5 percentage points.
+Rows reviewed: 5
+Changed rows under easier_to_trigger_minus_5pp: none
+Changed rows under harder_to_trigger_plus_5pp: C, D, E, F
+Rows changed under at least one perturbation: C, D, E, F (4/5)
+Rows unchanged under both perturbations: B
 Interpretation:
-- This check does not optimize thresholds.
-- It tests whether current Demo 2 guardrail notes are fragile under +/- 5 percentage-point threshold shifts.
-- Any changed store should be treated as threshold-sensitive evidence, not as a stable peer-comparison rule.
-
-Stores with changed guardrail notes under sensitivity scenarios: B, C, D, E, F
+- This check does not optimize thresholds or create peer-selection rules.
+- A changed row shows local sensitivity of the diagnostic note set in the current sample.
+- An unchanged row does not establish stability outside the current sample.

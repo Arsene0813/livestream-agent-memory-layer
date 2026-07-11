@@ -102,7 +102,7 @@ Main file:
 
 - `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md`
 
-A guardrail-sensitivity check is included because the current Demo 2 thresholds are prototype interpretation thresholds, not optimized business cutoffs. In the current B-F sample, guardrail notes change under plus or minus 5 percentage-point threshold shifts, so these thresholds are treated as diagnostic warnings rather than stable peer-comparison rules.
+A guardrail-sensitivity check is included because the current Demo 2 thresholds are prototype interpretation thresholds, not optimized business cutoffs. In the current B-F sample, four of five rows change when the existing SQL thresholds are raised by 5 percentage points, while the easier-to-trigger scenario produces no note changes. This is a small-sample sensitivity result, so the thresholds remain diagnostic warnings rather than optimized peer-comparison rules.
 
 A query-robustness inspection is also included to test whether supported, unsupported, hard-negative, entity or period mismatch, and ambiguous comparison queries behave consistently under small wording variations.
 
