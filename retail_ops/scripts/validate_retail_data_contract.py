@@ -140,6 +140,59 @@ def source_exists(relative_path: str) -> bool:
     return (ROOT / relative_path).exists()
 
 
+def declared_source_csv_fields(
+    *,
+    relative_path: str,
+    index: int,
+    fact: dict[str, object],
+    failures: list[str],
+) -> set[str]:
+    prefix = f"{relative_path} fact #{index}"
+    source_path = fact.get("source_path")
+    supporting_paths = fact.get("supporting_source_paths", [])
+
+    paths: list[str] = []
+    if isinstance(source_path, str) and source_path.strip():
+        paths.append(source_path)
+
+    if supporting_paths is None:
+        supporting_paths = []
+    if not isinstance(supporting_paths, list):
+        failures.append(
+            f"{prefix} has non-list supporting_source_paths"
+        )
+        supporting_paths = []
+
+    for supporting_path in supporting_paths:
+        if not isinstance(supporting_path, str) or not supporting_path.strip():
+            failures.append(
+                f"{prefix} has invalid supporting source path "
+                f"`{supporting_path}`"
+            )
+            continue
+        paths.append(supporting_path)
+
+    fields: set[str] = set()
+    for declared_path in dict.fromkeys(paths):
+        if not source_exists(declared_path):
+            failures.append(
+                f"{prefix} declared source path does not exist: "
+                f"{declared_path}"
+            )
+            continue
+
+        if Path(declared_path).suffix.lower() != ".csv":
+            failures.append(
+                f"{prefix} declared source path is not a CSV field "
+                f"source: {declared_path}"
+            )
+            continue
+
+        fields.update(read_csv_headers(declared_path))
+
+    return fields
+
+
 ALLOWED_PERIOD_GRANULARITIES = {"month", "month_range"}
 
 
@@ -215,7 +268,7 @@ def validate_generated_facts(
     *,
     relative_path: str,
     allowed_entities: set[str],
-    known_fields: set[str],
+    documented_fields: set[str],
     failures: list[str],
 ) -> None:
     path = ROOT / relative_path
@@ -279,21 +332,47 @@ def validate_generated_facts(
 
         source_path = fact.get("source_path")
         if not isinstance(source_path, str) or not source_path.strip():
-            failures.append(f"{relative_path} fact #{index} has missing source_path")
-        elif not source_exists(source_path):
             failures.append(
-                f"{relative_path} fact #{index} source_path does not exist: {source_path}"
+                f"{relative_path} fact #{index} has missing source_path"
             )
+
+        declared_fields = declared_source_csv_fields(
+            relative_path=relative_path,
+            index=index,
+            fact=fact,
+            failures=failures,
+        )
 
         source_fields = fact.get("source_fields")
         if not isinstance(source_fields, list):
-            failures.append(f"{relative_path} fact #{index} has non-list source_fields")
+            failures.append(
+                f"{relative_path} fact #{index} has non-list source_fields"
+            )
             continue
 
         for field in source_fields:
-            if field not in known_fields and field not in KNOWN_HELPER_FIELDS:
+            if not isinstance(field, str) or not field.strip():
                 failures.append(
-                    f"{relative_path} fact #{index} source field `{field}` is not known"
+                    f"{relative_path} fact #{index} has invalid "
+                    f"source field `{field}`"
+                )
+                continue
+
+            if (
+                field not in documented_fields
+                and field not in KNOWN_HELPER_FIELDS
+            ):
+                failures.append(
+                    f"{relative_path} fact #{index} source field "
+                    f"`{field}` is not documented in DATA_DICTIONARY.md "
+                    "or approved helper registry"
+                )
+
+            if declared_fields and field not in declared_fields:
+                failures.append(
+                    f"{relative_path} fact #{index} source field "
+                    f"`{field}` is not present in declared "
+                    "source/supporting CSV headers"
                 )
 
         limitations = fact.get("limitations")
@@ -336,15 +415,14 @@ def main() -> int:
         "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     )
 
-    known_fields = (
-        extract_backticked_fields(dictionary)
-        | demo1_source_headers
+    documented_fields = extract_backticked_fields(dictionary)
+    current_source_output_fields = (
+        demo1_source_headers
         | demo1_top_sku_headers
         | demo1_output_headers
         | demo1_summary_headers
         | demo2_source_headers
         | demo2_output_headers
-        | KNOWN_HELPER_FIELDS
     )
 
     validator_paths = {
@@ -370,8 +448,8 @@ def main() -> int:
     for field in REQUIRED_CANONICAL_FIELDS:
         if field not in dictionary:
             failures.append(f"Required canonical field `{field}` missing from DATA_DICTIONARY.md")
-        if field not in known_fields:
-            failures.append(f"Required canonical field `{field}` missing from known source/output fields")
+        if field not in current_source_output_fields:
+            failures.append(f"Required canonical field `{field}` missing from current source/output fields")
 
     for phrase in REQUIRED_BOUNDARY_PHRASES:
         if phrase not in dictionary:
@@ -399,14 +477,14 @@ def main() -> int:
     validate_generated_facts(
         relative_path="retail_ops/outputs/generated_retail_memory_facts.json",
         allowed_entities={"store_A"},
-        known_fields=known_fields,
+        documented_fields=documented_fields,
         failures=failures,
     )
 
     validate_generated_facts(
         relative_path="retail_ops/outputs/generated_demo2_retail_memory_facts.json",
         allowed_entities={"store_B", "store_C", "store_D", "store_E", "store_F"},
-        known_fields=known_fields,
+        documented_fields=documented_fields,
         failures=failures,
     )
 
@@ -422,7 +500,7 @@ def main() -> int:
         "Checked Demo 2 source/output headers.",
         "Checked Demo 2 diagnostic-scope and limitation fields.",
         "Checked generated Demo 1 and Demo 2 memory fact structure and period metadata.",
-        "Checked source_path existence and known source_fields.",
+        "Checked dictionary-bounded source_fields against declared source and supporting CSV headers.",
         "Checked critical metric-boundary phrases in DATA_DICTIONARY.md.",
         "Checked current schema aliases and dictionary-defined field boundaries.",
         f"Saved result path: {RESULT_PATH.relative_to(ROOT)}",
