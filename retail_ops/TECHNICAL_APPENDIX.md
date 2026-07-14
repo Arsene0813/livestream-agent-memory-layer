@@ -20,7 +20,7 @@ This appendix is for later audit of architecture, lineage, and field-usage consi
 ## Architecture
 
 
-## Document Ownership
+## Repository Document Roles
 
 | This file owns | Canonical file for related detail |
 |---|---|
@@ -147,7 +147,7 @@ Both paths should preserve metric definitions, entity scope, period scope, sourc
 |---|---|---|
 | Data dictionary | Preserve backend metric meanings and canonical field names. | Existing Meituan backend metrics stay tied to documented definitions. |
 | SQL diagnostics | Compute store-period diagnostic evidence under the documented field contract. | SQL output remains diagnostic evidence, not a final operating decision. |
-| Generated memory facts | Store observed values, source fields, calculation notes, confidence labels, and limitations. | Memory facts summarize evidence without replacing raw backend definitions. |
+| Generated memory facts | Store observed values, source fields, calculation notes, confidence labels, and limitations. | Memory facts summarize evidence without replacing documented backend metric definitions. |
 | Boundary checks | Check entity scope, period scope, metric meanings, and comparison limits before answers are accepted. | Evaluation focuses on evidence discipline and answer scope. |
 | Future comparability gate | Judge whether two store-period records can be compared for one selected operating question. | The gate is question-specific and depends on broader store-period evidence. |
 
@@ -243,7 +243,7 @@ This file owns claim-to-data lineage for the retail-operations evidence path.
 
 It traces how selected Meituan backend metrics move from source CSV files into SQL diagnostics, SQL outputs, generated memory facts, and answer-boundary evaluations.
 
-## Document Ownership
+## Lineage Document Roles
 
 | This file owns | Canonical file for related detail |
 |---|---|
@@ -537,7 +537,7 @@ The panel keeps `store_type` values aligned with the existing source data: `self
 ## Field-Usage Review
 
 
-## Document Ownership
+## Field-Review Document Roles
 
 This file owns field-name and semantic-change review for the retail-operations evidence path.
 

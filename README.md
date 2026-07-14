@@ -27,6 +27,8 @@ The goal is to build a more reliable evidence-based framework for multi-store op
 
 The current prototype follows one evidence path: selected backend-derived metric evidence -> canonical field dictionary -> SQL diagnostic output -> generated retail memory facts -> boundary-preserving answer checks.
 
+Current source tables were manually transcribed and anonymized at store level; this repository does not implement automated backend ingestion.
+
 In practice, the project first preserves the documented metric definitions, then uses SQL to structure selected manually transcribed store-period records, and then converts diagnostic evidence into memory facts with source fields, observed values, source paths, and limitations. The final check is whether later answers stay inside the available evidence boundary.
 
 The single source of truth for retail field names and metric meanings is:
