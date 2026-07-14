@@ -115,7 +115,7 @@
     "period_label": "2026-02_to_2026-04",
     "period_start": "2026-02-01",
     "period_end": "2026-04-30",
-    "value": "Store A's transaction and conversion signals moved in different directions across the demo period. April 2026 recovered in transaction amount and transaction orders compared with March, but order conversion rate and average order value declined. This supports a cautious operating-stage reading rather than a simple performance-improvement label.",
+    "value": "Store A's transaction and conversion signals moved in different directions across the demo period. From March to April 2026, transaction amount and transaction orders increased, while order conversion rate and average order value declined. The observed pattern is a multi-metric trade-off across transaction scale, order volume, conversion, and average order value.",
     "observed_values": {
       "2026-03": {
         "transaction_amount": 6454.84,
@@ -163,7 +163,7 @@
     "period_label": "2026-02_to_2026-04",
     "period_start": "2026-02-01",
     "period_end": "2026-04-30",
-    "value": "",
+    "value": "Store A's April 2026 changes should be read across transaction amount, transaction orders, exposure users, entry users, search entry users, order conversion rate, and average order value together. The available fields support a multi-metric description of the period change, not a single-factor attribution.",
     "observed_values": {
       "2026-04": {
         "transaction_amount_mom_pct": 40.73,
@@ -206,7 +206,7 @@
     "period_label": "2026-02_to_2026-04",
     "period_start": "2026-02-01",
     "period_end": "2026-04-30",
-    "value": "The top-SKU evidence for Store A is mainly care-solution-heavy. These top SKUs are used as lightweight qualitative product-mix evidence, not as a full category-level sales-share analysis.",
+    "value": "All listed top-3 SKU records in the available Store A evidence are care-solution items. These records provide limited product-mix context for the observed top-SKU set; they do not represent the store's full SKU or category sales structure.",
     "observed_values": {
       "evidence_scope": "top 3 SKU transaction and sales evidence only"
     },
