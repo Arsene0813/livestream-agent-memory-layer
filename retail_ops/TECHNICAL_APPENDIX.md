@@ -580,6 +580,24 @@ Any future field-name change must pass this review first:
 
 Future fields such as `activity_status`, `market_area_type`, `market_area_type_source`, `market_area_type_confidence`, `comparison_question_type`, or `comparison_decision` must not be introduced into source CSVs, SQL outputs, generated facts, or eval cases until they are first documented in `retail_ops/data/DATA_DICTIONARY.md` and linked through the Source-to-Claim Lineage section of this appendix.
 
+## Search-Term Source Field Review
+
+This review records the existing search-term source fields before any future
+field-name or semantic change. These fields remain in their current source
+table and generated-fact evidence locations.
+
+| Existing field | Dictionary definition | Current use location | Rename decision |
+|---|---|---|---|
+| `search_term_rank` | Rank in the backend top-search-term list for one store-period. | `retail_ops/data/demo2_top_search_terms.csv` | Keep the existing name; no rename. |
+| `search_term` | Original backend search-term text and source-of-truth term value. | `retail_ops/data/demo2_top_search_terms.csv`; Demo 2 generated-fact `source_fields` and `observed_values` | Keep the existing name; no rename. |
+| `search_term_en` | Conservative English reviewer helper for `search_term`. | `retail_ops/data/demo2_top_search_terms.csv`; Demo 2 generated-fact `source_fields` and `observed_values` | Keep the existing name; no rename. |
+| `search_term_exposure_times` | Search-term-level recorded exposure count. | `retail_ops/data/demo2_top_search_terms.csv`; Demo 2 generated-fact `source_fields` and `observed_values` | Keep the existing name; no rename. |
+| `search_term_click_times` | Search-term-level recorded click count. | `retail_ops/data/demo2_top_search_terms.csv`; Demo 2 generated-fact `source_fields` and `observed_values` | Keep the existing name; no rename. |
+| `search_term_order_times` | Search-term-level recorded order-action count. | `retail_ops/data/demo2_top_search_terms.csv`; Demo 2 generated-fact `source_fields` and `observed_values` | Keep the existing name; no rename. |
+
+No CSV header, generated-fact field, memory slot, API response key, or metric
+formula is changed by this review.
+
 ## API Response Metadata Review
 
 This review covers API response metadata only. These keys are not canonical
