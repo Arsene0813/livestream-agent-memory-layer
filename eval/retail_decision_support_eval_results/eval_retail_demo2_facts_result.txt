@@ -1,9 +1,31 @@
-Retail Demo 2 facts eval result: 5/5 passed
-Passed: 5
-Failed: 0
+Retail Demo 2 fact-contract coverage result: 25/25 entity-slot contracts passed
+Expected coverage: 5 stores x 5 slots = 25
+Status: passed
+Passed contracts: 25
+Failed checks: 0
 
-PASS store_b_visibility_entry_profile
-PASS store_c_top3_sku_product_mix_note
-PASS store_d_activity_lever_profile
-PASS store_f_transaction_conversion_profile
-PASS store_f_single_metric_attribution_guard
+PASS store_B/visibility_entry_profile
+PASS store_B/activity_lever_profile
+PASS store_B/transaction_conversion_profile
+PASS store_B/top3_sku_product_mix_note
+PASS store_B/single_metric_attribution_guard
+PASS store_C/visibility_entry_profile
+PASS store_C/activity_lever_profile
+PASS store_C/transaction_conversion_profile
+PASS store_C/top3_sku_product_mix_note
+PASS store_C/single_metric_attribution_guard
+PASS store_D/visibility_entry_profile
+PASS store_D/activity_lever_profile
+PASS store_D/transaction_conversion_profile
+PASS store_D/top3_sku_product_mix_note
+PASS store_D/single_metric_attribution_guard
+PASS store_E/visibility_entry_profile
+PASS store_E/activity_lever_profile
+PASS store_E/transaction_conversion_profile
+PASS store_E/top3_sku_product_mix_note
+PASS store_E/single_metric_attribution_guard
+PASS store_F/visibility_entry_profile
+PASS store_F/activity_lever_profile
+PASS store_F/transaction_conversion_profile
+PASS store_F/top3_sku_product_mix_note
+PASS store_F/single_metric_attribution_guard

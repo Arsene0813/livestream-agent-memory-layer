@@ -580,6 +580,141 @@ Any future field-name change must pass this review first:
 
 Future fields such as `activity_status`, `market_area_type`, `market_area_type_source`, `market_area_type_confidence`, `comparison_question_type`, or `comparison_decision` must not be introduced into source CSVs, SQL outputs, generated facts, or eval cases until they are first documented in `retail_ops/data/DATA_DICTIONARY.md` and linked through the Source-to-Claim Lineage section of this appendix.
 
+## Search-Term Source Field Review
+
+This review records the existing search-term source fields before any future
+field-name or semantic change. These fields remain in their current source
+table and generated-fact evidence locations.
+
+| Existing field | Dictionary definition | Current use location | Rename decision |
+|---|---|---|---|
+| `search_term_rank` | Rank in the backend top-search-term list for one store-period. | `retail_ops/data/demo2_top_search_terms.csv` | Keep the existing name; no rename. |
+| `search_term` | Original backend search-term text and source-of-truth term value. | `retail_ops/data/demo2_top_search_terms.csv`; Demo 2 generated-fact `source_fields` and `observed_values` | Keep the existing name; no rename. |
+| `search_term_en` | Conservative English reviewer helper for `search_term`. | `retail_ops/data/demo2_top_search_terms.csv`; Demo 2 generated-fact `source_fields` and `observed_values` | Keep the existing name; no rename. |
+| `search_term_exposure_times` | Search-term-level recorded exposure count. | `retail_ops/data/demo2_top_search_terms.csv`; Demo 2 generated-fact `source_fields` and `observed_values` | Keep the existing name; no rename. |
+| `search_term_click_times` | Search-term-level recorded click count. | `retail_ops/data/demo2_top_search_terms.csv`; Demo 2 generated-fact `source_fields` and `observed_values` | Keep the existing name; no rename. |
+| `search_term_order_times` | Search-term-level recorded order-action count. | `retail_ops/data/demo2_top_search_terms.csv`; Demo 2 generated-fact `source_fields` and `observed_values` | Keep the existing name; no rename. |
+
+No CSV header, generated-fact field, memory slot, API response key, or metric
+formula is changed by this review.
+
+## Repeated-Window Analytical Field Review
+
+This review records the existing repeated-window analytical output fields before any future name or semantic change.
+
+| Existing field | Dictionary definition | Current use location | Rename decision |
+|---|---|---|---|
+| `feb_activity_orders` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_entry_users` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_exposure_users` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_search_entry_users` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_search_exposure_users` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_transaction_orders` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_activity_orders` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_entry_users` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_exposure_users` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_search_entry_users` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_search_exposure_users` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_transaction_orders` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_activity_cost_ratio_pct` | February or April snapshot of the named store-month percentage metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_entry_conversion_rate_pct` | February or April snapshot of the named store-month percentage metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_order_conversion_rate_pct` | February or April snapshot of the named store-month percentage metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_payment_conversion_rate_pct` | February or April snapshot of the named store-month percentage metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_activity_cost_ratio_pct` | February or April snapshot of the named store-month percentage metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_entry_conversion_rate_pct` | February or April snapshot of the named store-month percentage metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_order_conversion_rate_pct` | February or April snapshot of the named store-month percentage metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_payment_conversion_rate_pct` | February or April snapshot of the named store-month percentage metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `activity_orders_feb_to_apr_delta` | April minus February for the named count metric, in the base metric's unit. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `exposure_users_feb_to_apr_delta` | April minus February for the named count metric, in the base metric's unit. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `search_entry_users_feb_to_apr_delta` | April minus February for the named count metric, in the base metric's unit. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `search_exposure_users_feb_to_apr_delta` | April minus February for the named count metric, in the base metric's unit. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `transaction_orders_feb_to_apr_delta` | April minus February for the named count metric, in the base metric's unit. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `entry_conversion_rate_pct_feb_to_apr_delta` | April minus February for the named percentage metric, expressed in percentage points. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `order_conversion_rate_pct_feb_to_apr_delta` | April minus February for the named percentage metric, expressed in percentage points. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `payment_conversion_rate_pct_feb_to_apr_delta` | April minus February for the named percentage metric, expressed in percentage points. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `exposure_users_feb_to_apr_pct` | Relative February-to-April change calculated as (April - February) / February * 100. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `search_entry_users_feb_to_apr_pct` | Relative February-to-April change calculated as (April - February) / February * 100. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `search_exposure_users_feb_to_apr_pct` | Relative February-to-April change calculated as (April - February) / February * 100. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `transaction_orders_feb_to_apr_pct` | Relative February-to-April change calculated as (April - February) / February * 100. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+
+These rows describe analytical output columns, not new source fields.
+
+No CSV header, SQL expression, generated fact, memory slot, API response key, or numerical result is changed by this review.
+
+## Generated-Fact Metadata Field Review
+
+This review records the top-level generated-fact metadata contract.
+These keys describe memory-layer structure and traceability. They are not canonical retail source fields or SQL-derived business metrics.
+
+| Existing key | Namespace definition | Current use location | Rename decision |
+|---|---|---|---|
+| `calculation` | Human-readable derivation or construction note for the generated fact. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
+| `is_active` | Boolean lifecycle flag indicating that the generated fact is active for the demo path. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
+| `kind` | Payload-kind discriminator used to identify the object as a retail memory fact. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
+| `limitations` | Explicit list of evidence and interpretation boundaries attached to the fact. | Generated Demo 1 and Demo 2 retail-memory fact objects and endpoint responses. | Keep the existing key; no rename. |
+| `lineage_path` | Repository-relative path to the documented source-to-claim lineage. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
+| `observed_values` | Structured evidence payload containing the metrics and helper values used by the fact. | Generated Demo 1 and Demo 2 retail-memory fact objects and endpoint responses. | Keep the existing key; no rename. |
+| `period_granularity` | Time-grain label for the fact period, such as month. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
+| `period_label` | Reviewer-readable identifier for the fact's reporting period. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
+| `slot` | Stable memory-layer category used to group facts by diagnostic purpose. | Generated facts, API filtering, and fact coverage evaluation. | Keep the existing key; no rename. |
+| `source_fields` | List of dictionary-bounded retail fields used to construct or support the fact. | Generated facts and retail data-contract validation. | Keep the existing key; no rename. |
+| `source_path` | Primary repository-relative file path backing the generated fact. | Generated facts, endpoint responses, and fact-contract evaluation. | Keep the existing key; no rename. |
+| `supporting_source_paths` | Additional repository-relative evidence paths used by the fact. | Generated facts and fact-contract evaluation. | Keep the existing key; no rename. |
+| `type` | Fact-type discriminator used by the memory and API payload contract. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
+| `value` | Non-empty reviewer-facing fact statement; it is not a raw metric field. | Generated facts, endpoint responses, and data-contract validation. | Keep the existing key; no rename. |
+
+The canonical retail fields referenced by `source_fields` and `observed_values` remain governed by `retail_ops/data/DATA_DICTIONARY.md`.
+No generated-fact key, value, slot, source path, or API behavior is changed by this review.
+
+## Generated-Fact Payload Helper Key Review
+
+This review records structured helper keys that exist inside generated-fact `observed_values`.
+They organize evidence for reviewer readability and do not introduce new raw retail metrics.
+
+| Existing key | Namespace definition | Current use location | Rename decision |
+|---|---|---|---|
+| `evidence_scope` | Payload helper describing the evidence window and scope represented by the fact. | Demo 1 generated-fact observed_values. | Keep the existing key; no rename. |
+| `top_search_terms` | Structured list of the limited top-search-term evidence attached to a visibility fact. | Demo 2 visibility-entry generated facts. | Keep the existing key; no rename. |
+| `top_skus_by_transaction_amount` | Structured list of the limited top-three SKU evidence ranked by transaction amount. | Demo 2 product-mix generated facts. | Keep the existing key; no rename. |
+
+`top_search_terms` and `top_skus_by_transaction_amount` represent limited listed evidence only; they are not complete search or product catalog coverage.
+No payload key, source field, generated fact, memory slot, or numerical result is changed by this review.
+
+## API Response Metadata Review
+
+This review covers API response metadata only. These keys are not canonical
+Meituan source fields, SQL-derived retail metrics, or generated memory slots.
+`retail_ops/data/DATA_DICTIONARY.md` remains authoritative for the retail
+fields carried by endpoint facts.
+
+| Existing metadata | Dictionary boundary | Current use locations | Decision |
+|---|---|---|---|
+| `demo_scope` | API metadata, not a dictionary field | `api/main.py` and Demo 2 endpoint evaluation | Key retained; value is `demo2_same_period_b_f_diagnostic` |
+| `retrieval_mode` | API metadata describing whether retrieval runs | Demo 2 and Qdrant-backed endpoint paths | Key retained; Demo 2 uses `not_used` |
+| `selection_mode` | API metadata describing deterministic fact selection | Demo 2 endpoint and endpoint evaluation | Added with value `deterministic_entity_slot_filter`; not a rename |
+| `score` | Fact-level response metadata, not a retail metric | Shared answer builder and endpoint facts | Demo 2 uses `null`; retrieval-backed paths preserve actual scores |
+| `confidence` | Generated-fact trace confidence | Generated facts and endpoint responses | Key and values retained |
+
+### Implemented Demo 2 response metadata
+
+Supported Demo 2 responses now use:
+
+- `demo_scope`: `demo2_same_period_b_f_diagnostic`
+- `retrieval_mode`: `not_used`
+- `selection_mode`: `deterministic_entity_slot_filter`
+- fact-level `score`: `null`
+
+The Demo 2 endpoint reads repository-backed facts and applies deterministic
+entity-and-slot filtering. It does not calculate an embedding similarity
+score.
+
+`confidence` remains trace-confidence metadata attached to generated facts.
+It is not a similarity score, causal confidence, forecast confidence, or
+confidence in an operating recommendation.
+
+These metadata changes do not modify source CSV fields, SQL output fields,
+metric formulas, generated memory slots, or evidence interpretations.
+
 ## Field-Change Migration Order
 
 Any future field rename or semantic change must be migrated in this order:

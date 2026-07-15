@@ -1,5 +1,39 @@
 # Project Summary for Admissions Review
 
+## Reviewer reading path
+
+The repository contains implementation details, generated artifacts, and
+supporting experiments. A reviewer can follow this shorter evidence path:
+
+1. Start with the
+   [Retail Operations Extension](retail_ops/README.md)
+   for the retail problem, Demo 1, Demo 2, and evidence boundaries.
+2. Inspect the
+   [Demo 2 generated memory facts](retail_ops/outputs/generated_demo2_retail_memory_facts.json)
+   for the five stores by five diagnostic slots represented in the
+   file-backed demo.
+3. Use the
+   [Meituan backend metric dictionary](retail_ops/data/DATA_DICTIONARY.md)
+   for canonical source fields, analytical output definitions, formulas,
+   grains, and interpretation boundaries.
+4. Use the
+   [retail technical appendix](retail_ops/TECHNICAL_APPENDIX.md)
+   for source-to-claim lineage, metadata namespaces, design decisions, and
+   limitations.
+5. Review the
+   [retail experiment map](retail_ops/EXPERIMENT_RESULTS.md)
+   for the purpose and result location of each experiment.
+6. Check the four Demo 2 evaluation layers:
+   - [fact-contract coverage](eval/eval_retail_demo2_facts.py);
+   - [answer-contract fixtures](eval/eval_retail_demo2_answer_behavior.py);
+   - [endpoint behavior](eval/eval_retail_demo2_endpoint_behavior.py);
+   - [scope-boundary behavior](eval/eval_retail_demo2_scope_boundary.py).
+
+The answer-contract fixture evaluation uses manually specified wording
+contracts and does not call the API endpoint. Endpoint behavior and
+scope-boundary evaluations exercise the implemented response path and its
+refusal boundaries.
+
 ## Project Title
 
 Meituan Instant-Retail Decision Support Prototype

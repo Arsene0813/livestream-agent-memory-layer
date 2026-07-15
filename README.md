@@ -6,6 +6,14 @@ A local evidence-bounded decision-support prototype for multi-store Meituan inst
 
 The title keeps the lifecycle-aware memory-layer framing used in the application materials. The current implemented retail path applies that evidence-boundary design to Meituan backend metrics, SQL diagnostic outputs, generated retail memory facts, answer-boundary checks, and RAC grounded review.
 
+## Admissions review path
+
+For the shortest reviewer-oriented path through the repository, start with
+the [Project Summary for Admissions Review](PROJECT_SUMMARY_FOR_ADMISSIONS.md).
+It links the retail evidence, field contracts, technical decisions, and
+evaluation layers while preserving the project's livestream memory-layer
+framing.
+
 ## Core Research Question
 
 This project grew from a real Meituan instant-retail operating problem.

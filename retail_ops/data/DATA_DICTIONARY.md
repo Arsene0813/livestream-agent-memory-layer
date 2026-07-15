@@ -856,20 +856,30 @@ Key naming choices:
 
 business_district_rank is included as a supplementary backend-reported field. It should not be used alone as a hard comparability condition because business-district boundaries and local competitive contexts may differ across stores.
 
-### demo2_top_search_terms.csv
+### `demo2_top_search_terms.csv`
 
-This table records the top 3 backend-reported search terms for each store-period.
+This source table records the top three backend-reported search terms for
+each store-period. Its rows are search-term evidence, not store-level totals,
+customer-level attribution, keyword-quality scores, or causal explanations.
 
-Fields:
+| Field | Dictionary definition | Data grain | Interpretation boundary |
+|---|---|---|---|
+| `search_term_rank` | Position of the search term in the backend top-search-term list for the selected store-period. | Store-period-search-term | Ordering metadata only; it is not a performance score or keyword-quality classification. |
+| `search_term` | Original search term retained from the available backend evidence. | Store-period-search-term | Source value and source of truth for the term text; it must not be replaced by the English helper field. |
+| `search_term_en` | Conservative English helper translation of `search_term` for reviewer readability. | Store-period-search-term | Helper text only; it is not an independently observed backend value or a translated source-of-truth field. |
+| `search_term_exposure_times` | Number of recorded search-result exposures associated with the listed search term in the selected reporting window. | Store-period-search-term | Impression count, not unique users; it must not be substituted for `search_exposure_users`. |
+| `search_term_click_times` | Number of recorded clicks associated with the listed search term in the selected reporting window. | Store-period-search-term | Click count, not unique click users, entry users, or transaction orders. |
+| `search_term_order_times` | Number of recorded order actions attributed to the listed search term in the source evidence. | Store-period-search-term | Search-term evidence only; it is not interchangeable with store-level `transaction_orders` and does not prove causal attribution. |
 
-- search_term_rank: rank of the search term in the backend top-search-term list.
-- search_term: original backend search term.
-- search_term_en: conservative English translation for readability.
-- search_term_exposure_times: exposure count for the search term.
-- search_term_click_times: click count for the search term.
-- search_term_order_times: order count attributed to the search term.
+The original Chinese `search_term` remains the source value.
+`search_term_en` is retained only as a conservative reviewer-readability
+helper.
 
-The Chinese search_term remains the source value. search_term_en is only a helper field and should not replace the original backend value.
+Search-term exposure, click, and order counts should be interpreted together.
+They describe the limited top-search-term evidence available for the selected
+store-period. They do not represent complete search-query coverage, unique
+customer attribution, full search-funnel reconstruction, or proof that a
+search term caused transaction performance.
 
 ### demo2_top_skus_by_sales_volume.csv
 
@@ -1005,3 +1015,106 @@ Examples:
 Correct use: these fields describe directional movement within the selected repeated-window output.
 
 Boundary: they do not explain why the movement happened, and they do not prove cross-store comparability, causal impact, customer satisfaction, product quality, or operating recommendation readiness.
+
+## Repeated-Window Analytical Output Field Contract
+
+This section defines the existing analytical columns in
+`retail_ops/outputs/repeated_window_panel_summary_output.csv`.
+
+These columns are derived comparison outputs. They are not raw backend source
+fields, causal estimates, forecasts, or complete operating recommendations.
+Their current names are retained.
+
+### February and April count snapshots
+
+- `feb_activity_orders`
+- `feb_entry_users`
+- `feb_exposure_users`
+- `feb_search_entry_users`
+- `feb_search_exposure_users`
+- `feb_transaction_orders`
+- `apr_activity_orders`
+- `apr_entry_users`
+- `apr_exposure_users`
+- `apr_search_entry_users`
+- `apr_search_exposure_users`
+- `apr_transaction_orders`
+
+Each `feb_` field is the corresponding February store-month value. Each
+`apr_` field is the corresponding April store-month value.
+
+These fields preserve the unit and grain of their base metric. They do not
+represent a sum across February through April.
+
+### February and April percentage snapshots
+
+- `feb_activity_cost_ratio_pct`
+- `feb_entry_conversion_rate_pct`
+- `feb_order_conversion_rate_pct`
+- `feb_payment_conversion_rate_pct`
+- `apr_activity_cost_ratio_pct`
+- `apr_entry_conversion_rate_pct`
+- `apr_order_conversion_rate_pct`
+- `apr_payment_conversion_rate_pct`
+
+Each field is the corresponding February or April percentage metric already
+calculated for that store-month.
+
+The `_pct` suffix means the stored value is expressed in percentage units.
+These snapshot fields are not percentage changes.
+
+### February-to-April absolute count deltas
+
+- `activity_orders_feb_to_apr_delta`
+- `exposure_users_feb_to_apr_delta`
+- `search_entry_users_feb_to_apr_delta`
+- `search_exposure_users_feb_to_apr_delta`
+- `transaction_orders_feb_to_apr_delta`
+
+For each field:
+
+`feb_to_apr_delta = April value - February value`
+
+The result preserves the unit of the base count. A positive value means the
+April count is higher; a negative value means it is lower. The value is not
+normalized for store size, traffic opportunity, market conditions, or
+intervening operational changes.
+
+### February-to-April percentage-point deltas
+
+- `entry_conversion_rate_pct_feb_to_apr_delta`
+- `order_conversion_rate_pct_feb_to_apr_delta`
+- `payment_conversion_rate_pct_feb_to_apr_delta`
+
+For each field:
+
+`feb_to_apr_delta = April percentage value - February percentage value`
+
+The result is a percentage-point difference, not a relative percent change.
+For example, movement from 10% to 12% is a `2` percentage-point delta, not a
+20% value in these fields.
+
+### February-to-April relative percent changes
+
+- `exposure_users_feb_to_apr_pct`
+- `search_entry_users_feb_to_apr_pct`
+- `search_exposure_users_feb_to_apr_pct`
+- `transaction_orders_feb_to_apr_pct`
+
+For each field:
+
+`feb_to_apr_pct = (April value - February value) / February value * 100`
+
+This calculation requires a valid non-zero February denominator. It describes
+relative change in the named metric only. It does not establish causality,
+cross-store comparability, or a final operating recommendation.
+
+### Repeated-window interpretation boundary
+
+The February and April snapshots, absolute deltas, percentage-point deltas,
+and relative percent changes should be read together with the existing
+`observed_month_count`, `repeated_window_summary_flag`, and
+`summary_boundary_note` fields.
+
+No repeated-window output alone proves that an activity, search term, product
+mix, subsidy, or store characteristic caused the observed change.

@@ -330,6 +330,12 @@ def validate_generated_facts(
             failures=failures,
         )
 
+        value = fact.get("value")
+        if not isinstance(value, str) or not value.strip():
+            failures.append(
+                f"{relative_path} fact #{index} has missing or empty value"
+            )
+
         source_path = fact.get("source_path")
         if not isinstance(source_path, str) or not source_path.strip():
             failures.append(
@@ -499,7 +505,7 @@ def main() -> int:
         "Checked Demo 1 source/output headers.",
         "Checked Demo 2 source/output headers.",
         "Checked Demo 2 diagnostic-scope and limitation fields.",
-        "Checked generated Demo 1 and Demo 2 memory fact structure and period metadata.",
+        "Checked generated Demo 1 and Demo 2 memory fact structure, non-empty values, and period metadata.",
         "Checked dictionary-bounded source_fields against declared source and supporting CSV headers.",
         "Checked critical metric-boundary phrases in DATA_DICTIONARY.md.",
         "Checked current schema aliases and dictionary-defined field boundaries.",
