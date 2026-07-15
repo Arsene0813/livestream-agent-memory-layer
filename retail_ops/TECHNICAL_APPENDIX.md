@@ -641,6 +641,45 @@ These rows describe analytical output columns, not new source fields.
 
 No CSV header, SQL expression, generated fact, memory slot, API response key, or numerical result is changed by this review.
 
+## Generated-Fact Metadata Field Review
+
+This review records the top-level generated-fact metadata contract.
+These keys describe memory-layer structure and traceability. They are not canonical retail source fields or SQL-derived business metrics.
+
+| Existing key | Namespace definition | Current use location | Rename decision |
+|---|---|---|---|
+| `calculation` | Human-readable derivation or construction note for the generated fact. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
+| `is_active` | Boolean lifecycle flag indicating that the generated fact is active for the demo path. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
+| `kind` | Payload-kind discriminator used to identify the object as a retail memory fact. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
+| `limitations` | Explicit list of evidence and interpretation boundaries attached to the fact. | Generated Demo 1 and Demo 2 retail-memory fact objects and endpoint responses. | Keep the existing key; no rename. |
+| `lineage_path` | Repository-relative path to the documented source-to-claim lineage. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
+| `observed_values` | Structured evidence payload containing the metrics and helper values used by the fact. | Generated Demo 1 and Demo 2 retail-memory fact objects and endpoint responses. | Keep the existing key; no rename. |
+| `period_granularity` | Time-grain label for the fact period, such as month. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
+| `period_label` | Reviewer-readable identifier for the fact's reporting period. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
+| `slot` | Stable memory-layer category used to group facts by diagnostic purpose. | Generated facts, API filtering, and fact coverage evaluation. | Keep the existing key; no rename. |
+| `source_fields` | List of dictionary-bounded retail fields used to construct or support the fact. | Generated facts and retail data-contract validation. | Keep the existing key; no rename. |
+| `source_path` | Primary repository-relative file path backing the generated fact. | Generated facts, endpoint responses, and fact-contract evaluation. | Keep the existing key; no rename. |
+| `supporting_source_paths` | Additional repository-relative evidence paths used by the fact. | Generated facts and fact-contract evaluation. | Keep the existing key; no rename. |
+| `type` | Fact-type discriminator used by the memory and API payload contract. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
+| `value` | Non-empty reviewer-facing fact statement; it is not a raw metric field. | Generated facts, endpoint responses, and data-contract validation. | Keep the existing key; no rename. |
+
+The canonical retail fields referenced by `source_fields` and `observed_values` remain governed by `retail_ops/data/DATA_DICTIONARY.md`.
+No generated-fact key, value, slot, source path, or API behavior is changed by this review.
+
+## Generated-Fact Payload Helper Key Review
+
+This review records structured helper keys that exist inside generated-fact `observed_values`.
+They organize evidence for reviewer readability and do not introduce new raw retail metrics.
+
+| Existing key | Namespace definition | Current use location | Rename decision |
+|---|---|---|---|
+| `evidence_scope` | Payload helper describing the evidence window and scope represented by the fact. | Demo 1 generated-fact observed_values. | Keep the existing key; no rename. |
+| `top_search_terms` | Structured list of the limited top-search-term evidence attached to a visibility fact. | Demo 2 visibility-entry generated facts. | Keep the existing key; no rename. |
+| `top_skus_by_transaction_amount` | Structured list of the limited top-three SKU evidence ranked by transaction amount. | Demo 2 product-mix generated facts. | Keep the existing key; no rename. |
+
+`top_search_terms` and `top_skus_by_transaction_amount` represent limited listed evidence only; they are not complete search or product catalog coverage.
+No payload key, source field, generated fact, memory slot, or numerical result is changed by this review.
+
 ## API Response Metadata Review
 
 This review covers API response metadata only. These keys are not canonical
