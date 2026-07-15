@@ -580,6 +580,115 @@ Any future field-name change must pass this review first:
 
 Future fields such as `activity_status`, `market_area_type`, `market_area_type_source`, `market_area_type_confidence`, `comparison_question_type`, or `comparison_decision` must not be introduced into source CSVs, SQL outputs, generated facts, or eval cases until they are first documented in `retail_ops/data/DATA_DICTIONARY.md` and linked through the Source-to-Claim Lineage section of this appendix.
 
+## API Response Metadata Review
+
+This review covers API response metadata only.
+
+These keys are not canonical Meituan source fields, SQL-derived retail
+metrics, or generated memory slots. Definitions in
+`retail_ops/data/DATA_DICTIONARY.md` remain authoritative for all retail
+data fields referenced by endpoint facts.
+
+| Existing metadata | Dictionary boundary | Current use locations | Rename decision |
+|---|---|---|---|
+| `demo_scope` | API metadata, not a dictionary field | `api/main.py`, Demo 2 endpoint and endpoint evaluation | Keep the key; later change only the value |
+| `retrieval_mode` | API metadata describing whether retrieval is used | `api/main.py`, Demo 2 endpoint and endpoint evaluation | Keep the key; later clarify the Demo 2 value |
+| `selection_mode` | Proposed API metadata for deterministic fact selection | Demo 2 endpoint and endpoint evaluation | Add as a new metadata key; not a rename |
+| `score` | Fact-level response metadata; not a retail metric | Shared answer builder, Qdrant-backed path and Demo 2 path | Keep the key; use `null` when Demo 2 has no similarity score |
+| `confidence` | Generated-fact trace confidence; not similarity or business confidence | Generated facts and endpoint responses | Keep the key and current values |
+
+### Metadata decisions
+
+#### `demo_scope`
+
+Current value:
+
+`demo2_cross_store`
+
+Current implementation boundary:
+
+- Stores B-F only;
+- March 2026 only;
+- same-period diagnostic evidence;
+- no finished pairwise comparability decision.
+
+Planned value:
+
+`demo2_same_period_b_f_diagnostic`
+
+Decision:
+
+Keep the metadata key. Change only its value in the subsequent API patch.
+
+#### `retrieval_mode`
+
+The current Demo 2 endpoint reads generated facts from a repository file and
+applies deterministic entity-and-slot filtering. It does not run embedding
+retrieval.
+
+Planned Demo 2 value:
+
+`not_used`
+
+Decision:
+
+Keep the metadata key for response compatibility. Qdrant-backed endpoints may
+continue to report an actual retrieval mode.
+
+#### `selection_mode`
+
+Planned value:
+
+`deterministic_entity_slot_filter`
+
+Decision:
+
+Add this as API response metadata. It is not a rename and is not a canonical
+retail data field.
+
+#### `score`
+
+Qdrant-backed paths may return an actual similarity score.
+
+The current Demo 2 path assigns `1.0` even though it does not calculate
+similarity.
+
+Planned Demo 2 value:
+
+`null`
+
+Decision:
+
+Keep the key. Use `null` for deterministic Demo 2 selection while preserving
+real scores in retrieval-backed paths.
+
+#### `confidence`
+
+This value describes trace confidence attached to a generated fact.
+
+It does not represent:
+
+- similarity score;
+- causal confidence;
+- forecast confidence;
+- confidence in an operating recommendation.
+
+Decision:
+
+No key or value change is planned in the next API patch.
+
+### Planned Demo 2 response metadata
+
+The subsequent API patch should return:
+
+- `demo_scope`: `demo2_same_period_b_f_diagnostic`
+- `retrieval_mode`: `not_used`
+- `selection_mode`: `deterministic_entity_slot_filter`
+- fact-level `score`: `null`
+
+These metadata changes do not modify source CSV fields, SQL output fields,
+metric formulas, generated memory slots, or evidence interpretations.
+
 ## Field-Change Migration Order
 
 Any future field rename or semantic change must be migrated in this order:
