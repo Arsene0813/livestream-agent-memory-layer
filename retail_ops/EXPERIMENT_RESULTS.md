@@ -111,7 +111,7 @@ limitations, source paths, and local evidence snippets.
 | Transformation | `retail_ops/scripts/generate_demo2_retail_memory_facts.py` converts row-level diagnostics into slot-based retail memory facts. |
 | Output | `retail_ops/outputs/generated_demo2_retail_memory_facts.json`. |
 | Expected behavior | Generated facts should preserve store entity, period, slot, observed values, calculation notes, source fields, primary source path, supporting source paths, lineage path, confidence, limitations, active status, and period granularity. |
-| Current result | Passed current generated-fact evaluation. |
+| Current result | Passed 25/25 entity-slot contracts across five stores and five implemented slots. The evaluation checks exact coverage, required fact metadata, repository-backed paths, and slot-specific boundary terms; schema and dictionary consistency remain covered by `validate_retail_data_contract.py`. |
 | Checked by | `python3 eval/eval_retail_demo2_facts.py` |
 | Result path | `eval/retail_decision_support_eval_results/eval_retail_demo2_facts_result.txt` |
 | Failure mode | Mixing store-level and SKU-level fields, dropping source evidence, introducing undocumented fields, or letting top-search or top-SKU evidence appear without supporting source paths. |
