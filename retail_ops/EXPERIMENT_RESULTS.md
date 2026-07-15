@@ -126,28 +126,28 @@ Implemented Demo 2 evidence slots:
 | `top3_sku_product_mix_note` | Lightweight top-SKU concentration evidence from selected ranking views. |
 | `single_metric_attribution_guard` | Guardrail against explaining performance from one metric alone. |
 
-## Experiment 4: Demo 2 Answer-Boundary Contract Check
+## Experiment 4: Demo 2 Answer-Contract Fixture Validation
 
 | Item | Content |
 |---|---|
-| Question | Can expected answer patterns preserve metric boundaries when Demo 2 evidence is used? |
-| Input | Retail evaluation cases; Demo 2 generated facts; data dictionary; lineage rules. |
-| Transformation | Scenario-based answer-behavior checks test whether retrieved evidence is used with the correct metric definitions and limitations. |
-| Output | Retail evaluation result files under `eval/` and validation outputs under `retail_ops/outputs/`. |
-| Expected behavior | The system qualifies or refuses unsupported claims about causal attribution, audited profit, full 48-store generalization, final store ranking, promotion decisions, pairwise store comparability, or full product-category share. |
-| Current result | Passed current offline scenario checks. |
+| Question | Do six manually specified answer contracts preserve the documented Demo 2 metric and comparison boundaries? |
+| Input | Six fixed answer-contract fixtures; Demo 2 SQL output and generated facts used for setup checks. |
+| Transformation | `eval/eval_retail_demo2_answer_behavior.py` checks each fixed contract text for required and forbidden terms. It does not call `/chat_retail_ops_demo2_kb` and does not generate answers. |
+| Output | `eval/retail_decision_support_eval_results/eval_retail_demo2_answer_behavior_result.txt`. |
+| Expected behavior | Each fixture preserves the relevant metric definition and scope limit for activity-cost ratio, top-SKU evidence, search-entry comparison, strategy transfer, same-period readiness, or `region_type`. |
+| Current result | Six of six manually specified answer contracts passed the current required/forbidden-term checks. |
 | Checked by | `python3 eval/eval_retail_demo2_answer_behavior.py` |
 | Result path | `eval/retail_decision_support_eval_results/eval_retail_demo2_answer_behavior_result.txt` |
-| Failure mode | Producing fluent but unsupported advice from isolated metrics, treating current Demo 2 as a completed pairwise decision system, or ignoring `comparison_limit_notes`. |
+| Failure mode | A contract omits required metric or scope language, or includes a forbidden ranking, causal, profit, or direct strategy-transfer claim. |
 
-Answer-boundary rules checked here:
+### Answer-contract rules checked here
 
 | Boundary | Rule |
 |---|---|
 | Activity cost ratio | `activity_cost_ratio_pct` is not traditional ROI or profit margin. |
-| Top-SKU share | `top3_sku_transaction_amount_share_pct` is not full product-category sales share. |
+| Top-SKU share | `top3_sku_transaction_amount_share_pct` describes the listed top-SKU evidence rather than full product-category sales share. |
 | Search-entry evidence | Search-entry evidence is one visibility-to-entry signal within the current store-period profile. |
-| Activity evidence | Activity evidence describes operating-tool usage, not automatic promotion-transfer logic. |
+| Activity evidence | Activity evidence describes operating-tool usage; it does not establish automatic promotion-transfer logic. |
 | Same-period readiness | `same_period_diagnostic_ready` is not a finished pairwise comparability decision. |
 | Region context | `region_type` is weak context only. |
 

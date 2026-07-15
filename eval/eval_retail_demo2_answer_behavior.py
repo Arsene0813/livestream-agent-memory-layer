@@ -107,7 +107,7 @@ def main() -> int:
 
     if failures:
         lines.append(
-            f"Retail Demo 2 answer-behavior boundary eval result: 0/{EXPECTED_CASE_COUNT} passed"
+            f"Retail Demo 2 answer-contract fixture validation result: 0/{EXPECTED_CASE_COUNT} passed"
         )
         lines.append("")
         for failure in failures:
@@ -304,14 +304,14 @@ def main() -> int:
             lines.append(f"PASS {case['name']}")
 
     summary = [
-        f"Retail Demo 2 answer-behavior boundary eval result: {passed}/{len(cases)} passed",
+        f"Retail Demo 2 answer-contract fixture validation result: {passed}/{len(cases)} passed",
         f"Passed: {passed}",
         f"Failed: {failed}",
         "",
         *lines,
         "",
-        "This eval checks answer-boundary behavior for Demo 2. It does not claim full 48-store automation.",
-        "It verifies that answers preserve metric definitions, comparison limits, and refusal/qualification boundaries.",
+        "This validation checks six manually specified answer contracts for Demo 2. It does not call the API endpoint or generate answers.",
+        "It verifies required and forbidden wording for metric definitions, comparison limits, and refusal or qualification boundaries.",
         "",
     ]
 

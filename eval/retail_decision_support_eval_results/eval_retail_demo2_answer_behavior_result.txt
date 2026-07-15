@@ -1,4 +1,4 @@
-Retail Demo 2 answer-behavior boundary eval result: 6/6 passed
+Retail Demo 2 answer-contract fixture validation result: 6/6 passed
 Passed: 6
 Failed: 0
 
@@ -9,5 +9,5 @@ PASS promotion_strategy_transfer_requires_limits
 PASS same_period_ready_is_not_pairwise_gate
 PASS region_type_is_weak_context_not_market_classification
 
-This eval checks answer-boundary behavior for Demo 2. It does not claim full 48-store automation.
-It verifies that answers preserve metric definitions, comparison limits, and refusal/qualification boundaries.
+This validation checks six manually specified answer contracts for Demo 2. It does not call the API endpoint or generate answers.
+It verifies required and forbidden wording for metric definitions, comparison limits, and refusal or qualification boundaries.

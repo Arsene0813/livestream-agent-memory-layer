@@ -14,7 +14,12 @@ if str(ROOT) not in sys.path:
 from api.main import RetailOpsDemo2KbReq, chat_retail_ops_demo2_kb  # noqa: E402
 
 
-RESULT_PATH = ROOT / "eval" / "results" / "eval_retail_demo2_endpoint_behavior_result.txt"
+RESULT_PATH = (
+    ROOT
+    / "eval"
+    / "retail_decision_support_eval_results"
+    / "eval_retail_demo2_endpoint_behavior_result.txt"
+)
 
 
 def stringify(obj: Any) -> str:
