@@ -1015,3 +1015,106 @@ Examples:
 Correct use: these fields describe directional movement within the selected repeated-window output.
 
 Boundary: they do not explain why the movement happened, and they do not prove cross-store comparability, causal impact, customer satisfaction, product quality, or operating recommendation readiness.
+
+## Repeated-Window Analytical Output Field Contract
+
+This section defines the existing analytical columns in
+`retail_ops/outputs/repeated_window_panel_summary_output.csv`.
+
+These columns are derived comparison outputs. They are not raw backend source
+fields, causal estimates, forecasts, or complete operating recommendations.
+Their current names are retained.
+
+### February and April count snapshots
+
+- `feb_activity_orders`
+- `feb_entry_users`
+- `feb_exposure_users`
+- `feb_search_entry_users`
+- `feb_search_exposure_users`
+- `feb_transaction_orders`
+- `apr_activity_orders`
+- `apr_entry_users`
+- `apr_exposure_users`
+- `apr_search_entry_users`
+- `apr_search_exposure_users`
+- `apr_transaction_orders`
+
+Each `feb_` field is the corresponding February store-month value. Each
+`apr_` field is the corresponding April store-month value.
+
+These fields preserve the unit and grain of their base metric. They do not
+represent a sum across February through April.
+
+### February and April percentage snapshots
+
+- `feb_activity_cost_ratio_pct`
+- `feb_entry_conversion_rate_pct`
+- `feb_order_conversion_rate_pct`
+- `feb_payment_conversion_rate_pct`
+- `apr_activity_cost_ratio_pct`
+- `apr_entry_conversion_rate_pct`
+- `apr_order_conversion_rate_pct`
+- `apr_payment_conversion_rate_pct`
+
+Each field is the corresponding February or April percentage metric already
+calculated for that store-month.
+
+The `_pct` suffix means the stored value is expressed in percentage units.
+These snapshot fields are not percentage changes.
+
+### February-to-April absolute count deltas
+
+- `activity_orders_feb_to_apr_delta`
+- `exposure_users_feb_to_apr_delta`
+- `search_entry_users_feb_to_apr_delta`
+- `search_exposure_users_feb_to_apr_delta`
+- `transaction_orders_feb_to_apr_delta`
+
+For each field:
+
+`feb_to_apr_delta = April value - February value`
+
+The result preserves the unit of the base count. A positive value means the
+April count is higher; a negative value means it is lower. The value is not
+normalized for store size, traffic opportunity, market conditions, or
+intervening operational changes.
+
+### February-to-April percentage-point deltas
+
+- `entry_conversion_rate_pct_feb_to_apr_delta`
+- `order_conversion_rate_pct_feb_to_apr_delta`
+- `payment_conversion_rate_pct_feb_to_apr_delta`
+
+For each field:
+
+`feb_to_apr_delta = April percentage value - February percentage value`
+
+The result is a percentage-point difference, not a relative percent change.
+For example, movement from 10% to 12% is a `2` percentage-point delta, not a
+20% value in these fields.
+
+### February-to-April relative percent changes
+
+- `exposure_users_feb_to_apr_pct`
+- `search_entry_users_feb_to_apr_pct`
+- `search_exposure_users_feb_to_apr_pct`
+- `transaction_orders_feb_to_apr_pct`
+
+For each field:
+
+`feb_to_apr_pct = (April value - February value) / February value * 100`
+
+This calculation requires a valid non-zero February denominator. It describes
+relative change in the named metric only. It does not establish causality,
+cross-store comparability, or a final operating recommendation.
+
+### Repeated-window interpretation boundary
+
+The February and April snapshots, absolute deltas, percentage-point deltas,
+and relative percent changes should be read together with the existing
+`observed_month_count`, `repeated_window_summary_flag`, and
+`summary_boundary_note` fields.
+
+No repeated-window output alone proves that an activity, search term, product
+mix, subsidy, or store characteristic caused the observed change.

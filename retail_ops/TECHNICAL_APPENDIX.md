@@ -598,6 +598,49 @@ table and generated-fact evidence locations.
 No CSV header, generated-fact field, memory slot, API response key, or metric
 formula is changed by this review.
 
+## Repeated-Window Analytical Field Review
+
+This review records the existing repeated-window analytical output fields before any future name or semantic change.
+
+| Existing field | Dictionary definition | Current use location | Rename decision |
+|---|---|---|---|
+| `feb_activity_orders` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_entry_users` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_exposure_users` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_search_entry_users` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_search_exposure_users` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_transaction_orders` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_activity_orders` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_entry_users` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_exposure_users` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_search_entry_users` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_search_exposure_users` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_transaction_orders` | February or April snapshot of the named store-month count metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_activity_cost_ratio_pct` | February or April snapshot of the named store-month percentage metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_entry_conversion_rate_pct` | February or April snapshot of the named store-month percentage metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_order_conversion_rate_pct` | February or April snapshot of the named store-month percentage metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `feb_payment_conversion_rate_pct` | February or April snapshot of the named store-month percentage metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_activity_cost_ratio_pct` | February or April snapshot of the named store-month percentage metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_entry_conversion_rate_pct` | February or April snapshot of the named store-month percentage metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_order_conversion_rate_pct` | February or April snapshot of the named store-month percentage metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `apr_payment_conversion_rate_pct` | February or April snapshot of the named store-month percentage metric. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `activity_orders_feb_to_apr_delta` | April minus February for the named count metric, in the base metric's unit. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `exposure_users_feb_to_apr_delta` | April minus February for the named count metric, in the base metric's unit. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `search_entry_users_feb_to_apr_delta` | April minus February for the named count metric, in the base metric's unit. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `search_exposure_users_feb_to_apr_delta` | April minus February for the named count metric, in the base metric's unit. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `transaction_orders_feb_to_apr_delta` | April minus February for the named count metric, in the base metric's unit. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `entry_conversion_rate_pct_feb_to_apr_delta` | April minus February for the named percentage metric, expressed in percentage points. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `order_conversion_rate_pct_feb_to_apr_delta` | April minus February for the named percentage metric, expressed in percentage points. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `payment_conversion_rate_pct_feb_to_apr_delta` | April minus February for the named percentage metric, expressed in percentage points. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `exposure_users_feb_to_apr_pct` | Relative February-to-April change calculated as (April - February) / February * 100. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `search_entry_users_feb_to_apr_pct` | Relative February-to-April change calculated as (April - February) / February * 100. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `search_exposure_users_feb_to_apr_pct` | Relative February-to-April change calculated as (April - February) / February * 100. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+| `transaction_orders_feb_to_apr_pct` | Relative February-to-April change calculated as (April - February) / February * 100. | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Keep the existing name; no rename. |
+
+These rows describe analytical output columns, not new source fields.
+
+No CSV header, SQL expression, generated fact, memory slot, API response key, or numerical result is changed by this review.
+
 ## API Response Metadata Review
 
 This review covers API response metadata only. These keys are not canonical
