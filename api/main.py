@@ -2363,7 +2363,7 @@ def load_demo2_retail_facts() -> list[dict]:
 def demo2_retail_facts_to_points(facts: list[dict]) -> list[dict]:
     return [
         {
-            "score": 1.0,
+            "score": None,
             "payload": fact,
         }
         for fact in facts
@@ -2414,9 +2414,10 @@ async def chat_retail_ops_demo2_kb(req: RetailOpsDemo2KbReq):
     points = demo2_retail_facts_to_points(selected_facts[:limit])
 
     result = retail_answer_from_points(points)
-    result["demo_scope"] = "demo2_cross_store"
-    result["retrieval_mode"] = "file_backed_retail_memory_facts"
 
+    result["demo_scope"] = "demo2_same_period_b_f_diagnostic"
+    result["retrieval_mode"] = "not_used"
+    result["selection_mode"] = "deterministic_entity_slot_filter"
     return result
 
 

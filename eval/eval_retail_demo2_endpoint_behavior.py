@@ -36,17 +36,40 @@ def require_refusal(name: str, result: dict[str, Any]) -> None:
         raise AssertionError(f"{name}: expected supported=False, got {result}")
 
 
-def require_demo2_endpoint_metadata(name: str, result: dict[str, Any]) -> None:
-    if result.get("demo_scope") != "demo2_cross_store":
+def require_demo2_endpoint_metadata(
+    name: str,
+    result: dict[str, Any],
+) -> None:
+    expected_metadata = {
+        "demo_scope": "demo2_same_period_b_f_diagnostic",
+        "retrieval_mode": "not_used",
+        "selection_mode": "deterministic_entity_slot_filter",
+    }
+
+    for field_name, expected_value in expected_metadata.items():
+        if result.get(field_name) != expected_value:
+            raise AssertionError(
+                f"{name}: expected {field_name}={expected_value!r}, "
+                f"got {result.get(field_name)!r}"
+            )
+
+    facts = result.get("facts", [])
+
+    if not facts:
         raise AssertionError(
-            f"{name}: expected demo_scope='demo2_cross_store', "
-            f"got {result.get('demo_scope')!r}"
+            f"{name}: expected at least one supported fact"
         )
 
-    if result.get("retrieval_mode") != "file_backed_retail_memory_facts":
+    non_null_scores = [
+        fact.get("score")
+        for fact in facts
+        if fact.get("score") is not None
+    ]
+
+    if non_null_scores:
         raise AssertionError(
-            f"{name}: expected retrieval_mode='file_backed_retail_memory_facts', "
-            f"got {result.get('retrieval_mode')!r}"
+            f"{name}: deterministic Demo 2 facts must use "
+            f"score=None, got {non_null_scores}"
         )
 
 
