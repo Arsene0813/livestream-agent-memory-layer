@@ -623,9 +623,11 @@ English definition: The portion of promotional subsidy borne by the platform.
 
 English formula used in this project: `activity_cost_ratio_pct = activity_cost / activity_original_transaction_amount * 100`
 
-中文解释：该公式描述活动成本相对于活动营业总额的比例。数值较小表示在该后台口径下，每单位活动营业总额对应的记录活动成本较低。
+中文解释（美团后台官方表述）：该公式是成本除以活动带动营业额，因此数值越小，单位活动营业额对应的成本越低，活动效率越好。
 
-English interpretation: This formula describes recorded activity cost relative to activity original transaction amount. A smaller value means lower recorded activity cost per unit of activity original transaction amount under this backend formula.
+项目使用边界：本项目原样保留上述后台解释，并按已记录的 `activity_cost / activity_original_transaction_amount` 比率使用该指标。该比率本身不单独证明增量需求、利润、毛利、因果提升或整体活动效果。
+
+English project interpretation: This formula describes recorded activity cost relative to activity original transaction amount. A smaller value means lower recorded activity cost per unit of activity original transaction amount under this backend formula.
 
 Important naming rule:
 
