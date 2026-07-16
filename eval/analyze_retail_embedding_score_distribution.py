@@ -72,7 +72,7 @@ def fact_to_text(fact: dict[str, Any], source_file: str) -> str:
         ("lineage_path", fact.get("lineage_path", "")),
         ("confidence", fact.get("confidence", "")),
         ("limitations", compact_json(fact.get("limitations", []))),
-        ("active", fact.get("active", "")),
+        ("is_active", fact.get("is_active", "")),
     ]
 
     known = {key for key, _ in fields}
