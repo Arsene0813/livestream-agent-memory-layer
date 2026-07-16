@@ -88,6 +88,7 @@
     "source_fields": [
       "activity_original_transaction_amount",
       "activity_orders",
+      "transaction_orders",
       "activity_cost",
       "merchant_subsidy_amount",
       "platform_subsidy_amount",
@@ -185,6 +186,11 @@
       "activity_cost_ratio_pct",
       "order_conversion_rate_pct",
       "average_order_value",
+      "transaction_amount_mom_pct",
+      "transaction_orders_mom_pct",
+      "entry_users_mom_pct",
+      "search_entry_users_mom_pct",
+      "average_order_value_mom_pct",
       "top3_sku_transaction_amount_share_pct"
     ],
     "confidence": "high",
