@@ -53,7 +53,7 @@ DEFAULT_CASES_PATH = ROOT / "eval" / "retrieval_threshold_cases.json"
 DEFAULT_OUTPUT_DIR = ROOT / "retail_ops" / "outputs"
 
 
-REFERENCE_THRESHOLD_DEFAULT = 0.5707
+REFERENCE_THRESHOLD_DEFAULT = 0.5767
 REFERENCE_THRESHOLD_SOURCE_DEFAULT = (
     "retail_ops/outputs/"
     "retrieval_threshold_summary.md"
