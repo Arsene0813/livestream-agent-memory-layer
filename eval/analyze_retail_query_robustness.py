@@ -31,10 +31,12 @@ from typing import Any
 
 try:
     from retail_retrieval_corpus import (
+        corpus_provenance,
         load_retail_retrieval_documents,
     )
 except ModuleNotFoundError:
     from eval.retail_retrieval_corpus import (
+        corpus_provenance,
         load_retail_retrieval_documents,
     )
 
@@ -47,6 +49,10 @@ DEFAULT_OUTPUT_DIR = ROOT / "retail_ops" / "outputs"
 
 
 REFERENCE_THRESHOLD_DEFAULT = 0.5707
+REFERENCE_THRESHOLD_SOURCE_DEFAULT = (
+    "retail_ops/outputs/"
+    "retrieval_threshold_summary.md"
+)
 
 
 def load_json(path: Path) -> Any:
@@ -356,6 +362,10 @@ def main() -> None:
     parser.add_argument("--model", default="bge-m3")
     parser.add_argument("--ollama-url", default="http://127.0.0.1:11434")
     parser.add_argument("--reference-threshold", type=float, default=REFERENCE_THRESHOLD_DEFAULT)
+    parser.add_argument(
+        "--reference-threshold-source",
+        default=REFERENCE_THRESHOLD_SOURCE_DEFAULT,
+    )
     parser.add_argument("--top-k", type=int, default=5)
     args = parser.parse_args()
 
@@ -373,6 +383,17 @@ def main() -> None:
     docs = build_corpus()
     if not docs:
         raise SystemExit("[FAIL] No corpus documents found.")
+
+    provenance = corpus_provenance(
+        docs,
+        args.model,
+    )
+    provenance.update(
+        {
+            "reference_threshold": args.reference_threshold,
+            "reference_threshold_source": args.reference_threshold_source,
+        }
+    )
 
     print(f"[INFO] Loaded cases: {len(cases)}")
     print(f"[INFO] Built corpus docs: {len(docs)}")
@@ -418,6 +439,13 @@ def main() -> None:
                 "variant_id": f"{case['case_id']}::{variant_index:02d}_{variant_type}",
                 "variant_type": variant_type,
                 "case_type": case["case_type"],
+                "corpus_document_count": provenance["corpus_document_count"],
+                "corpus_sha256": provenance["corpus_sha256"],
+                "embedding_model": provenance["embedding_model"],
+                "corpus_builder": provenance["corpus_builder"],
+                "generated_from_commit": provenance["generated_from_commit"],
+                "reference_threshold": provenance["reference_threshold"],
+                "reference_threshold_source": provenance["reference_threshold_source"],
                 "original_query": case["query"],
                 "variant_query": variant_query,
                 "top1_score": round(top1_score, 6),
@@ -455,6 +483,13 @@ def main() -> None:
         "variant_id",
         "variant_type",
         "case_type",
+        "corpus_document_count",
+        "corpus_sha256",
+        "embedding_model",
+        "corpus_builder",
+        "generated_from_commit",
+        "reference_threshold",
+        "reference_threshold_source",
         "original_query",
         "variant_query",
         "top1_score",
@@ -492,6 +527,13 @@ def main() -> None:
                 {
                     "threshold": threshold,
                     "case_type": case_type,
+                    "corpus_document_count": provenance["corpus_document_count"],
+                    "corpus_sha256": provenance["corpus_sha256"],
+                    "embedding_model": provenance["embedding_model"],
+                    "corpus_builder": provenance["corpus_builder"],
+                    "generated_from_commit": provenance["generated_from_commit"],
+                    "reference_threshold": provenance["reference_threshold"],
+                    "reference_threshold_source": provenance["reference_threshold_source"],
                     "variant_count": variant_count,
                     "above_threshold_count": above_count,
                     "above_threshold_rate_pct": pct(above_count, variant_count),
@@ -504,6 +546,13 @@ def main() -> None:
     sweep_fields = [
         "threshold",
         "case_type",
+        "corpus_document_count",
+        "corpus_sha256",
+        "embedding_model",
+        "corpus_builder",
+        "generated_from_commit",
+        "reference_threshold",
+        "reference_threshold_source",
         "variant_count",
         "above_threshold_count",
         "above_threshold_rate_pct",
@@ -564,8 +613,13 @@ It is a diagnostic evaluation for the current file-backed retail decision-suppor
 - Demo 2 memory facts: `retail_ops/outputs/generated_demo2_retail_memory_facts.json`
 - Dictionary context: `retail_ops/data/DATA_DICTIONARY.md`
 - Demo 2 source notes: `retail_ops/data/demo2_source_notes.md`
-- Embedding model: `{args.model}`
-- Reference threshold: `{args.reference_threshold}`
+- Corpus documents: {provenance["corpus_document_count"]}
+- Corpus SHA-256: `{provenance["corpus_sha256"]}`
+- Corpus builder: `{provenance["corpus_builder"]}`
+- Generated from commit: `{provenance["generated_from_commit"]}`
+- Embedding model: `{provenance["embedding_model"]}`
+- Reference threshold: `{provenance["reference_threshold"]}`
+- Reference threshold source: `{provenance["reference_threshold_source"]}`
 
 ## Variant Types
 

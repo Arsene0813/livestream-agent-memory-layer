@@ -15,12 +15,14 @@ try:
     from retail_retrieval_corpus import (
         FACT_JSON_PATHS,
         FIELD_CONTRACT_PATHS,
+        corpus_provenance,
         load_retail_retrieval_documents as load_documents,
     )
 except ModuleNotFoundError:
     from eval.retail_retrieval_corpus import (
         FACT_JSON_PATHS,
         FIELD_CONTRACT_PATHS,
+        corpus_provenance,
         load_retail_retrieval_documents as load_documents,
     )
 
@@ -187,6 +189,7 @@ def main() -> int:
         raise ValueError(f"{CASES_PATH} should contain a list of cases")
 
     docs = load_documents()
+    provenance = corpus_provenance(docs, EMBED_MODEL)
 
     print(f"Loaded {len(cases)} retrieval threshold cases.")
     print(f"Loaded {len(docs)} retrieval documents.")
@@ -241,6 +244,11 @@ def main() -> int:
             rows.append({
                 "case_id": case["case_id"],
                 "case_type": case["case_type"],
+                "corpus_document_count": provenance["corpus_document_count"],
+                "corpus_sha256": provenance["corpus_sha256"],
+                "embedding_model": provenance["embedding_model"],
+                "corpus_builder": provenance["corpus_builder"],
+                "generated_from_commit": provenance["generated_from_commit"],
                 "query": case["query"],
                 "rank": rank,
                 "score": round(float(score), 6),
@@ -287,9 +295,12 @@ def main() -> int:
         "",
         "## Corpus",
         "",
-        f"- Retrieval documents loaded: {len(docs)}",
+        f"- Retrieval documents loaded: {provenance['corpus_document_count']}",
+        f"- Corpus SHA-256: `{provenance['corpus_sha256']}`",
+        f"- Corpus builder: `{provenance['corpus_builder']}`",
+        f"- Generated from commit: `{provenance['generated_from_commit']}`",
         f"- Retrieval threshold cases: {len(cases)}",
-        f"- Embedding model: `{EMBED_MODEL}` via local Ollama",
+        f"- Embedding model: `{provenance['embedding_model']}` via local Ollama",
         "- Generated memory fact sources:",
     ]
 

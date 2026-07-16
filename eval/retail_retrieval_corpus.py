@@ -3,8 +3,10 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -24,6 +26,64 @@ FIELD_CONTRACT_PATHS = [
     Path("retail_ops/data/DATA_DICTIONARY.md"),
     Path("retail_ops/data/demo2_source_notes.md"),
 ]
+
+CORPUS_BUILDER_ID = (
+    "eval/retail_retrieval_corpus.py::"
+    "load_retail_retrieval_documents"
+)
+
+
+def corpus_sha256(
+    docs: list[dict[str, Any]],
+) -> str:
+    """Return a deterministic SHA-256 digest for the ordered corpus."""
+
+    payload = json.dumps(
+        docs,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+
+    return hashlib.sha256(payload).hexdigest()
+
+
+def current_git_commit() -> str:
+    """Return the repository HEAD used to generate an output."""
+
+    try:
+        completed = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=REPO_ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return "unavailable"
+
+    commit = completed.stdout.strip().lower()
+
+    if re.fullmatch(r"[0-9a-f]{40}", commit):
+        return commit
+
+    return "unavailable"
+
+
+def corpus_provenance(
+    docs: list[dict[str, Any]],
+    embedding_model: str,
+) -> dict[str, Any]:
+    """Build provenance metadata shared by retrieval outputs."""
+
+    return {
+        "corpus_document_count": len(docs),
+        "corpus_sha256": corpus_sha256(docs),
+        "embedding_model": embedding_model,
+        "corpus_builder": CORPUS_BUILDER_ID,
+        "generated_from_commit": current_git_commit(),
+    }
 
 
 def repository_path(path: Path) -> Path:
