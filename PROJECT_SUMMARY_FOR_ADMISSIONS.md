@@ -44,6 +44,17 @@ Repository: `livestream-agent-memory-layer`
 
 This staged local prototype grew from a real operating problem in a 48-store Meituan instant-retail business. The Meituan merchant backend contains detailed single-store metrics, but it is mainly designed for reviewing one store at a time. As the store count increased, the harder question became how to compare store-period records without flattening different reporting windows, activity conditions, product structures, store types, and market contexts into the same judgment.
 
+## Evidence Coverage
+
+| Scope | Current evidence |
+|---|---|
+| Business context | The operating problem emerged in a 48-store Meituan instant-retail business. |
+| Repository evidence | Manually transcribed and anonymized observations for six stores: Store A and selected Stores B-F. |
+| Demo 1 | Store A across February, March, and April 2026. |
+| Demo 2 | Stores B-F under one March 2026 reporting window. |
+| Repeated-window panel | Stores B-F across February, March, and April 2026, using the supporting-table coverage documented in the repository. |
+| Current decision use | Descriptive diagnosis, evidence lineage, scope checks, and retrieval or answer-boundary evaluation. |
+
 The current retail decision-support path turns selected backend-derived evidence into a cautious evidence chain:
 
 1. Meituan backend metric evidence
@@ -188,8 +199,8 @@ These are the main fields that are easy to misread in application review. Full d
 | `transaction_amount` | Transaction amount / transaction scale in the current implemented evidence. It should not be renamed or treated as `gross_revenue` unless a future backend export provides that separate field under the dictionary definition. |
 | `top3_sku_transaction_amount_share_pct` | Lightweight top-SKU concentration evidence from selected ranking views. It is not full product-category sales share. |
 
-## Current Limitation
+## Current Evidence Boundary
 
-The current implemented evidence covers selected stores and selected reporting windows. It is enough to show a staged data-science prototype, but not enough to automate all-48-store comparison, final store ranking, promotion transfer, market-area classification, or causal attribution.
+The current repository evidence covers six selected stores and selected reporting windows. It supports reproducible descriptive diagnostics, field-contract checks, lineage-aware memory facts, and answer-boundary evaluation.
 
-That limitation is intentional: the project is designed to keep operating claims inside the evidence currently available.
+Broader store ranking, promotion transfer, market-area classification, and causal attribution require additional store-period coverage and operating context beyond the current evidence.

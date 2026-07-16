@@ -110,9 +110,15 @@ Current derived outputs are separated into two layers.
 
 1. SQL output columns:
 
+- Demo 1 month-over-month change fields, ranking-change fields, and supporting diagnostic flags documented below.
+- Demo 2 share diagnostics and scope fields, including `search_entry_share_pct`, `activity_order_share_pct`, `comparison_scope_flag`, and `comparison_limit_notes`.
+- Repeated-window coverage and movement fields documented in the repeated-window column conventions below.
 
-2. Memory-facing artifacts:
+2. Memory-facing fields and artifacts:
 
+- entity and period metadata, canonical `slot` values, `value`, and `observed_values`;
+- `source_fields`, `source_path`, `supporting_source_paths`, and `lineage_path`;
+- `calculation_notes`, evidence-trace `confidence`, `limitations`, and active-state metadata.
 
 Memory-facing slots are generated from multiple source fields and SQL-derived columns. They are not raw Meituan backend fields and should not be treated as SQL output headers. The SQL layer must not silently rename, redefine, or reverse-engineer Meituan backend metrics. It also must not turn one threshold into a fixed store-stage label. For example, `order_conversion_rate_pct` follows the documented backend funnel definition: `order_users / entry_users`.
 
@@ -197,7 +203,7 @@ The following fields are SQL-derived diagnostic fields used in Demo 2. They are 
 
 | Field | Formula | Current interpretation | Boundary |
 |---|---|---|---|
-| `search_entry_share_pct` | `search_entry_users / entry_users * 100` | Directional structure metric for the share of store entry attributed to the search source in the current reporting window. | Source-level traffic users may overlap, so this should not be interpreted as perfect user-level attribution. |
+| `search_entry_share_pct` | `search_entry_users / entry_users * 100` | Directional structure metric computed as search-source entry users divided by total entry users in the same reporting window. | Source-level traffic users may overlap, so the ratio should not be read as user-level attribution or exclusive channel contribution. |
 | `activity_order_share_pct` | `activity_orders / transaction_orders * 100` | Measures the share of transaction orders associated with activity orders in the current reporting window. | Indicates activity involvement, not full activity status, campaign mechanism, causal demand lift, or promotion-transfer readiness. |
 
 ### `comparison_scope_flag`
@@ -617,15 +623,16 @@ English definition: The portion of promotional subsidy borne by the platform.
 
 English formula used in this project: `activity_cost_ratio_pct = activity_cost / activity_original_transaction_amount * 100`
 
-中文解释：该公式是成本除以活动带动营业额，因此数值越小，单位活动营业额对应的成本越低，活动效率越好。
+中文解释：该公式描述活动成本相对于活动营业总额的比例。数值较小表示在该后台口径下，每单位活动营业总额对应的记录活动成本较低。
 
-English interpretation: This formula is cost divided by activity-driven revenue. Therefore, a smaller value indicates lower cost per unit of activity-driven revenue and better promotional efficiency.
+English interpretation: This formula describes recorded activity cost relative to activity original transaction amount. A smaller value means lower recorded activity cost per unit of activity original transaction amount under this backend formula.
 
 Important naming rule:
 
 - In this project, this metric is called `activity_cost_ratio_pct`.
 - It should not be called traditional ROI, because traditional ROI is often interpreted as return divided by cost, where larger is better.
 - The backend label is 投入产出比, but the formula behaves like a cost ratio.
+- The ratio does not by itself establish incremental demand, profit, margin, causal lift, or overall campaign effectiveness.
 
 ---
 
@@ -716,9 +723,9 @@ Interpretation: Directional measure of how much total store exposure came from s
 
 Formula: `search_entry_share_pct = search_entry_users / entry_users * 100`
 
-Interpretation: Directional measure of how much total store entry came from search entry.
+Interpretation: Directional ratio of search-source entry users to total entry users in the same reporting window.
 
-Important limitation: This is not perfect user-level attribution because traffic-source users may overlap.
+Boundary: This preserves the documented numerator and denominator. Source-level traffic users may overlap, so the ratio should not be interpreted as user-level attribution or exclusive channel contribution.
 
 ### `search_entry_rate_pct` / 搜索曝光到入店转化率
 

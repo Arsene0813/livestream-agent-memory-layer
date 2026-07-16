@@ -47,6 +47,8 @@ The single source of truth for retail field names and metric meanings is:
 
 The current retail decision-support path has three implemented evidence layers: Demo 1 for Store A month-over-month diagnosis, Demo 2 for selected Stores B-F under one March 2026 reporting window, and the repeated-window B-F panel across 2026-02, 2026-03, and 2026-04.
 
+The operating problem came from a 48-store business. The evidence committed to this repository covers six anonymized stores: Store A and selected Stores B-F under the reporting windows listed below. The 48-store figure describes the operating context; the committed analytical evidence covers the selected six stores.
+
 Demo 2 uses the `cross_store_comparability` file-path term for reference stability, but in the current implementation it means same-period B-F diagnostic evidence with interpretation guardrails. The future pairwise comparability gate remains question-specific: it should judge whether two store-period records can be compared for one selected operating question.
 
 | Area | Current implementation | Current boundary |
@@ -81,7 +83,7 @@ For admissions review, use this path first. It keeps the retail decision-support
 
 | Step | File | What to check |
 |---:|---|---|
-| 1 | `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Business origin, 48-store decision-support problem, staged prototype scope, and repeated-window evidence path. |
+| 1 | `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Business origin, 48-store operating context, six-store repository evidence, staged prototype scope, and repeated-window evidence path. |
 | 2 | `retail_ops/data/DATA_DICTIONARY.md` | Canonical Meituan metric meanings, implemented field names, and naming boundaries. |
 | 3 | `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` | Store A month-over-month diagnostic path across February, March, and April 2026. |
 | 4 | `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` | Same-period B-F diagnostic reading under one reporting window and one field contract. |
