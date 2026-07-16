@@ -29,6 +29,7 @@ paths, confidence updates, and unresolved limitations inspectable.
 | Experiment                          | Question                                                                                                   | Input                                                                    | Output                                                                                | What it prevents                                                                       |
 | ----------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
 | Field-contract validation           | Are field names and metric meanings consistent across the retail path?                                         | `DATA_DICTIONARY.md`, source CSV files, SQL outputs, generated facts     | Pass/fail validation of names, meanings, and fact structure                           | Alias drift, silent metric redefinition, unsupported generated-fact fields             |
+| Value-lineage validation | Do source values, derived outputs, and generated memory facts agree at field level? | Demo 1 and Demo 2 source CSV files, diagnostic outputs, top-search and top-SKU evidence, generated facts | Pass/fail comparisons for passthrough values, formulas, period metadata, and nested evidence | Silent value drift between source evidence, diagnostic outputs, and retrieval facts |
 | Demo 1 month-over-month diagnostic  | Can one store be described across repeated months without reducing the result to one metric?               | Store A February-April 2026 backend-derived metrics                      | Multi-metric diagnostic output and memory facts                                       | Single-metric attribution, causal overclaim, month-as-good-or-bad labeling             |
 | Demo 2 same-period diagnostic       | Can selected B-F store-period rows be staged under one March 2026 reporting window and one field contract? | Stores B-F March 2026 metric records, top search terms, top-SKU evidence | Row-level diagnostic output with `comparison_scope_flag` and `comparison_limit_notes` | Store ranking, premature pairwise comparability, strategy-transfer claims              |
 | Answer-boundary checks              | Do later answers preserve entity, period, metric-definition, source, and comparison limits?                | Generated retail memory facts and boundary test cases                    | Scenario-level pass/fail behavior                                                     | Unsupported recommendations, period mismatch, entity mismatch, ROI/profit overclaim    |
@@ -44,6 +45,7 @@ paths, confidence updates, and unresolved limitations inspectable.
 | Layer | Review question | Evidence output | Boundary protected |
 |---|---|---|---|
 | Field contract | Are field names and metric meanings consistent? | Dictionary, source headers, SQL outputs, generated-fact structure | Alias drift and silent metric redefinition |
+| Value lineage | Do values remain consistent across source tables, diagnostic outputs, and generated facts? | Demo 1 and Demo 2 value-lineage validation results | Silent value drift and unsupported retrieval-fact values |
 | SQL diagnostics | Can selected store-period records be structured without changing backend meanings? | Demo 1 month-over-month output and Demo 2 same-period B-F output | Single-metric attribution, store ranking, premature comparison |
 | Memory facts and answer boundaries | Can later answers preserve entity, period, source, metric, and limitation fields? | Generated retail memory facts, answer-behavior checks, endpoint checks | Unsupported advice, ROI/profit overclaim, scope mismatch |
 | Retrieval wording-variation stress test | Does wording variation still route to the intended evidence path? | Score-distribution and query-robustness outputs | Fluent answers hiding weak or mismatched evidence |
@@ -93,8 +95,9 @@ limitations, source paths, and local evidence snippets.
 | Transformation | `retail_ops/sql/01_store_a_month_over_month_diagnostic.sql` derives month-over-month movement, ranking changes, traffic and conversion tradeoffs, and top-SKU concentration evidence. |
 | Output | `retail_ops/outputs/store_a_demo1_sql_output.csv`; `retail_ops/outputs/generated_retail_memory_facts.json`. |
 | Expected behavior | The output may describe observed month-over-month movement, but it should not attribute performance change to one metric alone. |
-| Current result | The diagnostic output is generated, and the current field and data-contract checks pass. |
-| Checked by | `python3 retail_ops/scripts/validate_retail_data_contract.py` |
+| Current result | The diagnostic output is generated. The data contract passes, and the value-lineage check passes across 3 source rows, 3 SQL output rows, 9 top-SKU rows, 180 source, formula, month-over-month, rank-change, and tradeoff comparisons, and 5 generated memory facts. |
+| Checked by | `python3 retail_ops/scripts/validate_retail_data_contract.py`; `python3 retail_ops/scripts/validate_demo1_value_lineage.py` |
+| Result path | `retail_ops/outputs/demo1_value_lineage_validation_result.txt` |
 
 ## Experiment 2: Demo 2 Same-Period Store Diagnostic
 
@@ -132,9 +135,9 @@ limitations, source paths, and local evidence snippets.
 | Transformation | `retail_ops/scripts/generate_demo2_retail_memory_facts.py` converts row-level diagnostics into slot-based retail memory facts. |
 | Output | `retail_ops/outputs/generated_demo2_retail_memory_facts.json`. |
 | Expected behavior | Generated facts should preserve store entity, period, slot, observed values, calculation notes, source fields, primary source path, supporting source paths, lineage path, confidence, limitations, active status, and period granularity. |
-| Current result | Passed 25/25 entity-slot contracts across five stores and five implemented slots. The evaluation checks exact coverage, required fact metadata, repository-backed paths, and slot-specific boundary terms; schema and dictionary consistency remain covered by `validate_retail_data_contract.py`. |
-| Checked by | `python3 eval/eval_retail_demo2_facts.py` |
-| Result path | `eval/retail_decision_support_eval_results/eval_retail_demo2_facts_result.txt` |
+| Current result | Passed 25/25 entity-slot contracts across five stores and five implemented slots. The fact-contract evaluation checks exact coverage, required metadata, repository-backed paths, and slot-specific boundary terms. A separate value-lineage check passes across 5 source rows, 5 diagnostic output rows, 250 source-to-output and derived-value comparisons, and 325 fact metadata and observed-value comparisons, including nested top-search and top-SKU evidence. |
+| Checked by | `python3 eval/eval_retail_demo2_facts.py`; `python3 retail_ops/scripts/validate_demo2_value_lineage.py`; `python3 retail_ops/scripts/validate_retail_data_contract.py` |
+| Result paths | `eval/retail_decision_support_eval_results/eval_retail_demo2_facts_result.txt`; `retail_ops/outputs/demo2_value_lineage_validation_result.txt` |
 | Failure mode | Mixing store-level and SKU-level fields, dropping source evidence, introducing undocumented fields, or letting top-search or top-SKU evidence appear without supporting source paths. |
 
 Implemented Demo 2 evidence slots:
@@ -193,7 +196,7 @@ Implemented Demo 2 evidence slots:
 | Transformation | `eval/analyze_retail_embedding_score_distribution.py` embeds each query and retrieval document with local Ollama `bge-m3`, retrieves top-k evidence, records scores, top-1/top-2 margins, expected matches, entity matches, slot matches, and period-scope checks. |
 | Output | `retail_ops/outputs/retrieval_score_distribution.csv`; `retail_ops/outputs/retrieval_threshold_summary.md`; `retail_ops/outputs/retrieval_score_distribution.png`. |
 | Expected behavior | The inspection records retrieval behavior across supported, unsupported, hard-negative, entity/period mismatch, and ambiguous comparison queries. |
-| Current result | Completed as an offline small-corpus retrieval inspection. |
+| Current result | Completed over 29 cases and 282 retrieval documents. Positive-supported cases retained expected evidence at top-5 in 8/8 cases, while negative-unsupported cases had 0/6 expected hits. The exploratory reference threshold is `0.5767`, midway between the positive-supported p25 score `0.6243` and negative-unsupported p75 score `0.5292`. |
 | Boundary | Offline reference-threshold inspection only. Retrieval scores make evidence routing inspectable, but final operating claims still require entity, period, source-path, metric-definition, and interpretation-boundary checks. |
 | Failure mode | Treating a high retrieval score as sufficient evidence for an operating conclusion, or claiming a production-level threshold from the current small file-backed corpus. |
 
@@ -206,8 +209,9 @@ Implemented Demo 2 evidence slots:
 | Transformation | `eval/analyze_retail_query_robustness.py` tests shortened, paraphrased, typo/noise, and keyword-order query variants. |
 | Output | `retail_ops/outputs/retrieval_query_robustness.csv`; `retail_ops/outputs/retrieval_query_threshold_sweep.csv`; `retail_ops/outputs/retrieval_query_robustness_summary.md`. |
 | Expected behavior | Supported cases should generally retain expected evidence in top-k under small wording changes. Unsupported, hard-negative, entity/period-mismatch, and ambiguous comparison cases should still require entity, period, slot, source-path, and interpretation-boundary checks. |
-| Current result | Completed as an offline small-corpus wording-variation stress test. |
+| Current result | Completed over 131 deterministic query variants. Positive-supported variants retained expected evidence and remained above `0.5767` in 34/34 variants; negative-unsupported variants had 0/30 expected hits and 0/30 above the reference threshold. Hard-negative, entity/period-mismatch, and ambiguous variants still crossed the threshold in 23/33, 12/18, and 5/16 variants, respectively. |
 | Boundary | Top-k retention or a score above the reference threshold does not make a query answerable; entity, period, slot, source-path, and answer-boundary checks remain required. |
+| Boundary example | For the Store D February `refund_amount` mismatch case, one shortened variant scored `0.578648`, slightly above the reference threshold, but had no expected top-5 hit. Its top result was a dictionary definition with no entity or slot, so it does not support a February Store D refund amount or an original-order-quality claim. |
 
 ## Experiment 7: Repeated-Window Coverage and Descriptive Movement Check
 

@@ -70,16 +70,19 @@
     ]
   },
   {
-    "case_id": "",
+    "case_id": "positive_store_e_single_metric_guard",
     "case_type": "positive_supported",
-    "query": "",
+    "query": "What does Store E's single_metric_attribution_guard say?",
     "expected_entity": "store_E",
-    "expected_slot": "",
+    "expected_slot": "single_metric_attribution_guard",
     "expected_period_terms": [
       "2026-03",
       "March 2026"
     ],
-    "expected_terms": []
+    "expected_terms": [
+      "comparison_scope_flag",
+      "comparison_limit_notes"
+    ]
   },
   {
     "case_id": "positive_store_f_estimated_income_proxy",
@@ -276,7 +279,7 @@
   {
     "case_id": "mismatch_store_d_february_refund",
     "case_type": "entity_period_mismatch",
-    "query": "",
+    "query": "Does the current evidence support a claim about Store D's refund_amount in February 2026?",
     "expected_entity": "store_D",
     "expected_slot": "",
     "expected_period_terms": [
@@ -324,13 +327,16 @@
     ]
   },
   {
-    "case_id": "",
+    "case_id": "ambiguous_compare_transaction_conversion",
     "case_type": "ambiguous_comparison",
-    "query": "",
+    "query": "Which store has stronger transaction conversion performance?",
     "expected_entity": null,
-    "expected_slot": "",
+    "expected_slot": "transaction_conversion_profile",
     "expected_period_terms": [],
-    "expected_terms": []
+    "expected_terms": [
+      "order_conversion_rate_pct",
+      "payment_conversion_rate_pct"
+    ]
   },
   {
     "case_id": "ambiguous_compare_activity_transfer",

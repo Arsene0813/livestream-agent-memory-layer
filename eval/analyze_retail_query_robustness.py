@@ -29,23 +29,35 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+try:
+    from retail_retrieval_corpus import (
+        corpus_provenance,
+        load_retail_retrieval_documents,
+    )
+except ModuleNotFoundError:
+    from eval.retail_retrieval_corpus import (
+        corpus_provenance,
+        load_retail_retrieval_documents,
+    )
+
+try:
+    from retrieval_case_validation import validate_retrieval_cases
+except ModuleNotFoundError:
+    from eval.retrieval_case_validation import validate_retrieval_cases
+
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
 DEFAULT_CASES_PATH = ROOT / "eval" / "retrieval_threshold_cases.json"
 DEFAULT_OUTPUT_DIR = ROOT / "retail_ops" / "outputs"
 
-CORPUS_JSON_FILES = [
-    ROOT / "retail_ops" / "outputs" / "generated_retail_memory_facts.json",
-    ROOT / "retail_ops" / "outputs" / "generated_demo2_retail_memory_facts.json",
-]
 
-CORPUS_TEXT_FILES = [
-    ROOT / "retail_ops" / "data" / "DATA_DICTIONARY.md",
-    ROOT / "retail_ops" / "data" / "demo2_source_notes.md",
-]
-
-REFERENCE_THRESHOLD_DEFAULT = 0.5707
+REFERENCE_THRESHOLD_DEFAULT = 0.5767
+REFERENCE_THRESHOLD_SOURCE_DEFAULT = (
+    "retail_ops/outputs/"
+    "retrieval_threshold_summary.md"
+)
 
 
 def load_json(path: Path) -> Any:
@@ -73,56 +85,83 @@ def first_present(mapping: dict[str, Any], keys: list[str], default: Any = "") -
     return default
 
 
-def extract_cases(raw: Any) -> list[dict[str, Any]]:
-    if isinstance(raw, list):
-        cases = raw
-    elif isinstance(raw, dict):
-        cases = None
-        for key in ["cases", "retrieval_threshold_cases", "items", "data"]:
-            if isinstance(raw.get(key), list):
-                cases = raw[key]
-                break
-        if cases is None:
-            raise ValueError("Could not find a case list in retrieval_threshold_cases.json")
-    else:
-        raise ValueError("Unsupported retrieval threshold case format")
+def extract_cases(
+    raw: Any,
+    *,
+    source: str = "<retrieval cases>",
+) -> list[dict[str, Any]]:
+    cases = validate_retrieval_cases(
+        raw,
+        source=source,
+    )
 
     normalized = []
-    for i, case in enumerate(cases, start=1):
-        if not isinstance(case, dict):
-            continue
 
-        query = first_present(
-            case,
-            ["query", "user_query", "question", "input_query", "prompt"],
-            "",
-        )
-        if not str(query).strip():
-            print(f"[WARN] Skipping case {i}: no query-like field found", file=sys.stderr)
-            continue
-
-        case_id = str(first_present(case, ["case_id", "id", "name"], f"case_{i:03d}"))
-        case_type = str(first_present(case, ["case_type", "type", "label", "category", "group"], "unknown"))
-
+    for case in cases:
         normalized.append(
             {
-                "case_id": case_id,
-                "case_type": case_type,
-                "query": str(query).strip(),
+                "case_id": case["case_id"],
+                "case_type": case["case_type"],
+                "query": case["query"],
                 "expected_doc_ids": normalize_list(
-                    first_present(case, ["expected_doc_ids", "expected_doc_id", "expected_fact_ids", "expected_fact_id"], [])
+                    first_present(
+                        case,
+                        [
+                            "expected_doc_ids",
+                            "expected_doc_id",
+                            "expected_fact_ids",
+                            "expected_fact_id",
+                        ],
+                        [],
+                    )
                 ),
                 "expected_slots": normalize_list(
-                    first_present(case, ["expected_slots", "expected_slot", "expected_slot_names", "target_slot"], [])
+                    first_present(
+                        case,
+                        [
+                            "expected_slots",
+                            "expected_slot",
+                            "expected_slot_names",
+                            "target_slot",
+                        ],
+                        [],
+                    )
                 ),
                 "expected_entities": normalize_list(
-                    first_present(case, ["expected_entities", "expected_entity", "expected_entity_id", "target_entity", "target_entity_id"], [])
+                    first_present(
+                        case,
+                        [
+                            "expected_entities",
+                            "expected_entity",
+                            "expected_entity_id",
+                            "target_entity",
+                            "target_entity_id",
+                        ],
+                        [],
+                    )
                 ),
                 "expected_source_paths": normalize_list(
-                    first_present(case, ["expected_source_paths", "expected_source_path", "source_path"], [])
+                    first_present(
+                        case,
+                        [
+                            "expected_source_paths",
+                            "expected_source_path",
+                            "source_path",
+                        ],
+                        [],
+                    )
                 ),
                 "expected_keywords": normalize_list(
-                    first_present(case, ["expected_keywords", "expected_terms", "must_contain", "evidence_keywords"], [])
+                    first_present(
+                        case,
+                        [
+                            "expected_keywords",
+                            "expected_terms",
+                            "must_contain",
+                            "evidence_keywords",
+                        ],
+                        [],
+                    )
                 ),
                 "raw": case,
             }
@@ -131,127 +170,10 @@ def extract_cases(raw: Any) -> list[dict[str, Any]]:
     return normalized
 
 
-def flatten_text(value: Any) -> str:
-    if value is None:
-        return ""
-    if isinstance(value, (str, int, float, bool)):
-        return str(value)
-    if isinstance(value, list):
-        return " ".join(flatten_text(x) for x in value)
-    if isinstance(value, dict):
-        parts = []
-        for key in sorted(value.keys()):
-            parts.append(f"{key}: {flatten_text(value[key])}")
-        return " ".join(parts)
-    return str(value)
-
-
-def fact_records_from_json(path: Path) -> list[dict[str, Any]]:
-    if not path.exists():
-        print(f"[WARN] Missing corpus file: {path.relative_to(ROOT)}", file=sys.stderr)
-        return []
-
-    raw = load_json(path)
-    if isinstance(raw, list):
-        facts = raw
-    elif isinstance(raw, dict):
-        facts = None
-        for key in ["facts", "memory_facts", "items", "data"]:
-            if isinstance(raw.get(key), list):
-                facts = raw[key]
-                break
-        if facts is None:
-            facts = [raw]
-    else:
-        return []
-
-    docs = []
-    for i, fact in enumerate(facts, start=1):
-        if not isinstance(fact, dict):
-            continue
-
-        entity = str(first_present(fact, ["entity_id", "entity", "store_id"], ""))
-        slot = str(first_present(fact, ["slot", "slot_name", "fact_slot"], ""))
-        source_path = str(first_present(fact, ["source_path", "source", "file_path"], path.as_posix()))
-        fact_id = str(first_present(fact, ["fact_id", "id", "doc_id"], ""))
-
-        if not fact_id:
-            fact_id = f"{path.relative_to(ROOT)}#{i}:{entity}:{slot}"
-
-        text = flatten_text(fact)
-
-        docs.append(
-            {
-                "doc_id": fact_id,
-                "doc_type": "memory_fact",
-                "source_path": source_path,
-                "entity": entity,
-                "slot": slot,
-                "text": text,
-            }
-        )
-
-    return docs
-
-
-def chunk_text(text: str, chunk_size: int = 1800, overlap: int = 200) -> list[str]:
-    clean = re.sub(r"\s+", " ", text).strip()
-    if not clean:
-        return []
-    if len(clean) <= chunk_size:
-        return [clean]
-
-    chunks = []
-    start = 0
-    while start < len(clean):
-        end = min(len(clean), start + chunk_size)
-        chunks.append(clean[start:end])
-        if end == len(clean):
-            break
-        start = max(0, end - overlap)
-    return chunks
-
-
-def docs_from_text_file(path: Path) -> list[dict[str, Any]]:
-    if not path.exists():
-        print(f"[WARN] Missing corpus text file: {path.relative_to(ROOT)}", file=sys.stderr)
-        return []
-
-    text = path.read_text(encoding="utf-8")
-    docs = []
-    for i, chunk in enumerate(chunk_text(text), start=1):
-        docs.append(
-            {
-                "doc_id": f"{path.relative_to(ROOT)}#chunk_{i}",
-                "doc_type": "text_chunk",
-                "source_path": str(path.relative_to(ROOT)),
-                "entity": "",
-                "slot": "document_context",
-                "text": chunk,
-            }
-        )
-    return docs
-
-
 def build_corpus() -> list[dict[str, Any]]:
-    docs: list[dict[str, Any]] = []
+    """Load the shared canonical retail retrieval corpus."""
 
-    for path in CORPUS_JSON_FILES:
-        docs.extend(fact_records_from_json(path))
-
-    for path in CORPUS_TEXT_FILES:
-        docs.extend(docs_from_text_file(path))
-
-    # Deduplicate by doc_id.
-    seen = set()
-    deduped = []
-    for doc in docs:
-        if doc["doc_id"] in seen:
-            continue
-        seen.add(doc["doc_id"])
-        deduped.append(doc)
-
-    return deduped
+    return load_retail_retrieval_documents()
 
 
 def ollama_embed(text: str, model: str, ollama_url: str, retries: int = 3) -> list[float]:
@@ -450,7 +372,7 @@ def pct(n: int, d: int) -> float:
 def write_csv(path: Path, rows: list[dict[str, Any]], fieldnames: list[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         for row in rows:
             writer.writerow({k: row.get(k, "") for k in fieldnames})
@@ -472,6 +394,10 @@ def main() -> None:
     parser.add_argument("--model", default="bge-m3")
     parser.add_argument("--ollama-url", default="http://127.0.0.1:11434")
     parser.add_argument("--reference-threshold", type=float, default=REFERENCE_THRESHOLD_DEFAULT)
+    parser.add_argument(
+        "--reference-threshold-source",
+        default=REFERENCE_THRESHOLD_SOURCE_DEFAULT,
+    )
     parser.add_argument("--top-k", type=int, default=5)
     args = parser.parse_args()
 
@@ -482,13 +408,27 @@ def main() -> None:
         raise SystemExit(f"[FAIL] Cases file not found: {cases_path}")
 
     raw_cases = load_json(cases_path)
-    cases = extract_cases(raw_cases)
+    cases = extract_cases(
+        raw_cases,
+        source=str(cases_path),
+    )
     if not cases:
         raise SystemExit("[FAIL] No usable cases found.")
 
     docs = build_corpus()
     if not docs:
         raise SystemExit("[FAIL] No corpus documents found.")
+
+    provenance = corpus_provenance(
+        docs,
+        args.model,
+    )
+    provenance.update(
+        {
+            "reference_threshold": args.reference_threshold,
+            "reference_threshold_source": args.reference_threshold_source,
+        }
+    )
 
     print(f"[INFO] Loaded cases: {len(cases)}")
     print(f"[INFO] Built corpus docs: {len(docs)}")
@@ -527,19 +467,26 @@ def main() -> None:
             hit_at_k = expected_hit(case, top_docs)
             top5_doc_ids = [doc["doc_id"] for _, doc in top]
             top5_slots = [doc["slot"] for _, doc in top]
-            top5_entities = [doc["entity"] for _, doc in top]
+            top5_entities = [doc["entity_id"] for _, doc in top]
 
             row = {
                 "case_id": case["case_id"],
                 "variant_id": f"{case['case_id']}::{variant_index:02d}_{variant_type}",
                 "variant_type": variant_type,
                 "case_type": case["case_type"],
+                "corpus_document_count": provenance["corpus_document_count"],
+                "corpus_sha256": provenance["corpus_sha256"],
+                "embedding_model": provenance["embedding_model"],
+                "corpus_builder": provenance["corpus_builder"],
+                "generated_from_commit": provenance["generated_from_commit"],
+                "reference_threshold": provenance["reference_threshold"],
+                "reference_threshold_source": provenance["reference_threshold_source"],
                 "original_query": case["query"],
                 "variant_query": variant_query,
                 "top1_score": round(top1_score, 6),
                 "top1_doc_id": top1_doc["doc_id"],
                 "top1_slot": top1_doc["slot"],
-                "top1_entity": top1_doc["entity"],
+                "top1_entity": top1_doc["entity_id"],
                 "top5_doc_ids": " | ".join(top5_doc_ids),
                 "top5_slots": " | ".join(top5_slots),
                 "top5_entities": " | ".join(top5_entities),
@@ -571,6 +518,13 @@ def main() -> None:
         "variant_id",
         "variant_type",
         "case_type",
+        "corpus_document_count",
+        "corpus_sha256",
+        "embedding_model",
+        "corpus_builder",
+        "generated_from_commit",
+        "reference_threshold",
+        "reference_threshold_source",
         "original_query",
         "variant_query",
         "top1_score",
@@ -608,6 +562,13 @@ def main() -> None:
                 {
                     "threshold": threshold,
                     "case_type": case_type,
+                    "corpus_document_count": provenance["corpus_document_count"],
+                    "corpus_sha256": provenance["corpus_sha256"],
+                    "embedding_model": provenance["embedding_model"],
+                    "corpus_builder": provenance["corpus_builder"],
+                    "generated_from_commit": provenance["generated_from_commit"],
+                    "reference_threshold": provenance["reference_threshold"],
+                    "reference_threshold_source": provenance["reference_threshold_source"],
                     "variant_count": variant_count,
                     "above_threshold_count": above_count,
                     "above_threshold_rate_pct": pct(above_count, variant_count),
@@ -620,6 +581,13 @@ def main() -> None:
     sweep_fields = [
         "threshold",
         "case_type",
+        "corpus_document_count",
+        "corpus_sha256",
+        "embedding_model",
+        "corpus_builder",
+        "generated_from_commit",
+        "reference_threshold",
+        "reference_threshold_source",
         "variant_count",
         "above_threshold_count",
         "above_threshold_rate_pct",
@@ -680,8 +648,13 @@ It is a diagnostic evaluation for the current file-backed retail decision-suppor
 - Demo 2 memory facts: `retail_ops/outputs/generated_demo2_retail_memory_facts.json`
 - Dictionary context: `retail_ops/data/DATA_DICTIONARY.md`
 - Demo 2 source notes: `retail_ops/data/demo2_source_notes.md`
-- Embedding model: `{args.model}`
-- Reference threshold: `{args.reference_threshold}`
+- Corpus documents: {provenance["corpus_document_count"]}
+- Corpus SHA-256: `{provenance["corpus_sha256"]}`
+- Corpus builder: `{provenance["corpus_builder"]}`
+- Generated from commit: `{provenance["generated_from_commit"]}`
+- Embedding model: `{provenance["embedding_model"]}`
+- Reference threshold: `{provenance["reference_threshold"]}`
+- Reference threshold source: `{provenance["reference_threshold_source"]}`
 
 ## Variant Types
 
