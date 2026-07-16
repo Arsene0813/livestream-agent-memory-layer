@@ -40,6 +40,11 @@ except ModuleNotFoundError:
         load_retail_retrieval_documents,
     )
 
+try:
+    from retrieval_case_validation import validate_retrieval_cases
+except ModuleNotFoundError:
+    from eval.retrieval_case_validation import validate_retrieval_cases
+
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -80,56 +85,83 @@ def first_present(mapping: dict[str, Any], keys: list[str], default: Any = "") -
     return default
 
 
-def extract_cases(raw: Any) -> list[dict[str, Any]]:
-    if isinstance(raw, list):
-        cases = raw
-    elif isinstance(raw, dict):
-        cases = None
-        for key in ["cases", "retrieval_threshold_cases", "items", "data"]:
-            if isinstance(raw.get(key), list):
-                cases = raw[key]
-                break
-        if cases is None:
-            raise ValueError("Could not find a case list in retrieval_threshold_cases.json")
-    else:
-        raise ValueError("Unsupported retrieval threshold case format")
+def extract_cases(
+    raw: Any,
+    *,
+    source: str = "<retrieval cases>",
+) -> list[dict[str, Any]]:
+    cases = validate_retrieval_cases(
+        raw,
+        source=source,
+    )
 
     normalized = []
-    for i, case in enumerate(cases, start=1):
-        if not isinstance(case, dict):
-            continue
 
-        query = first_present(
-            case,
-            ["query", "user_query", "question", "input_query", "prompt"],
-            "",
-        )
-        if not str(query).strip():
-            print(f"[WARN] Skipping case {i}: no query-like field found", file=sys.stderr)
-            continue
-
-        case_id = str(first_present(case, ["case_id", "id", "name"], f"case_{i:03d}"))
-        case_type = str(first_present(case, ["case_type", "type", "label", "category", "group"], "unknown"))
-
+    for case in cases:
         normalized.append(
             {
-                "case_id": case_id,
-                "case_type": case_type,
-                "query": str(query).strip(),
+                "case_id": case["case_id"],
+                "case_type": case["case_type"],
+                "query": case["query"],
                 "expected_doc_ids": normalize_list(
-                    first_present(case, ["expected_doc_ids", "expected_doc_id", "expected_fact_ids", "expected_fact_id"], [])
+                    first_present(
+                        case,
+                        [
+                            "expected_doc_ids",
+                            "expected_doc_id",
+                            "expected_fact_ids",
+                            "expected_fact_id",
+                        ],
+                        [],
+                    )
                 ),
                 "expected_slots": normalize_list(
-                    first_present(case, ["expected_slots", "expected_slot", "expected_slot_names", "target_slot"], [])
+                    first_present(
+                        case,
+                        [
+                            "expected_slots",
+                            "expected_slot",
+                            "expected_slot_names",
+                            "target_slot",
+                        ],
+                        [],
+                    )
                 ),
                 "expected_entities": normalize_list(
-                    first_present(case, ["expected_entities", "expected_entity", "expected_entity_id", "target_entity", "target_entity_id"], [])
+                    first_present(
+                        case,
+                        [
+                            "expected_entities",
+                            "expected_entity",
+                            "expected_entity_id",
+                            "target_entity",
+                            "target_entity_id",
+                        ],
+                        [],
+                    )
                 ),
                 "expected_source_paths": normalize_list(
-                    first_present(case, ["expected_source_paths", "expected_source_path", "source_path"], [])
+                    first_present(
+                        case,
+                        [
+                            "expected_source_paths",
+                            "expected_source_path",
+                            "source_path",
+                        ],
+                        [],
+                    )
                 ),
                 "expected_keywords": normalize_list(
-                    first_present(case, ["expected_keywords", "expected_terms", "must_contain", "evidence_keywords"], [])
+                    first_present(
+                        case,
+                        [
+                            "expected_keywords",
+                            "expected_terms",
+                            "must_contain",
+                            "evidence_keywords",
+                        ],
+                        [],
+                    )
                 ),
                 "raw": case,
             }
@@ -376,7 +408,10 @@ def main() -> None:
         raise SystemExit(f"[FAIL] Cases file not found: {cases_path}")
 
     raw_cases = load_json(cases_path)
-    cases = extract_cases(raw_cases)
+    cases = extract_cases(
+        raw_cases,
+        source=str(cases_path),
+    )
     if not cases:
         raise SystemExit("[FAIL] No usable cases found.")
 

@@ -26,6 +26,11 @@ except ModuleNotFoundError:
         load_retail_retrieval_documents as load_documents,
     )
 
+try:
+    from retrieval_case_validation import validate_retrieval_cases
+except ModuleNotFoundError:
+    from eval.retrieval_case_validation import validate_retrieval_cases
+
 
 
 ROOT = Path(".")
@@ -184,9 +189,11 @@ def make_plot(rows: list[dict[str, Any]]) -> None:
 
 
 def main() -> int:
-    cases = load_json(CASES_PATH)
-    if not isinstance(cases, list):
-        raise ValueError(f"{CASES_PATH} should contain a list of cases")
+    raw_cases = load_json(CASES_PATH)
+    cases = validate_retrieval_cases(
+        raw_cases,
+        source=str(CASES_PATH),
+    )
 
     docs = load_documents()
     provenance = corpus_provenance(docs, EMBED_MODEL)
