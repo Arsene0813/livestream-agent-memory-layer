@@ -1,0 +1,11 @@
+Demo 1 value lineage validation PASSED.
+Checked source store-period rows: 3
+Checked SQL output store-period rows: 3
+Checked top-SKU rows: 9
+Checked source/SKU period-key comparisons: 36
+Checked source-to-output, formula, month-over-month, rank-change, and tradeoff comparisons: 180
+Checked generated memory facts: 5
+Checked fact metadata and observed-value comparisons: 79
+Checked the product-mix fact against the top-3 SKU evidence scope and sku_category_note values.
+Checked each period-level observed field against SQL-output values and declared source_fields.
+Saved result path: retail_ops/outputs/demo1_value_lineage_validation_result.txt
