@@ -1,10 +1,10 @@
-# Retrieval Query Robustness Summary
+# Retrieval Query Wording-Variation Stress-Test Summary
 
 ## Purpose
 
-This small-corpus check inspects whether retrieval behavior remains reasonably stable when the same query intent is expressed with small wording changes.
+This small-corpus stress test records how retrieval behavior changes when the same query intent is expressed with deterministic wording variations.
 
-It does not prove production-level retrieval robustness. It is a diagnostic evaluation for the current file-backed retail decision-support prototype.
+It is a diagnostic evaluation for the current file-backed retail decision-support prototype.
 
 ## Inputs
 
@@ -26,7 +26,7 @@ Each original query is evaluated with deterministic wording variants:
 - `typo_punctuation_noise`
 - `keyword_order_changed`
 
-## Robustness by Case Type
+## Results by Case Type
 
 | case_type | variant_count | expected_hit_at_5_count | expected_hit_at_5_rate | above_reference_threshold_count | above_reference_threshold_rate | top1_changed_non_original_count | top1_changed_non_original_rate |
 | --- | --- | --- | --- | --- | --- | --- | --- |

@@ -402,7 +402,7 @@ def main() -> int:
     make_plot(rows)
 
     lines = [
-        "# Retrieval Threshold Calibration Summary",
+        "# Retrieval Threshold Inspection Summary",
         "",
         "This file summarizes prototype retrieval score distributions over file-backed retail evidence.",
         "",
@@ -466,19 +466,19 @@ def main() -> int:
         neg_p75 = percentile(negative_values, 0.75)
         candidate = (pos_p25 + neg_p75) / 2
         candidate_note = (
-            f"One rough candidate threshold from this small corpus is around `{candidate:.4f}`, "
+            f"An exploratory reference threshold from this small corpus is around `{candidate:.4f}`, "
             f"midway between the positive-supported p25 score `{pos_p25:.4f}` and the "
-            f"negative-unsupported p75 score `{neg_p75:.4f}`. This is a prototype calibration "
-            "reference, not a production cutoff."
+            f"negative-unsupported p75 score `{neg_p75:.4f}`. This is an inspection "
+            "reference, not a production cutoff or an answer-decision rule."
         )
     else:
-        candidate_note = "A candidate threshold should be selected after inspecting the generated score table."
+        candidate_note = "A reference threshold should be interpreted only after inspecting the generated score table."
 
     lines.extend([
         "",
         "## Threshold Interpretation",
         "",
-        "A candidate threshold should reduce unsupported retrieval noise while keeping most supported evidence available for answer generation.",
+        "A reference threshold can be inspected for the trade-off between unsupported retrieval noise and supported evidence retention.",
         "",
         candidate_note,
         "",
@@ -490,7 +490,7 @@ def main() -> int:
         "",
         "Ambiguous comparison cases should be narrowed by metric and operating question before the system makes a comparison.",
         "",
-        "Because the current corpus is small, this score distribution is used for prototype calibration rather than production-level threshold validation.",
+        "Because the current corpus is small, this score distribution is used for inspection of retrieval behavior and failure modes rather than production-level threshold validation.",
         "",
         "## Outputs",
         "",

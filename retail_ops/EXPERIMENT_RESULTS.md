@@ -2,6 +2,27 @@
 
 This file records the retail experiment map, validation results, and boundary checks for the current decision-support prototype.
 
+## Evidence Types
+
+The current work uses three evidence types. They answer different questions
+and should not be read as one combined accuracy benchmark.
+
+| Evidence type | Question answered | Typical result |
+|---|---|---|
+| Contract and integrity checks | Does the implementation preserve documented names, formulas, paths, metadata, and answer boundaries? | Pass/fail results over declared fixtures and contracts. |
+| Descriptive diagnostic analyses | What is visible in the selected store-period evidence under the stated reporting windows? | Observed levels, changes, coverage, and threshold sensitivity. |
+| Retrieval behavior stress tests | How does semantic retrieval behave for supported, unsupported, mismatched, hard-negative, and ambiguous queries? | Score distributions, top-k retention, threshold sweeps, and failure modes. |
+
+Answer-contract and endpoint-contract checks determine whether an answer
+preserves the required entity, period, source, metric-definition, and scope
+boundaries. Retrieval scores answer a narrower question: how semantic
+similarity behaves while routing evidence. A high score does not make a query
+answerable.
+
+RAC grounded review remains an important technical layer. It uses local
+evidence from these stages to make multi-factor reasoning, critique, source
+paths, confidence updates, and unresolved limitations inspectable.
+
 ## First-Pass Reviewer Matrix
 
 
@@ -11,7 +32,7 @@ This file records the retail experiment map, validation results, and boundary ch
 | Demo 1 month-over-month diagnostic  | Can one store be described across repeated months without reducing the result to one metric?               | Store A February-April 2026 backend-derived metrics                      | Multi-metric diagnostic output and memory facts                                       | Single-metric attribution, causal overclaim, month-as-good-or-bad labeling             |
 | Demo 2 same-period diagnostic       | Can selected B-F store-period rows be staged under one March 2026 reporting window and one field contract? | Stores B-F March 2026 metric records, top search terms, top-SKU evidence | Row-level diagnostic output with `comparison_scope_flag` and `comparison_limit_notes` | Store ranking, premature pairwise comparability, strategy-transfer claims              |
 | Answer-boundary checks              | Do later answers preserve entity, period, metric-definition, source, and comparison limits?                | Generated retail memory facts and boundary test cases                    | Scenario-level pass/fail behavior                                                     | Unsupported recommendations, period mismatch, entity mismatch, ROI/profit overclaim    |
-| Retrieval and robustness inspection | Does wording variation still retrieve the intended evidence path?                                          | Local file-backed retail evidence corpus and query variants              | Score-distribution and query-robustness inspection                                    | Fluent answers hiding weak or mismatched evidence                                      |
+| Retrieval wording-variation stress test | Does wording variation still retrieve the intended evidence path?                                          | Local file-backed retail evidence corpus and query variants              | Score-distribution and wording-variation stress-test outputs                                    | Fluent answers hiding weak or mismatched evidence                                      |
 | Repeated-window B-F panel           | Is there enough repeated store-period coverage to prepare future question-specific comparison rules?       | Stores B-F February-April 2026 panel records                             | Coverage output and descriptive repeated-window summary                               | Premature gate claims, store ranking, causal interpretation from short-window evidence |
 | Future comparability-gate contract  | What should the next pairwise decision layer decide, and what should it refuse?                            | Current evidence boundaries and planned gate design                      | Question-specific future gate contract                                                | Treating current Demo 2 as a completed pairwise gate                                   |
 
@@ -25,7 +46,7 @@ This file records the retail experiment map, validation results, and boundary ch
 | Field contract | Are field names and metric meanings consistent? | Dictionary, source headers, SQL outputs, generated-fact structure | Alias drift and silent metric redefinition |
 | SQL diagnostics | Can selected store-period records be structured without changing backend meanings? | Demo 1 month-over-month output and Demo 2 same-period B-F output | Single-metric attribution, store ranking, premature comparison |
 | Memory facts and answer boundaries | Can later answers preserve entity, period, source, metric, and limitation fields? | Generated retail memory facts, answer-behavior checks, endpoint checks | Unsupported advice, ROI/profit overclaim, scope mismatch |
-| Retrieval and robustness inspection | Does wording variation still route to the intended evidence path? | Score-distribution and query-robustness outputs | Fluent answers hiding weak or mismatched evidence |
+| Retrieval wording-variation stress test | Does wording variation still route to the intended evidence path? | Score-distribution and query-robustness outputs | Fluent answers hiding weak or mismatched evidence |
 | Repeated-window panel | Is there repeated B-F evidence before stronger comparison rules are attempted? | February-April 2026 coverage and descriptive summary outputs | Premature gate claims, causal interpretation, strategy-transfer approval |
 | RAC grounded review | Can multi-factor reasoning remain inspectable over local evidence? | Grounded review outputs with confidence, limitations, source paths, and evidence snippets | Hidden evidence jumps and overconfident synthesis |
 | Future gate contract | What should the next pairwise decision layer decide or refuse? | Future comparability-gate contract stub | Treating current Demo 2 as a completed pairwise gate |
@@ -41,7 +62,7 @@ selected Meituan backend metrics
 -> SQL diagnostic outputs
 -> generated retail memory facts
 -> answer-boundary checks
--> retrieval and robustness inspection
+-> retrieval wording-variation stress test
 -> repeated-window evidence review
 -> RAC grounded review over local evidence
 ```
@@ -72,7 +93,7 @@ limitations, source paths, and local evidence snippets.
 | Transformation | `retail_ops/sql/01_store_a_month_over_month_diagnostic.sql` derives month-over-month movement, ranking changes, traffic and conversion tradeoffs, and top-SKU concentration evidence. |
 | Output | `retail_ops/outputs/store_a_demo1_sql_output.csv`; `retail_ops/outputs/generated_retail_memory_facts.json`. |
 | Expected behavior | The output may describe observed month-over-month movement, but it should not attribute performance change to one metric alone. |
-| Current result | Passed current validation check. |
+| Current result | The diagnostic output is generated, and the current field and data-contract checks pass. |
 | Checked by | `python3 retail_ops/scripts/validate_retail_data_contract.py` |
 
 ## Experiment 2: Demo 2 Same-Period Store Diagnostic
@@ -171,22 +192,22 @@ Implemented Demo 2 evidence slots:
 | Input | `eval/retrieval_threshold_cases.json`; generated Demo 1 and Demo 2 retail memory facts; selected field-contract notes such as `DATA_DICTIONARY.md` and `demo2_source_notes.md`. |
 | Transformation | `eval/analyze_retail_embedding_score_distribution.py` embeds each query and retrieval document with local Ollama `bge-m3`, retrieves top-k evidence, records scores, top-1/top-2 margins, expected matches, entity matches, slot matches, and period-scope checks. |
 | Output | `retail_ops/outputs/retrieval_score_distribution.csv`; `retail_ops/outputs/retrieval_threshold_summary.md`; `retail_ops/outputs/retrieval_score_distribution.png`. |
-| Expected behavior | The calibration makes retrieval behavior inspectable across supported, unsupported, hard-negative, entity/period mismatch, and ambiguous comparison queries. |
+| Expected behavior | The inspection records retrieval behavior across supported, unsupported, hard-negative, entity/period mismatch, and ambiguous comparison queries. |
 | Current result | Completed as an offline small-corpus retrieval inspection. |
-| Boundary | Offline calibration reference only. Retrieval scores make evidence routing inspectable, but final operating claims still require entity, period, source-path, metric-definition, and interpretation-boundary checks. |
+| Boundary | Offline reference-threshold inspection only. Retrieval scores make evidence routing inspectable, but final operating claims still require entity, period, source-path, metric-definition, and interpretation-boundary checks. |
 | Failure mode | Treating a high retrieval score as sufficient evidence for an operating conclusion, or claiming a production-level threshold from the current small file-backed corpus. |
 
-## Experiment 6: Query Robustness Inspection
+## Experiment 6: Query Wording-Variation Stress Test
 
 | Item | Content |
 |---|---|
-| Question | Does retrieval behavior remain reasonably stable when the same query intent is expressed with small wording changes? |
+| Question | How does retrieval behavior change when the same query intent is expressed with deterministic wording variations? |
 | Input | Current retail retrieval-inspection cases and wording variants. |
 | Transformation | `eval/analyze_retail_query_robustness.py` tests shortened, paraphrased, typo/noise, and keyword-order query variants. |
 | Output | `retail_ops/outputs/retrieval_query_robustness.csv`; `retail_ops/outputs/retrieval_query_threshold_sweep.csv`; `retail_ops/outputs/retrieval_query_robustness_summary.md`. |
 | Expected behavior | Supported cases should generally retain expected evidence in top-k under small wording changes. Unsupported, hard-negative, entity/period-mismatch, and ambiguous comparison cases should still require entity, period, slot, source-path, and interpretation-boundary checks. |
-| Current result | Completed as an offline small-corpus robustness inspection. |
-| Boundary | Retrieval score is only one signal and should be paired with answer-boundary checks. |
+| Current result | Completed as an offline small-corpus wording-variation stress test. |
+| Boundary | Top-k retention or a score above the reference threshold does not make a query answerable; entity, period, slot, source-path, and answer-boundary checks remain required. |
 
 ## Experiment 7: Repeated-Window Coverage and Descriptive Movement Check
 

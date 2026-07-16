@@ -1,4 +1,4 @@
-# Retrieval Threshold Calibration Summary
+# Retrieval Threshold Inspection Summary
 
 This file summarizes prototype retrieval score distributions over file-backed retail evidence.
 
@@ -42,17 +42,17 @@ The purpose is to inspect retrieval-threshold behavior. It is not a production-l
 
 ## Threshold Interpretation
 
-This calibration is an offline embedding-retrieval inspection over the current file-backed retail evidence corpus. It does not set the runtime behavior of `/chat_retail_ops_demo2_kb`.
+This is an offline embedding-retrieval inspection over the current file-backed retail evidence corpus. It does not set the runtime behavior of `/chat_retail_ops_demo2_kb`.
 
 The current Demo 2 endpoint selects generated Demo 2 memory facts through file-backed entity, slot, and scope logic. Answer safety still depends on entity, period, slot, source-path, and answer-boundary checks rather than score alone.
 
-A candidate threshold should reduce unsupported retrieval noise while keeping most supported evidence available for answer generation. One rough candidate threshold from this small corpus is around `0.5707`, midway between the positive-supported p25 score `0.6121` and the negative-unsupported p75 score `0.5293`.
+A reference threshold can be inspected for the trade-off between unsupported retrieval noise and supported evidence retention. An exploratory reference threshold from this small corpus is around `0.5707`, midway between the positive-supported p25 score `0.6121` and the negative-unsupported p75 score `0.5293`.
 
-This is a prototype calibration reference, not a production cutoff. High scores in hard-negative boundary cases are expected. They show that a semantically related fact can be retrieved even when the correct answer should still refuse or qualify the requested conclusion.
+This is an inspection reference, not a production cutoff or an answer-decision rule. High scores in hard-negative boundary cases are expected. They show that a semantically related fact can be retrieved even when the correct answer should still refuse or qualify the requested conclusion.
 
 For that reason, retrieval thresholding must be paired with entity, period, slot, source-path, and answer-boundary checks. Entity/period mismatch cases should not be treated as answerable merely because a related store or metric is retrieved. Ambiguous comparison cases should be narrowed by metric and operating question before the system makes a comparison.
 
-Because the current corpus is small, this score distribution is used for prototype calibration rather than production-level threshold validation.
+Because the current corpus is small, this score distribution is used to inspect retrieval behavior and failure modes rather than establish a production threshold.
 
 ## Outputs
 

@@ -9,7 +9,7 @@ This script is intentionally self-contained:
 - computes cosine similarity directly;
 - writes robustness rows, threshold sweep rows, and a Markdown summary.
 
-It does not modify the production API or the existing retrieval threshold calibration script.
+It does not modify the production API or the existing retrieval threshold inspection script.
 """
 
 from __future__ import annotations
@@ -665,13 +665,13 @@ def main() -> None:
             ]
         )
 
-    summary_md = f"""# Retrieval Query Robustness Summary
+    summary_md = f"""# Retrieval Query Wording-Variation Stress-Test Summary
 
 ## Purpose
 
-This small-corpus check inspects whether retrieval behavior remains reasonably stable when the same query intent is expressed with small wording changes.
+This small-corpus stress test records how retrieval behavior changes when the same query intent is expressed with deterministic wording variations.
 
-It does not prove production-level retrieval robustness. It is a diagnostic evaluation for the current file-backed retail decision-support prototype.
+It is a diagnostic evaluation for the current file-backed retail decision-support prototype.
 
 ## Inputs
 
@@ -693,7 +693,7 @@ Each original query is evaluated with deterministic wording variants:
 - `typo_punctuation_noise`
 - `keyword_order_changed`
 
-## Robustness by Case Type
+## Results by Case Type
 
 {markdown_table(
     [
@@ -736,7 +736,7 @@ Final answer behavior should still depend on entity, period, slot, source-path, 
     summary_path = output_dir / "retrieval_query_robustness_summary.md"
     summary_path.write_text(summary_md, encoding="utf-8")
 
-    print("[PASS] Query robustness analysis completed.")
+    print("[PASS] Query wording-variation stress test completed.")
     print(f"Wrote: {robustness_path.relative_to(ROOT)}")
     print(f"Wrote: {sweep_path.relative_to(ROOT)}")
     print(f"Wrote: {summary_path.relative_to(ROOT)}")
