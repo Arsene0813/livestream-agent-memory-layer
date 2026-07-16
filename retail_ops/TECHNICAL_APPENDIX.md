@@ -328,7 +328,7 @@ Traffic-source users may overlap. The same customer may see the store through mu
 activity_cost_ratio_pct = activity_cost / activity_original_transaction_amount * 100
 ~~~
 
-A smaller value means lower activity cost per unit of activity-driven revenue. This project avoids calling it traditional ROI because traditional ROI is often interpreted in the opposite direction.
+Under the official Meituan backend explanation documented in `retail_ops/data/DATA_DICTIONARY.md`, a smaller value means lower cost per unit of activity-driven revenue and better activity efficiency. In this project, the field remains `activity_cost_ratio_pct` because the implemented formula behaves as a cost ratio rather than traditional ROI. The observed ratio is interpreted together with the documented operating context; by itself, it does not establish incremental demand, profit, margin, causal lift, or overall campaign effectiveness.
 
 ### Transaction Metrics
 
