@@ -13,8 +13,13 @@ It is a diagnostic evaluation for the current file-backed retail decision-suppor
 - Demo 2 memory facts: `retail_ops/outputs/generated_demo2_retail_memory_facts.json`
 - Dictionary context: `retail_ops/data/DATA_DICTIONARY.md`
 - Demo 2 source notes: `retail_ops/data/demo2_source_notes.md`
+- Corpus documents: 282
+- Corpus SHA-256: `142368acc56e40a7dee55aabd65e4bfea719f29052b1c7d84a82b4a5654726f3`
+- Corpus builder: `eval/retail_retrieval_corpus.py::load_retail_retrieval_documents`
+- Generated from commit: `e598a640edceda32f538cda8dfe17cf634f4bcfc`
 - Embedding model: `bge-m3`
-- Reference threshold: `0.5707`
+- Reference threshold: `0.5767`
+- Reference threshold source: `retail_ops/outputs/retrieval_threshold_summary.md`
 
 ## Variant Types
 
@@ -30,11 +35,11 @@ Each original query is evaluated with deterministic wording variants:
 
 | case_type | variant_count | expected_hit_at_5_count | expected_hit_at_5_rate | above_reference_threshold_count | above_reference_threshold_rate | top1_changed_non_original_count | top1_changed_non_original_rate |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| ambiguous_comparison | 16 | 13 | 81.25% | 2 | 12.5% | 4 | 33.33% |
-| entity_period_mismatch | 17 | 17 | 100.0% | 17 | 100.0% | 3 | 23.08% |
-| hard_negative_boundary | 33 | 33 | 100.0% | 18 | 54.55% | 8 | 30.77% |
-| negative_unsupported | 30 | 0 | 0.0% | 3 | 10.0% | 4 | 16.67% |
-| positive_supported | 35 | 35 | 100.0% | 27 | 77.14% | 1 | 3.7% |
+| ambiguous_comparison | 16 | 12 | 75.0% | 5 | 31.25% | 5 | 41.67% |
+| entity_period_mismatch | 18 | 13 | 72.22% | 12 | 66.67% | 5 | 35.71% |
+| hard_negative_boundary | 33 | 28 | 84.85% | 23 | 69.7% | 8 | 30.77% |
+| negative_unsupported | 30 | 0 | 0.0% | 0 | 0.0% | 4 | 16.67% |
+| positive_supported | 34 | 34 | 100.0% | 34 | 100.0% | 2 | 7.69% |
 
 ## Threshold Sweep
 
@@ -42,11 +47,11 @@ This sweep is not an optimization procedure. It shows how many query variants re
 
 | threshold | variants_above_threshold | variants_above_threshold_rate |
 | --- | --- | --- |
-| 0.5 | 112 | 85.5% |
-| 0.55 | 92 | 70.23% |
-| 0.6 | 48 | 36.64% |
-| 0.65 | 35 | 26.72% |
-| 0.7 | 13 | 9.92% |
+| 0.5 | 117 | 89.31% |
+| 0.55 | 87 | 66.41% |
+| 0.6 | 61 | 46.56% |
+| 0.65 | 34 | 25.95% |
+| 0.7 | 14 | 10.69% |
 
 The full threshold sweep by case type is stored in:
 
