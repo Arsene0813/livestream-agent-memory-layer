@@ -29,21 +29,22 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+try:
+    from retail_retrieval_corpus import (
+        load_retail_retrieval_documents,
+    )
+except ModuleNotFoundError:
+    from eval.retail_retrieval_corpus import (
+        load_retail_retrieval_documents,
+    )
+
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
 DEFAULT_CASES_PATH = ROOT / "eval" / "retrieval_threshold_cases.json"
 DEFAULT_OUTPUT_DIR = ROOT / "retail_ops" / "outputs"
 
-CORPUS_JSON_FILES = [
-    ROOT / "retail_ops" / "outputs" / "generated_retail_memory_facts.json",
-    ROOT / "retail_ops" / "outputs" / "generated_demo2_retail_memory_facts.json",
-]
-
-CORPUS_TEXT_FILES = [
-    ROOT / "retail_ops" / "data" / "DATA_DICTIONARY.md",
-    ROOT / "retail_ops" / "data" / "demo2_source_notes.md",
-]
 
 REFERENCE_THRESHOLD_DEFAULT = 0.5707
 
@@ -131,127 +132,10 @@ def extract_cases(raw: Any) -> list[dict[str, Any]]:
     return normalized
 
 
-def flatten_text(value: Any) -> str:
-    if value is None:
-        return ""
-    if isinstance(value, (str, int, float, bool)):
-        return str(value)
-    if isinstance(value, list):
-        return " ".join(flatten_text(x) for x in value)
-    if isinstance(value, dict):
-        parts = []
-        for key in sorted(value.keys()):
-            parts.append(f"{key}: {flatten_text(value[key])}")
-        return " ".join(parts)
-    return str(value)
-
-
-def fact_records_from_json(path: Path) -> list[dict[str, Any]]:
-    if not path.exists():
-        print(f"[WARN] Missing corpus file: {path.relative_to(ROOT)}", file=sys.stderr)
-        return []
-
-    raw = load_json(path)
-    if isinstance(raw, list):
-        facts = raw
-    elif isinstance(raw, dict):
-        facts = None
-        for key in ["facts", "memory_facts", "items", "data"]:
-            if isinstance(raw.get(key), list):
-                facts = raw[key]
-                break
-        if facts is None:
-            facts = [raw]
-    else:
-        return []
-
-    docs = []
-    for i, fact in enumerate(facts, start=1):
-        if not isinstance(fact, dict):
-            continue
-
-        entity = str(first_present(fact, ["entity_id", "entity", "store_id"], ""))
-        slot = str(first_present(fact, ["slot", "slot_name", "fact_slot"], ""))
-        source_path = str(first_present(fact, ["source_path", "source", "file_path"], path.as_posix()))
-        fact_id = str(first_present(fact, ["fact_id", "id", "doc_id"], ""))
-
-        if not fact_id:
-            fact_id = f"{path.relative_to(ROOT)}#{i}:{entity}:{slot}"
-
-        text = flatten_text(fact)
-
-        docs.append(
-            {
-                "doc_id": fact_id,
-                "doc_type": "memory_fact",
-                "source_path": source_path,
-                "entity": entity,
-                "slot": slot,
-                "text": text,
-            }
-        )
-
-    return docs
-
-
-def chunk_text(text: str, chunk_size: int = 1800, overlap: int = 200) -> list[str]:
-    clean = re.sub(r"\s+", " ", text).strip()
-    if not clean:
-        return []
-    if len(clean) <= chunk_size:
-        return [clean]
-
-    chunks = []
-    start = 0
-    while start < len(clean):
-        end = min(len(clean), start + chunk_size)
-        chunks.append(clean[start:end])
-        if end == len(clean):
-            break
-        start = max(0, end - overlap)
-    return chunks
-
-
-def docs_from_text_file(path: Path) -> list[dict[str, Any]]:
-    if not path.exists():
-        print(f"[WARN] Missing corpus text file: {path.relative_to(ROOT)}", file=sys.stderr)
-        return []
-
-    text = path.read_text(encoding="utf-8")
-    docs = []
-    for i, chunk in enumerate(chunk_text(text), start=1):
-        docs.append(
-            {
-                "doc_id": f"{path.relative_to(ROOT)}#chunk_{i}",
-                "doc_type": "text_chunk",
-                "source_path": str(path.relative_to(ROOT)),
-                "entity": "",
-                "slot": "document_context",
-                "text": chunk,
-            }
-        )
-    return docs
-
-
 def build_corpus() -> list[dict[str, Any]]:
-    docs: list[dict[str, Any]] = []
+    """Load the shared canonical retail retrieval corpus."""
 
-    for path in CORPUS_JSON_FILES:
-        docs.extend(fact_records_from_json(path))
-
-    for path in CORPUS_TEXT_FILES:
-        docs.extend(docs_from_text_file(path))
-
-    # Deduplicate by doc_id.
-    seen = set()
-    deduped = []
-    for doc in docs:
-        if doc["doc_id"] in seen:
-            continue
-        seen.add(doc["doc_id"])
-        deduped.append(doc)
-
-    return deduped
+    return load_retail_retrieval_documents()
 
 
 def ollama_embed(text: str, model: str, ollama_url: str, retries: int = 3) -> list[float]:
@@ -527,7 +411,7 @@ def main() -> None:
             hit_at_k = expected_hit(case, top_docs)
             top5_doc_ids = [doc["doc_id"] for _, doc in top]
             top5_slots = [doc["slot"] for _, doc in top]
-            top5_entities = [doc["entity"] for _, doc in top]
+            top5_entities = [doc["entity_id"] for _, doc in top]
 
             row = {
                 "case_id": case["case_id"],
@@ -539,7 +423,7 @@ def main() -> None:
                 "top1_score": round(top1_score, 6),
                 "top1_doc_id": top1_doc["doc_id"],
                 "top1_slot": top1_doc["slot"],
-                "top1_entity": top1_doc["entity"],
+                "top1_entity": top1_doc["entity_id"],
                 "top5_doc_ids": " | ".join(top5_doc_ids),
                 "top5_slots": " | ".join(top5_slots),
                 "top5_entities": " | ".join(top5_entities),

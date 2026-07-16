@@ -11,19 +11,24 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+try:
+    from retail_retrieval_corpus import (
+        FACT_JSON_PATHS,
+        FIELD_CONTRACT_PATHS,
+        load_retail_retrieval_documents as load_documents,
+    )
+except ModuleNotFoundError:
+    from eval.retail_retrieval_corpus import (
+        FACT_JSON_PATHS,
+        FIELD_CONTRACT_PATHS,
+        load_retail_retrieval_documents as load_documents,
+    )
+
+
 
 ROOT = Path(".")
 CASES_PATH = ROOT / "eval/retrieval_threshold_cases.json"
 
-FACT_JSON_PATHS = [
-    ROOT / "retail_ops/outputs/generated_retail_memory_facts.json",
-    ROOT / "retail_ops/outputs/generated_demo2_retail_memory_facts.json",
-]
-
-FIELD_CONTRACT_PATHS = [
-    ROOT / "retail_ops/data/DATA_DICTIONARY.md",
-    ROOT / "retail_ops/data/demo2_source_notes.md",
-]
 
 DETAIL_CSV_PATH = ROOT / "retail_ops/outputs/retrieval_score_distribution.csv"
 SUMMARY_MD_PATH = ROOT / "retail_ops/outputs/retrieval_threshold_summary.md"
@@ -38,138 +43,6 @@ def load_json(path: Path) -> Any:
     if not path.exists():
         raise FileNotFoundError(f"Missing file: {path}")
     return json.loads(path.read_text(encoding="utf-8"))
-
-
-def compact_json(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True)
-
-
-def first_existing(fact: dict[str, Any], keys: list[str]) -> str:
-    for key in keys:
-        value = fact.get(key)
-        if value not in (None, "", [], {}):
-            return str(value)
-    return ""
-
-
-def fact_to_text(fact: dict[str, Any], source_file: str) -> str:
-    fields = [
-        ("source_file", source_file),
-        ("fact_id", fact.get("fact_id", "")),
-        ("kind", fact.get("kind", "")),
-        ("type", fact.get("type", "")),
-        ("entity_id", fact.get("entity_id", "")),
-        ("slot", fact.get("slot", "")),
-        ("period_label", first_existing(fact, ["period_label", "period"])),
-        ("period_start", fact.get("period_start", "")),
-        ("period_end", fact.get("period_end", "")),
-        ("value", fact.get("value", "")),
-        ("observed_values", compact_json(fact.get("observed_values", {}))),
-        ("calculation", fact.get("calculation", "")),
-        ("source_fields", compact_json(fact.get("source_fields", []))),
-        ("source_path", fact.get("source_path", "")),
-        ("supporting_source_paths", compact_json(fact.get("supporting_source_paths", []))),
-        ("lineage_path", fact.get("lineage_path", "")),
-        ("confidence", fact.get("confidence", "")),
-        ("limitations", compact_json(fact.get("limitations", []))),
-        ("is_active", fact.get("is_active", "")),
-    ]
-
-    known = {key for key, _ in fields}
-    extras = []
-    for key in sorted(fact):
-        if key not in known:
-            value = fact[key]
-            if isinstance(value, (str, int, float, bool)) or value is None:
-                extras.append((key, value))
-
-    lines = [f"{key}: {value}" for key, value in fields]
-    lines.extend(f"{key}: {value}" for key, value in extras)
-    return "\n".join(lines)
-
-
-def fact_to_doc(fact: dict[str, Any], source_file: str, index: int) -> dict[str, Any]:
-    return {
-        "doc_id": str(fact.get("fact_id") or f"{Path(source_file).name}:{index}"),
-        "doc_type": "generated_memory_fact",
-        "source_file": source_file,
-        "entity_id": str(fact.get("entity_id", "")),
-        "slot": str(fact.get("slot", "")),
-        "period_label": first_existing(fact, ["period_label", "period"]),
-        "period_start": str(fact.get("period_start", "")),
-        "period_end": str(fact.get("period_end", "")),
-        "source_path": str(fact.get("source_path", "")),
-        "text": fact_to_text(fact, source_file),
-    }
-
-
-def split_markdown_chunks(path: Path) -> list[dict[str, Any]]:
-    if not path.exists():
-        return []
-
-    text = path.read_text(encoding="utf-8")
-    chunks: list[dict[str, Any]] = []
-
-    # Keep table rows as separate retrievable field-contract snippets.
-    for line_no, line in enumerate(text.splitlines(), start=1):
-        stripped = line.strip()
-        if stripped.startswith("| `") and "`" in stripped:
-            field_match = re.search(r"`([^`]+)`", stripped)
-            slot = field_match.group(1) if field_match else ""
-            chunks.append({
-                "doc_id": f"{path}:L{line_no}",
-                "doc_type": "field_contract_row",
-                "source_file": str(path),
-                "entity_id": "",
-                "slot": slot,
-                "period_label": "",
-                "period_start": "",
-                "period_end": "",
-                "source_path": str(path),
-                "text": f"source_file: {path}\nline: {line_no}\nslot: {slot}\ncontent: {stripped}",
-            })
-
-    # Also add paragraph-level chunks for narrative boundary notes.
-    parts = re.split(r"\n\s*\n", text)
-    for idx, part in enumerate(parts):
-        cleaned = part.strip()
-        if len(cleaned) < 80:
-            continue
-        chunks.append({
-            "doc_id": f"{path}:chunk:{idx}",
-            "doc_type": "field_contract_note",
-            "source_file": str(path),
-            "entity_id": "",
-            "slot": "",
-            "period_label": "",
-            "period_start": "",
-            "period_end": "",
-            "source_path": str(path),
-            "text": f"source_file: {path}\nchunk: {idx}\ncontent:\n{cleaned}",
-        })
-
-    return chunks
-
-
-def load_documents() -> list[dict[str, Any]]:
-    docs: list[dict[str, Any]] = []
-
-    for path in FACT_JSON_PATHS:
-        facts = load_json(path)
-        if not isinstance(facts, list):
-            raise ValueError(f"{path} should contain a list of generated memory facts")
-        for idx, fact in enumerate(facts):
-            if not isinstance(fact, dict):
-                raise ValueError(f"{path} contains a non-object fact at index {idx}")
-            docs.append(fact_to_doc(fact, str(path), idx))
-
-    for path in FIELD_CONTRACT_PATHS:
-        docs.extend(split_markdown_chunks(path))
-
-    if not docs:
-        raise ValueError("No retrieval documents loaded")
-
-    return docs
 
 
 def embed(text: str, retries: int = 2) -> list[float]:
