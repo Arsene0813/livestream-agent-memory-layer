@@ -109,7 +109,7 @@ Basic flow:
 selected backend-derived metrics / operator input -> metric dictionary and data contract -> SQL diagnostic output -> generated memory facts -> retrieval with source fields and limitations -> qualified answer or refusal
 ```
 
-The important design choice is that memory facts are not just summaries. They carry source fields, observed values, calculation notes, source paths, supporting source paths, confidence labels, and limitations.
+The important design choice is that memory facts are not just summaries. They carry source fields, observed values, `calculation` metadata, source paths, supporting source paths, confidence labels, and limitations.
 
 ## Implemented API and Retrieval Scope
 

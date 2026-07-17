@@ -110,7 +110,7 @@ These notes are interpretation guardrails.
 
 The threshold-based guardrail labels in this demo are prototype diagnostic warnings. They help expose which records need interpretation limits; they are not optimized business cutoffs, peer-selection rules, or pairwise comparability decisions.
 
-A guardrail-sensitivity check is included for this reason: in the current B-F sample, all five store rows change `comparison_limit_notes` under at least one plus-or-minus 5 percentage-point threshold scenario. This makes the current thresholds useful as diagnostic warnings, but not stable enough to become peer-comparison rules or strategy-transfer rules.
+A guardrail-sensitivity check is included for this reason. Baseline reproduction passes for all five rows. Four rows (C, D, E, and F) change `comparison_limit_notes` when the implemented thresholds are raised by 5 percentage points; Store B remains unchanged, and lowering the thresholds by 5 percentage points changes no rows. This local sensitivity supports treating the current thresholds as diagnostic warnings rather than peer-comparison rules or strategy-transfer rules.
 
 ## What This Demo Supports
 

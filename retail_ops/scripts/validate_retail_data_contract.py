@@ -294,6 +294,7 @@ def validate_generated_facts(
         "period_granularity",
         "value",
         "observed_values",
+        "calculation",
         "source_fields",
         "confidence",
         "source_path",
@@ -334,6 +335,12 @@ def validate_generated_facts(
         if not isinstance(value, str) or not value.strip():
             failures.append(
                 f"{relative_path} fact #{index} has missing or empty value"
+            )
+
+        calculation = fact.get("calculation")
+        if not isinstance(calculation, str) or not calculation.strip():
+            failures.append(
+                f"{relative_path} fact #{index} has missing or empty calculation"
             )
 
         source_path = fact.get("source_path")
@@ -505,7 +512,7 @@ def main() -> int:
         "Checked Demo 1 source/output headers.",
         "Checked Demo 2 source/output headers.",
         "Checked Demo 2 diagnostic-scope and limitation fields.",
-        "Checked generated Demo 1 and Demo 2 memory fact structure, non-empty values, and period metadata.",
+        "Checked generated Demo 1 and Demo 2 memory fact structure, non-empty values and calculations, and period metadata.",
         "Checked dictionary-bounded source_fields against declared source and supporting CSV headers.",
         "Checked critical metric-boundary phrases in DATA_DICTIONARY.md.",
         "Checked current schema aliases and dictionary-defined field boundaries.",

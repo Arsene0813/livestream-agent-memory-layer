@@ -118,7 +118,7 @@ Current derived outputs are separated into two layers.
 
 - entity and period metadata, canonical `slot` values, `value`, and `observed_values`;
 - `source_fields`, `source_path`, `supporting_source_paths`, and `lineage_path`;
-- `calculation_notes`, evidence-trace `confidence`, `limitations`, and active-state metadata.
+- `calculation`, evidence-trace `confidence`, `limitations`, and active-state metadata.
 
 Memory-facing slots are generated from multiple source fields and SQL-derived columns. They are not raw Meituan backend fields and should not be treated as SQL output headers. The SQL layer must not silently rename, redefine, or reverse-engineer Meituan backend metrics. It also must not turn one threshold into a fixed store-stage label. For example, `order_conversion_rate_pct` follows the documented backend funnel definition: `order_users / entry_users`.
 
