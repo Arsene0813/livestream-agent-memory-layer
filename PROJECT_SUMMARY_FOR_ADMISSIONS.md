@@ -52,7 +52,7 @@ The current retail decision-support path turns selected, manually transcribed me
 
 Demo 1 structures Store A February-April 2026 movement as a multi-metric operating profile. Demo 2 structures selected Stores B-F under one March 2026 reporting window and one field contract. The repeated-window panel adds B-F coverage across 2026-02, 2026-03, and 2026-04 as preparation for future question-specific pairwise comparability rules.
 
-The repository also includes a deterministic factor-aware grounded review scaffold. This is an important technical part of the project, but it serves a different role from the retail SQL evidence path. It decomposes operating questions into factors, routes each factor to local evidence or boundary evidence, applies critique and fact checks, and produces inspectable grounded reports.
+The repository also includes a deterministic factor-aware grounded review layer. It decomposes operating questions into factors, routes each factor to local evidence or boundary evidence, applies critique and fact checks, and produces inspectable grounded reports over the structured retail evidence.
 
 The current project does not claim a completed pairwise comparability gate. A future gate should judge whether two store-period records can be compared for one selected operating question, using factors such as reporting-window alignment, transaction order volume, transaction amount, activity involvement, activity intensity, store type, repeated-window stability, weak region context, competition evidence, SKU structure, and fulfillment or stockout context.
 
@@ -79,7 +79,7 @@ The current project does not claim a completed pairwise comparability gate. A fu
 | Generated memory facts | Diagnostic evidence is stored with source fields, observed values, confidence labels, and limitations. |
 | Boundary checks | Later answers are checked against entity scope, period scope, metric definitions, and comparison limits. |
 | Future comparability gate | Planned pairwise logic will decide whether two store-period records can be compared for a specific operating question. |
-| RAC grounded review scaffold | Factor-aware review layer for decomposing questions, routing evidence, applying critique, checking facts, and producing inspectable grounded reports over local evidence. |
+| RAC grounded review layer | Factor-aware review layer for decomposing questions, routing evidence, applying critique, checking facts, and producing inspectable grounded reports over local evidence. |
 
 ## Business Problem
 
@@ -111,10 +111,10 @@ The current prototype treats SQL as the structuring layer and the memory layer a
 | SQL diagnostic layer | Converts selected manually structured store-period records into diagnostic outputs under one field contract. |
 | Generated memory facts | Stores evidence with source paths, source fields, observed values, `calculation` metadata, confidence labels, and limitations. |
 | Boundary evaluations | Checks whether later answers preserve entity scope, period scope, metric definitions, and comparison limits. |
-| RAC grounded review scaffold | Provides deterministic factor expansion, evidence routing, critique, fact checking, evidence-coverage update, and grounded report generation over local project evidence. |
+| RAC grounded review layer | Provides deterministic factor expansion, evidence routing, critique, fact checking, evidence-coverage update, and grounded report generation over local project evidence. |
 | Future comparability gate | Planned pairwise gate for deciding whether two store-period records can be compared for a specific operating question. |
 
-The memory layer records evidence and limitations so that different stores, periods, activity conditions, product structures, and regional contexts are not collapsed into the same comparison. The RAC scaffold makes the reasoning path inspectable when a question involves multiple factors and uneven evidence coverage.
+The memory layer records evidence and limitations so that different stores, periods, activity conditions, product structures, and regional contexts are not collapsed into the same comparison. The RAC layer makes the reasoning path inspectable when a question involves multiple factors and uneven evidence coverage.
 
 ## Current Implemented Retail Path
 
@@ -149,7 +149,7 @@ Main outputs:
 - `retail_ops/outputs/store_period_panel_coverage_output.csv`
 - `retail_ops/outputs/repeated_window_panel_summary_output.csv`
 
-## Factor-Aware Grounded Review Scaffold
+## Factor-Aware Grounded Review Layer
 
 The project also includes a deterministic source-aware review scaffold over local project evidence. This is an important technical component because it makes multi-factor reasoning inspectable before an answer is written.
 

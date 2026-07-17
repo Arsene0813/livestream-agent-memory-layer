@@ -6,7 +6,7 @@ A local evidence-bounded decision-support prototype for multi-store Meituan inst
 
 The title keeps the lifecycle-aware memory-layer framing used in the application materials. The current implemented retail path applies that evidence-boundary design to Meituan backend metrics, SQL diagnostic outputs, generated retail memory facts, answer-boundary checks, and RAC grounded review.
 
-## Admissions review path
+## Start Here
 
 For the shortest reviewer-oriented path through the repository, start with
 the [Project Summary for Admissions Review](PROJECT_SUMMARY_FOR_ADMISSIONS.md).
@@ -60,7 +60,7 @@ Demo 2 uses the `cross_store_comparability` file-path term for reference stabili
 | Repeated-window panel | B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04. | Descriptive repeated-window evidence before future pairwise comparability rules. |
 | Memory facts | Converts diagnostic outputs into source-bounded facts with observed values, source fields, source paths, confidence labels, and limitations. | File-backed evidence records derived from manually structured source tables. |
 | Answer-boundary checks | Tests whether answers stay within entity, period, metric-definition, source, and interpretation boundaries. | Scenario-based checks tied to the current evidence path; not broad LLM robustness tests. |
-| RAC scaffold | Provides deterministic factor expansion, evidence routing, critique, fact checking, evidence-coverage update, and grounded report generation over local project evidence. | Local-evidence scaffold for reviewability; not live backend ingestion, autonomous cognition, or operating-decision automation. |
+| Factor-aware grounded review layer (RAC) | Provides deterministic factor expansion, evidence routing, critique, fact checking, evidence-coverage updates, and grounded report generation over local project evidence. | File-grounded review with explicit source paths, competing hypotheses, and limitations. |
 
 ## Key Design Principles
 
