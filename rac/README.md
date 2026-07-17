@@ -1,86 +1,115 @@
-# Structured Reasoning Scaffold
+# Factor-Aware Grounded Review (RAC)
 
-This module is a structured reasoning scaffold for question decomposition, evidence routing, critique, and evidence-coverage and limitation update.
+RAC is the factor-aware grounded review layer of the current
+decision-support prototype.
 
-The `rac/` directory name is retained for path stability. In reviewer-facing wording, this should be read as a deterministic, source-grounded reasoning scaffold with explicit evidence and boundary checks.
+It takes a decision question and structured local evidence, makes the
+review path explicit, and records where the available evidence supports
+a statement, where only a boundary can be established, and where a
+stronger conclusion should remain unresolved.
 
-Workflow:
+The runnable implementation is deterministic and file-grounded. It uses
+local project files and explicit review rules so that the reasoning
+contract can be inspected and evaluated independently of model behavior.
 
-question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-coverage and limitation update -> final report
+For the reviewer-facing cases and generated reports, start with
+[`DEMO_INDEX.md`](DEMO_INDEX.md).
 
-## Why this module exists
+## Implemented Review Path
 
-A normal LLM can produce a plausible answer without explicitly checking:
+```text
+question
+-> question analysis
+-> factor expansion
+-> factor weighting
+-> source-aware local evidence routing
+-> boundary evidence for unavailable requirements
+-> competing hypotheses
+-> critique
+-> fact checking
+-> evidence-coverage and limitation update
+-> grounded final report
+-> quality gate
+```
 
- * which factors are relevant,
- * which assumptions are unsupported,
- * which evidence was actually used,
- * which competing explanations remain possible,
- * which conclusion should be downgraded because evidence is incomplete.
+The pipeline separates factor selection, evidence retrieval, hypothesis
+formation, critique, and report generation. A final answer therefore
+retains an inspectable path back to the evidence packets and limitations
+used during review.
 
-This module turns answer generation into an evidence-grounded review workflow.
+## Why This Layer Exists
 
-## Current deterministic review scaffold
+A plausible answer is not necessarily a supported decision.
 
-The current implementation is intentionally narrow and conservative. It defines:
+RAC adds explicit checks for:
 
-* a shared review-state schema,
-* deterministic question analysis and factor expansion,
-* deterministic factor-weight buckets,
-* local file-based evidence routing,
-* competing-hypothesis templates,
-* critique and fact-check stages,
-* evidence-coverage scoring,
-* explicit limitation reporting.
+- which factors are relevant to the question;
+- which source files were used;
+- which assumptions remain unsupported;
+- which competing explanations remain possible;
+- which requirements are absent from the current evidence;
+- which conclusion should be qualified or withheld;
+- whether the final report preserves the evidence boundary.
 
-The current implementation does not claim to implement autonomous world modeling, live Meituan backend access, neural-network weight updates, completed pairwise comparability, or automated operating decisions.
+This layer complements the retail field dictionary, SQL diagnostics,
+generated memory facts, lineage validation, and answer-boundary
+evaluation.
 
-## Future graph-based extension
+## Current Implementation
 
-A future implementation could connect these contracts to a graph workflow, such as a LangGraph-style shared-state node design. That would be an extension of the current deterministic scaffold, not a capability claimed by the current implementation.
+The implemented RAC scaffold includes:
 
-The future version should still keep the current evidence-boundary discipline:
+- a shared review-state contract;
+- deterministic question analysis;
+- question-specific factor expansion;
+- explicit heuristic factor weights;
+- local file-based evidence routing;
+- source-path existence checks;
+- factor-specific keyword matching;
+- local evidence snippets and line ranges;
+- boundary evidence for unavailable requirements;
+- competing-hypothesis templates;
+- critique and fact-check stages;
+- evidence-coverage scoring;
+- explicit limitation updates;
+- grounded Markdown and JSON reports;
+- a deterministic grounded quality gate.
 
-* carry typed state between stages,
-* require source references for evidence claims,
-* keep boundary evidence separate from direct metric evidence,
-* report missing evidence instead of filling gaps with unsupported claims,
-* avoid causal or operating-decision claims when the evidence does not support them.
+The current runnable path uses local files and deterministic rules.
+Graph orchestration, model calls, vector retrieval, and live
+merchant-backend access are future integration options rather than
+requirements for the present evidence contract.
 
-<!-- RAC_FUTURE_FACTOR_LOOP_START -->
-## Future extension: dynamic factor weighting
+## Evidence Types
 
-The current RAC implementation is deterministic and file-grounded. A future version could make the reasoning loop more adaptive by assigning different weights to factors depending on the question type and available evidence.
+RAC distinguishes three evidence-routing outcomes.
 
-For example, a search-entry comparison may prioritize search exposure, search entry rate, and ranking context. A promotion-transfer question should give more weight to activity involvement, activity-cost ratio, campaign timing evidence, competitor context, and repeated-window evidence.
+| Evidence type | Meaning | Review treatment |
+|---|---|---|
+| Direct evidence | A local source contains factor-relevant evidence for the current question. | The report may use the evidence within its documented scope. |
+| Boundary evidence | A local source explicitly records that a required field, gate, or condition is not implemented or not available. | The report records the missing requirement instead of inventing supporting evidence. |
+| Fallback evidence | No sufficiently specific direct or boundary source was resolved. | Evidence coverage is reduced and the limitation remains visible. |
 
-Any future loop should preserve the current boundary discipline:
-
-* expand factors before retrieving evidence,
-* retrieve evidence by factor instead of searching for a ready-made answer,
-* generate competing hypotheses when multiple explanations are plausible,
-* critique unsupported assumptions before writing the final answer,
-* update confidence and limitations only when the evidence supports the change.
-
-This planned extension should keep the same evidence-boundary discipline as the current implementation: strategy decisions and causal claims still require stronger evidence than the current scaffold provides.
-<!-- RAC_FUTURE_FACTOR_LOOP_END -->
+For the cross-store comparability case, requirements such as competition
+context and repeated reporting windows can be routed to
+`retail_ops/COMPARABILITY_GATE_V0.md` as boundary evidence. This allows
+the report to distinguish a documented missing requirement from a
+missing source-resolution result.
 
 ## Factor Weight Generation
 
-The current RAC scaffold uses deterministic heuristic factor weights.
-
-The weights are generated in `rac/src/mock_pipeline.py` by fixed factor-id buckets:
+Factor weights are generated in `rac/src/mock_pipeline.py` using explicit
+factor-ID buckets.
 
 ```text
-high-priority review factors -> 0.85
+high-priority review factors   -> 0.85
 medium-priority review factors -> 0.72
-default relevant factors -> 0.60
+default relevant factors       -> 0.60
 ```
 
-The bucket assignment is explicit:
+### High-priority factors
 
 ```text
-high:
 promotion_intensity
 activity_intensity
 order_conversion
@@ -88,8 +117,11 @@ sku_margin_structure
 evidence_packets
 belief_records
 retrieval_trace
+```
 
-medium:
+### Medium-priority factors
+
+```text
 search_exposure
 entry_conversion
 same_reporting_period
@@ -102,242 +134,159 @@ hypotheses
 confidence
 limitations
 active_state_filtering
-
-default:
-any relevant factor not listed in high or medium
 ```
 
-These weights are review-priority weights. They are not learned from data, not calculated directly from observed metric tables, not probabilities, and not optimized business thresholds.
+Any relevant factor not listed in the high- or medium-priority buckets
+receives the default value.
 
-Their purpose is to make the review path explicit: higher-weight factors are treated as more central when the scaffold tries to prevent overconfident causal, comparability, or strategy-transfer claims.
+These values are review-priority weights. They are fixed prototype
+heuristics, not learned parameters, metric-derived estimates,
+probabilities, business thresholds, or causal-effect estimates.
 
-The generated Grounded RAC Reports include a `How Factor Weights Are Generated` subsection so a reviewer can see the bucket rule, weight value, factor membership, and limitations directly in the report.
+The grounded reports expose the bucket, factor membership, assigned
+weight, and interpretation limit so the weighting rule can be reviewed
+directly.
 
-## Design boundary
+## Evidence-Coverage Score
 
-This module should not claim:
+Grounded RAC reports use a formula-based Evidence-Coverage Score:
 
- * that the system has a true Bayesian posterior,
- * that factor weights are mathematically learned probabilities,
- * that it has live access to Meituan backend data,
- * that Demo 2 already implements a pairwise comparability gate,
- * that the system can fully infer causality from observational store metrics.
+```text
+evidence_coverage_score
+= 0.45 * direct_evidence_rate
++ 0.25 * supported_or_boundary_rate
++ 0.15 * no_missing_source_file_score
++ 0.15 * no_fallback_score
+```
 
-The correct claim is narrower:
+| Component | Weight | Rationale |
+|---|---:|---|
+| `direct_evidence_rate` | 0.45 | Direct local evidence receives the highest weight. |
+| `supported_or_boundary_rate` | 0.25 | Explicit boundary evidence is preferable to an unsupported inference. |
+| `no_missing_source_file_score` | 0.15 | Existing source paths are required for traceability. |
+| `no_fallback_score` | 0.15 | Unresolved fallback packets reduce evidence coverage. |
 
-This scaffold makes LLM-assisted reasoning more traceable by decomposing a question into relevant factors, retrieving evidence by factor, generating competing hypotheses, checking unsupported assumptions, and producing grounded reports with a formula-based evidence-coverage score and mock reports with scenario-template confidence.
-## Example use cases
+The score summarizes local evidence-routing coverage. It is not a
+Bayesian posterior, calibrated probability, causal-confidence estimate,
+or predicted business-success rate.
 
-### Retail operations diagnostic
+Mock reports separately carry Scenario-Template Confidence. That value
+is assigned by deterministic question-type templates and is not merged
+with the grounded Evidence-Coverage Score.
 
-Question:
+## Competing Hypotheses, Critique, and Fact Checks
 
-Can Store A's April growth be attributed to search exposure?
+RAC does not route evidence directly into a single preferred narrative.
 
-Expected behavior:
+For each review case, the pipeline can retain multiple plausible
+explanations, then check:
 
-- consider search exposure,
-- consider entry conversion,
-- consider order conversion,
-- consider promotion intensity,
-- avoid attributing growth to search alone.
+- whether each hypothesis has relevant evidence;
+- whether the hypothesis exceeds the evidence scope;
+- whether another explanation remains plausible;
+- whether a causal or strategy-transfer statement is unsupported;
+- whether source paths and snippets are present;
+- whether the final report carries unresolved limitations forward.
 
-### Cross-store comparability judgment
+This structure is especially important when observational store metrics
+move in different directions or when same-period records lack the
+question-specific context required for comparison.
 
-Question:
+## Runnable Layers
+
+| Layer | Run command | Validation command | Main output |
+|---|---|---|---|
+| Deterministic review scaffold | `python3 rac/scripts/run_mock_pipeline.py --all-eval` | `python3 rac/scripts/validate_mock_pipeline.py` | Mock review-state and report outputs in `rac/outputs/` |
+| Local evidence resolver | `python3 rac/scripts/run_local_evidence_resolver.py --all-eval` | `python3 rac/scripts/validate_local_evidence_resolver.py` | Source-grounded evidence packets |
+| Grounded deterministic pipeline | `python3 rac/scripts/run_grounded_pipeline.py --all-eval` | `python3 rac/scripts/validate_grounded_pipeline.py` | `rac/outputs/grounded_*.json` and `rac/outputs/grounded_*.md` |
+| Grounded quality gate | Generated with the grounded pipeline | `python3 rac/scripts/validate_grounded_quality_gate.py` | `grounded_quality_summary.json` and `grounded_quality_summary.md` |
+
+The mock pipeline establishes the review-state contract. The local
+resolver connects factors to repository evidence. The grounded pipeline
+combines both layers into inspectable reports. The quality gate checks
+whether those reports preserve the required evidence structure.
+
+## Grounded Report Contract
+
+The grounded quality gate checks that every generated report contains:
+
+- the reviewed question;
+- expanded factors and factor weights;
+- competing hypotheses;
+- critic findings;
+- fact-check output;
+- local source paths;
+- source line ranges;
+- local evidence snippets;
+- explicit limitations;
+- evidence-routing status;
+- no missing source files;
+- no forbidden positive overclaims.
+
+This contract prevents the RAC layer from becoming a loose prompt
+wrapper. A report must show what evidence it used, where that evidence
+came from, and what remains unresolved.
+
+## Reviewer Cases
+
+The reviewer-facing cases are indexed in
+[`DEMO_INDEX.md`](DEMO_INDEX.md).
+
+They cover questions such as:
+
+### Store A attribution review
+
+Can Store A's April change be attributed to search exposure?
+
+The review should consider search exposure, entry conversion, order
+conversion, activity involvement, and competing explanations rather than
+assigning the movement to one metric.
+
+### Cross-store comparability review
 
 Are Stores B-F directly comparable in March 2026?
 
-Expected behavior:
+The review should preserve the common reporting period and metric
+definitions while identifying the additional question-specific evidence
+required for pairwise comparability.
 
-- recognize the same reporting period,
-- preserve backend metric definitions,
-- identify missing pairwise comparability gates,
-- avoid claiming robust cross-store causal comparison.
+### Promotion-strategy review
 
-### Strategic recommendation
+What should be checked before changing a store's promotion strategy?
 
-Question:
+The review should identify relevant factors, retrieve available evidence,
+record missing requirements, and distinguish diagnostic checks from a
+strategy recommendation.
 
-What should be checked before changing promotions for a store?
+## Interpretation Boundary
 
-Expected behavior:
+The current RAC implementation supports an inspectable, deterministic
+review over structured local evidence. It can expose relevant factors,
+source use, competing explanations, evidence gaps, and report
+limitations.
 
-- identify relevant operating factors,
-- retrieve available evidence,
-- generate competing explanations,
-- state missing evidence,
-- recommend checks rather than overconfident actions.
+Causal inference, learned factor weights, live merchant-backend access,
+automated pairwise comparability decisions, and autonomous operating
+actions require additional evidence or implementation beyond the
+current review contract.
 
-## Deterministic mock pipeline
+## Future Extensions
 
-The deterministic mock pipeline is the current runnable implementation of the structured reasoning workflow.
+The existing contracts can later be connected to a shared-state graph
+workflow, model-assisted factor expansion, vector retrieval, or adaptive
+factor weighting.
 
-It does not call an LLM, Qdrant, Ollama, OpenAI, or any live backend service.
+Those extensions should retain the current invariants:
 
-Its purpose is to prove that the system contract can run end-to-end:
+- typed review state;
+- factor-first evidence retrieval;
+- source references for evidence claims;
+- separation of direct and boundary evidence;
+- explicit competing hypotheses;
+- critique before final reporting;
+- evidence-based confidence and limitation updates;
+- refusal to fill missing evidence with unsupported claims.
 
-question
--> question analysis
--> factor expansion
--> factor weighting
--> evidence routing
--> hypothesis generation
--> critique
--> fact checking
--> review-state update
--> final report
-
-Run all mock evaluation cases:
-
-python3 rac/scripts/run_mock_pipeline.py --all-eval
-
-Validate the deterministic pipeline:
-
-python3 rac/scripts/validate_mock_pipeline.py
-
-The generated reports are written to:
-
-rac/outputs/
-
-This stage is intentionally conservative. The mock pipeline should not be presented as real LLM reasoning or real retrieval. It is a stable execution scaffold before any future LangGraph-style or retrieval-backed implementation.
-
-## Local evidence resolver
-
-The local evidence resolver is the first grounding layer for the RAC workflow.
-
-It upgrades placeholder evidence packets into local, source-grounded evidence packets by reading project files and matching factor-specific keywords.
-
-The resolver does not call an LLM, Qdrant, Ollama, OpenAI, or any live backend service.
-
-It performs:
-
-- source path existence checks,
-- factor-specific keyword matching,
-- local evidence snippet extraction,
-- resolver limitation reporting.
-
-Run the resolver for all evaluation cases:
-
-python3 rac/scripts/run_local_evidence_resolver.py --all-eval
-
-Validate the resolver:
-
-python3 rac/scripts/validate_local_evidence_resolver.py
-
-Generated outputs:
-
-rac/outputs/local_evidence_resolver_all_cases.json
-rac/outputs/local_evidence_resolver_sample.json
-
-This stage is still deterministic. It should not be presented as semantic retrieval or true reasoning. Its purpose is to prove that the scaffold can ground factor-specific evidence in local project files before adding LangGraph, LLM calls, or vector retrieval.
-
-## Grounded deterministic pipeline
-
-The grounded deterministic pipeline connects the mock RAC workflow to the local evidence resolver.
-
-It runs:
-
-question
--> mock RAC pipeline
--> local evidence resolver
--> grounded evidence rows
--> final report with local evidence snippets
-
-Run all grounded evaluation cases:
-
-python3 rac/scripts/run_grounded_pipeline.py --all-eval
-
-Validate the grounded pipeline:
-
-python3 rac/scripts/validate_grounded_pipeline.py
-
-Generated outputs are written to:
-
-rac/outputs/grounded_*.json
-rac/outputs/grounded_*.md
-
-This stage still does not call an LLM, vector database, or live backend service.
-
-The purpose is to prove that the scaffold can produce factor-aware reports grounded in local project evidence before adding LangGraph, model calls, or Qdrant retrieval.
-
-## Grounded quality gate
-
-The grounded quality gate validates the generated grounded RAC reports.
-
-It checks that each report includes:
-
-- required report sections,
-- factor weights,
-- competing hypotheses,
-- critic findings,
-- fact check output,
-- local source paths,
-- line ranges,
-- local evidence snippets,
-- explicit limitations,
-- zero missing source files,
-- no forbidden positive overclaims.
-
-Run the quality gate:
-
-python3 rac/scripts/validate_grounded_quality_gate.py
-
-Generated outputs:
-
-rac/outputs/grounded_quality_summary.json
-rac/outputs/grounded_quality_summary.md
-
-This quality gate is intentionally strict. It is designed to prevent the structured reasoning scaffold from becoming a loose prompt wrapper. A grounded report must show what evidence it used, where the evidence came from, what the system cannot conclude, and whether any source-grounding problem exists.
-
-## Reviewer demo index
-
-For a reviewer-facing overview of the RAC module, start here:
-
-rac/DEMO_INDEX.md
-
-This page explains what the module does, how to run the grounded demos, which outputs to inspect, and what the current implementation does not claim.
-
-## Source-aware and boundary-aware grounding
-
-The RAC grounding layer has been hardened so that the cross-store comparability demo no longer relies on generic fallback snippets for key factors.
-
-Current quality-gate result:
-
-- Total grounded packets: 29
-- Keyword matched packets: 27
-- Boundary matched packets: 2
-- Fallback packets: 0
-- Missing source files: 0
-
-For rac_cross_store_comparability_001:
-
-- competition and repeated_reporting_windows are routed to retail_ops/COMPARABILITY_GATE_V0.md as boundary_evidence.
-- The report does not claim that pairwise comparability is implemented.
-- Pairwise comparability remains future work.
-
-This distinction matters because RAC should not pretend that missing evidence exists. When a factor is required but not currently structured, the system should ground that factor in an explicit boundary source rather than using a generic fallback snippet.
-
-
-## Score Explainability
-
-Grounded RAC reports use a formula-based Evidence-Coverage Score.
-
-Formula: evidence_coverage_score = 0.45 * direct_evidence_rate + 0.25 * supported_or_boundary_rate + 0.15 * no_missing_source_file_score + 0.15 * no_fallback_score.
-
-This score is calculated from local evidence-routing status. It is not a learned probability, Bayesian posterior, causal confidence score, or business-success probability.
-
-Weight rationale for the grounded score:
-
-| Component | Weight | Why |
-|---|---:|---|
-| `direct_evidence_rate` | 0.45 | Highest priority because actual local evidence should matter more than boundary-only evidence. |
-| `supported_or_boundary_rate` | 0.25 | Boundary evidence is valuable because it explicitly records missing requirements instead of hiding them. |
-| `no_missing_source_file_score` | 0.15 | Source files must exist, but this is a basic traceability check rather than evidence strength. |
-| `no_fallback_score` | 0.15 | Fallback evidence is acceptable as a warning, but should reduce confidence in coverage. |
-
-These weights are fixed prototype heuristics, not learned parameters, optimized thresholds, calibrated probabilities, or business-performance predictors.
-
-Future work should run a small sensitivity check over alternative weight settings, similar to the Demo 2 guardrail sensitivity check.
-
-Mock RAC reports use Scenario-Template Confidence instead. That value is assigned by deterministic question-type templates and is kept only to show how the mock scaffold carries a review-state value.
+A useful next experiment is a small sensitivity analysis over alternative
+factor-weight and Evidence-Coverage Score settings, using the same
+principle as the retail guardrail sensitivity analysis.
