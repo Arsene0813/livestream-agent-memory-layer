@@ -109,15 +109,24 @@ summary AS (
 
         feb_entry_conversion_rate_pct,
         apr_entry_conversion_rate_pct,
-        ROUND(apr_entry_conversion_rate_pct - feb_entry_conversion_rate_pct, 2) AS entry_conversion_rate_pct_feb_to_apr_delta,
+        ROUND(
+            apr_entry_conversion_rate_pct - feb_entry_conversion_rate_pct,
+            2
+        ) AS entry_conversion_rate_pct_feb_to_apr_delta,
 
         feb_order_conversion_rate_pct,
         apr_order_conversion_rate_pct,
-        ROUND(apr_order_conversion_rate_pct - feb_order_conversion_rate_pct, 2) AS order_conversion_rate_pct_feb_to_apr_delta,
+        ROUND(
+            apr_order_conversion_rate_pct - feb_order_conversion_rate_pct,
+            2
+        ) AS order_conversion_rate_pct_feb_to_apr_delta,
 
         feb_payment_conversion_rate_pct,
         apr_payment_conversion_rate_pct,
-        ROUND(apr_payment_conversion_rate_pct - feb_payment_conversion_rate_pct, 2) AS payment_conversion_rate_pct_feb_to_apr_delta,
+        ROUND(
+            apr_payment_conversion_rate_pct - feb_payment_conversion_rate_pct,
+            2
+        ) AS payment_conversion_rate_pct_feb_to_apr_delta,
 
         feb_search_exposure_users,
         apr_search_exposure_users,

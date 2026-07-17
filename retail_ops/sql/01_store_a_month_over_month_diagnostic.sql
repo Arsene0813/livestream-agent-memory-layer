@@ -189,19 +189,46 @@ final_output AS (
 
         activity_cost_ratio_pct,
 
-        ROUND(merchant_subsidy_amount * 100.0 / NULLIF(activity_cost, 0), 2) AS merchant_subsidy_share_of_activity_cost_pct,
-        ROUND(top3_sku_transaction_amount * 100.0 / NULLIF(transaction_amount, 0), 2) AS top3_sku_transaction_amount_share_pct,
+        ROUND(
+            merchant_subsidy_amount * 100.0 / NULLIF(activity_cost, 0),
+            2
+        ) AS merchant_subsidy_share_of_activity_cost_pct,
+        ROUND(
+            top3_sku_transaction_amount * 100.0 / NULLIF(transaction_amount, 0),
+            2
+        ) AS top3_sku_transaction_amount_share_pct,
 
-        ROUND((transaction_amount - prev_transaction_amount) * 100.0 / NULLIF(prev_transaction_amount, 0), 2) AS transaction_amount_mom_pct,
-        ROUND((transaction_orders - prev_transaction_orders) * 100.0 / NULLIF(prev_transaction_orders, 0), 2) AS transaction_orders_mom_pct,
-        ROUND((estimated_income_proxy - prev_estimated_income_proxy) * 100.0 / NULLIF(prev_estimated_income_proxy, 0), 2) AS estimated_income_proxy_mom_pct,
-        ROUND((exposure_users - prev_exposure_users) * 100.0 / NULLIF(prev_exposure_users, 0), 2) AS exposure_users_mom_pct,
-        ROUND((search_exposure_users - prev_search_exposure_users) * 100.0 / NULLIF(prev_search_exposure_users, 0), 2) AS search_exposure_users_mom_pct,
+        ROUND(
+            (transaction_amount - prev_transaction_amount) * 100.0 / NULLIF(prev_transaction_amount, 0),
+            2
+        ) AS transaction_amount_mom_pct,
+        ROUND(
+            (transaction_orders - prev_transaction_orders) * 100.0 / NULLIF(prev_transaction_orders, 0),
+            2
+        ) AS transaction_orders_mom_pct,
+        ROUND(
+            (estimated_income_proxy - prev_estimated_income_proxy) * 100.0 / NULLIF(prev_estimated_income_proxy, 0),
+            2
+        ) AS estimated_income_proxy_mom_pct,
+        ROUND(
+            (exposure_users - prev_exposure_users) * 100.0 / NULLIF(prev_exposure_users, 0),
+            2
+        ) AS exposure_users_mom_pct,
+        ROUND(
+            (search_exposure_users - prev_search_exposure_users) * 100.0 / NULLIF(prev_search_exposure_users, 0),
+            2
+        ) AS search_exposure_users_mom_pct,
         ROUND((entry_users - prev_entry_users) * 100.0 / NULLIF(prev_entry_users, 0), 2) AS entry_users_mom_pct,
-        ROUND((search_entry_users - prev_search_entry_users) * 100.0 / NULLIF(prev_search_entry_users, 0), 2) AS search_entry_users_mom_pct,
+        ROUND(
+            (search_entry_users - prev_search_entry_users) * 100.0 / NULLIF(prev_search_entry_users, 0),
+            2
+        ) AS search_entry_users_mom_pct,
         ROUND((order_users - prev_order_users) * 100.0 / NULLIF(prev_order_users, 0), 2) AS order_users_mom_pct,
         ROUND((payment_users - prev_payment_users) * 100.0 / NULLIF(prev_payment_users, 0), 2) AS payment_users_mom_pct,
-        ROUND((average_order_value - prev_average_order_value) * 100.0 / NULLIF(prev_average_order_value, 0), 2) AS average_order_value_mom_pct,
+        ROUND(
+            (average_order_value - prev_average_order_value) * 100.0 / NULLIF(prev_average_order_value, 0),
+            2
+        ) AS average_order_value_mom_pct,
 
         store_average_rank - prev_store_average_rank AS store_average_rank_change,
         search_average_rank - prev_search_average_rank AS search_average_rank_change,
