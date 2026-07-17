@@ -18,8 +18,9 @@ REQUIRED_PHRASES = [
     "generates competing hypotheses",
     "applies critique and fact checks",
     (
-        "produces a grounded report with confidence, "
-        "limitations, source paths, and local evidence snippets"
+        "produces a grounded report with template confidence labels, "
+        "limitations, source paths, source-line audit pointers, "
+        "and evidence fields"
     ),
     (
         "helps prevent a grounded answer from hiding "

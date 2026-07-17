@@ -25,7 +25,7 @@ REQUIRED_BOUNDARY_PHRASES = [
     "source-aware",
     "boundary evidence",
     "pairwise comparability remains future work",
-    "completed pairwise comparability gate",
+    "pairwise comparability remains future work",
 ]
 
 REQUIRED_PATHS = [

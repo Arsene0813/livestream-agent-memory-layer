@@ -15,10 +15,10 @@ REQUIRED_SECTIONS = [
     "## Demo Cases",
     "## Recommended Review Order",
     "## What The Grounded Reports Show",
-    "## Why This Is Different From Ordinary RAG",
-    "## What This Module Does Not Claim",
-    "## Current Limitations",
-    "## Next Possible Steps",
+    "## Review Contract",
+    "## Current Evidence and Integration Boundary",
+    "## Next Experiments",
+    "## Score Explainability Note",
 ]
 
 REQUIRED_COMMANDS = [
@@ -42,12 +42,12 @@ REQUIRED_CODE_FILES = [
 ]
 
 REQUIRED_BOUNDARY_PHRASES = [
-    "does not call an LLM",
-    "This module does not claim",
-    "Future work",
-    "Not implemented",
-    "causal proof",
-    "confidence and limitations",
+    "deterministic and source-aware",
+    "boundary evidence",
+    "source-line audit pointer",
+    "evidence-coverage score",
+    "scenario-template confidence",
+    "pairwise comparability remains future work",
 ]
 
 FORBIDDEN_OVERCLAIMS = [
@@ -91,7 +91,7 @@ def main() -> None:
             fail(f"Referenced file missing from DEMO_INDEX.md: {relative_path}")
 
     for phrase in REQUIRED_BOUNDARY_PHRASES:
-        if phrase not in text:
+        if normalize(phrase) not in normalized:
             fail(f"Missing boundary phrase: {phrase}")
 
     for phrase in FORBIDDEN_OVERCLAIMS:

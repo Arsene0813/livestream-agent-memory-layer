@@ -4,15 +4,7 @@ Repository: `livestream-agent-memory-layer`
 
 A local evidence-bounded decision-support prototype for multi-store Meituan instant-retail operations, built with SQL diagnostics, metric-boundary preservation, lifecycle-aware retrieval, and deterministic grounded review.
 
-The title keeps the lifecycle-aware memory-layer framing used in the application materials. The current implemented retail path applies that evidence-boundary design to Meituan backend metrics, SQL diagnostic outputs, generated retail memory facts, answer-boundary checks, and RAC grounded review.
-
-## Start Here
-
-For the shortest reviewer-oriented path through the repository, start with
-the [Project Summary for Admissions Review](PROJECT_SUMMARY_FOR_ADMISSIONS.md).
-It links the retail evidence, field contracts, technical decisions, and
-evaluation layers while preserving the project's livestream memory-layer
-framing.
+The current implemented retail path applies the repository's lifecycle-aware evidence-boundary design to Meituan backend metrics, SQL diagnostic outputs, generated retail memory facts, answer-boundary checks, and RAC grounded review.
 
 ## Core Research Question
 

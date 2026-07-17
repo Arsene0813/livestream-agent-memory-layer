@@ -569,7 +569,7 @@ This file also preserves the field-name and scope-change guardrails that protect
 - `region_type` remains weak region or market-context evidence only; it is not a hard market-area classification, store-stage label, or peer-store grouping rule.
 - Activity evidence should remain separated into involvement, intensity, and future explicit campaign status only when campaign-calendar or backend status evidence exists.
 - Retrieval-score analysis remains offline inspection, not production retrieval logic.
-- `rac/` should be described as a deterministic source-aware review scaffold over the structured retail evidence path, not as autonomous cognition or a separate operating-decision engine.
+- `rac/` is the deterministic source-aware review layer over the structured retail evidence path, with factor expansion, evidence routing, competing hypotheses, critique, fact checks, and explicit limitations.
 
 
 ## Review Rule
