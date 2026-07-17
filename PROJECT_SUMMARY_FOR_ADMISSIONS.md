@@ -151,9 +151,9 @@ Main outputs:
 
 ## Factor-Aware Grounded Review Layer
 
-The project also includes a deterministic source-aware review scaffold over local project evidence. This is an important technical component because it makes multi-factor reasoning inspectable before an answer is written.
+The project also includes a deterministic source-aware review layer over local project evidence. This is an important technical component because it makes multi-factor reasoning inspectable before an answer is written.
 
-The scaffold decomposes an operating question into relevant factors, routes each factor to local evidence or boundary evidence, generates competing hypotheses, applies critique and fact checks, and produces a grounded report with confidence, limitations, source paths, and local evidence snippets.
+The layer decomposes an operating question into relevant factors, routes each factor to local evidence or boundary evidence, generates competing hypotheses, applies critique and fact checks, and produces a grounded report with confidence, limitations, source paths, and local evidence snippets.
 
 This layer is useful when current evidence is strong for one factor but weak, missing, or boundary-only for another. It helps prevent a grounded answer from hiding missing evidence behind a fluent conclusion.
 
