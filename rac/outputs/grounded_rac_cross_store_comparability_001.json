@@ -274,6 +274,17 @@
       "hypothesis_id": "H2",
       "claim": "Stores B-F should not be treated as directly comparable without pairwise gates.",
       "confidence": 0.86,
+      "supporting_factors": [
+        "same_reporting_period",
+        "store_type",
+        "order_volume",
+        "transaction_amount",
+        "activity_intensity",
+        "region_context",
+        "competition",
+        "sku_structure",
+        "repeated_reporting_windows"
+      ],
       "weaknesses": [
         "The mock pipeline does not compute quantitative pairwise thresholds."
       ],

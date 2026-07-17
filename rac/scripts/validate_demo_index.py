@@ -8,7 +8,7 @@ RAC = ROOT / "rac"
 DEMO_INDEX = RAC / "DEMO_INDEX.md"
 
 REQUIRED_SECTIONS = [
-    "# Structured Reasoning Scaffold Demo Index",
+    "# Factor-Aware Grounded Review Demo Index",
     "## 30-Second Summary",
     "## Current Implementation Status",
     "## How To Run",

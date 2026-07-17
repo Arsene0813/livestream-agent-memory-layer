@@ -11,6 +11,7 @@ RAC = ROOT / "rac"
 
 REQUIRED_FILES = [
     "README.md",
+    "src/state_validation.py",
     "schemas/cognition_state.schema.json",
     "schemas/rac_eval_case.schema.json",
     "prompts/question_analyzer.md",
@@ -26,14 +27,15 @@ REQUIRED_FILES = [
 ]
 
 REQUIRED_README_PHRASES = [
-    "Retrieval-Augmented Cognition",
+    "Factor-Aware Grounded Review (RAC)",
+    "shared review-state contract",
     "factor expansion",
-    "factor weighting",
+    "factor weights",
     "evidence routing",
-    "hypothesis generation",
+    "competing hypotheses",
     "critique",
-    "belief",
-    "does not claim",
+    "Fact Checks",
+    "Interpretation Boundary",
 ]
 
 REQUIRED_EVAL_KEYS = [

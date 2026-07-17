@@ -57,14 +57,14 @@ The `Source Lines` column is an audit pointer to the local source-file line rang
 
 | Factor | Source | Evidence Type | Status | Source Lines | Evidence Fields |
 |---|---|---|---|---|---|
-| typed_memory | rac/README.md | default_evidence | keyword_matched | 8-10 | fact |
-| evidence_packets | rac/README.md | default_evidence | keyword_matched | 2-4 | evidence |
-| hypotheses | rac/README.md | default_evidence | keyword_matched | 8-10 | hypothesis |
-| belief_records | rac/README.md | default_evidence | keyword_matched | 62-64 | confidence |
-| confidence | rac/README.md | default_evidence | keyword_matched | 62-64 | confidence |
-| limitations | rac/README.md | default_evidence | keyword_matched | 2-4 | limitation |
-| retrieval_trace | rac/README.md | default_evidence | keyword_matched | 4-6 | source |
-| active_state_filtering | rac/README.md | default_evidence | keyword_matched | 26-28 | state |
+| typed_memory | rac/README.md | default_evidence | keyword_matched | 1-2 | fact |
+| evidence_packets | rac/README.md | default_evidence | keyword_matched | 5-7 | evidence |
+| hypotheses | rac/README.md | default_evidence | keyword_matched | 26-28 | hypotheses, competing |
+| belief_records | rac/README.md | default_evidence | keyword_matched | 117-119 | belief |
+| confidence | rac/README.md | default_evidence | keyword_matched | 134-136 | confidence |
+| limitations | rac/README.md | default_evidence | keyword_matched | 7-9 | boundary |
+| retrieval_trace | rac/README.md | default_evidence | keyword_matched | 24-26 | source |
+| active_state_filtering | rac/README.md | default_evidence | keyword_matched | 7-9 | state |
 
 
 ## 5. Competing Hypotheses

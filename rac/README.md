@@ -128,6 +128,7 @@ same_reporting_period
 store_type
 order_volume
 transaction_amount
+transaction_orders
 payment_conversion
 typed_memory
 hypotheses

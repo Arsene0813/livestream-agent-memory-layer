@@ -4,7 +4,7 @@
 
 Promotion changes should be checked against cost, conversion, SKU structure, margin, and competitor context.
 
-This is a deterministic mock result. It proves the workflow can run end-to-end, but it does not claim live retrieval or autonomous world modeling.
+This is a deterministic mock result. It confirms that the current fixed fixture can generate the expected artifacts end-to-end, but it does not claim live retrieval or autonomous world modeling.
 
 ## 2. Question Type
 
@@ -44,6 +44,7 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 | Hypothesis | Confidence | Status | Weakness |
 |---|---:|---|---|
 | Promotion decisions should be checked against cost, conversion, SKU structure, margin, and competitor context. | 0.84 | strong | Final action still requires real margin and competitor evidence. |
+| The current evidence can support a bounded promotion review checklist, but not an automatic promotion change. | 0.68 | plausible | The mock pipeline does not calculate real cost trend. |
 
 ## 6. Critic Findings
 
@@ -83,4 +84,4 @@ How this value is assigned:
 - review_state_id: promotion_changes_require_multi_factor_check
 - status: active
 - validity_conditions:
- - Retail operations decision-support questions.
+  - Retail operations decision-support questions.

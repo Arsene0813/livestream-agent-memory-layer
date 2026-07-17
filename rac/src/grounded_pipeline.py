@@ -7,6 +7,7 @@ from typing import Any
 
 from rac.src.local_evidence_resolver import resolve_state_evidence
 from rac.src.mock_pipeline import build_factor_weighting_explanation, run_mock_pipeline, slugify
+from rac.src.state_validation import validate_cognition_state
 
 
 def markdown_escape(value: object) -> str:
@@ -401,6 +402,7 @@ def run_grounded_pipeline(question: str, *, root: Path) -> dict[str, Any]:
     state["grounded_evidence_rows"] = build_grounded_evidence_rows(grounded)
     state["final_report"] = write_grounded_final_report(state)
 
+    validate_cognition_state(state, root=root)
     return state
 
 

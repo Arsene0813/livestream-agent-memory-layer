@@ -20,9 +20,9 @@ REQUIRED_REPORT_SECTIONS = [
     "## 6. Critic Findings",
     "## 7. Fact Check",
     "## 8. Final Judgment",
-    "## 9. Confidence",
+    "## 9. Evidence-Coverage Score",
     "## 10. What Cannot Be Concluded",
-    "## 11. Belief Update",
+    "## 11. Review-State Update",
 ]
 
 ALLOWED_GROUNDING_STATUSES = {
@@ -94,8 +94,11 @@ def main() -> None:
             if section not in report:
                 fail(f"{case['case_id']} report missing section: {section}")
 
-        if "Local Evidence Snippet" not in report:
-            fail(f"{case['case_id']} report does not expose local snippets")
+        if "Source Lines" not in report or "Evidence Fields" not in report:
+            fail(
+                f"{case['case_id']} report does not expose "
+                "source-line audit pointers and evidence fields"
+            )
 
         if "Missing source files: 0" not in report:
             fail(f"{case['case_id']} report does not show zero missing sources")

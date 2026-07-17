@@ -74,8 +74,8 @@ Expected quality-gate result:
 
   [OK] RAC grounded quality gate passed
   [OK] Cases checked: 4
-  [OK] Total grounded packets: 29
-  [OK] Keyword matched packets: 27
+  [OK] Total grounded packets: 30
+  [OK] Keyword matched packets: 28
   [OK] Boundary matched packets: 2
   [OK] Fallback packets: 0
   [OK] Missing source files: 0

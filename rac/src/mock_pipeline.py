@@ -5,6 +5,8 @@ import re
 from pathlib import Path
 from typing import Any
 
+from rac.src.state_validation import validate_cognition_state
+
 
 def slugify(text: str) -> str:
     text = text.lower()
@@ -46,6 +48,17 @@ FACTOR_LIBRARY: dict[str, list[dict[str, Any]]] = {
         {"factor_id": "entry_conversion", "name": "Entry conversion", "description": "Shows whether exposure translated into store visits.", "evidence_needed": ["entry users", "exposure users", "entry conversion rate"]},
         {"factor_id": "order_conversion", "name": "Order conversion", "description": "Shows whether store visits translated into order submissions.", "evidence_needed": ["order users", "entry users", "order conversion rate"]},
         {"factor_id": "promotion_intensity", "name": "Promotion intensity", "description": "Promotion activity may affect orders, transaction amount, and attribution.", "evidence_needed": ["activity orders", "activity cost", "activity original transaction amount"]},
+        {
+            "factor_id": "transaction_orders",
+            "name": "Transaction orders",
+            "description": (
+                "Provides accepted and not-cancelled order-volume "
+                "context without establishing attribution by itself."
+            ),
+            "evidence_needed": [
+                "transaction_orders",
+            ],
+        },
     ],
     "comparability_judgment": [
         {"factor_id": "same_reporting_period", "name": "Same reporting period", "description": "Stores must first share the same reporting window.", "evidence_needed": ["period start", "period end"]},
@@ -102,6 +115,7 @@ FACTOR_WEIGHT_BUCKETS: dict[str, set[str]] = {
         "store_type",
         "order_volume",
         "transaction_amount",
+        "transaction_orders",
         "payment_conversion",
         "typed_memory",
         "hypotheses",
@@ -241,7 +255,20 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
             },
             {
                 "hypothesis_id": "H2",
+                "claim": (
+                    "Store A's April performance should be reviewed "
+                    "as a multi-factor movement across search exposure, "
+                    "entry conversion, order conversion, promotion "
+                    "intensity, and transaction orders."
+                ),
                 "confidence": 0.74,
+                "supporting_factors": [
+                    "search_exposure",
+                    "entry_conversion",
+                    "order_conversion",
+                    "promotion_intensity",
+                    "transaction_orders",
+                ],
                 "weaknesses": ["Observational evidence cannot establish strict causality."],
                 "status": "strong"
             },
@@ -249,6 +276,13 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
                 "hypothesis_id": "H3",
                 "claim": "The available evidence is insufficient for single-cause attribution.",
                 "confidence": 0.82,
+                "supporting_factors": [
+                    "search_exposure",
+                    "entry_conversion",
+                    "order_conversion",
+                    "promotion_intensity",
+                    "transaction_orders",
+                ],
                 "weaknesses": ["Conservative rather than complete causal explanation."],
                 "status": "strong"
             }
@@ -268,6 +302,17 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
                 "hypothesis_id": "H2",
                 "claim": "Stores B-F should not be treated as directly comparable without pairwise gates.",
                 "confidence": 0.86,
+                "supporting_factors": [
+                    "same_reporting_period",
+                    "store_type",
+                    "order_volume",
+                    "transaction_amount",
+                    "activity_intensity",
+                    "region_context",
+                    "competition",
+                    "sku_structure",
+                    "repeated_reporting_windows",
+                ],
                 "weaknesses": ["The mock pipeline does not compute quantitative pairwise thresholds."],
                 "status": "strong"
             }
@@ -279,12 +324,37 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
                 "hypothesis_id": "H1",
                 "claim": "Promotion decisions should be checked against cost, conversion, SKU structure, margin, and competitor context.",
                 "confidence": 0.84,
+                "supporting_factors": [
+                    "activity_orders",
+                    "activity_cost",
+                    "merchant_subsidy",
+                    "platform_subsidy",
+                    "order_conversion",
+                    "payment_conversion",
+                    "sku_margin_structure",
+                    "competitor_context",
+                ],
                 "weaknesses": ["Final action still requires real margin and competitor evidence."],
                 "status": "strong"
             },
             {
                 "hypothesis_id": "H2",
+                "claim": (
+                    "The current evidence can support a bounded "
+                    "promotion review checklist, but not an automatic "
+                    "promotion change."
+                ),
                 "confidence": 0.68,
+                "supporting_factors": [
+                    "activity_orders",
+                    "activity_cost",
+                    "merchant_subsidy",
+                    "platform_subsidy",
+                    "order_conversion",
+                    "payment_conversion",
+                    "sku_margin_structure",
+                    "competitor_context",
+                ],
                 "weaknesses": ["The mock pipeline does not calculate real cost trend."],
                 "status": "plausible"
             }
@@ -422,7 +492,7 @@ def write_final_report(state: dict[str, Any]) -> str:
     lines.append("")
     lines.append(state["belief_update"]["claim"])
     lines.append("")
-    lines.append("This is a deterministic mock result. It proves the workflow can run end-to-end, but it does not claim live retrieval or autonomous world modeling.")
+    lines.append("This is a deterministic mock result. It confirms that the current fixed fixture can generate the expected artifacts end-to-end, but it does not claim live retrieval or autonomous world modeling.")
     lines.append("")
     lines.append("## 2. Question Type")
     lines.append("")
@@ -518,90 +588,7 @@ def run_mock_pipeline(question: str) -> dict[str, Any]:
     factor_weights = weight_factors(factors)
     evidence_packets = route_evidence(analysis["question_type"], factors)
     hypotheses = generate_hypotheses(analysis["question_type"])
-    hypotheses = [
-        h for h in hypotheses
-        if isinstance(h, dict) and h.get("claim")
-    ]
-
-    if len(hypotheses) < 2:
-        fallback_hypotheses = {
-            "strategic_recommendation": [
-                {
-                    "claim": (
-                        "Promotion changes should be reviewed with activity cost, "
-                        "order conversion, payment conversion, SKU structure, margin context, "
-                        "and competitor context."
-                    ),
-                    "confidence": 0.72,
-                    "status": "plausible",
-                    "weakness": (
-                        "The mock pipeline does not calculate live competitor, margin, "
-                        "or promotion-response evidence."
-                    ),
-                },
-                {
-                    "claim": (
-                        "The available evidence can support a bounded review plan, "
-                        "but not an automatic promotion decision."
-                    ),
-                    "confidence": 0.80,
-                    "status": "strong",
-                    "weakness": (
-                        "The current prototype remains deterministic and file-backed."
-                    ),
-                },
-            ],
-            "causal_diagnostic": [
-                {
-                    "claim": (
-                        "The available evidence is insufficient for single-cause attribution."
-                    ),
-                    "confidence": 0.82,
-                    "status": "strong",
-                    "weakness": "Conservative rather than complete causal explanation.",
-                },
-            ],
-            "comparability_judgment": [
-                {
-                    "claim": (
-                        "Same-period staging does not establish direct pairwise comparability."
-                    ),
-                    "confidence": 0.86,
-                    "status": "strong",
-                    "weakness": (
-                        "The mock pipeline does not compute quantitative pairwise thresholds."
-                    ),
-                },
-            ],
-        }
-
-        existing_claims = {h.get("claim") for h in hypotheses}
-        for candidate in fallback_hypotheses.get(analysis["question_type"], []):
-            if len(hypotheses) >= 2:
-                break
-            if candidate["claim"] not in existing_claims:
-                hypotheses.append(candidate)
-                existing_claims.add(candidate["claim"])
     critic_findings = critique(analysis["question_type"])
-    normalized_hypotheses = []
-    for h in hypotheses:
-        if not isinstance(h, dict) or not h.get("claim"):
-            continue
-
-        if "weaknesses" not in h:
-            weakness = h.pop("weakness", "")
-            if isinstance(weakness, list):
-                h["weaknesses"] = weakness
-            elif weakness:
-                h["weaknesses"] = [weakness]
-            else:
-                h["weaknesses"] = ["No additional weakness recorded."]
-
-        h.setdefault("confidence", 0.60)
-        h.setdefault("status", "plausible")
-        normalized_hypotheses.append(h)
-
-    hypotheses = normalized_hypotheses
 
     fact_check_result = fact_check(analysis["question_type"], [h["claim"] for h in hypotheses])
     belief_update = build_belief_update(analysis["question_type"])
@@ -621,6 +608,10 @@ def run_mock_pipeline(question: str) -> dict[str, Any]:
     }
 
     state["final_report"] = write_final_report(state)
+    validate_cognition_state(
+        state,
+        root=Path(__file__).resolve().parents[2],
+    )
     return state
 
 

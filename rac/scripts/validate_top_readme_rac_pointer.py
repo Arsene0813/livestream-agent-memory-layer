@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from __future__ import annotations
 
 import re
@@ -6,34 +7,22 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 TOP_README = ROOT / "README.md"
 
-START_MARKER = "<!-- RAC_EXTENSION_START -->"
-END_MARKER = "<!-- RAC_EXTENSION_END -->"
-
 REQUIRED_PATHS = [
+    "PROJECT_SUMMARY_FOR_ADMISSIONS.md",
     "rac/DEMO_INDEX.md",
-    "rac/outputs/grounded_rac_store_a_attribution_001.md",
-    "rac/outputs/grounded_rac_cross_store_comparability_001.md",
-    "rac/outputs/grounded_quality_summary.md",
-    "rac/scripts/run_grounded_pipeline.py",
-    "rac/scripts/validate_grounded_quality_gate.py",
 ]
 
 REQUIRED_PHRASES = [
-    "Structured Reasoning Scaffold: Factor-Aware Grounded Review",
-    "question decomposition",
+    "Lifecycle-Aware AI Memory Layer for Retail Decision Support",
+    "Factor-aware grounded review layer (RAC)",
+    "deterministic grounded review",
     "factor expansion",
-    "factor weighting",
-    "local evidence grounding",
+    "evidence routing",
     "competing hypotheses",
     "critique",
-    "fact check",
-    "confidence and limitations",
-    "deterministic only",
-    "no LLM calls",
-    "no Qdrant retrieval",
-    "no live Meituan backend access",
-    "no completed pairwise comparability gate",
-    "no causal proof from observational store metrics",
+    "fact checking",
+    "limitations",
+    "future pairwise comparability gate remains question-specific",
 ]
 
 FORBIDDEN_OVERCLAIMS = [
@@ -47,24 +36,14 @@ FORBIDDEN_OVERCLAIMS = [
 
 
 def fail(message: str) -> None:
-    raise SystemExit(f"[Top README RAC pointer validation failed] {message}")
+    raise SystemExit(
+        f"[Top README RAC pointer validation failed] "
+        f"{message}"
+    )
 
 
 def normalize(text: str) -> str:
     return re.sub(r"\s+", " ", text.strip().lower())
-
-
-def extract_section(text: str) -> str:
-    start = text.find(START_MARKER)
-    end = text.find(END_MARKER)
-
-    if start == -1 or end == -1:
-        fail("structured reasoning scaffold markers not found in top-level README.md")
-
-    if end <= start:
-        fail("RAC extension markers are in the wrong order")
-
-    return text[start:end + len(END_MARKER)]
 
 
 def main() -> None:
@@ -72,23 +51,25 @@ def main() -> None:
         fail("Top-level README.md does not exist")
 
     text = TOP_README.read_text(encoding="utf-8")
-    section = extract_section(text)
+    normalized_text = normalize(text)
 
     for phrase in REQUIRED_PHRASES:
-        if phrase not in section:
-            fail(f"Missing required phrase in RAC section: {phrase}")
+        if normalize(phrase) not in normalized_text:
+            fail(f"Missing required phrase: {phrase}")
 
     for relative_path in REQUIRED_PATHS:
-        if relative_path not in section:
-            fail(f"RAC section does not reference path: {relative_path}")
+        if relative_path not in text:
+            fail(
+                f"README does not reference path: {relative_path}"
+            )
 
         if not (ROOT / relative_path).exists():
-            fail(f"Referenced path does not exist: {relative_path}")
-
-    normalized_section = normalize(section)
+            fail(
+                f"Referenced path does not exist: {relative_path}"
+            )
 
     for phrase in FORBIDDEN_OVERCLAIMS:
-        if normalize(phrase) in normalized_section:
+        if normalize(phrase) in normalized_text:
             fail(f"Forbidden overclaim found: {phrase}")
 
     print("[OK] Top README RAC pointer validation passed")

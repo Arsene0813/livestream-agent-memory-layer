@@ -4,7 +4,7 @@
 
 RAC should be implemented as a reasoning layer above the existing typed memory system before replacing any endpoint.
 
-This is a deterministic mock result. It proves the workflow can run end-to-end, but it does not claim live retrieval or autonomous world modeling.
+This is a deterministic mock result. It confirms that the current fixed fixture can generate the expected artifacts end-to-end, but it does not claim live retrieval or autonomous world modeling.
 
 ## 2. Question Type
 
@@ -81,4 +81,4 @@ How this value is assigned:
 - review_state_id: rac_should_layer_above_existing_memory
 - status: active
 - validity_conditions:
- - Current project architecture stage.
+  - Current project architecture stage.

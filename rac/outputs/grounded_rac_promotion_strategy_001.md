@@ -57,12 +57,12 @@ The `Source Lines` column is an audit pointer to the local source-file line rang
 
 | Factor | Source | Evidence Type | Status | Source Lines | Evidence Fields |
 |---|---|---|---|---|---|
-| activity_orders | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 129-131 | activity_orders |
-| activity_cost | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 130-132 | activity_cost |
-| merchant_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 130-132 | merchant_subsidy |
-| platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 130-132 | platform_subsidy |
+| activity_orders | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 135-137 | activity_orders |
+| activity_cost | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 136-138 | activity_cost |
+| merchant_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 136-138 | merchant_subsidy |
+| platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 136-138 | platform_subsidy |
 | order_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 77-79 | order conversion |
-| payment_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 479-481 | 支付人数 |
+| payment_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 510-512 | 支付人数 |
 | sku_margin_structure | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 13-15 | sku |
 | competitor_context | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 75-77 | competition |
 
@@ -74,7 +74,7 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 | Hypothesis | Confidence | Status | Weakness |
 |---|---:|---|---|
 | Promotion decisions should be checked against cost, conversion, SKU structure, margin, and competitor context. | 0.84 | strong | Final action still requires real margin and competitor evidence. |
-| Promotion changes should be reviewed with activity cost, order conversion, payment conversion, SKU structure, margin context, and competitor context. | 0.72 | plausible | The mock pipeline does not calculate live competitor, margin, or promotion-response evidence. |
+| The current evidence can support a bounded promotion review checklist, but not an automatic promotion change. | 0.68 | plausible | The mock pipeline does not calculate real cost trend. |
 
 ## 6. Critic Findings
 

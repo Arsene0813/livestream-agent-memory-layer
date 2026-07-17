@@ -4,7 +4,7 @@
 
 Stores B-F can be staged for same-period diagnostic review, but should not be treated as directly comparable without pairwise gates.
 
-This is a deterministic mock result. It proves the workflow can run end-to-end, but it does not claim live retrieval or autonomous world modeling.
+This is a deterministic mock result. It confirms that the current fixed fixture can generate the expected artifacts end-to-end, but it does not claim live retrieval or autonomous world modeling.
 
 ## 2. Question Type
 
@@ -86,4 +86,4 @@ How this value is assigned:
 - review_state_id: stores_b_f_same_period_not_directly_comparable
 - status: active
 - validity_conditions:
- - Demo 2 March 2026 B-F context.
+  - Demo 2 March 2026 B-F context.

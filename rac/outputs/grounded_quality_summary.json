@@ -9,19 +9,19 @@
       "passed": true,
       "issues": [],
       "metrics": {
-        "factor_count": 4,
-        "factor_weight_count": 4,
-        "hypothesis_count": 2,
+        "factor_count": 5,
+        "factor_weight_count": 5,
+        "hypothesis_count": 3,
         "critic_count": 2,
         "limitation_count": 3,
-        "grounded_row_count": 4,
-        "total_packets": 4,
-        "keyword_matched_count": 4,
+        "grounded_row_count": 5,
+        "total_packets": 5,
+        "keyword_matched_count": 5,
         "boundary_matched_count": 0,
         "fallback_count": 0,
         "source_missing_count": 0,
         "row_status_counts": {
-          "keyword_matched": 4
+          "keyword_matched": 5
         }
       }
     },
