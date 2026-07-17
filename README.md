@@ -33,7 +33,7 @@ The goal is to build a more reliable evidence-based framework for multi-store op
 
 ## Current Prototype Workflow
 
-The current prototype follows one evidence path: selected backend-derived metric evidence -> canonical field dictionary -> SQL diagnostic output -> generated retail memory facts -> boundary-preserving answer checks.
+The current prototype follows one evidence path: selected merchant-backend metrics -> canonical field dictionary -> SQL diagnostic output -> generated retail memory facts -> boundary-preserving answer checks.
 
 Current source tables were manually transcribed and anonymized at store level; this repository does not implement automated backend ingestion.
 
@@ -106,7 +106,7 @@ The prototype has two connected layers.
 Basic flow:
 
 ```text
-selected backend-derived metrics / operator input -> metric dictionary and data contract -> SQL diagnostic output -> generated memory facts -> retrieval with source fields and limitations -> qualified answer or refusal
+selected merchant-backend metrics / operator input -> metric dictionary and data contract -> SQL diagnostic output -> generated memory facts -> retrieval with source fields and limitations -> qualified answer or refusal
 ```
 
 The important design choice is that memory facts are not just summaries. They carry source fields, observed values, `calculation` metadata, source paths, supporting source paths, confidence labels, and limitations.
@@ -218,7 +218,7 @@ Detailed retail file ownership is kept in `retail_ops/README.md`.
 
 ## Review Takeaway and Next Step
 
-This repository demonstrates a staged decision-support prototype for a real Meituan multi-store operating problem. Selected backend-derived metrics are manually structured under documented definitions, transformed with SQL, converted into retrieval-facing memory facts, and checked against evidence boundaries before later answers make operating claims.
+This repository demonstrates a staged decision-support prototype for a real Meituan multi-store operating problem. Selected merchant-backend metrics are manually transcribed into source tables under documented definitions, transformed with SQL, converted into retrieval-facing memory facts, and checked against evidence boundaries before later answers make operating claims.
 
 | Area | Current role | Next use |
 | --- | --- | --- |

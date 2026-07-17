@@ -55,7 +55,7 @@ This staged local prototype grew from a real operating problem in a 48-store Mei
 | Repeated-window panel | Stores B-F across February, March, and April 2026, using the supporting-table coverage documented in the repository. |
 | Current decision use | Descriptive diagnosis, evidence lineage, scope checks, and retrieval or answer-boundary evaluation. |
 
-The current retail decision-support path turns selected backend-derived evidence into a cautious evidence chain:
+The current retail decision-support path turns selected, manually transcribed merchant-backend metrics into a traceable evidence chain:
 
 1. Meituan backend metric evidence
 2. `DATA_DICTIONARY.md` field contract

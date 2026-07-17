@@ -165,7 +165,7 @@ Both paths should preserve metric definitions, entity scope, period scope, sourc
 
 | Evidence type | Examples | Current role | Interpretation limit |
 |---|---|---|---|
-| Backend-derived fields | `transaction_amount`, `entry_users`, `order_users`, `activity_orders` | Preserve Meituan backend metric meanings under canonical field names. | Observed metrics need context before stronger operating interpretation. |
+| Backend-reported fields | `transaction_amount`, `entry_users`, `order_users`, `activity_orders` | Preserve Meituan backend metric meanings under canonical field names. | Observed metrics need context before stronger operating interpretation. |
 | SQL-derived diagnostics | `search_entry_rate_pct`, `search_entry_share_pct`, `activity_order_share_pct`, `comparison_limit_notes` | Expose visibility-entry structure, activity involvement, product-mix signals, and interpretation limits. | Diagnostic signals are not peer-selection rules. |
 | Retrieval-facing memory slots | `visibility_entry_profile`, `activity_lever_profile`, `transaction_conversion_profile`, `single_metric_attribution_guard`, `top3_sku_product_mix_note` | Store evidence with source fields, observed values, `calculation` metadata, confidence, and limitations. | Memory slots keep evidence traceable rather than creating undocumented fields. |
 | Future gate fields | `comparison_question_type`, `comparison_decision`, `market_area_type` | Planned contract fields for future pairwise comparability work. | These are future fields, not current Demo 2 output columns. |
@@ -298,9 +298,9 @@ Main output files:
 |---|---|---|---|---|
 | Store A's visibility and entry structure can be described from exposure, ranking, entry, and search-entry metrics. | `exposure_users`, `store_average_rank`, `entry_users`, `search_exposure_users`, `search_average_rank`, `search_entry_users` | `search_exposure_share_pct`, `search_entry_share_pct`, `search_entry_rate_pct` | `visibility_entry_profile` | Describes whether the store was being seen and entered; does not prove causal growth. |
 | Store A's activity metrics should be interpreted as operating-lever evidence. | `activity_original_transaction_amount`, `activity_orders`, `activity_cost`, `merchant_subsidy_amount`, `platform_subsidy_amount` | `activity_order_share_pct`, `activity_cost_ratio_pct`, `merchant_subsidy_share_of_activity_cost_pct` | `activity_lever_profile` | Activity is a tool inside the operating chain, not a standalone causal explanation or simple ROI judgment. |
-| Store A's transaction and conversion signals moved in different directions. | `transaction_amount`, `transaction_orders`, `order_conversion_rate_pct`, `average_order_value` | `transaction_amount_mom_pct`, `transaction_orders_mom_pct`, `average_order_value_mom_pct` | `transaction_conversion_profile` | Transaction recovery can coexist with weaker conversion or lower average order value. |
+| Store A's transaction and conversion signals moved in different directions. | `transaction_amount`, `transaction_orders`, `order_conversion_rate_pct`, `average_order_value` | `transaction_amount_mom_pct`, `transaction_orders_mom_pct`, `average_order_value_mom_pct` | `transaction_conversion_profile` | Higher transaction amount and order volume can coexist with lower conversion rate and average order value. These fields describe the movement, not its cause. |
 | Store A's changes should not be explained by one metric alone. | Visibility, entry, transaction, conversion, activity, and SKU evidence | Combined multi-signal interpretation | `single_metric_attribution_guard` | The demo supports structured comparison of signals, not causal attribution. |
-| Top SKU mix appears care-solution-heavy. | Top-3 SKU records | Top-3 SKU observation | `top3_sku_product_mix_note` | Top-3 evidence only; not full SKU category-share analysis. |
+| All nine listed Store A top-three monthly SKU rows are tagged `care_solution`. | Top-3 SKU records and the manually curated `sku_category_note` helper field | Observation over the listed rows | `top3_sku_product_mix_note` | Listed-row evidence only; not the store's full catalogue, category sales share, or total product mix. |
 
 ## Metric Lineage Rules
 
@@ -328,7 +328,7 @@ Traffic-source users may overlap. The same customer may see the store through mu
 activity_cost_ratio_pct = activity_cost / activity_original_transaction_amount * 100
 ~~~
 
-Under the official Meituan backend explanation documented in `retail_ops/data/DATA_DICTIONARY.md`, a smaller value means lower cost per unit of activity-driven revenue and better activity efficiency. In this project, the field remains `activity_cost_ratio_pct` because the implemented formula behaves as a cost ratio rather than traditional ROI. The observed ratio is interpreted together with the documented operating context; by itself, it does not establish incremental demand, profit, margin, causal lift, or overall campaign effectiveness.
+Under the documented formula, a smaller value means lower recorded `activity_cost` per unit of `activity_original_transaction_amount` in the same reporting scope. The field remains `activity_cost_ratio_pct` because this is a cost ratio rather than traditional ROI. Incremental efficiency, lift, margin, or campaign effectiveness would require additional operating context and counterfactual evidence.
 
 ### Transaction Metrics
 
@@ -555,7 +555,7 @@ This section records field-name and semantic-change review for the retail eviden
 
 Current decision: **no existing source CSV field, SQL output field, generated memory slot, or evaluation field is renamed.**
 
-The purpose of this review is to protect the Meituan backend metric contract before future comparability-gate work. Backend-derived fields, SQL-derived diagnostic fields, and retrieval-facing memory slots should not be mixed, renamed, or promoted into new meanings without an explicit mapping review.
+The purpose of this review is to protect the Meituan merchant-backend metric contract before future comparability-gate work. Backend-reported fields, SQL-derived diagnostic fields, and retrieval-facing memory slots should not be mixed, renamed, or promoted into new meanings without an explicit mapping review.
 
 ## Consolidated Scope Notes
 
@@ -728,7 +728,7 @@ Any future field rename or semantic change must be migrated in this order:
 7. update validation scripts and expected outputs;
 8. update README, admissions summary, and demo docs only after the data contract is stable.
 
-This rule is intentionally conservative. The project should prefer adding clearly documented future fields over silently changing the meaning of existing Meituan backend-derived fields.
+This rule is intentionally conservative. The project should prefer adding clearly documented future fields over silently changing the meaning of existing Meituan backend-reported fields.
 
 
 ## Current Field Review Table
@@ -753,7 +753,7 @@ This rule is intentionally conservative. The project should prefer adding clearl
 | `entry_conversion_rate_pct` | Backend-style entry conversion rate, interpreted with exposure and entry scope. | Source CSVs, SQL outputs. | No. |
 | `search_entry_users` | Backend-reported users entering from search during the selected period. | Source CSVs, SQL output, visibility facts. | No. |
 | `search_entry_rate_pct` | SQL-derived search exposure-to-entry diagnostic. | Demo 2 SQL output and lineage. | No. |
-| `search_entry_share_pct` | SQL-derived directional structure metric for the share of store entry attributed to the search source. Source-level users may overlap. | Demo 2 SQL output, generated facts, lineage. | No. |
+| `search_entry_share_pct` | SQL-derived directional ratio: `search_entry_users / entry_users * 100` in the same reporting window. Source-level users may overlap, so it is not user-level attribution or exclusive channel contribution. | Demo 2 SQL output, generated facts, lineage. | No. |
 | `order_users` | Backend order-user metric used in the backend order-conversion formula. | Source CSVs, SQL output, transaction/conversion facts. | No. |
 | `order_times` | Backend order-submission/action-count metric. It is not the same as `order_users`. | Source CSVs and funnel evidence. | No. |
 | `order_amount` | Backend order-submission amount field. It belongs to the order-submission funnel and must not be merged with `transaction_amount`. | Demo 2 source metrics, SQL output, generated facts, lineage. | No. |
