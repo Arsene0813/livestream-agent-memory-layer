@@ -20,6 +20,9 @@ FORBIDDEN_ALIASES = [
     "paid_amount",
 ]
 
+# Selected required implemented fields exercised by the current
+# Demo 1 and Demo 2 contracts. This is not the complete field
+# registry documented in DATA_DICTIONARY.md.
 REQUIRED_CANONICAL_FIELDS = [
     "store_id",
     "period_start",
@@ -508,7 +511,7 @@ def main() -> int:
 
     report = [
         "Retail data contract validation PASSED.",
-        "Checked canonical field presence across dictionary and current source/output files.",
+        "Checked selected required implemented field presence across the dictionary and current source/output files.",
         "Checked Demo 1 source/output headers.",
         "Checked Demo 2 source/output headers.",
         "Checked Demo 2 diagnostic-scope and limitation fields.",

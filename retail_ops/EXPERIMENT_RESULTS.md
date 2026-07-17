@@ -19,6 +19,8 @@ boundaries. Retrieval scores answer a narrower question: how semantic
 similarity behaves while routing evidence. A high score does not make a query
 answerable.
 
+The retail data-contract validator is a static contract check over the selected required implemented fields listed in `REQUIRED_CANONICAL_FIELDS`, current source and output headers, forbidden aliases, generated-fact metadata, and required dictionary boundary phrases. It does not parse or semantically validate every field definition in `DATA_DICTIONARY.md`.
+
 RAC grounded review remains an important technical layer. It uses local
 evidence from these stages to make multi-factor reasoning, critique, source
 paths, confidence updates, and unresolved limitations inspectable.
@@ -28,9 +30,9 @@ paths, confidence updates, and unresolved limitations inspectable.
 
 | Experiment                          | Question                                                                                                   | Input                                                                    | Output                                                                                | What it prevents                                                                       |
 | ----------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| Field-contract validation           | Are field names and metric meanings consistent across the retail path?                                         | `DATA_DICTIONARY.md`, source CSV files, SQL outputs, generated facts     | Pass/fail validation of names, meanings, and fact structure                           | Alias drift, silent metric redefinition, unsupported generated-fact fields             |
+| Field-contract validation           | Do the selected required implemented fields, declared headers, aliases, generated-fact metadata, and required boundary phrases remain aligned with the current contract?                                         | `DATA_DICTIONARY.md`, source CSV files, SQL outputs, generated facts     | Pass/fail checks over the declared static contract scope                           | Declared alias drift, missing required fields, and unsupported generated-fact metadata             |
 | Value-lineage validation | Do source values, derived outputs, and generated memory facts agree at field level? | Demo 1 and Demo 2 source CSV files, diagnostic outputs, top-search and top-SKU evidence, generated facts | Pass/fail comparisons for passthrough values, formulas, period metadata, and nested evidence | Silent value drift between source evidence, diagnostic outputs, and retrieval facts |
-| Demo 1 month-over-month diagnostic  | Can one store be described across repeated months without reducing the result to one metric?               | Store A February-April 2026 backend-derived metrics                      | Multi-metric diagnostic output and memory facts                                       | Single-metric attribution, causal overclaim, month-as-good-or-bad labeling             |
+| Demo 1 month-over-month diagnostic  | Can one store be described across repeated months without reducing the result to one metric?               | Store A February-April 2026 manually transcribed merchant-backend metrics                      | Multi-metric diagnostic output and memory facts                                       | Single-metric attribution, causal overclaim, month-as-good-or-bad labeling             |
 | Demo 2 same-period diagnostic       | Can selected B-F store-period rows be staged under one March 2026 reporting window and one field contract? | Stores B-F March 2026 metric records, top search terms, top-SKU evidence | Row-level diagnostic output with `comparison_scope_flag` and `comparison_limit_notes` | Store ranking, premature pairwise comparability, strategy-transfer claims              |
 | Answer-boundary checks              | Do later answers preserve entity, period, metric-definition, source, and comparison limits?                | Generated retail memory facts and boundary test cases                    | Scenario-level pass/fail behavior                                                     | Unsupported recommendations, period mismatch, entity mismatch, ROI/profit overclaim    |
 | Retrieval wording-variation stress test | Does wording variation still retrieve the intended evidence path?                                          | Local file-backed retail evidence corpus and query variants              | Score-distribution and wording-variation stress-test outputs                                    | Fluent answers hiding weak or mismatched evidence                                      |
@@ -44,7 +46,7 @@ paths, confidence updates, and unresolved limitations inspectable.
 
 | Layer | Review question | Evidence output | Boundary protected |
 |---|---|---|---|
-| Field contract | Are field names and metric meanings consistent? | Dictionary, source headers, SQL outputs, generated-fact structure | Alias drift and silent metric redefinition |
+| Field contract | Do the selected required implemented fields and declared static checks remain aligned? | Dictionary boundary phrases, source/output headers, aliases, and generated-fact structure | Declared alias drift, missing required fields, and unsupported generated-fact metadata |
 | Value lineage | Do values remain consistent across source tables, diagnostic outputs, and generated facts? | Demo 1 and Demo 2 value-lineage validation results | Silent value drift and unsupported retrieval-fact values |
 | SQL diagnostics | Can selected store-period records be structured without changing backend meanings? | Demo 1 month-over-month output and Demo 2 same-period B-F output | Single-metric attribution, store ranking, premature comparison |
 | Memory facts and answer boundaries | Can later answers preserve entity, period, source, metric, and limitation fields? | Generated retail memory facts, answer-behavior checks, endpoint checks | Unsupported advice, ROI/profit overclaim, scope mismatch |
@@ -69,7 +71,7 @@ selected Meituan backend metrics
 -> RAC grounded review over local evidence
 ```
 
-The early checks protect field names, metric meanings, source paths, and
+The early checks protect selected required implemented field names, declared headers, required boundary phrases, source paths, and
 generated-fact structure. Demo 1 and Demo 2 then test whether selected
 store-period evidence can be turned into diagnostic outputs without changing
 backend metric definitions.
