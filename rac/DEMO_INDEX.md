@@ -1,10 +1,14 @@
-# Structured Reasoning Scaffold Demo Index
+# Factor-Aware Grounded Review Demo Index
 
-This page is the reviewer-facing entry point for the `rac/` implementation folder.
+This page is the reviewer-facing entry point for the `rac/`
+implementation. RAC is an important factor-aware grounded review layer
+over the structured retail evidence.
 
-The module is a structured reasoning scaffold for question decomposition, evidence routing, critique, and evidence-coverage update. It is not a free-form multi-agent chatroom and should not be presented as autonomous cognition.
+It makes factor selection, source routing, unavailable evidence,
+competing explanations, critique, fact checks, and evidence coverage
+inspectable before a report is accepted.
 
-It forces an answer to pass through:
+The implemented workflow is:
 
 ```text
 question

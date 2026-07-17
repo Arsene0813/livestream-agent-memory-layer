@@ -1,38 +1,25 @@
 # Project Summary for Admissions Review
 
-## Reviewer reading path
+## Reviewer Reading Path
 
-The repository contains implementation details, generated artifacts, and
-supporting experiments. A reviewer can follow this shorter evidence path:
+This file is the single application-facing entry point.
 
-1. Start with the
-   [Retail Operations Extension](retail_ops/README.md)
-   for the retail problem, Demo 1, Demo 2, and evidence boundaries.
-2. Inspect the
-   [Demo 2 generated memory facts](retail_ops/outputs/generated_demo2_retail_memory_facts.json)
-   for the five stores by five diagnostic slots represented in the
-   file-backed demo.
-3. Use the
-   [Meituan backend metric dictionary](retail_ops/data/DATA_DICTIONARY.md)
-   for canonical source fields, analytical output definitions, formulas,
-   grains, and interpretation boundaries.
-4. Use the
-   [retail technical appendix](retail_ops/TECHNICAL_APPENDIX.md)
-   for source-to-claim lineage, metadata namespaces, design decisions, and
-   limitations.
-5. Review the
-   [retail experiment map](retail_ops/EXPERIMENT_RESULTS.md)
-   for the purpose and result location of each experiment.
-6. Check the four Demo 2 evaluation layers:
-   - [fact-contract coverage](eval/eval_retail_demo2_facts.py);
-   - [answer-contract fixtures](eval/eval_retail_demo2_answer_behavior.py);
-   - [endpoint behavior](eval/eval_retail_demo2_endpoint_behavior.py);
-   - [scope-boundary behavior](eval/eval_retail_demo2_scope_boundary.py).
+| Step | File | What to inspect |
+|---:|---|---|
+| 1 | `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Business origin, evidence coverage, architecture, implemented scope, and decision boundary. |
+| 2 | `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` | Store A month-over-month evidence and multi-metric interpretation. |
+| 3 | `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` | Same-period B-F evidence and interpretation guardrails. |
+| 4 | `retail_ops/outputs/store_period_panel_coverage_output.csv` and `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Repeated-window B-F coverage and descriptive summary. |
+| 5 | `retail_ops/EXPERIMENT_RESULTS.md` | Experiment questions, procedures, results, and failure modes. |
+| 6 | `rac/DEMO_INDEX.md` | Factor-aware grounded review cases, reports, pipeline stages, and quality gate. |
 
-The answer-contract fixture evaluation uses manually specified wording
-contracts and does not call the API endpoint. Endpoint behavior and
-scope-boundary evaluations exercise the implemented response path and its
-refusal boundaries.
+The full project evolution is preserved in
+`case_studies/from_livestream_to_retail_decision_support.md`.
+
+Use `retail_ops/data/DATA_DICTIONARY.md`,
+`retail_ops/TECHNICAL_APPENDIX.md`, and
+`retail_ops/COMPARABILITY_GATE_V0.md` as contract and technical
+references while reviewing the implemented evidence.
 
 ## Project Title
 
@@ -69,18 +56,18 @@ The repository also includes a deterministic factor-aware grounded review scaffo
 
 The current project does not claim a completed pairwise comparability gate. A future gate should judge whether two store-period records can be compared for one selected operating question, using factors such as reporting-window alignment, transaction order volume, transaction amount, activity involvement, activity intensity, store type, repeated-window stability, weak region context, competition evidence, SKU structure, and fulfillment or stockout context.
 
-## Review Note
+## Document Ownership
 
-This file is the application-facing summary. For full repository review after this summary, use:
-
-1. `README.md` - repository-level review path and current implementation boundary.
-2. `retail_ops/data/DATA_DICTIONARY.md` - authoritative field names and metric definitions.
-3. `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` - current single-store month-over-month diagnostic.
-4. `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` - current same-period B-F diagnostic.
-5. `retail_ops/outputs/store_period_panel_coverage_output.csv` and `retail_ops/outputs/repeated_window_panel_summary_output.csv` - repeated-window B-F coverage and descriptive summary.
-6. `retail_ops/EXPERIMENT_RESULTS.md` - experiment questions, inputs, transformations, pass conditions, failure modes, implemented checks, and validation outcomes.
-7. `retail_ops/COMPARABILITY_GATE_V0.md` - future pairwise comparability-gate contract.
-8. `rac/DEMO_INDEX.md` - optional deterministic grounded-review scaffold cases.
+| File | Primary responsibility |
+|---|---|
+| `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Application-facing business, evidence, architecture, and evaluation narrative. |
+| `README.md` | Repository-level map, architecture, reproduction commands, and implementation scope. |
+| `case_studies/from_livestream_to_retail_decision_support.md` | Complete design evolution from livestream product memory to retail decision support. |
+| `retail_ops/data/DATA_DICTIONARY.md` | Authoritative field names, metric definitions, formulas, grains, and interpretation boundaries. |
+| `retail_ops/EXPERIMENT_RESULTS.md` | Implemented experiment questions, procedures, results, and failure modes. |
+| `rac/DEMO_INDEX.md` | Reviewer-facing RAC cases, grounded reports, execution path, and quality-gate evidence. |
+| `retail_ops/TECHNICAL_APPENDIX.md` | Consolidated lineage, field usage, architecture details, and technical limitations. |
+| `retail_ops/COMPARABILITY_GATE_V0.md` | Future question-specific pairwise comparability contract. |
 
 ## Operating Step Summary
 
@@ -114,7 +101,7 @@ The merchant backend provides detailed metrics, but it is mainly organized for s
 
 A cross-store decision should preserve metric definitions, align reporting windows, expose comparison limits, and separate observed evidence from operating interpretations that the current data cannot yet support.
 
-The current prototype treats SQL as the structuring layer and the memory layer as the evidence-retention layer. SQL organizes selected source records into diagnostic outputs. Generated memory facts then preserve the store, period, source fields, observed values, calculation notes, confidence labels, and limitations so that later retrieval or answer generation does not lose the boundary around the evidence.
+The current prototype treats SQL as the structuring layer and the memory layer as the evidence-retention layer. SQL organizes selected source records into diagnostic outputs. Generated memory facts then preserve the store, period, source fields, observed values, `calculation` metadata, confidence labels, and limitations so that later retrieval or answer generation does not lose the boundary around the evidence.
 
 ## Current Prototype Layers
 
@@ -122,7 +109,7 @@ The current prototype treats SQL as the structuring layer and the memory layer a
 |---|---|
 | Metric dictionary | Preserves Meituan backend metric meanings and canonical project field names. |
 | SQL diagnostic layer | Converts selected manually structured store-period records into diagnostic outputs under one field contract. |
-| Generated memory facts | Stores evidence with source paths, source fields, observed values, calculation notes, confidence labels, and limitations. |
+| Generated memory facts | Stores evidence with source paths, source fields, observed values, `calculation` metadata, confidence labels, and limitations. |
 | Boundary evaluations | Checks whether later answers preserve entity scope, period scope, metric definitions, and comparison limits. |
 | RAC grounded review scaffold | Provides deterministic factor expansion, evidence routing, critique, fact checking, evidence-coverage update, and grounded report generation over local project evidence. |
 | Future comparability gate | Planned pairwise gate for deciding whether two store-period records can be compared for a specific operating question. |

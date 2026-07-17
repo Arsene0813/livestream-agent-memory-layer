@@ -73,43 +73,57 @@ This prototype emphasizes:
 - checking whether generated answers remain tied to entity, period, metric definitions, and documented evidence boundaries;
 - returning boundary-preserving answers when the evidence does not support an operating conclusion.
 
-## Reviewer Orientation
-
-Use the `Admissions Review Path` table below as the first pass. It keeps the business problem, field dictionary, implemented diagnostics, repeated-window evidence, experiment results, and future comparability-gate contract in one stable order. Technical appendices remain available after the first pass.
-
 ## Admissions Review Path
 
-For admissions review, use this path first. It keeps the retail decision-support story in one order: business problem, field contract, implemented diagnostics, repeated-window evidence, experiment results, future comparability-gate design, and optional grounded-review depth.
+`PROJECT_SUMMARY_FOR_ADMISSIONS.md` is the single application-facing
+starting point. The first pass follows the business problem, implemented
+evidence, experiments, and RAC in one order.
 
-| Step | File | What to check |
+| Step | File | Review purpose |
 |---:|---|---|
-| 1 | `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Business origin, 48-store operating context, six-store repository evidence, staged prototype scope, and repeated-window evidence path. |
-| 2 | `retail_ops/data/DATA_DICTIONARY.md` | Canonical Meituan metric meanings, implemented field names, and naming boundaries. |
-| 3 | `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` | Store A month-over-month diagnostic path across February, March, and April 2026. |
-| 4 | `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` | Same-period B-F diagnostic reading under one reporting window and one field contract. |
-| 5 | `retail_ops/outputs/store_period_panel_coverage_output.csv` and `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Repeated-window B-F evidence coverage and descriptive summary for 2026-02 to 2026-04. This is the preparation layer before future pairwise comparability rules. |
-| 6 | `retail_ops/EXPERIMENT_RESULTS.md` | Experiment questions, implemented checks, validation outcomes, failure modes, and evidence-boundary behavior. |
-| 7 | `retail_ops/COMPARABILITY_GATE_V0.md` | Future question-specific pairwise comparability-gate contract. |
-| 8 | `rac/DEMO_INDEX.md` | Optional deterministic grounded-review scaffold for factor routing, critique, fact checking, and evidence-coverage reporting. |
+| 1 | `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Understand the business problem, evidence coverage, implemented scope, and decision boundary. |
+| 2 | `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` | Inspect the Store A repeated-window diagnostic and its multi-metric interpretation. |
+| 3 | `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` | Inspect the same-period B-F diagnostic and its interpretation guardrails. |
+| 4 | `retail_ops/outputs/store_period_panel_coverage_output.csv` and `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Check repeated-window B-F coverage and descriptive movement. |
+| 5 | `retail_ops/EXPERIMENT_RESULTS.md` | Review validation questions, procedures, results, and failure boundaries. |
+| 6 | `rac/DEMO_INDEX.md` | Inspect the factor-aware grounded review pipeline, reports, and quality gate. |
 
-Technical appendix material is consolidated under `retail_ops/TECHNICAL_APPENDIX.md`, but it is not required for the first admissions reading path.
+After the first pass:
+
+- `case_studies/from_livestream_to_retail_decision_support.md`
+  preserves the complete system evolution from livestream product memory
+  to retail decision support.
+- `retail_ops/data/DATA_DICTIONARY.md` and
+  `retail_ops/TECHNICAL_APPENDIX.md` are the field-contract and technical
+  audit references.
+- `retail_ops/COMPARABILITY_GATE_V0.md` records the future
+  question-specific pairwise comparability contract.
 
 ## Architecture
 
-The prototype has two connected layers.
+The repository has three connected layers. Each layer owns a different
+part of the decision-support problem.
 
-| Layer | Purpose | Main files |
-| --- | --- | --- |
-| Memory-layer prototype | Store and retrieve typed facts while handling updates, stale knowledge, and unsupported questions. | `api/`, `scripts/`, `eval/` |
-| Retail operations extension | Structure Meituan-style backend metrics and preserve diagnostic evidence for cautious comparison. | `retail_ops/` |
+| Layer | Responsibility | Main files |
+|---|---|---|
+| Lifecycle-aware memory layer | Stores typed product facts, controls updates and active state, retrieves current evidence, and falls back when knowledge is unsupported. | `api/`, `scripts/`, `eval/` |
+| Retail evidence layer | Preserves merchant-backend metric definitions, structures store-period evidence with SQL, generates source-bounded memory facts, and validates lineage and interpretation limits. | `retail_ops/` |
+| Factor-aware grounded review layer (RAC) | Expands decision factors, routes local evidence, records competing hypotheses, applies critique and fact checks, and reports evidence coverage and limitations. | `rac/` |
 
-Basic flow:
+The reviewer-oriented evidence flow is:
 
 ```text
-selected merchant-backend metrics / operator input -> metric dictionary and data contract -> SQL diagnostic output -> generated memory facts -> retrieval with source fields and limitations -> qualified answer or refusal
+selected merchant-backend metrics
+-> canonical field contract
+-> SQL diagnostic outputs
+-> source-bounded memory facts
+-> boundary evaluation and RAC grounded review
+-> grounded report, qualified answer, or refusal
 ```
 
-The important design choice is that memory facts are not just summaries. They carry source fields, observed values, `calculation` metadata, source paths, supporting source paths, confidence labels, and limitations.
+The retail evidence layer establishes what the available data supports.
+RAC makes the multi-factor review path inspectable over that structured
+evidence.
 
 ## Implemented API and Retrieval Scope
 
@@ -239,44 +253,27 @@ Retail experiment wording and validation claims should stay aligned with `retail
 
 Future pairwise comparability-gate wording must follow `retail_ops/COMPARABILITY_GATE_V0.md`.
 
-## Structured Reasoning Scaffold: Factor-Aware Grounded Review
+## Factor-Aware Grounded Review (RAC)
 
-The `rac/` module adds a deterministic, source-aware review scaffold above the retail evidence path. It runs after the field dictionary, SQL diagnostics, and generated memory facts have already structured the available evidence.
+The `rac/` module is an important technical component of the current
+prototype. It operates over the structured retail evidence and makes the
+reasoning path visible before a grounded report is accepted.
 
-Its role is to make the review path inspectable before a grounded report is accepted. It is secondary to the retail evidence path and does not replace SQL diagnostics, the field dictionary, or future pairwise comparability rules.
+Its implemented workflow covers:
 
-The scaffold covers:
+- question analysis and factor expansion;
+- interpretable factor weighting;
+- source-aware local evidence routing;
+- explicit boundary evidence for unavailable requirements;
+- competing hypotheses;
+- critique and fact checking;
+- evidence-coverage and limitation updates;
+- grounded report generation;
+- a deterministic quality gate.
 
-- question decomposition
-- factor expansion
-- factor weighting
-- local evidence grounding
-- competing hypotheses
-- critique
-- fact check
-- confidence and limitations
+Start with `rac/DEMO_INDEX.md` for the reviewer-facing cases, generated
+reports, execution commands, and quality-gate results.
 
-The scaffold is deterministic and local-evidence-based. It uses already structured project files to make factor coverage, missing evidence, critique, fact checks, and confidence updates inspectable before a grounded report is accepted.
-
-
-Current RAC execution boundary:
-
-- deterministic only
-- no LLM calls
-- no Qdrant retrieval
-- no live Meituan backend access
-- no completed pairwise comparability gate
-- no causal proof from observational store metrics
-
-Current RAC evidence and scripts:
-
-- `rac/DEMO_INDEX.md`
-- `rac/outputs/grounded_rac_store_a_attribution_001.md`
-- `rac/outputs/grounded_rac_cross_store_comparability_001.md`
-- `rac/outputs/grounded_quality_summary.md`
-- `rac/scripts/run_grounded_pipeline.py`
-- `rac/scripts/validate_grounded_quality_gate.py`
-
-Current implementation scope: deterministic review over local project evidence.
-
-<!-- RAC_EXTENSION_END -->
+The current implementation is deterministic and file-grounded. It
+complements the field dictionary, SQL diagnostics, generated facts, and
+answer-boundary evaluations rather than replacing them.

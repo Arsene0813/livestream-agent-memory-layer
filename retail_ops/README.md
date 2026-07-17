@@ -1,10 +1,13 @@
 # Retail Operations Extension
 
-This folder contains the Meituan instant-retail evidence path used by the current decision-support prototype.
+This folder owns the implemented retail evidence layer: source tables,
+the canonical field dictionary, SQL diagnostics, generated facts,
+outputs, validation scripts, experiments, and technical references.
 
-It is not the main project narrative file.
-
-It is the folder entry point for retail data, SQL, generated facts, outputs, checks, and appendices.
+For the application first-pass order, use
+[`PROJECT_SUMMARY_FOR_ADMISSIONS.md`](../PROJECT_SUMMARY_FOR_ADMISSIONS.md).
+Within this folder, this README is the working map for locating retail
+evidence and implementation files.
 
 ## Folder Workflow
 

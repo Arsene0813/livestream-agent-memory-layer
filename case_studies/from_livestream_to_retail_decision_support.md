@@ -1,6 +1,14 @@
-# Appendix: From Product Memory to Retail Decision Support
+# Design Evolution: From Livestream Product Memory to Retail Decision Support
 
-This appendix records the earlier project evolution. The admissions-facing project narrative starts from the retail operations decision-support problem: selected Meituan merchant-backend evidence needs to be structured, checked, and reused without turning weak diagnostic signals into unsupported operating conclusions.
+This case study preserves the complete project evolution: local model
+serving, vector recall, retrieval gating, typed facts, overwrite control,
+lifecycle-aware retrieval, product-level routing, evaluation, and the
+later retail decision-support extension.
+
+The application first-pass path begins with the current retail evidence
+and RAC implementation. This file then shows how the earlier memory-layer
+work produced the update, traceability, active-state, refusal, and
+evidence-boundary principles used in the current architecture.
 
 ## Why the Retail Setting Required Stricter Evidence Boundaries
 
@@ -27,7 +35,7 @@ That means a later answer can discuss the store's observed March 2026 profile, b
 This is the practical role of the memory layer in the retail setting: it stores not only the metric value, but also the context needed to determine whether the observation should be reused in a cross-store comparison.
 
 
-# System Evolution
+## System Evolution
 
 ## Local LLM Backend
 
@@ -103,7 +111,7 @@ The practical problem is different from livestream product memory. Meituan's mer
 
 The retail extension therefore uses SQL and documented metric definitions before retrieval. The SQL layer organizes selected store-period, traffic, activity, search-term, and top-SKU evidence into same-period, contract-aligned diagnostic outputs.
 
-The memory layer records store-period evidence, calculation notes, confidence, and limitations so that March data is not casually mixed with April data, activity-heavy stores are not treated like low-activity stores, and lightweight top-SKU evidence is not overstated as full category-share analysis.
+The memory layer records store-period evidence, `calculation` metadata, confidence, and limitations so that March data is not casually mixed with April data, activity-heavy stores are not treated like low-activity stores, and lightweight top-SKU evidence is not overstated as full category-share analysis.
 
 This is still a staged prototype. Its current purpose is not to automate final operating decisions, but to make cross-store interpretation more traceable, more cautious, and easier to verify as the number of stores increases.
 
