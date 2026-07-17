@@ -91,9 +91,9 @@ Store A's visibility and entry structure can be described from exposure, ranking
 Interpretation:
 
 - March had weaker exposure, weaker average rank, fewer entry users, and fewer search-entry users.
-- Compared with March, April had more exposure users, a lower (better) average rank number, more entry users, and more search-entry users.
+- April recovered in exposure, rank, entry users, and search-entry users.
 - These metrics describe whether the store was being seen and entered.
-- By themselves, they do not explain the change in transaction amount or identify a causal driver.
+- By themselves, they are not enough to explain the full transaction recovery.
 
 ## Activity-Lever Profile
 
@@ -107,13 +107,13 @@ Activity metrics are interpreted as operating-lever evidence.
 
 Interpretation:
 
-- `activity_order_share_pct` ranged from 97.10% to 98.54% across the three observed months.
-- This ratio records activity-order involvement under the documented formula. Assessing incremental demand or activity efficiency would require promotion mechanics and counterfactual evidence not included here.
-- Competition, price pressure, ranking pressure, and other operating conditions remain relevant context.
+- Activity orders accounted for a high share of transaction orders in all three months.
+- Activity-order structure shows high activity involvement during the observed period.
+- The meaning of this activity involvement depends on operating context, competition, price pressure, and ranking pressure.
 
 ## Transaction and Conversion Profile
 
-From March to April, transaction amount and transaction orders increased.
+April recovered in transaction scale compared with March.
 
 | Metric        | 2026-03 | 2026-04 | Direction |
 | --------------------- | ------: | ------: | --------- |
@@ -126,21 +126,25 @@ From March to April, transaction amount and transaction orders increased.
 
 Interpretation:
 
-From March to April, `transaction_amount` increased from 6454.84 to 9083.72 and `transaction_orders` increased from 207 to 337. Over the same comparison, `order_conversion_rate_pct` decreased from 42.34% to 37.42%, and `average_order_value` decreased from 31.18 to 26.95. April `transaction_amount` remained below February's 9460.70.
+April's recovery should not be read as a simple quality improvement.
 
-These fields show a multi-metric movement, but not its cause or profitability.
+The store had more exposure, more entry users, more transaction orders, and higher transaction amount, but order conversion rate and average order value declined.
+
+This supports a cautious operating-signal reading: the store recovered scale, but the recovery coexisted with weaker conversion rate and lower average order value.
 
 ## Top-SKU Evidence
 
-All nine listed top-three monthly SKU rows are tagged `care_solution` in the manually curated `sku_category_note` helper field.
+The top-SKU evidence is mainly care-solution-heavy.
 
-This describes the listed evidence only. It does not represent the store's full catalogue, category sales share, or total product mix.
+This evidence is useful as a lightweight product-mix signal, but it is not full category-level sales-share analysis.
+
+The current demo does not manually classify all SKUs, and it does not claim full SKU-category coverage.
 
 ## Single-Metric Attribution Guard
 
 The main lesson of this demo is that Store A's monthly changes should not be explained by one metric alone.
 
-Compared with March, April 2026 showed:
+April 2026 showed:
 
 - transaction amount up;
 - transaction orders up;
@@ -149,8 +153,9 @@ Compared with March, April 2026 showed:
 - search-entry users up;
 - order conversion rate down;
 - average order value down;
-- `activity_order_share_pct` at 97.63%;
-- top-SKU evidence limited to the three listed April rows.
+
+- activity-order share still high;
+- top-SKU evidence still limited.
 
 This is why the project uses a memory layer with traceable facts and limitations. The memory facts preserve observed signals, source fields, and caveats so later answers do not collapse the month-over-month movement into a one-factor explanation.
 
