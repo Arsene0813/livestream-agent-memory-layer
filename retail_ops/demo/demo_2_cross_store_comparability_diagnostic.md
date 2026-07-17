@@ -87,13 +87,15 @@ The SQL prepares a same-period diagnostic output with:
 
 ### `comparison_scope_flag`
 
-This field records whether the row is inside the current Demo 2 comparison scope.
+This field records whether the row is inside the narrow current Demo 2 diagnostic scope.
 
 In the current Demo 2 output, all B-F stores use the same March 2026 reporting window and are marked:
 
   same_period_diagnostic_ready
 
-This means the rows are ready for the current same-period diagnostic. It does not mean the stores are fully comparable in every business sense.
+For this fixture, the flag checks the exact March window plus non-missing `transaction_amount`, `transaction_orders`, `exposure_users`, `entry_users`, `search_exposure_users`, `search_entry_users`, `activity_orders`, and `top3_sku_transaction_amount`.
+
+This means the core transaction, funnel, activity-involvement, and lightweight product-mix fields are ready for the current row-level same-period diagnostic. It does not certify every output column, and it does not mean the stores are fully comparable in every business sense.
 
 ### `comparison_limit_notes`
 

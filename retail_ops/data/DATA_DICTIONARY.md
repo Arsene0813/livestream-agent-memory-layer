@@ -214,17 +214,30 @@ Purpose: `comparison_scope_flag` records whether a store-period row is inside th
 
 Current values:
 
-- `same_period_diagnostic_ready`: the row has the required same-period fields for the current Demo 2 diagnostic.
+- `same_period_diagnostic_ready`: the row matches the fixed Demo 2 reporting window and contains the core fields used by the current row-level diagnostic.
 - `not_comparable_period_mismatch`: the row does not match the Demo 2 reporting window.
-- `insufficient_data`: one or more required diagnostic fields are missing.
+- `insufficient_data`: one or more core diagnostic fields are missing.
 
-Correct use: This field is a data-readiness and diagnostic-scope guardrail. It helps the memory layer decide whether a same-period cross-store diagnostic can be discussed from the current evidence.
+Core readiness contract for the current Demo 2 fixture:
+
+- `period_start = 2026-03-01`;
+- `period_end = 2026-03-31`;
+- non-missing `transaction_amount`;
+- non-missing `transaction_orders`;
+- non-missing `exposure_users`;
+- non-missing `entry_users`;
+- non-missing `search_exposure_users`;
+- non-missing `search_entry_users`;
+- non-missing `activity_orders`;
+- non-missing `top3_sku_transaction_amount`.
+
+Correct use: This field is a narrow data-readiness and diagnostic-scope guardrail. It indicates that the current Demo 2 core transaction, funnel, activity-involvement, and lightweight product-mix evidence can be discussed under the fixed March 2026 window. It does not certify completeness of every carried-through output column.
 
 Pairwise-gate boundary: `comparison_scope_flag` is not the future pairwise comparability-gate decision. It does not decide whether one store's pricing, promotion, SKU, ranking, fulfillment, or operating strategy can be transferred to another store.
 
-Design reason: In Demo 2, `same_period_diagnostic_ready` requires both aligned reporting windows and the required diagnostic evidence for the current diagnostic scope. Top-3 SKU transaction-amount evidence is included because Demo 2 uses lightweight product-mix evidence to qualify cross-store interpretation. If that evidence is missing, the row should be treated as `insufficient_data` rather than as comparable with zero SKU concentration.
+Design reason: The flag follows the exact fields checked in `retail_ops/sql/02_demo2_cross_store_comparability.sql`. Top-3 SKU transaction-amount evidence is included because Demo 2 uses lightweight product-mix evidence to qualify cross-store interpretation. If that evidence is missing, the row should be treated as `insufficient_data` rather than as comparable with zero SKU concentration.
 
-Not supported: This field must not be used as a store-stage label, performance ranking, causal explanation, pairwise store-matching result, or operating recommendation.
+Not supported: This field must not be used as an all-column completeness certificate, store-stage label, performance ranking, causal explanation, pairwise store-matching result, or operating recommendation.
 
 ### `comparison_limit_notes`
 

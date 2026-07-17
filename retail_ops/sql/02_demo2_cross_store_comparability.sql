@@ -171,6 +171,9 @@ SELECT
     top3_sku_transaction_amount,
     top3_sku_transaction_amount_share_pct,
 
+    -- `same_period_diagnostic_ready` is deliberately narrow.
+    -- It confirms only the fixed March 2026 window plus the core fields checked below.
+    -- It does not certify every carried-through output field or pairwise comparability.
     CASE
         WHEN period_start != '2026-03-01'
           OR period_end != '2026-03-31'

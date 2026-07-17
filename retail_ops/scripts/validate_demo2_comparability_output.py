@@ -13,6 +13,19 @@ from pathlib import Path
 
 OUTPUT_PATH = Path("retail_ops/outputs/demo2_cross_store_comparability_output.csv")
 
+EXPECTED_PERIOD_START = "2026-03-01"
+EXPECTED_PERIOD_END = "2026-03-31"
+CORE_SCOPE_FIELDS = (
+    "transaction_amount",
+    "transaction_orders",
+    "exposure_users",
+    "entry_users",
+    "search_exposure_users",
+    "search_entry_users",
+    "activity_orders",
+    "top3_sku_transaction_amount",
+)
+
 REQUIRED_COLUMNS = [
     "store_id",
     "period_month",
@@ -83,6 +96,19 @@ def pct(numerator: float, denominator: float) -> float:
     return round(100.0 * numerator / denominator, 2)
 
 
+def expected_scope_flag(row: dict[str, str]) -> str:
+    if (
+        row.get("period_start") != EXPECTED_PERIOD_START
+        or row.get("period_end") != EXPECTED_PERIOD_END
+    ):
+        return "not_comparable_period_mismatch"
+
+    if any(row.get(field, "") == "" for field in CORE_SCOPE_FIELDS):
+        return "insufficient_data"
+
+    return "same_period_diagnostic_ready"
+
+
 def main() -> None:
     if not OUTPUT_PATH.exists():
         raise SystemExit(f"Missing output file: {OUTPUT_PATH}")
@@ -142,10 +168,11 @@ def main() -> None:
             pct(top3_sku_transaction_amount, transaction_amount),
         )
 
-        if row["comparison_scope_flag"] != "same_period_diagnostic_ready":
+        expected_flag = expected_scope_flag(row)
+        if row["comparison_scope_flag"] != expected_flag:
             raise SystemExit(
-                f"{store_id} has unexpected comparison_scope_flag: "
-                f"{row['comparison_scope_flag']}"
+                f"{store_id} comparison_scope_flag mismatch: "
+                f"actual={row['comparison_scope_flag']}, expected={expected_flag}"
             )
 
         if not row["comparison_limit_notes"].strip():

@@ -109,9 +109,9 @@ limitations, source paths, and local evidence snippets.
 | Input | `retail_ops/data/demo2_store_period_metrics.csv`; top search-term evidence; top-SKU transaction-amount evidence. |
 | Transformation | `retail_ops/sql/02_demo2_cross_store_comparability.sql` derives search-entry share/rate, activity-order share, top-3 SKU concentration, `comparison_scope_flag`, and `comparison_limit_notes`. |
 | Output | `retail_ops/outputs/demo2_cross_store_comparability_output.csv`; `retail_ops/outputs/generated_demo2_retail_memory_facts.json`. |
-| Expected behavior | The SQL output should include `comparison_scope_flag` and `comparison_limit_notes`, while staying at row-level same-period diagnostic scope. |
-| Current result | Passed current Demo 2 scope-boundary validation. |
-| Checked by | `python3 eval/eval_retail_demo2_scope_boundary.py` |
+| Expected behavior | The SQL output should include `comparison_scope_flag` and `comparison_limit_notes`, while staying at row-level same-period diagnostic scope. `same_period_diagnostic_ready` should certify only the fixed March window and the documented core readiness fields, not every output column or pairwise comparability. |
+| Current result | Passed the current Demo 2 output validation and scope-boundary validation. The output validator recomputes the derived ratios and checks the narrow flag contract against the documented core fields. |
+| Checked by | `python3 retail_ops/scripts/validate_demo2_comparability_output.py`; `python3 eval/eval_retail_demo2_scope_boundary.py` |
 | Result path | `eval/retail_decision_support_eval_results/eval_retail_demo2_scope_boundary_result.txt` |
 | Failure mode | Ranking stores globally, treating same-period diagnostic readiness as pairwise comparability, treating `activity_cost_ratio_pct` as ROI, or transferring a promotion, price, or SKU action without checking limits. |
 

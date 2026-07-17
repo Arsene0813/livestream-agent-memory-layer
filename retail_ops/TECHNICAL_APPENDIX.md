@@ -438,6 +438,8 @@ SQL-derived diagnostic fields include:
 
 These derived fields are diagnostic summaries. They do not replace Meituan backend definitions, rank stores, assign store stages, or prove causal operating effects.
 
+`same_period_diagnostic_ready` is intentionally narrower than all-column completeness. For the current fixture, it checks the fixed March 2026 date window and non-missing `transaction_amount`, `transaction_orders`, `exposure_users`, `entry_users`, `search_exposure_users`, `search_entry_users`, `activity_orders`, and `top3_sku_transaction_amount`. Other carried-through metrics remain available for interpretation, but their presence is not certified by this flag.
+
 ## Demo 2 Claim-to-Field Mapping
 
 | Claim / diagnostic | Supporting fields | Interpretation limit |
