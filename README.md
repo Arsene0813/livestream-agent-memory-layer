@@ -260,9 +260,9 @@ Its implemented workflow covers:
 - explicit boundary evidence for unavailable requirements;
 - competing hypotheses;
 - critique and rule-based claim and definition checks;
-- evidence-coverage and limitation updates;
+- review-state updates that record evidence coverage and limitations;
 - grounded report generation;
-- a deterministic quality gate.
+- a deterministic report-contract quality gate.
 
 Start with `rac/DEMO_INDEX.md` for the reviewer-facing cases, generated
 reports, execution commands, and quality-gate results.
