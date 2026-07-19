@@ -161,23 +161,24 @@ The first review path should stay short. These files are retained for technical 
 
 ## Evaluation Snapshot
 
-For retail field names and metric meanings, `retail_ops/data/DATA_DICTIONARY.md` is authoritative. For generated retail diagnostic values and retail evaluation outcomes, use `retail_ops/outputs/` and `eval/retail_decision_support_eval_results/`.
+For retail field names and metric meanings, `retail_ops/data/DATA_DICTIONARY.md` is authoritative. Generated diagnostic values and evaluation outputs are recorded under `retail_ops/outputs/` and `eval/retail_decision_support_eval_results/`.
 
-The evaluation layer checks whether the current prototype preserves metric definitions, source boundaries, entity/period scope, and comparison limits when selected retail evidence is retrieved.
+The pass counts below come from repository-defined contract, fixture, lineage, and endpoint checks. They show whether the current evidence path satisfies its declared checks; they are not predictive-accuracy or general-model-performance measures. Retrieval stress tests are reported separately because their main outputs are score distributions and failure cases rather than one combined pass rate.
 
-| Check | Scope | Result |
-| --- | --- | --- |
+| Check | Scope | Current result |
+|---|---|---|
 | Livestream memory evaluation | Fact retrieval, overwrite behavior, entity separation, fallback/refusal, and non-fact filtering. | Current implemented cases pass. |
-| Retail retrieval evaluation | Store A retail-memory retrieval and unsupported-scope handling. | 8/8 passed. |
-| Retail Demo 2 facts evaluation | Store B-F generated fact coverage across diagnostic slots. | 5/5 passed. |
-| Retail Demo 2 scope-boundary evaluation | Demo 2 remains a row-level same-period diagnostic and does not expose future pairwise-gate schema. | 5/5 passed. |
-| Retail Demo 2 answer-boundary evaluation | Activity-cost ratio, top-SKU share, search-entry comparison, promotion-transfer limits, same-period boundary, and `region_type` weak-context boundary. | 6/6 passed. |
-| Retail Demo 2 endpoint behavior evaluation | File-backed Demo 2 endpoint behavior for supported Store B-F questions, unsupported-scope handling, and pairwise strategy-transfer boundary. | 7/7 passed. |
-| Retail data-contract validation | Dictionary phrases, source/output headers, forbidden aliases, and generated fact structure. | Passed. |
-| Retrieval score distribution inspection | Inspects score distributions over file-backed Demo 1 and Demo 2 retail evidence across supported, unsupported, hard-negative, entity/period mismatch, and ambiguous comparison queries. | Completed as offline inspection. |
-| Query robustness under wording variation | Tests retrieval behavior under shortened, paraphrased, typo/noise, and keyword-order query variants. | Completed. |
+| Store A retail retrieval evaluation | Store A retail-memory retrieval and unsupported-scope handling. | 8/8 repository-defined cases passed. |
+| Retail Demo 2 fact-contract coverage | Exact Store B-F coverage across five implemented evidence slots, required metadata, repository-backed paths, and slot-specific boundary terms. | 25/25 entity-slot contracts passed: five stores multiplied by five implemented slots. |
+| Retail Demo 2 scope-boundary evaluation | Required Demo 2 output fields, expected store IDs, row-level scope flag, and absence of future pairwise-gate schema. | 5/5 declared scope checks passed. |
+| Retail Demo 2 answer-contract fixture validation | Six manually specified contracts covering activity-cost ratio, top-SKU evidence, search-entry comparison, strategy transfer, same-period readiness, and `region_type`. | 6/6 fixtures passed. This check evaluates required and forbidden wording; it does not call the endpoint or generate answers. |
+| Retail Demo 2 endpoint-boundary evaluation | Supported Store B-F questions, unsupported all-48-store scope, ranking and final-recommendation requests, pairwise strategy transfer, and out-of-scope entities. | 7 endpoint scenarios passed. |
+| Retail data-contract and value-lineage validation | Declared canonical fields, headers, aliases, formulas, source-to-output values, generated-fact values, paths, and metadata. | Current static-contract and Demo 1/Demo 2 lineage checks pass. |
+| Retrieval threshold inspection | 29 cases over 282 file-backed retrieval documents, including supported, unsupported, hard-negative, mismatched, and ambiguous queries. | Supported cases retained expected evidence at top-5 in 8/8 cases; unsupported cases had 0/6 expected hits. The `0.5767` threshold remains an exploratory reference. |
+| Query wording-variation stress test | 131 deterministic shortened, paraphrased, typo/noise, and keyword-order variants. | Supported variants retained expected evidence and crossed the reference threshold in 34/34 cases; unsupported variants had 0/30 expected hits and 0/30 threshold crossings. Hard-negative, entity/period-mismatch, and ambiguous variants still crossed the threshold in 23/33, 12/18, and 5/16 cases. |
+| Demo 2 guardrail sensitivity | Baseline notes compared with thresholds lowered and raised by five percentage points. | Four of five store rows changed under the harder-to-trigger plus-five-point scenario; Store B remained unchanged, and the easier-to-trigger scenario changed no rows. |
 
-Demo 2 guardrail sensitivity is also inspected. In the current B-F sample, four of five store rows change under the harder-to-trigger plus-5-percentage-point scenario; Store B remains unchanged. The result shows local sensitivity in this small sample, not an optimized threshold or a peer-comparison rule.
+The current evaluation supports contract consistency, value traceability, and inspectable evidence routing. The threshold-crossing failure cases show why semantic similarity remains one routing signal rather than a sufficient basis for an operating conclusion.
 
 ## Optional Local Run
 
