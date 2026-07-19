@@ -271,23 +271,53 @@ automated pairwise comparability decisions, and autonomous operating
 actions require additional evidence or implementation beyond the
 current review contract.
 
-## Future Extensions
+## Implementation Roadmap
 
-The existing contracts can later be connected to a shared-state graph
-workflow, model-assisted factor expansion, vector retrieval, or adaptive
-factor weighting.
+The deterministic RAC path remains the reference baseline for later integrations. Future implementations should preserve the typed review state, evidence-source references, explicit limitations, critique stage, and report contract already used by the current pipeline.
 
-Those extensions should retain the current invariants:
+### Embedding-Based or Hybrid Retrieval
+
+The current retrieval experiments expose behavior under wording variation, hard-negative cases, entity and reporting-period mismatch, and ambiguous questions. A later experiment can compare the existing file-backed routing baseline with embedding-based or hybrid retrieval over the same evaluation cases.
+
+The comparison should record expected-evidence recall, false routing, entity and period preservation, unsupported-question behavior, threshold sensitivity, and source traceability. Vector retrieval would remain an evidence-routing mechanism rather than a source of operating conclusions.
+
+### Model-Assisted Review
+
+Model calls can be evaluated for factor expansion, competing-hypothesis generation, critique drafting, unresolved-evidence identification, and grounded report synthesis.
+
+Canonical field definitions, SQL-derived values, source paths, entity and period constraints, and deterministic positive-claim boundaries should remain externally controlled. Model-assisted outputs should be compared with the deterministic baseline for source use, unsupported claims, stability, preservation of limitations, and reviewer effort.
+
+### LangGraph-Style Orchestration
+
+The current review path can remain sequential while its state transitions are limited and directly inspectable. LangGraph-style orchestration becomes relevant when the workflow requires conditional re-retrieval, evidence-insufficiency branches, repeated critique, question-specific paths, recoverable failures, or human-review checkpoints.
+
+A later graph implementation should preserve the existing typed review state and report contract. Its value should be evaluated through clearer state transitions and recoverable failure handling rather than framework adoption alone.
+
+### Adaptive Factor Weighting
+
+The current factor weights are explicit prototype heuristics. Later experiments can compare the fixed buckets with alternative rule-based settings or learned weighting methods.
+
+Any adaptive approach should retain the factor set, the source of each weight, sensitivity results, and the distinction between review priority and business effect. Adaptive weights should not be interpreted as causal effects, business thresholds, or calibrated probabilities without separate evidence.
+
+### Live Merchant-Backend Integration
+
+Live merchant-backend access is a later data-integration path. It should be introduced after source-field mapping, reporting-period handling, schema drift, access control, anonymization, and lineage capture can be checked against the existing data dictionary and contract tests.
+
+The live path should preserve the canonical field names and Chinese definitions governed by `retail_ops/data/DATA_DICTIONARY.md`.
+
+### Next RAC Experiment
+
+The next experiment is a controlled sensitivity analysis over alternative factor-weight and Evidence-Coverage Score settings.
+
+It should keep the same reviewer cases and evidence packets, vary one heuristic setting at a time, record changes in factor priority and final review state, and identify which outputs remain stable. The current deterministic settings should remain the reference condition.
+
+All roadmap implementations should continue to preserve:
 
 - typed review state;
-- factor-first evidence retrieval;
+- factor-first evidence routing;
 - source references for evidence claims;
-- separation of direct and boundary evidence;
+- separation of direct, boundary, and fallback evidence;
 - explicit competing hypotheses;
 - critique before final reporting;
-- evidence-based confidence and limitation updates;
-- refusal to fill missing evidence with unsupported claims.
-
-A useful next experiment is a small sensitivity analysis over alternative
-factor-weight and Evidence-Coverage Score settings, using the same
-principle as the retail guardrail sensitivity analysis.
+- visible evidence-coverage and limitation updates;
+- withholding of conclusions that exceed the available evidence.
