@@ -26,10 +26,10 @@ question
 -> boundary evidence for unavailable requirements
 -> competing hypotheses
 -> critique
--> fact checking
--> evidence-coverage and limitation update
+-> rule-based claim and definition check
+-> review-state update
 -> grounded final report
--> quality gate
+-> report-contract quality gate
 ```
 
 The pipeline separates factor selection, evidence retrieval, hypothesis
@@ -69,16 +69,18 @@ The implemented RAC scaffold includes:
 - local evidence snippets and line ranges;
 - boundary evidence for unavailable requirements;
 - competing-hypothesis templates;
-- critique and fact-check stages;
+- critique and rule-based claim and definition-check stages;
 - evidence-coverage scoring;
 - explicit limitation updates;
 - grounded Markdown and JSON reports;
-- a deterministic grounded quality gate.
+- a deterministic report-contract quality gate.
 
 The current runnable path uses local files and deterministic rules.
 Graph orchestration, model calls, vector retrieval, and live
 merchant-backend access are future integration options rather than
 requirements for the present evidence contract.
+
+Reviewer-facing terminology is deliberately narrow: the claim and definition check applies deterministic rules to selected unsupported claims and definition conflicts, while the report-contract quality gate validates report structure and selected evidence boundaries. Neither mechanism establishes that an operating conclusion is correct.
 
 ## Evidence Types
 
@@ -175,7 +177,7 @@ Mock reports separately carry Scenario-Template Confidence. That value
 is assigned by deterministic question-type templates and is not merged
 with the grounded Evidence-Coverage Score.
 
-## Competing Hypotheses, Critique, and Fact Checks
+## Competing Hypotheses, Critique, and Claim Checks
 
 RAC does not route evidence directly into a single preferred narrative.
 
@@ -200,7 +202,7 @@ question-specific context required for comparison.
 | Deterministic review scaffold | `python3 rac/scripts/run_mock_pipeline.py --all-eval` | `python3 rac/scripts/validate_mock_pipeline.py` | Mock review-state and report outputs in `rac/outputs/` |
 | Local evidence resolver | `python3 rac/scripts/run_local_evidence_resolver.py --all-eval` | `python3 rac/scripts/validate_local_evidence_resolver.py` | Source-grounded evidence packets |
 | Grounded deterministic pipeline | `python3 rac/scripts/run_grounded_pipeline.py --all-eval` | `python3 rac/scripts/validate_grounded_pipeline.py` | `rac/outputs/grounded_*.json` and `rac/outputs/grounded_*.md` |
-| Grounded quality gate | Generated with the grounded pipeline | `python3 rac/scripts/validate_grounded_quality_gate.py` | `grounded_quality_summary.json` and `grounded_quality_summary.md` |
+| Report-contract quality gate | Generated with the grounded pipeline | `python3 rac/scripts/validate_grounded_quality_gate.py` | `grounded_quality_summary.json` and `grounded_quality_summary.md` |
 
 The mock pipeline establishes the review-state contract. The local
 resolver connects factors to repository evidence. The grounded pipeline
@@ -209,13 +211,13 @@ whether those reports preserve the required evidence structure.
 
 ## Grounded Report Contract
 
-The grounded quality gate checks that every generated report contains:
+The report-contract quality gate checks that every generated report contains:
 
 - the reviewed question;
 - expanded factors and factor weights;
 - competing hypotheses;
 - critic findings;
-- fact-check output;
+- rule-based claim and definition-check output;
 - local source paths;
 - source line ranges;
 - local evidence snippets;
