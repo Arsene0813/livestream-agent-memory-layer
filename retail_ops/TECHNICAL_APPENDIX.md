@@ -733,7 +733,9 @@ Any future field rename or semantic change must be migrated in this order:
 This rule is intentionally conservative. The project should prefer adding clearly documented future fields over silently changing the meaning of existing Meituan backend-reported fields.
 
 
-## Current Field Review Table
+## Field Definition and Usage Review
+
+This table summarizes selected fields referenced across the current retail evidence path. Complete field definitions and canonical naming remain governed by `retail_ops/data/DATA_DICTIONARY.md`.
 
 | Existing field | Dictionary definition or boundary | Current use location | Rename decision |
 |---|---|---|---|
@@ -754,7 +756,7 @@ This rule is intentionally conservative. The project should prefer adding clearl
 | `entry_times` | Backend-reported store-entry visits/actions. It is not the same as `entry_users`. | Source CSVs and traffic evidence. | No. |
 | `entry_conversion_rate_pct` | Backend-style entry conversion rate, interpreted with exposure and entry scope. | Source CSVs, SQL outputs. | No. |
 | `search_entry_users` | Backend-reported users entering from search during the selected period. | Source CSVs, SQL output, visibility facts. | No. |
-| `search_entry_rate_pct` | SQL-derived search exposure-to-entry diagnostic. | Demo 2 SQL output and lineage. | No. |
+| `search_entry_rate_pct` | SQL-derived search exposure-to-entry diagnostic. | Demo 1 and Demo 2 SQL outputs, generated facts, and lineage. | No. |
 | `search_entry_share_pct` | SQL-derived directional ratio: `search_entry_users / entry_users * 100` in the same reporting window. Source-level users may overlap, so it is not user-level attribution or exclusive channel contribution. | Demo 2 SQL output, generated facts, lineage. | No. |
 | `order_users` | Backend order-user metric used in the backend order-conversion formula. | Source CSVs, SQL output, transaction/conversion facts. | No. |
 | `order_times` | Backend order-submission/action-count metric. It is not the same as `order_users`. | Source CSVs and funnel evidence. | No. |
