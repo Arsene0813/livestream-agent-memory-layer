@@ -29,7 +29,7 @@ Repository: `livestream-agent-memory-layer`
 
 ## Project Summary
 
-This prototype grew from a practical decision problem in a 48-store Meituan instant-retail operation. The merchant backend provides detailed store-level metrics, but those records cannot support broader operating decisions unless their meanings, calculation paths, reporting periods, and comparison limits remain visible.
+This staged local prototype grew from a real operating problem in a 48-store Meituan instant-retail business. The Meituan merchant backend contains detailed single-store metrics, but it is mainly designed for reviewing one store at a time. As the store count increased, the harder question became how to compare store-period records without flattening different reporting windows, activity conditions, product structures, store types, and market contexts into the same judgment.
 
 The repository turns selected backend observations into a traceable decision-support prototype. Metric definitions are fixed in the data dictionary, diagnostic calculations are reproduced in SQL, derived findings retain their source lineage, and later retrieval and review steps preserve the boundaries attached to the evidence.
 
