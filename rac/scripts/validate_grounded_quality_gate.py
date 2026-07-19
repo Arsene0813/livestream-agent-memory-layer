@@ -22,7 +22,7 @@ REQUIRED_REPORT_SECTIONS = [
     "## 4. Local Evidence Grounding",
     "## 5. Competing Hypotheses",
     "## 6. Critic Findings",
-    "## 7. Fact Check",
+    "## 7. Claim and Definition Check",
     "## 8. Final Judgment",
     "## 9. Evidence-Coverage Score",
     "## 10. What Cannot Be Concluded",
@@ -65,7 +65,7 @@ CROSS_STORE_REQUIRED_BOUNDARY_SOURCES = {
 
 
 def fail(message: str) -> None:
-    raise SystemExit(f"[RAC grounded quality gate failed] {message}")
+    raise SystemExit(f"[RAC report-contract quality gate failed] {message}")
 
 
 def load_eval_cases() -> list[dict[str, Any]]:
@@ -380,7 +380,7 @@ def write_markdown_summary(results: list[dict[str, Any]], output_path: Path) -> 
     lines.append("")
     lines.append("## Cross-Store Grounding Requirement")
     lines.append("")
-    lines.append("For rac_cross_store_comparability_001, the quality gate requires:")
+    lines.append("For rac_cross_store_comparability_001, the report-contract quality gate requires:")
     lines.append("")
     lines.append("- fallback_count <= 1")
     lines.append("- order_volume -> retail_ops/outputs/demo2_cross_store_comparability_output.csv")
@@ -465,7 +465,7 @@ def main() -> None:
     total_fallback = sum(result["metrics"]["fallback_count"] for result in results)
     total_missing = sum(result["metrics"]["source_missing_count"] for result in results)
 
-    print("[OK] RAC grounded quality gate passed")
+    print("[OK] RAC report-contract quality gate passed")
     print(f"[OK] Cases checked: {len(results)}")
     print(f"[OK] Total grounded packets: {total_packets}")
     print(f"[OK] Keyword matched packets: {total_keyword}")

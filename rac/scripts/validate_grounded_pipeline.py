@@ -18,7 +18,7 @@ REQUIRED_REPORT_SECTIONS = [
     "## 4. Local Evidence Grounding",
     "## 5. Competing Hypotheses",
     "## 6. Critic Findings",
-    "## 7. Fact Check",
+    "## 7. Claim and Definition Check",
     "## 8. Final Judgment",
     "## 9. Evidence-Coverage Score",
     "## 10. What Cannot Be Concluded",

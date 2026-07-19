@@ -5,7 +5,7 @@ implementation. RAC is an important factor-aware grounded review layer
 over the structured retail evidence.
 
 It makes factor selection, source routing, unavailable evidence,
-competing explanations, critique, fact checks, and evidence coverage
+competing explanations, critique, rule-based claim and definition checks, and evidence coverage
 inspectable before a report is accepted.
 
 The implemented workflow is:
@@ -19,10 +19,10 @@ question
 -> boundary evidence for unavailable requirements
 -> hypothesis generation
 -> critique
--> fact checking
+-> rule-based claim and definition check
 -> evidence-coverage update
 -> grounded final report
--> quality gate
+-> report-contract quality gate
 ```
 
 ## 30-Second Summary
@@ -44,7 +44,7 @@ The implemented review process:
 8. Check unsupported claims and definition conflicts.
 9. Produce a grounded report with an evidence-coverage score,
    scenario-template confidence labels, and explicit limitations.
-10. Validate the report through a quality gate.
+10. Validate the report through a report-contract quality gate.
 
 The current implementation is deterministic and source-aware. It uses
 local project files, explicit boundary evidence, a shared review-state
@@ -59,7 +59,7 @@ contract, and fixed evaluation cases.
 | Local evidence resolver | Done | rac/src/local_evidence_resolver.py |
 | Source-aware cross-store grounding | Done | rac/src/local_evidence_resolver.py |
 | Grounded RAC pipeline | Done | rac/src/grounded_pipeline.py |
-| Grounded quality gate | Done | rac/scripts/validate_grounded_quality_gate.py |
+| Report-contract quality gate | Done | rac/scripts/validate_grounded_quality_gate.py |
 | LangGraph orchestration | Future work | Not implemented |
 | LLM-based factor generation | Future work | Not implemented |
 | Qdrant / vector retrieval integration | Future work | Not implemented |
@@ -78,7 +78,7 @@ Validate the grounded reports:
 
 Expected quality-gate result:
 
-  [OK] RAC grounded quality gate passed
+  [OK] RAC report-contract quality gate passed
   [OK] Cases checked: 4
   [OK] Total grounded packets: 30
   [OK] Keyword matched packets: 28
@@ -148,7 +148,7 @@ Each grounded report includes:
 - canonical evidence fields;
 - competing hypotheses with scenario-template confidence labels;
 - critic findings;
-- fact-check status;
+- claim and definition-check status;
 - a bounded final judgment;
 - an evidence-coverage score and its calculation inputs;
 - explicit limitations;
@@ -168,7 +168,7 @@ question
 -> explicit boundary evidence
 -> competing hypotheses
 -> critique
--> fact check
+-> claim and definition check
 -> grounded report
 ```
 
@@ -192,7 +192,7 @@ The current implemented scope includes:
 - factor-specific local evidence routing;
 - explicit boundary evidence for unavailable requirements;
 - competing hypothesis templates;
-- critique and fact-check records;
+- critique and rule-based claim and definition-check records;
 - JSON Schema and cross-record state validation;
 - fixed evaluation cases and generated quality summaries.
 

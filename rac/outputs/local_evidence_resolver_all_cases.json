@@ -7,15 +7,15 @@
       "summary": {
         "question": "Can Store A's April growth be attributed to search exposure?",
         "question_type": "causal_diagnostic",
-        "total_packets": 4,
+        "total_packets": 5,
         "status_counts": {
-          "keyword_matched": 4
+          "keyword_matched": 5
         },
         "role_counts": {
-          "default_evidence": 4
+          "default_evidence": 5
         },
         "source_missing_count": 0,
-        "keyword_matched_count": 4,
+        "keyword_matched_count": 5,
         "boundary_matched_count": 0,
         "fallback_count": 0
       },
@@ -41,16 +41,16 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 80,
-              "line_end": 82,
+              "line_start": 82,
+              "line_end": 84,
               "matched_terms": [
                 "search"
               ],
               "text": "Store A's visibility and entry structure can be described from exposure, ranking, entry, and search-entry metrics."
             },
             {
-              "line_start": 82,
-              "line_end": 84,
+              "line_start": 84,
+              "line_end": 86,
               "matched_terms": [
                 "search",
                 "search entry"
@@ -58,8 +58,8 @@
               "text": "| Month  | Exposure Users | Store Average Rank | Entry Users | Search Entry Users | Search Entry Share |\n| ------- | -------------: | -----------------: | ----------: | -----------------: | -----------------: |"
             },
             {
-              "line_start": 90,
-              "line_end": 92,
+              "line_start": 92,
+              "line_end": 94,
               "matched_terms": [
                 "search"
               ],
@@ -104,21 +104,22 @@
               "text": "```text\n   order_conversion_rate_pct = order_users / entry_users * 100\n   ```"
             },
             {
-              "line_start": 55,
-              "line_end": 57,
-              "matched_terms": [
-                "entry"
-              ],
-              "text": "```text\n   refund_amount\n   full_refund_orders\n   refund_orders_all_or_partial\n   ```"
-            },
-            {
-              "line_start": 66,
-              "line_end": 68,
+              "line_start": 68,
+              "line_end": 70,
               "matched_terms": [
                 "entry",
                 "entry users"
               ],
               "text": "3. Traffic-source users may overlap. Source-level users should not be summed into total exposure users or total entry users."
+            },
+            {
+              "line_start": 74,
+              "line_end": 76,
+              "matched_terms": [
+                "entry",
+                "entry users"
+              ],
+              "text": "| Month   | Transaction Amount | Transaction Orders | Entry Users | Order Conversion Rate | Average Order Value |\n| ------- | -----------------: | -----------------: | ----------: | --------------------: | ------------------: |"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: entry_conversion.",
@@ -151,24 +152,24 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 72,
-              "line_end": 74,
+              "line_start": 74,
+              "line_end": 76,
               "matched_terms": [
                 "order conversion"
               ],
               "text": "| Month   | Transaction Amount | Transaction Orders | Entry Users | Order Conversion Rate | Average Order Value |\n| ------- | -----------------: | -----------------: | ----------: | --------------------: | ------------------: |"
             },
             {
-              "line_start": 121,
-              "line_end": 123,
+              "line_start": 123,
+              "line_end": 125,
               "matched_terms": [
                 "order conversion"
               ],
               "text": "| Search Entry Users  |   445 |   839 | Up    |\n| Order Conversion Rate | 42.34% | 37.42% | Down   |\n| Average Order Value  |  31.18 |  26.95 | Down   |"
             },
             {
-              "line_start": 128,
-              "line_end": 130,
+              "line_start": 130,
+              "line_end": 132,
               "matched_terms": [
                 "order conversion"
               ],
@@ -217,16 +218,16 @@
               "text": "A store may use activity subsidy, pricing, ranking optimization, SKU mix, and fulfillment control as operating levers inside this chain."
             },
             {
-              "line_start": 58,
-              "line_end": 60,
+              "line_start": 60,
+              "line_end": 62,
               "matched_terms": [
                 "activity"
               ],
               "text": "2. `activity_cost_ratio_pct` follows the backend-style formula:"
             },
             {
-              "line_start": 61,
-              "line_end": 63,
+              "line_start": 63,
+              "line_end": 65,
               "matched_terms": [
                 "activity"
               ],
@@ -234,6 +235,55 @@
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: promotion_intensity.",
+          "original_limitations": [
+            "Deterministic mock pipeline only.",
+            "No live retrieval is performed in this step."
+          ],
+          "resolver_limitations": [
+            "Local text matching only.",
+            "No semantic embedding retrieval is used in this step.",
+            "No causality is inferred from matched snippets."
+          ]
+        },
+        {
+          "factor_id": "transaction_orders",
+          "evidence_id": "evidence_transaction_orders",
+          "source_type": "markdown",
+          "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+          "source_exists": true,
+          "grounding_role": "default_evidence",
+          "keywords_used": [
+            "transaction_orders",
+            "transaction orders"
+          ],
+          "grounding_status": "keyword_matched",
+          "snippets": [
+            {
+              "line_start": 74,
+              "line_end": 76,
+              "matched_terms": [
+                "transaction orders"
+              ],
+              "text": "| Month   | Transaction Amount | Transaction Orders | Entry Users | Order Conversion Rate | Average Order Value |\n| ------- | -----------------: | -----------------: | ----------: | --------------------: | ------------------: |"
+            },
+            {
+              "line_start": 101,
+              "line_end": 103,
+              "matched_terms": [
+                "transaction orders"
+              ],
+              "text": "| Month  | Activity Orders | Transaction Orders | Activity Order Share | Activity Cost Ratio |\n| ------- | --------------: | -----------------: | -------------------: | ------------------: |"
+            },
+            {
+              "line_start": 109,
+              "line_end": 111,
+              "matched_terms": [
+                "transaction orders"
+              ],
+              "text": "- Activity orders accounted for a high share of transaction orders in all three months.\n- Activity-order structure shows high activity involvement during the observed period."
+            }
+          ],
+          "original_claim_supported": "Provides context needed to evaluate factor: transaction_orders.",
           "original_limitations": [
             "Deterministic mock pipeline only.",
             "No live retrieval is performed in this step."
@@ -637,24 +687,24 @@
           "grounding_status": "boundary_matched",
           "snippets": [
             {
-              "line_start": 43,
-              "line_end": 45,
+              "line_start": 46,
+              "line_end": 48,
               "matched_terms": [
                 "competition"
               ],
               "text": "- transaction-scale bands;\n- competition context;\n- repeated-window stability;"
             },
             {
-              "line_start": 72,
-              "line_end": 74,
+              "line_start": 75,
+              "line_end": 77,
               "matched_terms": [
                 "competition"
               ],
               "text": "|---|---|---|---|\n| Search-entry structure comparison | `search_exposure_users`, `search_average_rank`, `search_entry_users`, `search_entry_rate_pct`, `search_entry_share_pct`, `entry_conversion_rate_pct`, `order_conversion_rate_pct` | repeated windows, competition context, stronger market context | cautious same-period diagnostic comparison |\n| Promotion or subsidy comparison | `activity_orders`, `activity_order_share_pct`, `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, `platform_subsidy_amount` | campaign calendar, campaign mechanism, competitor reaction, repeated activity windows | activity involvement and activity intensity only |"
             },
             {
-              "line_start": 75,
-              "line_end": 77,
+              "line_start": 78,
+              "line_end": 80,
               "matched_terms": [
                 "competitor"
               ],
@@ -774,20 +824,20 @@
               "text": "# Future Work: Pairwise Comparability Gate"
             },
             {
-              "line_start": 9,
-              "line_end": 11,
-              "matched_terms": [
-                "future work"
-              ],
-              "text": "The next stage is a pairwise comparability gate. It is documented here as future work."
-            },
-            {
-              "line_start": 44,
-              "line_end": 46,
+              "line_start": 8,
+              "line_end": 10,
               "matched_terms": [
                 "repeated"
               ],
-              "text": "- competition context;\n- repeated-window stability;\n- data-supported market-area classification;"
+              "text": "2. Demo 2: Stores B-F same-period diagnostic structure.\n3. Repeated-window panel: Stores B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04."
+            },
+            {
+              "line_start": 10,
+              "line_end": 12,
+              "matched_terms": [
+                "repeated"
+              ],
+              "text": "The repeated-window panel is an evidence-preparation layer for coverage and stability inspection before a future pairwise comparability gate. It is not a completed pairwise comparability gate."
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: repeated_reporting_windows.",
@@ -842,31 +892,30 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 116,
-              "line_end": 118,
+              "line_start": 135,
+              "line_end": 137,
               "matched_terms": [
                 "activity_orders"
               ],
               "text": "- explicit activity status, only if campaign-calendar or backend status evidence exists;\n- activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`;\n- activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`."
             },
             {
-              "line_start": 187,
-              "line_end": 189,
+              "line_start": 206,
+              "line_end": 208,
               "matched_terms": [
                 "activity_orders",
                 "activity orders",
                 "activity order"
               ],
-              "text": "| `search_entry_share_pct` | `search_entry_users / entry_users * 100` | Directional structure metric for the share of store entry attributed to the search source in the current reporting window. | Source-level traffic users may overlap, so this should not be interpreted as perfect user-level attribution. |\n| `activity_order_share_pct` | `activity_orders / transaction_orders * 100` | Measures the share of transaction orders associated with activity orders in the current reporting window. | Indicates activity involvement, not full activity status, campaign mechanism, causal demand lift, or promotion-transfer readiness. |"
+              "text": "| `search_entry_share_pct` | `search_entry_users / entry_users * 100` | Directional structure metric computed as search-source entry users divided by total entry users in the same reporting window. | Source-level traffic users may overlap, so the ratio should not be read as user-level attribution or exclusive channel contribution. |\n| `activity_order_share_pct` | `activity_orders / transaction_orders * 100` | Measures the share of transaction orders associated with activity orders in the current reporting window. | Indicates activity involvement, not full activity status, campaign mechanism, causal demand lift, or promotion-transfer readiness. |"
             },
             {
-              "line_start": 225,
-              "line_end": 227,
+              "line_start": 230,
+              "line_end": 232,
               "matched_terms": [
-                "activity orders",
-                "activity order"
+                "activity_orders"
               ],
-              "text": "|---|---|---:|---|---|\n| `high_activity_involvement` | `activity_order_share_pct` | `>= 80` | A large share of transaction orders involved activity orders. | Activity involvement, not explicit campaign status or promotion-transfer approval. |\n| `moderate_activity_involvement` | `activity_order_share_pct` | `>= 65` | Activity orders are a meaningful part of the transaction-order structure. | Diagnostic warning only. |"
+              "text": "- non-missing `search_entry_users`;\n- non-missing `activity_orders`;\n- non-missing `top3_sku_transaction_amount`."
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: activity_orders.",
@@ -895,24 +944,24 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 117,
-              "line_end": 119,
+              "line_start": 136,
+              "line_end": 138,
               "matched_terms": [
                 "activity_cost"
               ],
               "text": "- activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`;\n- activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`."
             },
             {
-              "line_start": 265,
-              "line_end": 267,
+              "line_start": 309,
+              "line_end": 311,
               "matched_terms": [
                 "activity cost"
               ],
               "text": "| `visibility_entry_profile`    | Exposure, ranking, entry, and search-entry structure.                       | Understanding whether the store was being seen and entered during the reporting window.             | Claiming visibility alone caused transaction growth.            |\n| `activity_lever_profile`     | Activity orders, activity cost, subsidy, and activity-cost ratio.                 | Understanding how promotional tools were used in the store's operating context.                 | Treating activity as a standalone cause or traditional ROI result.     |\n| `transaction_conversion_profile` | Transaction scale, order conversion, payment, and average order value.               | Reading transaction recovery or decline together with funnel quality.                      | Calling a period good or bad from one transaction metric alone.       |"
             },
             {
-              "line_start": 570,
-              "line_end": 572,
+              "line_start": 614,
+              "line_end": 616,
               "matched_terms": [
                 "activity_cost",
                 "活动成本"
@@ -946,24 +995,24 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 117,
-              "line_end": 119,
+              "line_start": 136,
+              "line_end": 138,
               "matched_terms": [
                 "merchant_subsidy"
               ],
               "text": "- activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`;\n- activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`."
             },
             {
-              "line_start": 548,
-              "line_end": 550,
+              "line_start": 592,
+              "line_end": 594,
               "matched_terms": [
                 "商家补贴"
               ],
               "text": "中文定义：平台展示的预计收入或预计订单收入类指标。预计订单收入通常指营业额扣除商家支出（包括商家补贴、平台服务费等）后的净收入，仅做数据展示，不做结算使用。"
             },
             {
-              "line_start": 572,
-              "line_end": 574,
+              "line_start": 616,
+              "line_end": 618,
               "matched_terms": [
                 "商家补贴"
               ],
@@ -996,24 +1045,24 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 117,
-              "line_end": 119,
+              "line_start": 136,
+              "line_end": 138,
               "matched_terms": [
                 "platform_subsidy"
               ],
               "text": "- activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`;\n- activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`."
             },
             {
-              "line_start": 572,
-              "line_end": 574,
+              "line_start": 616,
+              "line_end": 618,
               "matched_terms": [
                 "平台补贴"
               ],
               "text": "中文公式：活动成本 = 商家补贴金额 + 平台补贴金额"
             },
             {
-              "line_start": 574,
-              "line_end": 576,
+              "line_start": 618,
+              "line_end": 620,
               "matched_terms": [
                 "platform_subsidy"
               ],
@@ -1058,16 +1107,16 @@
               "text": "In the current project, `region_type` can only be used as weak context alongside period alignment, store type, order volume, visibility and ranking signals, entry and order conversion, activity profile, SKU evidence, data completeness, and future external market evidence. The current Demo 2 sample is too small to support a reliable regional classification."
             },
             {
-              "line_start": 266,
-              "line_end": 268,
+              "line_start": 310,
+              "line_end": 312,
               "matched_terms": [
                 "order conversion"
               ],
               "text": "| `activity_lever_profile`     | Activity orders, activity cost, subsidy, and activity-cost ratio.                 | Understanding how promotional tools were used in the store's operating context.                 | Treating activity as a standalone cause or traditional ROI result.     |\n| `transaction_conversion_profile` | Transaction scale, order conversion, payment, and average order value.               | Reading transaction recovery or decline together with funnel quality.                      | Calling a period good or bad from one transaction metric alone.       |\n| `single_metric_attribution_guard` | Guardrail against explaining performance from one metric alone.                  | Preventing unsupported attribution from exposure, ranking, activity, conversion, or SKU evidence alone. | Rejecting those metrics as irrelevant.                   |"
             },
             {
-              "line_start": 426,
-              "line_end": 428,
+              "line_start": 470,
+              "line_end": 472,
               "matched_terms": [
                 "下单"
               ],
@@ -1104,24 +1153,24 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 466,
-              "line_end": 468,
+              "line_start": 510,
+              "line_end": 512,
               "matched_terms": [
                 "支付人数"
               ],
               "text": "### `payment_users` / 支付人数"
             },
             {
-              "line_start": 474,
-              "line_end": 476,
+              "line_start": 518,
+              "line_end": 520,
               "matched_terms": [
                 "支付金额"
               ],
               "text": "### `payment_amount` / 支付金额"
             },
             {
-              "line_start": 480,
-              "line_end": 482,
+              "line_start": 524,
+              "line_end": 526,
               "matched_terms": [
                 "payment_conversion",
                 "支付转化"
@@ -1219,20 +1268,20 @@
               "text": "In Demo 2, `region_type` may contain coarse available labels such as city-level region labels. These values are retained for data-contract stability and source traceability, but they are not market-area types, consumption-level groups, maturity labels, or peer-store groups; in short, `region_type` is not a hard market-area classification. Stores with similar visible region labels may still differ in purchasing power, delivery radius, local competition, rent structure, promotion pressure, customer behavior, stockout risk, and fulfillment constraints."
             },
             {
-              "line_start": 111,
-              "line_end": 113,
+              "line_start": 100,
+              "line_end": 102,
+              "matched_terms": [
+                "competition"
+              ],
+              "text": "Boundary: `store_type` is not a performance label, market-area classification, peer-store group, or sufficient comparability condition by itself. It should be interpreted together with reporting-window alignment, transaction order volume, transaction amount, activity involvement, activity intensity, region or market context, SKU evidence, data completeness, repeated reporting windows, and future competition or fulfillment evidence."
+            },
+            {
+              "line_start": 130,
+              "line_end": 132,
               "matched_terms": [
                 "competition"
               ],
               "text": "A future pairwise comparability gate should use broader multi-store evidence to decide whether two store-period records can be compared for a specific operating question. Reliable store comparability should be judged from transaction order volume, transaction amount, store type, region and market context, competition environment, SKU structure, fulfillment or stockout evidence where available, repeated reporting windows, and activity evidence."
-            },
-            {
-              "line_start": 232,
-              "line_end": 234,
-              "matched_terms": [
-                "price"
-              ],
-              "text": "Not supported: This field does not rank stores, assign store stages, prove causality, or decide whether a promotion, subsidy, price change, SKU change, or ranking action should be taken."
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: competitor_context.",
@@ -1288,28 +1337,28 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 8,
-              "line_end": 10,
+              "line_start": 1,
+              "line_end": 2,
               "matched_terms": [
                 "fact"
               ],
-              "text": "question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-coverage and limitation update -> final report"
+              "text": "# Factor-Aware Grounded Review (RAC)"
             },
             {
-              "line_start": 14,
-              "line_end": 16,
+              "line_start": 2,
+              "line_end": 4,
               "matched_terms": [
                 "fact"
               ],
-              "text": "* which factors are relevant,\n * which assumptions are unsupported,"
+              "text": "RAC is the factor-aware grounded review layer of the current\ndecision-support prototype."
             },
             {
-              "line_start": 27,
-              "line_end": 29,
+              "line_start": 22,
+              "line_end": 24,
               "matched_terms": [
                 "fact"
               ],
-              "text": "* a shared review-state schema,\n* deterministic question analysis and factor expansion,\n* deterministic factor-weight buckets,"
+              "text": "-> question analysis\n-> factor expansion\n-> factor weighting"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: typed_memory.",
@@ -1341,29 +1390,29 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 2,
-              "line_end": 4,
+              "line_start": 5,
+              "line_end": 7,
               "matched_terms": [
                 "evidence"
               ],
-              "text": "This module is a structured reasoning scaffold for question decomposition, evidence routing, critique, and evidence-coverage and limitation update."
+              "text": "It takes a decision question and structured local evidence, makes the\nreview path explicit, and records where the available evidence supports"
             },
             {
-              "line_start": 4,
-              "line_end": 6,
+              "line_start": 24,
+              "line_end": 26,
               "matched_terms": [
                 "evidence",
                 "source"
               ],
-              "text": "The `rac/` directory name is retained for path stability. In reviewer-facing wording, this should be read as a deterministic, source-grounded reasoning scaffold with explicit evidence and boundary checks."
+              "text": "-> factor weighting\n-> source-aware local evidence routing\n-> boundary evidence for unavailable requirements"
             },
             {
-              "line_start": 8,
-              "line_end": 10,
+              "line_start": 34,
+              "line_end": 36,
               "matched_terms": [
                 "evidence"
               ],
-              "text": "question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-coverage and limitation update -> final report"
+              "text": "The pipeline separates factor selection, evidence retrieval, hypothesis\nformation, critique, and report generation. A final answer therefore"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: evidence_packets.",
@@ -1394,29 +1443,29 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 8,
-              "line_end": 10,
+              "line_start": 26,
+              "line_end": 28,
+              "matched_terms": [
+                "hypotheses",
+                "competing"
+              ],
+              "text": "-> boundary evidence for unavailable requirements\n-> competing hypotheses\n-> critique"
+            },
+            {
+              "line_start": 34,
+              "line_end": 36,
               "matched_terms": [
                 "hypothesis"
               ],
-              "text": "question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-coverage and limitation update -> final report"
+              "text": "The pipeline separates factor selection, evidence retrieval, hypothesis\nformation, critique, and report generation. A final answer therefore"
             },
             {
-              "line_start": 17,
-              "line_end": 19,
+              "line_start": 48,
+              "line_end": 50,
               "matched_terms": [
                 "competing"
               ],
-              "text": "* which evidence was actually used,\n * which competing explanations remain possible,\n * which conclusion should be downgraded because evidence is incomplete."
-            },
-            {
-              "line_start": 30,
-              "line_end": 32,
-              "matched_terms": [
-                "hypothesis",
-                "competing"
-              ],
-              "text": "* local file-based evidence routing,\n* competing-hypothesis templates,\n* critique and fact-check stages,"
+              "text": "- which assumptions remain unsupported;\n- which competing explanations remain possible;\n- which requirements are absent from the current evidence;"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: hypotheses.",
@@ -1448,28 +1497,28 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 62,
-              "line_end": 64,
-              "matched_terms": [
-                "confidence"
-              ],
-              "text": "* critique unsupported assumptions before writing the final answer,\n* update confidence and limitations only when the evidence supports the change."
-            },
-            {
-              "line_start": 88,
-              "line_end": 90,
+              "line_start": 119,
+              "line_end": 121,
               "matched_terms": [
                 "belief"
               ],
               "text": "evidence_packets\nbelief_records\nretrieval_trace"
             },
             {
-              "line_start": 101,
-              "line_end": 103,
+              "line_start": 136,
+              "line_end": 138,
               "matched_terms": [
                 "confidence"
               ],
               "text": "hypotheses\nconfidence\nlimitations"
+            },
+            {
+              "line_start": 172,
+              "line_end": 174,
+              "matched_terms": [
+                "confidence"
+              ],
+              "text": "The score summarizes local evidence-routing coverage. It is not a\nBayesian posterior, calibrated probability, causal-confidence estimate,\nor predicted business-success rate."
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: belief_records.",
@@ -1499,28 +1548,28 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 62,
-              "line_end": 64,
-              "matched_terms": [
-                "confidence"
-              ],
-              "text": "* critique unsupported assumptions before writing the final answer,\n* update confidence and limitations only when the evidence supports the change."
-            },
-            {
-              "line_start": 101,
-              "line_end": 103,
+              "line_start": 136,
+              "line_end": 138,
               "matched_terms": [
                 "confidence"
               ],
               "text": "hypotheses\nconfidence\nlimitations"
             },
             {
-              "line_start": 127,
-              "line_end": 129,
+              "line_start": 172,
+              "line_end": 174,
               "matched_terms": [
                 "confidence"
               ],
-              "text": "This scaffold makes LLM-assisted reasoning more traceable by decomposing a question into relevant factors, retrieving evidence by factor, generating competing hypotheses, checking unsupported assumptions, and producing grounded reports with a formula-based evidence-coverage score and mock reports with scenario-template confidence.\n## Example use cases"
+              "text": "The score summarizes local evidence-routing coverage. It is not a\nBayesian posterior, calibrated probability, causal-confidence estimate,\nor predicted business-success rate."
+            },
+            {
+              "line_start": 175,
+              "line_end": 177,
+              "matched_terms": [
+                "confidence"
+              ],
+              "text": "Mock reports separately carry Scenario-Template Confidence. That value\nis assigned by deterministic question-type templates and is not merged"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: confidence.",
@@ -1552,28 +1601,29 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 2,
-              "line_end": 4,
-              "matched_terms": [
-                "limitation"
-              ],
-              "text": "This module is a structured reasoning scaffold for question decomposition, evidence routing, critique, and evidence-coverage and limitation update."
-            },
-            {
-              "line_start": 4,
-              "line_end": 6,
+              "line_start": 7,
+              "line_end": 9,
               "matched_terms": [
                 "boundary"
               ],
-              "text": "The `rac/` directory name is retained for path stability. In reviewer-facing wording, this should be read as a deterministic, source-grounded reasoning scaffold with explicit evidence and boundary checks."
+              "text": "review path explicit, and records where the available evidence supports\na statement, where only a boundary can be established, and where a\nstronger conclusion should remain unresolved."
             },
             {
-              "line_start": 8,
-              "line_end": 10,
+              "line_start": 25,
+              "line_end": 27,
               "matched_terms": [
-                "limitation"
+                "boundary"
               ],
-              "text": "question -> question analysis -> factor expansion -> factor weighting -> evidence routing -> hypothesis generation -> critique / contradiction -> fact checking -> evidence-coverage and limitation update -> final report"
+              "text": "-> source-aware local evidence routing\n-> boundary evidence for unavailable requirements\n-> competing hypotheses"
+            },
+            {
+              "line_start": 36,
+              "line_end": 38,
+              "matched_terms": [
+                "limitation",
+                "limitations"
+              ],
+              "text": "formation, critique, and report generation. A final answer therefore\nretains an inspectable path back to the evidence packets and limitations\nused during review."
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: limitations.",
@@ -1606,29 +1656,28 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 4,
-              "line_end": 6,
+              "line_start": 24,
+              "line_end": 26,
               "matched_terms": [
                 "source"
               ],
-              "text": "The `rac/` directory name is retained for path stability. In reviewer-facing wording, this should be read as a deterministic, source-grounded reasoning scaffold with explicit evidence and boundary checks."
+              "text": "-> factor weighting\n-> source-aware local evidence routing\n-> boundary evidence for unavailable requirements"
             },
             {
-              "line_start": 44,
-              "line_end": 46,
+              "line_start": 34,
+              "line_end": 36,
+              "matched_terms": [
+                "retrieval"
+              ],
+              "text": "The pipeline separates factor selection, evidence retrieval, hypothesis\nformation, critique, and report generation. A final answer therefore"
+            },
+            {
+              "line_start": 46,
+              "line_end": 48,
               "matched_terms": [
                 "source"
               ],
-              "text": "* carry typed state between stages,\n* require source references for evidence claims,\n* keep boundary evidence separate from direct metric evidence,"
-            },
-            {
-              "line_start": 89,
-              "line_end": 91,
-              "matched_terms": [
-                "retrieval",
-                "trace"
-              ],
-              "text": "belief_records\nretrieval_trace"
+              "text": "- which factors are relevant to the question;\n- which source files were used;\n- which assumptions remain unsupported;"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: retrieval_trace.",
@@ -1662,28 +1711,28 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 26,
-              "line_end": 28,
+              "line_start": 7,
+              "line_end": 9,
               "matched_terms": [
                 "state"
               ],
-              "text": "* a shared review-state schema,\n* deterministic question analysis and factor expansion,"
+              "text": "review path explicit, and records where the available evidence supports\na statement, where only a boundary can be established, and where a\nstronger conclusion should remain unresolved."
             },
             {
-              "line_start": 39,
-              "line_end": 41,
+              "line_start": 29,
+              "line_end": 31,
               "matched_terms": [
                 "state"
               ],
-              "text": "A future implementation could connect these contracts to a graph workflow, such as a LangGraph-style shared-state node design. That would be an extension of the current deterministic scaffold, not a capability claimed by the current implementation."
+              "text": "-> rule-based claim and definition check\n-> review-state update\n-> grounded final report"
             },
             {
-              "line_start": 43,
-              "line_end": 45,
+              "line_start": 61,
+              "line_end": 63,
               "matched_terms": [
                 "state"
               ],
-              "text": "* carry typed state between stages,\n* require source references for evidence claims,"
+              "text": "- a shared review-state contract;\n- deterministic question analysis;"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: active_state_filtering.",

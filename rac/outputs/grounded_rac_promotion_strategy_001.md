@@ -82,7 +82,7 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 - [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.
 - [high] Promotion recommendations require margin and competitor context. Recommendation: Avoid final action recommendations without these checks.
 
-## 7. Fact Check
+## 7. Claim and Definition Check
 
 - Status: pass
 - Unsupported claims: none

@@ -60,8 +60,8 @@ The `Source Lines` column is an audit pointer to the local source-file line rang
 | typed_memory | rac/README.md | default_evidence | keyword_matched | 1-2 | fact |
 | evidence_packets | rac/README.md | default_evidence | keyword_matched | 5-7 | evidence |
 | hypotheses | rac/README.md | default_evidence | keyword_matched | 26-28 | hypotheses, competing |
-| belief_records | rac/README.md | default_evidence | keyword_matched | 117-119 | belief |
-| confidence | rac/README.md | default_evidence | keyword_matched | 134-136 | confidence |
+| belief_records | rac/README.md | default_evidence | keyword_matched | 119-121 | belief |
+| confidence | rac/README.md | default_evidence | keyword_matched | 136-138 | confidence |
 | limitations | rac/README.md | default_evidence | keyword_matched | 7-9 | boundary |
 | retrieval_trace | rac/README.md | default_evidence | keyword_matched | 24-26 | source |
 | active_state_filtering | rac/README.md | default_evidence | keyword_matched | 7-9 | state |
@@ -81,7 +81,7 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 - [high] The mock pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
 - [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.
 
-## 7. Fact Check
+## 7. Claim and Definition Check
 
 - Status: pass
 - Unsupported claims: none

@@ -289,7 +289,7 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
         )
 
     lines.append("")
-    lines.append("## 7. Fact Check")
+    lines.append("## 7. Claim and Definition Check")
     lines.append("")
     lines.append(f"- Status: {state['fact_check']['status']}")
 

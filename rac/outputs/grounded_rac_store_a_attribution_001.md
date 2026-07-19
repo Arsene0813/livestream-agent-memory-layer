@@ -76,7 +76,7 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 - [high] The mock pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
 - [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.
 
-## 7. Fact Check
+## 7. Claim and Definition Check
 
 - Status: pass
 - Unsupported claims: none

@@ -20,7 +20,7 @@ REQUIRED_PHRASES = [
     "evidence routing",
     "competing hypotheses",
     "critique",
-    "fact checking",
+    "rule-based claim and definition checks",
     "limitations",
     "future pairwise comparability gate remains question-specific",
 ]

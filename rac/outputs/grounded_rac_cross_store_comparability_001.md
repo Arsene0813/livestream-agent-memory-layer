@@ -84,7 +84,7 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 - [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.
 - [critical] Same-period staging must not be described as a completed pairwise comparability gate. Recommendation: Separate same-period diagnostic comparison from pairwise comparability.
 
-## 7. Fact Check
+## 7. Claim and Definition Check
 
 - Status: pass
 - Unsupported claims: none
