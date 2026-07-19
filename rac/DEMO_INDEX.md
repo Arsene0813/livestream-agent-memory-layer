@@ -20,7 +20,7 @@ question
 -> hypothesis generation
 -> critique
 -> rule-based claim and definition check
--> evidence-coverage update
+-> review-state update
 -> grounded final report
 -> report-contract quality gate
 ```
@@ -52,19 +52,18 @@ contract, and fixed evaluation cases.
 
 ## Current Implementation Status
 
-| Stage | Status | Main Files |
+| Component | Current Status | Evidence or Next Validation |
 |---|---|---|
-| Structured reasoning scaffold | Done | rac/prompts/, rac/schemas/, rac/eval/ |
-| Deterministic mock pipeline | Done | rac/src/mock_pipeline.py |
-| Local evidence resolver | Done | rac/src/local_evidence_resolver.py |
-| Source-aware cross-store grounding | Done | rac/src/local_evidence_resolver.py |
-| Grounded RAC pipeline | Done | rac/src/grounded_pipeline.py |
-| Report-contract quality gate | Done | rac/scripts/validate_grounded_quality_gate.py |
-| LangGraph orchestration | Future work | Not implemented |
-| LLM-based factor generation | Future work | Not implemented |
-| Qdrant / vector retrieval integration | Future work | Not implemented |
-| Pairwise comparability gate | Future work | Not implemented |
-| Live Meituan backend integration | Not claimed | Not implemented |
+| Structured review contracts | Implemented | `rac/prompts/`, `rac/schemas/`, and `rac/eval/` define the current review inputs, state, and fixed cases. |
+| Deterministic mock pipeline | Implemented | `rac/src/mock_pipeline.py` establishes the typed review-state and report contracts. |
+| Local evidence resolver | Implemented | `rac/src/local_evidence_resolver.py` routes factors to local source snippets or explicit boundary evidence. |
+| Grounded RAC pipeline | Implemented | `rac/src/grounded_pipeline.py` generates source-aware JSON and Markdown reports. |
+| Report-contract quality gate | Implemented | `rac/scripts/validate_grounded_quality_gate.py` validates report structure, evidence references, limitations, and selected claim boundaries. |
+| LangGraph-style orchestration | Planned experiment | Evaluate when conditional re-retrieval, repeated critique, recoverable branches, or human-review checkpoints make the sequential path difficult to inspect. |
+| Model-assisted review | Planned experiment | Compare model-assisted factor expansion, competing hypotheses, critique, and report synthesis against the deterministic baseline. |
+| Embedding-based or hybrid retrieval | Planned experiment | Test wording variation, hard-negative behavior, entity and period preservation, threshold sensitivity, and source traceability. |
+| Pairwise comparability gate | Planned evidence contract | Requires defined thresholds, broader repeated-window evidence, and additional market and operating context. |
+| Live Meituan backend integration | Future data integration | Requires source-field mapping, period handling, schema-drift checks, access control, anonymization, and lineage capture. |
 
 ## How To Run
 
@@ -157,31 +156,15 @@ Each grounded report includes:
 This structure keeps the evidence path, unresolved requirements, and
 interpretation boundary visible in the final report.
 
-## Review Contract
+## Review Checks
 
-The RAC review path is:
+A reviewer can assess each grounded output at three linked levels:
 
-```text
-question
--> relevant factors
--> factor-specific evidence
--> explicit boundary evidence
--> competing hypotheses
--> critique
--> claim and definition check
--> grounded report
-```
+1. **Factor coverage:** whether the question was decomposed into the factors needed for the current decision.
+2. **Evidence routing:** whether each factor was linked to an appropriate local source or recorded as explicit boundary evidence.
+3. **Judgment boundary:** whether the final judgment remains within the evidence, definitions, entity scope, and reporting period available to the case.
 
-Each factor remains linked to a source path, grounding role,
-source-line audit pointer, and evidence field. When a required source
-is unavailable, the missing requirement remains visible as boundary
-evidence in the review trace.
-
-The resulting report can be checked at three levels:
-
-1. whether the relevant factors were considered;
-2. whether each factor was routed to an appropriate source or boundary;
-3. whether the final judgment stays within the available evidence.
+Each evidence record retains its source path, grounding role, source-line audit pointer, and evidence fields. Missing requirements remain visible in the review trace rather than being replaced by an unsupported conclusion.
 
 ## Current Evidence and Integration Boundary
 
