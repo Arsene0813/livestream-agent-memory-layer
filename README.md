@@ -52,7 +52,7 @@ Demo 2 uses the `cross_store_comparability` file-path term for reference stabili
 | Repeated-window panel | B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04. | Descriptive repeated-window evidence before future pairwise comparability rules. |
 | Memory facts | Converts diagnostic outputs into source-bounded facts with observed values, source fields, source paths, confidence labels, and limitations. | File-backed evidence records derived from manually structured source tables. |
 | Answer-boundary checks | Tests whether answers stay within entity, period, metric-definition, source, and interpretation boundaries. | Scenario-based checks tied to the current evidence path; not broad LLM robustness tests. |
-| Factor-aware grounded review layer (RAC) | Provides deterministic factor expansion, evidence routing, critique, fact checking, evidence-coverage updates, and grounded report generation over local project evidence. | File-grounded review with explicit source paths, competing hypotheses, and limitations. |
+| Factor-aware grounded review layer (RAC) | Provides deterministic factor expansion, evidence routing, critique, rule-based claim and definition checks, review-state updates, and grounded report generation over local project evidence. | File-grounded review with explicit source paths, competing hypotheses, and limitations. |
 
 ## Key Design Principles
 
@@ -100,7 +100,7 @@ part of the decision-support problem.
 |---|---|---|
 | Lifecycle-aware memory layer | Stores typed product facts, controls updates and active state, retrieves current evidence, and falls back when knowledge is unsupported. | `api/`, `scripts/`, `eval/` |
 | Retail evidence layer | Preserves merchant-backend metric definitions, structures store-period evidence with SQL, generates source-bounded memory facts, and validates lineage and interpretation limits. | `retail_ops/` |
-| Factor-aware grounded review layer (RAC) | Expands decision factors, routes local evidence, records competing hypotheses, applies critique and fact checks, and reports evidence coverage and limitations. | `rac/` |
+| Factor-aware grounded review layer (RAC) | Expands decision factors, routes local evidence, records competing hypotheses, applies critique and rule-based claim and definition checks, and reports evidence coverage and limitations. | `rac/` |
 
 The reviewer-oriented evidence flow is:
 
@@ -259,7 +259,7 @@ Its implemented workflow covers:
 - source-aware local evidence routing;
 - explicit boundary evidence for unavailable requirements;
 - competing hypotheses;
-- critique and fact checking;
+- critique and rule-based claim and definition checks;
 - evidence-coverage and limitation updates;
 - grounded report generation;
 - a deterministic quality gate.
