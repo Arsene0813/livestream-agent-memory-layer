@@ -141,7 +141,7 @@ A stronger pairwise comparability gate should be implemented after Demo 2 eviden
 |---|---|---|---|
 | Reporting-window alignment | `period_start`, `period_end`, `period_month` | Repeated windows beyond one selected month | Backend exports across more store-period records |
 | Order volume | `transaction_orders` | Volume bands and repeated-window stability | Store-period metrics |
-| Transaction scale | `transaction_amount`, `average_order_value`, `estimated_income_proxy` | Scale bands and clearer income/cost evidence where available | Store-period metrics and backend financial views |
+| Transaction scale | `transaction_amount`, `average_order_value`; `estimated_income_proxy` as supplementary display context only | Transaction-amount and order-value bands; clearer settlement, cost, and income evidence where available | Store-period metrics and backend financial views |
 | Activity status | Not directly implemented | Campaign calendar or explicit backend activity-status evidence | Backend activity records or manually documented campaign calendar |
 | Activity involvement | `activity_orders`, `activity_order_share_pct` | Repeated activity windows and campaign mechanism evidence | Activity-order metrics over more periods |
 | Activity intensity | `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, `platform_subsidy_amount` | Subsidy-intensity stability and context for why the activity was used | Activity-cost and subsidy records |

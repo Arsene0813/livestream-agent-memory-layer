@@ -79,6 +79,13 @@ REQUIRED_BOUNDARY_PHRASES = [
     "not a hard market-area classification",
 ]
 
+REQUIRED_COMPARABILITY_GATE_PHRASES = [
+    "`estimated_income_proxy` as weak supplementary backend context only",
+    "`estimated_income_proxy` lacks a full calculation breakdown in the current demo data and should not be used as a primary gate factor.",
+    "`estimated_income_proxy` as supplementary display context only",
+    "Check whether transaction order volume and transaction amount are within a reasonable comparison band.",
+]
+
 CANONICAL_MEMORY_SLOTS = {
     "visibility_entry_profile",
     "activity_lever_profile",
@@ -103,6 +110,7 @@ KNOWN_HELPER_FIELDS = {
 REQUIRED_FILES = [
     "retail_ops/data/DATA_DICTIONARY.md",
     "retail_ops/TECHNICAL_APPENDIX.md",
+    "retail_ops/COMPARABILITY_GATE_V0.md",
     "retail_ops/data/store_a_monthly_metrics.csv",
     "retail_ops/data/store_a_top_skus.csv",
     "retail_ops/data/demo2_store_period_metrics.csv",
@@ -423,6 +431,7 @@ def main() -> int:
 
     dictionary = read_text("retail_ops/data/DATA_DICTIONARY.md")
     lineage = read_text("retail_ops/TECHNICAL_APPENDIX.md")
+    comparability_gate = read_text("retail_ops/COMPARABILITY_GATE_V0.md")
     demo1_sql = read_text("retail_ops/sql/01_store_a_month_over_month_diagnostic.sql")
     demo2_sql = read_text("retail_ops/sql/02_demo2_cross_store_comparability.sql")
 
@@ -481,6 +490,13 @@ def main() -> int:
         if phrase not in dictionary:
             failures.append(f"DATA_DICTIONARY.md missing required boundary phrase: {phrase}")
 
+    for phrase in REQUIRED_COMPARABILITY_GATE_PHRASES:
+        if phrase not in comparability_gate:
+            failures.append(
+                "COMPARABILITY_GATE_V0.md missing required "
+                f"estimated-income boundary phrase: {phrase}"
+            )
+
     for field in REQUIRED_DEMO2_OUTPUT_FIELDS:
         if field not in demo2_output_headers:
             failures.append(f"Demo 2 output missing required field `{field}`")
@@ -528,6 +544,7 @@ def main() -> int:
         "Checked generated Demo 1 and Demo 2 memory fact structure, non-empty values and calculations, and period metadata.",
         "Checked dictionary-bounded source_fields against declared source and supporting CSV headers.",
         "Checked critical metric-boundary phrases in DATA_DICTIONARY.md.",
+        "Checked estimated_income_proxy remains supplementary context rather than a primary comparability-gate factor.",
         "Checked registered non-canonical aliases while preserving DATA_DICTIONARY.md as the naming authority.",
         f"Saved result path: {RESULT_PATH.relative_to(ROOT)}",
     ]
