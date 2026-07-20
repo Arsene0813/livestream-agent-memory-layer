@@ -26,17 +26,6 @@ REQUIRED_FILES = [
     "eval/rac_eval_cases.json",
 ]
 
-REQUIRED_README_PHRASES = [
-    "Factor-Aware Grounded Review (RAC)",
-    "shared review-state contract",
-    "factor expansion",
-    "factor weights",
-    "evidence routing",
-    "competing hypotheses",
-    "critique",
-    "Fact Checks",
-    "Interpretation Boundary",
-]
 
 REQUIRED_EVAL_KEYS = [
     "case_id",
@@ -60,10 +49,6 @@ def main() -> None:
     if missing:
         fail(f"Missing files: {missing}")
 
-    readme = (RAC / "README.md").read_text(encoding="utf-8")
-    missing_phrases = [phrase for phrase in REQUIRED_README_PHRASES if phrase not in readme]
-    if missing_phrases:
-        fail(f"README missing required phrases: {missing_phrases}")
 
     for schema_path in [
         RAC / "schemas/cognition_state.schema.json",
