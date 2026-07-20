@@ -18,6 +18,12 @@ FORBIDDEN_ALIASES = [
     "estimated_order_income",
     "paid_users",
     "paid_amount",
+    "store_exposure_users",
+    "store_exposure_times",
+    "entry_visits",
+    "order_submissions",
+    "full_or_partial_refund_orders",
+    "business_area_rank",
 ]
 
 # Selected required implemented fields exercised by the current
@@ -443,7 +449,11 @@ def main() -> int:
 
     validator_paths = {
         (ROOT / "retail_ops/scripts/validate_retail_data_contract.py").resolve(),
+        (ROOT / "retail_ops/scripts/validate_demo2_staging_data.py").resolve(),
+        (ROOT / "retail_ops/scripts/validate_store_period_panel.py").resolve(),
         (ROOT / "scripts/validate_demo2_retail_endpoint_boundary.py").resolve(),
+        (ROOT / "retail_ops/data/DATA_DICTIONARY.md").resolve(),
+        RESULT_PATH.resolve(),
     }
 
     for path in tracked_files():
@@ -518,7 +528,7 @@ def main() -> int:
         "Checked generated Demo 1 and Demo 2 memory fact structure, non-empty values and calculations, and period metadata.",
         "Checked dictionary-bounded source_fields against declared source and supporting CSV headers.",
         "Checked critical metric-boundary phrases in DATA_DICTIONARY.md.",
-        "Checked current schema aliases and dictionary-defined field boundaries.",
+        "Checked registered non-canonical aliases while preserving DATA_DICTIONARY.md as the naming authority.",
         f"Saved result path: {RESULT_PATH.relative_to(ROOT)}",
     ]
     write_report(report)

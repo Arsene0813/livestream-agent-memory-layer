@@ -6,5 +6,5 @@ Checked Demo 2 diagnostic-scope and limitation fields.
 Checked generated Demo 1 and Demo 2 memory fact structure, non-empty values and calculations, and period metadata.
 Checked dictionary-bounded source_fields against declared source and supporting CSV headers.
 Checked critical metric-boundary phrases in DATA_DICTIONARY.md.
-Checked current schema aliases and dictionary-defined field boundaries.
+Checked registered non-canonical aliases while preserving DATA_DICTIONARY.md as the naming authority.
 Saved result path: retail_ops/outputs/retail_data_contract_validation_result.txt

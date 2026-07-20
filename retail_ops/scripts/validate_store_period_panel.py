@@ -29,6 +29,13 @@ if missing:
 forbidden_panel_aliases = {
     "full_refund_order_count",
     "full_or_partial_refund_order_count",
+    "self_operated",
+    "store_exposure_users",
+    "store_exposure_times",
+    "entry_visits",
+    "order_submissions",
+    "full_or_partial_refund_orders",
+    "business_area_rank",
 }
 
 required_panel_fields = {
@@ -287,7 +294,7 @@ alias_scan_paths = [
 ]
 for path in alias_scan_paths:
     text = path.read_text(encoding="utf-8")
-    for alias in ["full_refund_order_count", "full_or_partial_refund_order_count", "self_operated"]:
+    for alias in sorted(forbidden_panel_aliases):
         if alias in text:
             print(f"[FAIL] Non-canonical alias remains in {path.relative_to(ROOT)}: {alias}")
             sys.exit(1)
