@@ -41,6 +41,60 @@ def load_eval_cases() -> list[dict]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+PROMOTION_BOUNDARY_FACTORS = {
+    "sku_margin_structure",
+    "competitor_context",
+}
+
+
+def validate_promotion_grounded_rows(
+    case_id: str,
+    rows: list[dict],
+) -> None:
+    if case_id != "rac_promotion_strategy_001":
+        return
+
+    rows_by_factor = {
+        row["factor_id"]: row
+        for row in rows
+    }
+
+    missing = sorted(
+        PROMOTION_BOUNDARY_FACTORS
+        - set(rows_by_factor)
+    )
+
+    if missing:
+        fail(
+            "Promotion report is missing factors: "
+            f"{missing}"
+        )
+
+    actual_boundary = {
+        factor_id
+        for factor_id, row in rows_by_factor.items()
+        if row["grounding_status"] == "boundary_matched"
+    }
+
+    if actual_boundary != PROMOTION_BOUNDARY_FACTORS:
+        fail(
+            "Promotion grounded boundary mismatch. "
+            f"Expected {sorted(PROMOTION_BOUNDARY_FACTORS)}, "
+            f"found {sorted(actual_boundary)}"
+        )
+
+    for factor_id in sorted(PROMOTION_BOUNDARY_FACTORS):
+        role = rows_by_factor[factor_id].get(
+            "grounding_role"
+        )
+
+        if role != "boundary_evidence":
+            fail(
+                f"{factor_id} must use boundary_evidence, "
+                f"found {role}"
+            )
+
+
 def main() -> None:
     cases = load_eval_cases()
     output_dir = ROOT / "rac" / "outputs"
@@ -62,6 +116,11 @@ def main() -> None:
 
         summary = state["grounded_evidence"]["summary"]
         rows = state.get("grounded_evidence_rows", [])
+
+        validate_promotion_grounded_rows(
+            case["case_id"],
+            rows,
+        )
 
         if summary["total_packets"] == 0:
             fail(f"{case['case_id']} has zero grounded packets")

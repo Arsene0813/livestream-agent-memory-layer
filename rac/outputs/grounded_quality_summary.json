@@ -61,12 +61,13 @@
         "limitation_count": 3,
         "grounded_row_count": 8,
         "total_packets": 8,
-        "keyword_matched_count": 8,
-        "boundary_matched_count": 0,
+        "keyword_matched_count": 6,
+        "boundary_matched_count": 2,
         "fallback_count": 0,
         "source_missing_count": 0,
         "row_status_counts": {
-          "keyword_matched": 8
+          "keyword_matched": 6,
+          "boundary_matched": 2
         }
       }
     },

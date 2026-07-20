@@ -48,8 +48,8 @@ Weighting limitations:
 ## 4. Local Evidence Grounding
 
 - Total evidence packets: 8
-- Keyword matched packets: 8
-- Boundary matched packets: 0
+- Keyword matched packets: 6
+- Boundary matched packets: 2
 - Fallback packets: 0
 - Missing source files: 0
 
@@ -63,8 +63,8 @@ The `Source Lines` column is an audit pointer to the local source-file line rang
 | platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 136-138 | platform_subsidy |
 | order_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 77-79 | order conversion |
 | payment_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 510-512 | 支付人数 |
-| sku_margin_structure | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 13-15 | sku |
-| competitor_context | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 75-77 | competition |
+| sku_margin_structure | retail_ops/data/DATA_DICTIONARY.md | boundary_evidence | boundary_matched | 13-15 | sku |
+| competitor_context | retail_ops/data/DATA_DICTIONARY.md | boundary_evidence | boundary_matched | 75-77 | competition |
 
 
 ## 5. Competing Hypotheses
@@ -96,7 +96,7 @@ The judgment remains conservative because local snippet matching grounds the evi
 
 ## 9. Evidence-Coverage Score
 
-1.00
+0.89
 
 How this score is calculated:
 
@@ -131,11 +131,11 @@ Future sensitivity check:
 Current report inputs:
 
 - total_packets = 8
-- keyword_matched_packets = 8
-- boundary_matched_packets = 0
+- keyword_matched_packets = 6
+- boundary_matched_packets = 2
 - fallback_packets = 0
 - missing_source_files = 0
-- direct_evidence_rate = keyword_matched_packets / total_packets = 1.00
+- direct_evidence_rate = keyword_matched_packets / total_packets = 0.75
 - supported_or_boundary_rate = (keyword_matched_packets + boundary_matched_packets) / total_packets = 1.00
 - no_missing_source_file_score = 1.00
 - no_fallback_score = 1.00

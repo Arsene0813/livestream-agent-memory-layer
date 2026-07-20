@@ -263,6 +263,22 @@ FACTOR_KEYWORDS: dict[str, list[str]] = {
 }
 
 
+STRATEGIC_SOURCE_OVERRIDES: dict[str, list[dict[str, str]]] = {
+    "sku_margin_structure": [
+        {
+            "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+            "grounding_role": "boundary_evidence",
+        }
+    ],
+    "competitor_context": [
+        {
+            "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+            "grounding_role": "boundary_evidence",
+        }
+    ],
+}
+
+
 COMPARABILITY_SOURCE_OVERRIDES: dict[str, list[dict[str, str]]] = {
     "same_reporting_period": [
         {
@@ -454,7 +470,16 @@ def candidate_sources_for_packet(
 ) -> list[dict[str, str]]:
     factor_id = infer_factor_id(packet)
 
-    if question_type == "comparability_judgment" and factor_id in COMPARABILITY_SOURCE_OVERRIDES:
+    if (
+        question_type == "strategic_recommendation"
+        and factor_id in STRATEGIC_SOURCE_OVERRIDES
+    ):
+        return STRATEGIC_SOURCE_OVERRIDES[factor_id]
+
+    if (
+        question_type == "comparability_judgment"
+        and factor_id in COMPARABILITY_SOURCE_OVERRIDES
+    ):
         return COMPARABILITY_SOURCE_OVERRIDES[factor_id]
 
     return [

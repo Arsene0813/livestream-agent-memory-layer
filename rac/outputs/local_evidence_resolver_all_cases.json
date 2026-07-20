@@ -864,14 +864,16 @@
         "question_type": "strategic_recommendation",
         "total_packets": 8,
         "status_counts": {
-          "keyword_matched": 8
+          "keyword_matched": 6,
+          "boundary_matched": 2
         },
         "role_counts": {
-          "default_evidence": 8
+          "default_evidence": 6,
+          "boundary_evidence": 2
         },
         "source_missing_count": 0,
-        "keyword_matched_count": 8,
-        "boundary_matched_count": 0,
+        "keyword_matched_count": 6,
+        "boundary_matched_count": 2,
         "fallback_count": 0
       },
       "resolved_packets": [
@@ -1195,7 +1197,7 @@
           "source_type": "markdown",
           "source_path": "retail_ops/data/DATA_DICTIONARY.md",
           "source_exists": true,
-          "grounding_role": "default_evidence",
+          "grounding_role": "boundary_evidence",
           "keywords_used": [
             "margin",
             "sku margin",
@@ -1204,7 +1206,7 @@
             "利润",
             "商品"
           ],
-          "grounding_status": "keyword_matched",
+          "grounding_status": "boundary_matched",
           "snippets": [
             {
               "line_start": 13,
@@ -1248,7 +1250,7 @@
           "source_type": "markdown",
           "source_path": "retail_ops/data/DATA_DICTIONARY.md",
           "source_exists": true,
-          "grounding_role": "default_evidence",
+          "grounding_role": "boundary_evidence",
           "keywords_used": [
             "competitor",
             "competition",
@@ -1257,7 +1259,7 @@
             "竞争",
             "价格"
           ],
-          "grounding_status": "keyword_matched",
+          "grounding_status": "boundary_matched",
           "snippets": [
             {
               "line_start": 75,

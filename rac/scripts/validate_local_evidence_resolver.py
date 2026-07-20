@@ -20,6 +20,60 @@ def load_eval_cases() -> list[dict]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+PROMOTION_BOUNDARY_FACTORS = {
+    "sku_margin_structure",
+    "competitor_context",
+}
+
+
+def validate_promotion_boundary_routing(
+    case_id: str,
+    packets: list[dict],
+) -> None:
+    if case_id != "rac_promotion_strategy_001":
+        return
+
+    packets_by_factor = {
+        packet["factor_id"]: packet
+        for packet in packets
+    }
+
+    missing = sorted(
+        PROMOTION_BOUNDARY_FACTORS
+        - set(packets_by_factor)
+    )
+
+    if missing:
+        fail(
+            "Promotion case is missing factors: "
+            f"{missing}"
+        )
+
+    actual_boundary = {
+        factor_id
+        for factor_id, packet in packets_by_factor.items()
+        if packet["grounding_status"] == "boundary_matched"
+    }
+
+    if actual_boundary != PROMOTION_BOUNDARY_FACTORS:
+        fail(
+            "Promotion boundary routing mismatch. "
+            f"Expected {sorted(PROMOTION_BOUNDARY_FACTORS)}, "
+            f"found {sorted(actual_boundary)}"
+        )
+
+    for factor_id in sorted(PROMOTION_BOUNDARY_FACTORS):
+        role = packets_by_factor[factor_id].get(
+            "grounding_role"
+        )
+
+        if role != "boundary_evidence":
+            fail(
+                f"{factor_id} must use boundary_evidence, "
+                f"found {role}"
+            )
+
+
 def main() -> None:
     cases = load_eval_cases()
 
@@ -36,6 +90,11 @@ def main() -> None:
 
         summary = resolved["summary"]
         packets = resolved["resolved_packets"]
+
+        validate_promotion_boundary_routing(
+            case["case_id"],
+            packets,
+        )
 
         if summary["total_packets"] == 0:
             fail(f"{case['case_id']} produced no evidence packets")
