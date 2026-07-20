@@ -177,7 +177,7 @@ Mock reports separately carry Scenario-Template Confidence. That value
 is assigned by deterministic question-type templates and is not merged
 with the grounded Evidence-Coverage Score.
 
-## Competing Hypotheses, Critique, and Claim Checks
+## Competing Hypotheses, Critique, and Fact Checks
 
 RAC does not route evidence directly into a single preferred narrative.
 

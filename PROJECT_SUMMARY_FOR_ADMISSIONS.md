@@ -59,7 +59,7 @@ The central decision problem is therefore not simply which store or metric is hi
 | Repeated-window panel | Stores B-F across February, March, and April 2026 using the documented supporting-table coverage. |
 | Current analytical use | Descriptive diagnosis, value lineage, evidence routing, scope checks, and answer-boundary evaluation. |
 
-The repository evidence supports analysis of these selected store-period records. Question-specific pairwise comparability remains a separate analytical step because matching reporting windows alone does not establish that two stores are suitable peers for a particular operating decision.
+The repository evidence supports analysis of these selected store-period records. The current prototype does not claim a completed pairwise comparability gate. Question-specific pairwise comparability remains a separate analytical step because matching reporting windows alone does not establish that two stores are suitable peers for a particular operating decision.
 
 ## Prototype Design
 
@@ -91,7 +91,7 @@ Generated memory facts retain the entity, reporting period, evidence slot, sourc
 | Contract and lineage checks | Detects selected naming, formula, header, metadata, path, and source-to-output inconsistencies. |
 | Retrieval stress tests | Examines evidence routing under supported, unsupported, hard-negative, mismatched, ambiguous, and wording-variation queries. |
 | Boundary evaluations | Checks whether later answers preserve entity, period, metric-definition, and comparison limits. |
-| RAC grounded review | Decomposes multi-factor questions, routes local or boundary evidence, develops competing hypotheses, applies critique and rule-based claim and definition checks, updates evidence-coverage state, and produces an inspectable report. |
+| RAC grounded review | Decomposes multi-factor questions, routes local or boundary evidence, develops competing hypotheses, applies critique and fact checks for selected claim and definition conflicts, updates evidence-coverage state, and produces an inspectable report. |
 
 The layers have distinct responsibilities. SQL establishes reproducible diagnostic values. Memory facts preserve evidence after transformation. Retrieval identifies potentially relevant local evidence. Boundary evaluations and RAC review examine whether later reasoning remains connected to the documented source and scope.
 
@@ -164,7 +164,7 @@ Main outputs:
 
 The project also includes a deterministic source-aware review layer over local project evidence. This is an important technical component because it makes multi-factor reasoning inspectable before an answer is written.
 
-The layer decomposes an operating question into relevant factors, routes each factor to local evidence or boundary evidence, generates competing hypotheses, applies critique and rule-based claim and definition checks, and produces a grounded report with template confidence labels, limitations, source paths, source-line audit pointers, and evidence fields.
+The layer decomposes an operating question into relevant factors, routes each factor to local evidence or boundary evidence, generates competing hypotheses, applies critique and fact checks for selected claim and definition conflicts, and produces a grounded report with template confidence labels, limitations, source paths, source-line audit pointers, and evidence fields.
 
 This layer is useful when current evidence is strong for one factor but weak, missing, or boundary-only for another. It helps prevent a grounded answer from hiding missing evidence behind a fluent conclusion.
 

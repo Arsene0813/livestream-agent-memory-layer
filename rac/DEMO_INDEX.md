@@ -80,8 +80,8 @@ Expected quality-gate result:
   [OK] RAC report-contract quality gate passed
   [OK] Cases checked: 4
   [OK] Total grounded packets: 30
-  [OK] Keyword matched packets: 28
-  [OK] Boundary matched packets: 2
+  [OK] Keyword matched packets: 26
+  [OK] Boundary matched packets: 4
   [OK] Fallback packets: 0
   [OK] Missing source files: 0
 
@@ -156,7 +156,7 @@ Each grounded report includes:
 This structure keeps the evidence path, unresolved requirements, and
 interpretation boundary visible in the final report.
 
-## Review Checks
+## Review Contract
 
 A reviewer can assess each grounded output at three linked levels:
 
