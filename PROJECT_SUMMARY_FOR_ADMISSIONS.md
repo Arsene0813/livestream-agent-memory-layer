@@ -177,9 +177,7 @@ Reviewer entry points:
 | `rac/outputs/grounded_rac_cross_store_comparability_001.md` | Demo 2 cross-store comparability boundary review. |
 | `rac/src/grounded_pipeline.py` | Deterministic grounded review pipeline. |
 
-## Region and Market-Context Boundary
-
-`region_type` follows the central definition in `retail_ops/data/DATA_DICTIONARY.md`. In this project it is weak market-context metadata for the current demo, not a peer-grouping field, market-area label, consumption-level label, or store-stage label.
+## Future Market-Context Evidence
 
 Future market-context classification should be added only after broader store coverage and supporting evidence are available. Useful future evidence may include repeated store-period records, local consumption-level evidence, competition evidence, delivery-radius evidence, activity-condition evidence, and stronger geographic context.
 
