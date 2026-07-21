@@ -106,29 +106,9 @@ This flow is meant to prevent retrieved facts from being reused outside their ev
 * the retrieved metric has a documented interpretation boundary;
 * several candidate facts have similar scores and the comparison question is too broad.
 
-This flow is a local prototype retrieval pattern. It is not a production monitoring dashboard, not live Meituan backend integration, and not a substitute for answer-boundary checks.
+This flow is a local prototype retrieval pattern. It is not a production monitoring dashboard, live Meituan backend integration, or a substitute for answer-boundary checks.
 
-### Retail Retrieval Boundary Pattern
-
-The current retail retrieval path should not treat semantic similarity as sufficient evidence for an operating answer.
-
-A retail answer must still preserve:
-
-- entity scope;
-- reporting-period scope;
-- metric definition;
-- source-field support;
-- comparison limits.
-
-Typical refusal or qualification cases include:
-
-- the query asks for a metric outside the current evidence;
-- the query mixes stores, months, or demo scopes;
-- the query asks for strategy transfer or final operating action;
-- the retrieved metric has a documented interpretation boundary;
-- multiple candidate facts are semantically close but the comparison question is underspecified.
-
-This pattern is consistent with the offline retrieval-threshold and query-robustness inspections summarized in `retail_ops/EXPERIMENT_RESULTS.md`.
+The same scope checks are used to interpret the offline retrieval-threshold and query-robustness inspections summarized in `retail_ops/EXPERIMENT_RESULTS.md`.
 
 ## Endpoint Evidence Modes
 
@@ -563,7 +543,7 @@ The purpose of this review is to protect the Meituan merchant-backend metric con
 
 This file also preserves the field-name and scope-change guardrails that protect the current retail evidence path.
 
-- `retail_ops/data/DATA_DICTIONARY.md` remains the source of truth for retail field names and Meituan-style metric meanings.
+- `retail_ops/data/DATA_DICTIONARY.md` remains the source of truth for retail field names and selected Meituan merchant-backend metric meanings.
 - Demo 1 remains a Store A month-over-month diagnostic.
 - Demo 2 remains a same-period B-F diagnostic for March 2026, not a completed pairwise comparability gate.
 - `region_type` remains weak region or market-context evidence only; it is not a hard market-area classification, store-stage label, or peer-store grouping rule.
@@ -574,11 +554,7 @@ This file also preserves the field-name and scope-change guardrails that protect
 
 ## Review Rule
 
-Any future field-name change must pass this review first:
-
-| Existing field | Dictionary definition | Current usage | Rename decision |
-|---|---|---|---|
-| TBD | Must be checked against `retail_ops/data/DATA_DICTIONARY.md`. | Must list CSV, SQL, output, memory-fact, lineage, README/admissions, and eval usage. | Do not rename unless the full source-to-output path is migrated together. |
+Before implementation, any field-name or semantic change must record the existing field, its dictionary definition, current usage, and rename decision. The completed mappings for the current project are listed in the review tables below.
 
 Future fields such as `activity_status`, `market_area_type`, `market_area_type_source`, `market_area_type_confidence`, `comparison_question_type`, or `comparison_decision` must not be introduced into source CSVs, SQL outputs, generated facts, or eval cases until they are first documented in `retail_ops/data/DATA_DICTIONARY.md` and linked through the Source-to-Claim Lineage section of this appendix.
 
@@ -793,7 +769,7 @@ This table summarizes selected fields referenced across the current retail evide
 
 Pairwise comparability-gate fields are outside the current implemented retail scope.
 
-A reliable future gate should consider transaction order volume, transaction amount, explicit activity status when source evidence exists, activity involvement, activity intensity, store type, region and market context, competition environment, SKU structure, fulfillment or stockout evidence where available, and repeated reporting windows.
+A future gate should consider transaction order volume, transaction amount, explicit activity status when source evidence exists, activity involvement, activity intensity, store type, region and market context, competition environment, SKU structure, fulfillment or stockout evidence where available, and repeated reporting windows.
 
 At the current sample size, `region_type` remains weak context only. It must not be used as a hard market-area classification, store-stage label, consumption-level label, or peer-store grouping rule.
 
