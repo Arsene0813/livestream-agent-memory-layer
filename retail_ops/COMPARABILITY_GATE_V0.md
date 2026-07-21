@@ -8,9 +8,7 @@ The current implemented retail scope includes:
 2. Demo 2: Stores B-F same-period diagnostic structure.
 3. Repeated-window panel: Stores B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04.
 
-The repeated-window panel is an evidence-preparation layer for coverage and stability inspection before a future pairwise comparability gate. It is not a completed pairwise comparability gate.
-
-The next stage is a question-specific pairwise comparability gate. It is documented here as future work.
+The repeated-window panel prepares coverage and stability evidence; it is not a completed pairwise comparability gate. This document specifies the next question-specific pairwise decision layer.
 
 ## Why This Gate Matters
 
@@ -60,12 +58,9 @@ A future pairwise comparability gate should provide:
 
 The current `comparison_scope_flag` should not be treated as a pairwise comparability decision.
 
-## What Store Comparability Should Depend On
+## Comparability Decision Principle
 
-A reliable gate should judge a selected pair of store-period records for a specific operating question.
-
-
-The future gate should compare selected store-period records for a specific operating question instead of creating a store label from one threshold.
+Comparability is evaluated for one selected pair of store-period records and one operating question; it is not a permanent store label derived from one threshold.
 
 ## Operating Question Evidence Matrix
 
@@ -80,17 +75,9 @@ This matrix separates what the current evidence can support from what the future
 | Strategy-transfer readiness | current diagnostic fields and `comparison_limit_notes` | repeated windows, pairwise decision output, activity mechanism, competition, market context, fulfillment and stockout evidence | boundary-preserving answer until pairwise evidence is available |
 
 
-## Activity Evidence Boundary
-
-Activity evidence should be separated into:
-
-- explicit activity status, only if campaign-calendar or backend status evidence exists;
-- activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`;
-- activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`.
-
-A future `activity_status` field should be added only if campaign-calendar or explicit backend activity-status evidence is available and documented in `retail_ops/data/DATA_DICTIONARY.md` and the lineage section of `retail_ops/TECHNICAL_APPENDIX.md`.
-
 ## Activity Factor Boundary
+
+Activity evidence is evaluated as status, involvement, and intensity. An `activity_status` field should be added only when campaign-calendar or explicit backend status evidence exists and is documented in `retail_ops/data/DATA_DICTIONARY.md` and the lineage section of `retail_ops/TECHNICAL_APPENDIX.md`.
 
 The future gate should not collapse activity evidence into a single yes/no label.
 
@@ -135,7 +122,7 @@ The gate should return a decision for the selected operating question and explai
 
 ## Minimum Evidence Before Implementation
 
-A stronger pairwise comparability gate should be implemented after Demo 2 evidence is expanded beyond one selected month, or after missing evidence is explicitly represented as a blocking or limiting factor for the selected operating question. The gate should wait until the evidence below is available, or until the missing evidence is explicitly marked as a blocking or limiting factor for the selected operating question.
+Implementation should wait until Demo 2 extends beyond one selected month, or until missing evidence is explicitly represented as a blocking or limiting factor for the selected operating question.
 
 | Gate factor | Current Demo 2 support | Missing before gate | Future source |
 |---|---|---|---|
@@ -175,8 +162,6 @@ The gate should separate at least these comparison questions:
 - data-completeness comparability;
 - fulfillment or stockout comparability;
 - strategy-transfer readiness.
-
-The future flow should return a question-specific decision for the selected record pair, with supporting evidence and blocking factors.
 
 ## Future Gate Input Triple
 
@@ -257,7 +242,7 @@ Current implemented artifacts remain:
 <!-- COMPARABILITY_GATE_FUTURE_PLAN_START -->
 ## Future Implementation Plan: Question-Specific Pairwise Gate
 
-The future gate should remain question-specific. It should not decide whether two stores are generally comparable. It should decide whether two store-period records can support one selected comparison question.
+The implementation plan remains question-specific: it should decide whether one selected record pair supports one comparison question, not whether two stores are generally comparable.
 
 | Stage | Purpose | Conservative boundary |
 |---|---|---|
@@ -267,13 +252,3 @@ The future gate should remain question-specific. It should not decide whether tw
 
 This plan does not add current Demo 2 output columns. Demo 2 remains a same-period diagnostic evidence layer. The pairwise gate becomes valid only after more store-period windows and stronger market-context evidence are added.
 <!-- COMPARABILITY_GATE_FUTURE_PLAN_END -->
-
-## Why the Same Store Pair May Receive Different Decisions
-
-The future gate should not decide whether two stores are generally comparable. It should decide whether the records are comparable for one selected question.
-
-| Pair | Question | Possible future decision | Reason |
-|---|---|---|---|
-| B vs D | Compare search-entry structure | `comparable_with_limits` | Both records have same-period search-entry evidence, but activity and region limits still apply. |
-| B vs D | Transfer activity strategy | `insufficient_evidence` | Current evidence lacks campaign calendar, competitor response, and repeated activity windows. |
-| B vs D | Compare market-area performance | `insufficient_evidence` | `region_type` is weak context and not a market-area classification. |
