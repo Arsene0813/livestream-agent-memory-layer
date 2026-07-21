@@ -15,6 +15,21 @@ contract can be inspected and evaluated independently of model behavior.
 For the reviewer-facing cases and generated reports, start with
 [`DEMO_INDEX.md`](DEMO_INDEX.md).
 
+## Quick Start
+
+Generate the reviewer-facing grounded reports:
+
+```bash
+python3 rac/scripts/run_grounded_pipeline.py --all-eval
+```
+
+Validate the generated reports and their evidence boundaries:
+
+```bash
+python3 rac/scripts/validate_grounded_pipeline.py
+python3 rac/scripts/validate_grounded_quality_gate.py
+```
+
 ## Implemented Review Path
 
 ```text
