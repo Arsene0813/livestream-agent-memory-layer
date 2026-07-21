@@ -21,13 +21,13 @@ being seen -> being entered -> being ordered -> being selected again / maintaini
 Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on store state, local competition, activity intensity, product mix, and reporting-window alignment.
 
 
-The goal is to build a more reliable evidence-based framework for multi-store operational analysis, so that future operating decisions can be made with clearer data boundaries as the business expands.
+The project organizes multi-store operating evidence so that each decision can be traced to defined fields, reporting periods, and documented limits as the business expands.
 
 ## Current Prototype Workflow
 
 The current prototype follows one evidence path: selected merchant-backend metrics -> canonical field dictionary -> SQL diagnostic output -> generated retail memory facts -> boundary-preserving answer checks.
 
-Current source tables were manually transcribed and anonymized at store level; this repository does not implement automated backend ingestion.
+Current source tables were manually transcribed from the merchant backend and anonymized at store level.
 
 In practice, the project first preserves the documented metric definitions, then uses SQL to structure selected manually transcribed store-period records, and then converts diagnostic evidence into memory facts with source fields, observed values, source paths, and limitations. The final check is whether later answers stay inside the available evidence boundary.
 
@@ -41,7 +41,7 @@ The current retail decision-support path has three implemented evidence layers: 
 
 The operating problem came from a 48-store business. The evidence committed to this repository covers six anonymized stores: Store A and selected Stores B-F under the reporting windows listed below. The 48-store figure describes the operating context; the committed analytical evidence covers the selected six stores.
 
-Demo 2 uses the `cross_store_comparability` file-path term for reference stability, but in the current implementation it means same-period B-F diagnostic evidence with interpretation guardrails. The future pairwise comparability gate remains question-specific: it should judge whether two store-period records can be compared for one selected operating question.
+Demo 2 keeps the `cross_store_comparability` file-path term for reference stability and provides same-period B-F diagnostic evidence with interpretation guardrails. Question-specific pairwise comparability is specified separately in `retail_ops/COMPARABILITY_GATE_V0.md`.
 
 | Area | Current implementation | Current boundary |
 | --- | --- | --- |
@@ -163,7 +163,7 @@ The first review path should stay short. These files are retained for technical 
 
 For retail field names and metric meanings, `retail_ops/data/DATA_DICTIONARY.md` is authoritative. Generated diagnostic values and evaluation outputs are recorded under `retail_ops/outputs/` and `eval/retail_decision_support_eval_results/`.
 
-The pass counts below come from repository-defined contract, fixture, lineage, and endpoint checks. They show whether the current evidence path satisfies its declared checks; they are not predictive-accuracy or general-model-performance measures. Retrieval stress tests are reported separately because their main outputs are score distributions and failure cases rather than one combined pass rate.
+The counts below summarize declared contract, fixture, lineage, and endpoint results. Retrieval stress tests are reported separately through score distributions and failure cases.
 
 | Check | Scope | Current result |
 |---|---|---|

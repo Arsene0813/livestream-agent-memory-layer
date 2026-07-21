@@ -59,7 +59,7 @@ The central decision problem is therefore not simply which store or metric is hi
 | Repeated-window panel | Stores B-F across February, March, and April 2026 using the documented supporting-table coverage. |
 | Current analytical use | Descriptive diagnosis, value lineage, evidence routing, scope checks, and answer-boundary evaluation. |
 
-The repository evidence supports analysis of these selected store-period records. The current prototype does not claim a completed pairwise comparability gate. Question-specific pairwise comparability remains a separate analytical step because matching reporting windows alone does not establish that two stores are suitable peers for a particular operating decision.
+The repository supports analysis of these selected store-period records. Question-specific pairwise comparability is handled as a separate analytical step because matching reporting windows alone does not establish that two stores are suitable peers for a particular operating decision.
 
 ## Prototype Design
 
@@ -151,7 +151,7 @@ A query-robustness inspection is also included to test whether supported, unsupp
 
 ### Repeated-Window B-F Panel
 
-The repeated-window panel adds selected Stores B-F across 2026-02, 2026-03, and 2026-04. Its role is to make repeated store-period coverage visible before the future question-specific pairwise comparability gate exists.
+The repeated-window panel adds selected Stores B-F across 2026-02, 2026-03, and 2026-04, making repeated store-period coverage visible for later question-specific comparability checks.
 
 The panel verifies three-month coverage and reports descriptive February-to-April movement for selected fields. It prepares the evidence base for future comparison rules. Testing monthly guardrail stability will require repeated top-SKU evidence and monthly recomputation of `comparison_limit_notes`.
 
