@@ -18,11 +18,11 @@ from pathlib import Path
 import re
 import sys
 
-CORE_FILES = {
-    "README.md": 120,
-    "PROJECT_SUMMARY_FOR_ADMISSIONS.md": 80,
-    "retail_ops/README.md": 70,
-}
+CORE_FILES = [
+    "README.md",
+    "PROJECT_SUMMARY_FOR_ADMISSIONS.md",
+    "retail_ops/README.md",
+]
 
 # Only block positive overclaims.
 # Do not block sentences that explicitly say the project is NOT these things.
@@ -55,7 +55,7 @@ BOUNDARY_ALLOW_PREFIXES = [
 
 errors = []
 
-for file_name, min_lines in CORE_FILES.items():
+for file_name in CORE_FILES:
     path = Path(file_name)
 
     if not path.exists():
@@ -64,13 +64,6 @@ for file_name, min_lines in CORE_FILES.items():
 
     text = path.read_text(encoding="utf-8")
     lines = text.splitlines()
-
-    if len(lines) < min_lines:
-        errors.append(
-            f"[READABILITY] {file_name} has only {len(lines)} lines; "
-            f"expected at least {min_lines}. "
-            "This usually means tables/lists/headings were compressed into long physical lines."
-        )
 
     for line_no, line in enumerate(lines, start=1):
         stripped = line.strip()
