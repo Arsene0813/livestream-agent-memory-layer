@@ -64,7 +64,7 @@ The `Source Lines` column is an audit pointer to the local source-file line rang
 | transaction_amount | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | transaction_amount |
 | activity_intensity | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | activity_orders, activity_order_share_pct, activity_cost, activity_cost_ratio_pct |
 | region_context | retail_ops/data/DATA_DICTIONARY.md | definition_evidence | keyword_matched | 69-71 | region_type |
-| competition | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | 46-48 | future comparability-gate competition context |
+| competition | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | 44-46 | future comparability-gate competition context |
 | sku_structure | retail_ops/outputs/demo2_cross_store_comparability_output.csv | product_mix_evidence | keyword_matched | 1-2 | top3_sku_transaction_amount, top3_sku_transaction_amount_share_pct, SKU source tables |
 | repeated_reporting_windows | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | 1-2 | store_period_panel_metrics, repeated reporting windows |
 
