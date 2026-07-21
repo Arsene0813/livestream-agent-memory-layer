@@ -389,7 +389,7 @@ def write_markdown_summary(results: list[dict[str, Any]], output_path: Path) -> 
     lines.append("- competition -> retail_ops/COMPARABILITY_GATE_V0.md as boundary_evidence")
     lines.append("- repeated_reporting_windows -> retail_ops/COMPARABILITY_GATE_V0.md as boundary_evidence")
     lines.append("")
-    lines.append("## Issues")
+    lines.append("## Report-Contract Issues")
     lines.append("")
 
     any_issue = False
@@ -408,7 +408,7 @@ def write_markdown_summary(results: list[dict[str, Any]], output_path: Path) -> 
         lines.append("")
 
     if not any_issue:
-        lines.append("No quality issues detected.")
+        lines.append("No report-contract issues detected.")
         lines.append("")
 
     output_path.write_text("\n".join(lines), encoding="utf-8")

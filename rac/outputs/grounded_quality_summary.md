@@ -33,6 +33,6 @@ For rac_cross_store_comparability_001, the report-contract quality gate requires
 - competition -> retail_ops/COMPARABILITY_GATE_V0.md as boundary_evidence
 - repeated_reporting_windows -> retail_ops/COMPARABILITY_GATE_V0.md as boundary_evidence
 
-## Issues
+## Report-Contract Issues
 
-No quality issues detected.
+No report-contract issues detected.
