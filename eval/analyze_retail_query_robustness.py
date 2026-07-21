@@ -45,6 +45,11 @@ try:
 except ModuleNotFoundError:
     from eval.retrieval_case_validation import validate_retrieval_cases
 
+try:
+    from retrieval_contract_match import expected_hit_at_k
+except ModuleNotFoundError:
+    from eval.retrieval_contract_match import expected_hit_at_k
+
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -64,110 +69,19 @@ def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def normalize_list(value: Any) -> list[str]:
-    if value is None:
-        return []
-    if isinstance(value, list):
-        return [str(x) for x in value if x is not None and str(x) != ""]
-    if isinstance(value, tuple):
-        return [str(x) for x in value if x is not None and str(x) != ""]
-    if isinstance(value, str):
-        if not value.strip():
-            return []
-        return [value.strip()]
-    return [str(value)]
-
-
-def first_present(mapping: dict[str, Any], keys: list[str], default: Any = "") -> Any:
-    for key in keys:
-        if key in mapping and mapping[key] not in (None, ""):
-            return mapping[key]
-    return default
-
-
 def extract_cases(
     raw: Any,
     *,
     source: str = "<retrieval cases>",
 ) -> list[dict[str, Any]]:
+    """Validate and copy canonical retrieval cases."""
+
     cases = validate_retrieval_cases(
         raw,
         source=source,
     )
 
-    normalized = []
-
-    for case in cases:
-        normalized.append(
-            {
-                "case_id": case["case_id"],
-                "case_type": case["case_type"],
-                "query": case["query"],
-                "expected_doc_ids": normalize_list(
-                    first_present(
-                        case,
-                        [
-                            "expected_doc_ids",
-                            "expected_doc_id",
-                            "expected_fact_ids",
-                            "expected_fact_id",
-                        ],
-                        [],
-                    )
-                ),
-                "expected_slots": normalize_list(
-                    first_present(
-                        case,
-                        [
-                            "expected_slots",
-                            "expected_slot",
-                            "expected_slot_names",
-                            "target_slot",
-                        ],
-                        [],
-                    )
-                ),
-                "expected_entities": normalize_list(
-                    first_present(
-                        case,
-                        [
-                            "expected_entities",
-                            "expected_entity",
-                            "expected_entity_id",
-                            "target_entity",
-                            "target_entity_id",
-                        ],
-                        [],
-                    )
-                ),
-                "expected_source_paths": normalize_list(
-                    first_present(
-                        case,
-                        [
-                            "expected_source_paths",
-                            "expected_source_path",
-                            "source_path",
-                        ],
-                        [],
-                    )
-                ),
-                "expected_keywords": normalize_list(
-                    first_present(
-                        case,
-                        [
-                            "expected_keywords",
-                            "expected_terms",
-                            "must_contain",
-                            "evidence_keywords",
-                        ],
-                        [],
-                    )
-                ),
-                "raw": case,
-            }
-        )
-
-    return normalized
+    return [dict(case) for case in cases]
 
 
 def build_corpus() -> list[dict[str, Any]]:
@@ -324,45 +238,6 @@ def make_variants(query: str) -> list[tuple[str, str]]:
     return unique
 
 
-def expected_hit(case: dict[str, Any], docs: list[dict[str, Any]]) -> bool:
-    expected_doc_ids = set(case["expected_doc_ids"])
-    expected_slots = set(case["expected_slots"])
-    expected_entities = set(case["expected_entities"])
-    expected_source_paths = set(case["expected_source_paths"])
-    expected_keywords = [kw.lower() for kw in case["expected_keywords"]]
-
-    for doc in docs:
-        doc_id = str(doc.get("doc_id", ""))
-        slot = str(doc.get("slot", ""))
-        entity = str(doc.get("entity", ""))
-        source_path = str(doc.get("source_path", ""))
-        text = str(doc.get("text", "")).lower()
-
-        if expected_doc_ids and doc_id in expected_doc_ids:
-            return True
-
-        if expected_source_paths:
-            if source_path in expected_source_paths or any(p in source_path for p in expected_source_paths):
-                return True
-
-        if expected_keywords and any(kw.lower() in text for kw in expected_keywords):
-            return True
-
-        if expected_slots and expected_entities:
-            if slot in expected_slots and entity in expected_entities:
-                return True
-
-        elif expected_slots:
-            if slot in expected_slots:
-                return True
-
-        elif expected_entities:
-            if entity in expected_entities:
-                return True
-
-    return False
-
-
 def pct(n: int, d: int) -> float:
     if d == 0:
         return 0.0
@@ -464,7 +339,7 @@ def main() -> None:
             top1_score, top1_doc = top[0]
             top_docs = [doc for _, doc in top]
 
-            hit_at_k = expected_hit(case, top_docs)
+            hit_at_k = expected_hit_at_k(case, top_docs)
             top5_doc_ids = [doc["doc_id"] for _, doc in top]
             top5_slots = [doc["slot"] for _, doc in top]
             top5_entities = [doc["entity_id"] for _, doc in top]
@@ -666,6 +541,12 @@ Each original query is evaluated with deterministic wording variants:
 - `paraphrased`
 - `typo_punctuation_noise`
 - `keyword_order_changed`
+
+## Expected-Hit Contract
+
+For each non-negative case, `expected_hit_at_5` is true only when at least one top-5 document satisfies all applicable `entity_id`, slot, period, and expected-term constraints.
+
+`negative_unsupported` cases are always recorded without an expected evidence hit. Semantic similarity or a single matching keyword is not sufficient.
 
 ## Results by Case Type
 

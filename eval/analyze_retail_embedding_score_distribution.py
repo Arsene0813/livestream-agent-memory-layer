@@ -31,6 +31,17 @@ try:
 except ModuleNotFoundError:
     from eval.retrieval_case_validation import validate_retrieval_cases
 
+try:
+    from retrieval_contract_match import (
+        expected_document_match,
+        period_term_match,
+    )
+except ModuleNotFoundError:
+    from eval.retrieval_contract_match import (
+        expected_document_match,
+        period_term_match,
+    )
+
 
 
 ROOT = Path(".")
@@ -93,42 +104,6 @@ def cosine(a: list[float], b: list[float]) -> float:
     if norm_a == 0.0 or norm_b == 0.0:
         return 0.0
     return dot / (norm_a * norm_b)
-
-
-def text_contains_all(text: str, terms: list[str]) -> bool:
-    lowered = text.lower()
-    return all(str(term).lower() in lowered for term in terms)
-
-
-def period_term_match(doc: dict[str, Any], expected_period_terms: list[str]) -> bool:
-    if not expected_period_terms:
-        return True
-
-    period_text = " ".join([
-        doc.get("period_label", ""),
-        doc.get("period_start", ""),
-        doc.get("period_end", ""),
-        doc.get("text", ""),
-    ]).lower()
-
-    return any(str(term).lower() in period_text for term in expected_period_terms)
-
-
-def expected_match(case: dict[str, Any], doc: dict[str, Any]) -> bool:
-    if case["case_type"] == "negative_unsupported":
-        return False
-
-    expected_entity = case.get("expected_entity")
-    expected_slot = case.get("expected_slot")
-    expected_terms = case.get("expected_terms", [])
-    expected_period_terms = case.get("expected_period_terms", [])
-
-    entity_ok = True if not expected_entity else doc["entity_id"] == expected_entity
-    slot_ok = True if not expected_slot else doc["slot"] == expected_slot
-    period_ok = period_term_match(doc, expected_period_terms)
-    terms_ok = text_contains_all(doc["text"], expected_terms)
-
-    return bool(entity_ok and slot_ok and period_ok and terms_ok)
 
 
 def percentile(values: list[float], p: float) -> float:
@@ -232,7 +207,7 @@ def main() -> int:
         expected_hit = 0
 
         for rank, (score, doc) in enumerate(top_k, start=1):
-            is_match = expected_match(case, doc)
+            is_match = expected_document_match(case, doc)
             expected_hit = max(expected_hit, int(is_match))
 
             entity_match = (
