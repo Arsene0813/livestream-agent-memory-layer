@@ -10,10 +10,10 @@ The purpose is to inspect retrieval-threshold behavior. It is not a production-l
 
 ## Corpus
 
-- Retrieval documents loaded: 282
-- Corpus SHA-256: `142368acc56e40a7dee55aabd65e4bfea719f29052b1c7d84a82b4a5654726f3`
+- Retrieval documents loaded: 283
+- Corpus SHA-256: `db4af4728ae54a15f2332e77459c151fd2e32288817e16fba0f401c4a789b473`
 - Corpus builder: `eval/retail_retrieval_corpus.py::load_retail_retrieval_documents`
-- Execution commit: `09b4e118a7a2f0103555854f9cd41850530924b5`
+- Execution commit: `e1e34faa839fef97049cac5a9d090c76331ec6ab`
 - Provenance note: the corpus SHA-256 identifies the evidence snapshot; the execution commit identifies the code state used for the run.
 - Retrieval threshold cases: 29
 - Embedding model: `bge-m3` via local Ollama
@@ -38,11 +38,11 @@ The purpose is to inspect retrieval-threshold behavior. It is not a production-l
 
 | Case type | Cases | Top-1 min | Top-1 p25 | Top-1 median | Top-1 p75 | Top-1 max | Median margin | Expected hit@5 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| ambiguous_comparison | 4 | 0.5275 | 0.5399 | 0.5444 | 0.5572 | 0.5941 | 0.0021 | 3/4 |
-| entity_period_mismatch | 4 | 0.5538 | 0.5696 | 0.5897 | 0.6156 | 0.6489 | 0.0061 | 1/4 |
-| hard_negative_boundary | 7 | 0.5071 | 0.5688 | 0.6319 | 0.6739 | 0.7153 | 0.0068 | 5/7 |
-| negative_unsupported | 6 | 0.4582 | 0.4933 | 0.4971 | 0.5292 | 0.5602 | 0.0176 | 0/6 |
-| positive_supported | 8 | 0.6049 | 0.6243 | 0.6510 | 0.7071 | 0.7571 | 0.0337 | 8/8 |
+| ambiguous_comparison | 4 | 0.5275 | 0.5390 | 0.5438 | 0.5572 | 0.5941 | 0.0021 | 3/4 |
+| entity_period_mismatch | 4 | 0.5574 | 0.5705 | 0.5897 | 0.6158 | 0.6498 | 0.0083 | 1/4 |
+| hard_negative_boundary | 7 | 0.5071 | 0.5677 | 0.6292 | 0.6747 | 0.7105 | 0.0068 | 5/7 |
+| negative_unsupported | 6 | 0.4552 | 0.4943 | 0.4971 | 0.5292 | 0.5602 | 0.0161 | 0/6 |
+| positive_supported | 8 | 0.6049 | 0.6243 | 0.6507 | 0.7090 | 0.7553 | 0.0382 | 8/8 |
 
 ## Threshold Interpretation
 
