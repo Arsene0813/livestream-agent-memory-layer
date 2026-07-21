@@ -46,7 +46,7 @@ Demo 2 uses the `cross_store_comparability` file-path term for reference stabili
 | Area | Current implementation | Current boundary |
 | --- | --- | --- |
 | Livestream memory layer | Typed product facts, overwrite control, soft deactivation, active-state retrieval, fallback/refusal, scenario evaluation. | Local prototype for lifecycle-aware memory behavior. |
-| Data dictionary | Preserves Meituan-style backend metric meanings and canonical field names. | Manual normalization of selected backend evidence; field meanings follow `retail_ops/data/DATA_DICTIONARY.md`. |
+| Data dictionary | Preserves selected Meituan merchant-backend metric meanings and canonical field names. | Manual normalization of selected backend evidence; field meanings follow `retail_ops/data/DATA_DICTIONARY.md`. |
 | Retail Demo 1 | Store A month-over-month diagnostic across February, March, and April 2026. | Multi-metric interpretation rather than single-cause monthly explanation. |
 | Retail Demo 2 | Same-period B-F diagnostic for March 2026. | Same-period diagnostic evidence with explicit interpretation limits before pairwise comparability rules. |
 | Repeated-window panel | B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04. | Descriptive repeated-window evidence before future pairwise comparability rules. |

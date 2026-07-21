@@ -296,7 +296,7 @@ def main() -> int:
         "",
         "The retrieval corpus combines generated Demo 1 and Demo 2 retail memory facts with selected field-contract notes such as `DATA_DICTIONARY.md` and `demo2_source_notes.md`.",
         "",
-        "The current project does not connect to the live Meituan backend. The evidence used here comes from manually structured Meituan-style backend data and generated local memory facts.",
+        "The retrieval evidence consists of selected observations manually transcribed from the Meituan merchant backend, together with generated local memory facts; the experiment runs on the repository snapshot rather than a live backend connection.",
         "",
         "The purpose is to inspect retrieval-threshold behavior. It is not a production-level threshold validation, a broad LLM benchmark, or proof that retrieved evidence is sufficient for an operating conclusion.",
         "",
@@ -305,7 +305,13 @@ def main() -> int:
         f"- Retrieval documents loaded: {provenance['corpus_document_count']}",
         f"- Corpus SHA-256: `{provenance['corpus_sha256']}`",
         f"- Corpus builder: `{provenance['corpus_builder']}`",
-        f"- Generated from commit: `{provenance['generated_from_commit']}`",
+        f"- Execution commit: `{provenance['generated_from_commit']}`",
+        (
+            "- Provenance note: the corpus SHA-256 "
+            "identifies the evidence snapshot; the "
+            "execution commit identifies the code "
+            "state used for the run."
+        ),
         f"- Retrieval threshold cases: {len(cases)}",
         f"- Embedding model: `{provenance['embedding_model']}` via local Ollama",
         "- Generated memory fact sources:",

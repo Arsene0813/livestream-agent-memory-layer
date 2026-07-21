@@ -651,7 +651,8 @@ It is a diagnostic evaluation for the current file-backed retail decision-suppor
 - Corpus documents: {provenance["corpus_document_count"]}
 - Corpus SHA-256: `{provenance["corpus_sha256"]}`
 - Corpus builder: `{provenance["corpus_builder"]}`
-- Generated from commit: `{provenance["generated_from_commit"]}`
+- Execution commit: `{provenance["generated_from_commit"]}`
+- Provenance note: the corpus SHA-256 identifies the evidence snapshot; the execution commit identifies the code state used for the run.
 - Embedding model: `{provenance["embedding_model"]}`
 - Reference threshold: `{provenance["reference_threshold"]}`
 - Reference threshold source: `{provenance["reference_threshold_source"]}`

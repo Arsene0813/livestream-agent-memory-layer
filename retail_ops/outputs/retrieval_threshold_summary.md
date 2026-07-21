@@ -4,7 +4,7 @@ This file summarizes prototype retrieval score distributions over file-backed re
 
 The retrieval corpus combines generated Demo 1 and Demo 2 retail memory facts with selected field-contract notes such as `DATA_DICTIONARY.md` and `demo2_source_notes.md`.
 
-The current project does not connect to the live Meituan backend. The evidence used here comes from manually structured Meituan-style backend data and generated local memory facts.
+The retrieval evidence consists of selected observations manually transcribed from the Meituan merchant backend, together with generated local memory facts; the experiment runs on the repository snapshot rather than a live backend connection.
 
 The purpose is to inspect retrieval-threshold behavior. It is not a production-level threshold validation, a broad LLM benchmark, or proof that retrieved evidence is sufficient for an operating conclusion.
 
@@ -13,7 +13,8 @@ The purpose is to inspect retrieval-threshold behavior. It is not a production-l
 - Retrieval documents loaded: 282
 - Corpus SHA-256: `142368acc56e40a7dee55aabd65e4bfea719f29052b1c7d84a82b4a5654726f3`
 - Corpus builder: `eval/retail_retrieval_corpus.py::load_retail_retrieval_documents`
-- Generated from commit: `09b4e118a7a2f0103555854f9cd41850530924b5`
+- Execution commit: `09b4e118a7a2f0103555854f9cd41850530924b5`
+- Provenance note: the corpus SHA-256 identifies the evidence snapshot; the execution commit identifies the code state used for the run.
 - Retrieval threshold cases: 29
 - Embedding model: `bge-m3` via local Ollama
 - Generated memory fact sources:

@@ -16,7 +16,8 @@ It is a diagnostic evaluation for the current file-backed retail decision-suppor
 - Corpus documents: 282
 - Corpus SHA-256: `142368acc56e40a7dee55aabd65e4bfea719f29052b1c7d84a82b4a5654726f3`
 - Corpus builder: `eval/retail_retrieval_corpus.py::load_retail_retrieval_documents`
-- Generated from commit: `e598a640edceda32f538cda8dfe17cf634f4bcfc`
+- Execution commit: `e598a640edceda32f538cda8dfe17cf634f4bcfc`
+- Provenance note: the corpus SHA-256 identifies the evidence snapshot; the execution commit identifies the code state used for the run.
 - Embedding model: `bge-m3`
 - Reference threshold: `0.5767`
 - Reference threshold source: `retail_ops/outputs/retrieval_threshold_summary.md`
