@@ -44,7 +44,7 @@ The retail retrieval endpoint should:
 The current result is:
 
 ```text
-8 / 8 retail evaluation cases passing
+7 / 7 retail evaluation cases passing
 ```
 
 After modifying retail memory slots or generated facts, rerun:

@@ -1,5 +1,5 @@
-Retail eval result: 8/8 passed
-Passed: 8
+Retail eval result: 7/7 passed
+Passed: 7
 Failed: 0
 
 PASS store_a_visibility_entry_profile
