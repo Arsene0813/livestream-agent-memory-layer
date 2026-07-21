@@ -25,7 +25,7 @@ The project organizes multi-store operating evidence so that each decision can b
 
 ## Current Prototype Workflow
 
-The current prototype follows one evidence path: selected merchant-backend metrics -> canonical field dictionary -> SQL diagnostic output -> generated retail memory facts -> boundary-preserving answer checks.
+The current prototype follows one evidence path: selected merchant-backend metrics -> canonical field dictionary -> SQL diagnostic output -> generated retail memory facts -> boundary-preserving answer checks -> RAC grounded review.
 
 Current source tables were manually transcribed from the merchant backend and anonymized at store level.
 
