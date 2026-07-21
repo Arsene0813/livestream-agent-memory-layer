@@ -1,5 +1,17 @@
 # Project Summary for Admissions Review
 
+## Project Title
+
+Meituan Instant-Retail Decision Support Prototype
+
+Repository: `livestream-agent-memory-layer`
+
+## Project Summary
+
+This staged local prototype grew from a real operating problem in a 48-store Meituan instant-retail business. The Meituan merchant backend contains detailed single-store metrics, but it is mainly designed for reviewing one store at a time. As the store count increased, the harder question became how to compare store-period records without flattening different reporting windows, activity conditions, product structures, store types, and market contexts into the same judgment.
+
+The repository turns selected backend observations into a traceable decision-support prototype. Metric definitions are fixed in the data dictionary, diagnostic calculations are reproduced in SQL, derived findings retain their source lineage, and later retrieval and review steps preserve the boundaries attached to the evidence.
+
 ## Reviewer Reading Path
 
 This file is the single application-facing entry point.
@@ -20,18 +32,6 @@ Use `retail_ops/data/DATA_DICTIONARY.md`,
 `retail_ops/TECHNICAL_APPENDIX.md`, and
 `retail_ops/COMPARABILITY_GATE_V0.md` as contract and technical
 references while reviewing the implemented evidence.
-
-## Project Title
-
-Meituan Instant-Retail Decision Support Prototype
-
-Repository: `livestream-agent-memory-layer`
-
-## Project Summary
-
-This staged local prototype grew from a real operating problem in a 48-store Meituan instant-retail business. The Meituan merchant backend contains detailed single-store metrics, but it is mainly designed for reviewing one store at a time. As the store count increased, the harder question became how to compare store-period records without flattening different reporting windows, activity conditions, product structures, store types, and market contexts into the same judgment.
-
-The repository turns selected backend observations into a traceable decision-support prototype. Metric definitions are fixed in the data dictionary, diagnostic calculations are reproduced in SQL, derived findings retain their source lineage, and later retrieval and review steps preserve the boundaries attached to the evidence.
 
 ## Business Decision Problem
 
