@@ -167,7 +167,7 @@ Implemented Demo 2 evidence slots:
 | Transformation | Endpoint-level evaluation checks supported Store B-F questions, unsupported all-48-store questions, best-store ranking requests, final operating-recommendation requests, and out-of-Demo-2 entity questions. |
 | Output | `eval/retail_decision_support_eval_results/eval_retail_demo2_endpoint_behavior_result.txt`. |
 | Expected behavior | Supported Store B-F questions return file-backed Demo 2 facts; cross-store B-F questions stay at same-period diagnostic scope; unsupported scope or final-decision requests are refused or qualified. |
-| Current result | Passed current endpoint-level boundary checks. |
+| Current result | Seven of seven repository-defined endpoint scenarios passed the current boundary checks. |
 | Checked by | `python3 eval/eval_retail_demo2_endpoint_behavior.py` |
 
 ## Experiment 5: Retrieval Threshold Inspection
@@ -228,8 +228,8 @@ Evidence required before a monthly guardrail-stability test:
 | Input | `retail_ops/COMPARABILITY_GATE_V0.md`. |
 | Transformation | `eval/eval_future_comparability_gate_contract.py` checks that the planned input triple, output enum, and blocking-factor list are documented. |
 | Output | `eval/retail_decision_support_eval_results/eval_future_comparability_gate_contract_result.txt`. |
-| Expected behavior | The future gate may define planned factors such as transaction order volume, transaction amount, activity status, activity intensity, store type, region and market context, SKU structure, and repeated reporting windows. It should not appear as a current implemented gate in Demo 2 outputs. |
-| Current result | Documented and checked by the future-gate contract stub. |
+| Expected behavior | The future gate may define planned factors such as transaction order volume, transaction amount, activity involvement, cost intensity, store type, region and market context, SKU structure, and repeated reporting windows. It should not appear as a current implemented gate in Demo 2 outputs. |
+| Current result | The planned contract is documented, and the repository-defined future-gate contract check passes. |
 | Checked by | `python3 eval/eval_future_comparability_gate_contract.py` |
 | Failure mode | Treating Demo 2 row-level diagnostic readiness as a pairwise comparability decision. |
 
