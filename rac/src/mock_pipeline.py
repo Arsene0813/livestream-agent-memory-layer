@@ -65,7 +65,7 @@ FACTOR_LIBRARY: dict[str, list[dict[str, Any]]] = {
         {"factor_id": "store_type", "name": "Store type", "description": "Different store types may not be directly comparable.", "evidence_needed": ["store type"]},
         {"factor_id": "order_volume", "name": "Order volume", "description": "Order volume affects stability and reliability.", "evidence_needed": ["transaction order count", "transaction orders"]},
         {"factor_id": "transaction_amount", "name": "Transaction amount", "description": "Gives scale context but is not sufficient alone.", "evidence_needed": ["transaction amount"]},
-        {"factor_id": "activity_intensity", "name": "Activity involvement and intensity", "description": "Activity involvement and cost intensity can affect comparison context.", "evidence_needed": ["activity_orders", "activity_order_share_pct", "activity_cost", "activity_cost_ratio_pct"]},
+        {"factor_id": "activity_intensity", "name": "Activity involvement and intensity", "description": "Activity involvement and activity intensity can affect comparison context.", "evidence_needed": ["activity_orders", "activity_order_share_pct", "activity_cost", "activity_cost_ratio_pct"]},
         {"factor_id": "region_context", "name": "Region context", "description": "Region and market context affect demand.", "evidence_needed": ["region type", "business district context"]},
         {"factor_id": "competition", "name": "Competition", "description": "Competitor behavior can independently affect performance.", "evidence_needed": ["competitor price", "competitor order trend"]},
         {"factor_id": "sku_structure", "name": "SKU structure", "description": "SKU mix can change margins and conversion.", "evidence_needed": ["top SKUs", "SKU transaction amount"]},

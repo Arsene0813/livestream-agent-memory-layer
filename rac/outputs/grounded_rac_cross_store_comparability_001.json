@@ -40,7 +40,7 @@
     {
       "factor_id": "activity_intensity",
       "name": "Activity involvement and intensity",
-      "description": "Activity involvement and cost intensity can affect comparison context.",
+      "description": "Activity involvement and activity intensity can affect comparison context.",
       "evidence_needed": [
         "activity_orders",
         "activity_order_share_pct",

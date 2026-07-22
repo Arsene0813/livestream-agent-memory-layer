@@ -228,7 +228,7 @@ Evidence required before a monthly guardrail-stability test:
 | Input | `retail_ops/COMPARABILITY_GATE_V0.md`. |
 | Transformation | `eval/eval_future_comparability_gate_contract.py` checks that the planned input triple, output enum, and blocking-factor list are documented. |
 | Output | `eval/retail_decision_support_eval_results/eval_future_comparability_gate_contract_result.txt`. |
-| Expected behavior | The future gate may define planned factors such as transaction order volume, transaction amount, activity involvement, cost intensity, store type, region and market context, SKU structure, and repeated reporting windows. It should not appear as a current implemented gate in Demo 2 outputs. |
+| Expected behavior | The future gate may define planned factors such as transaction order volume, transaction amount, activity involvement, activity intensity, store type, region and market context, SKU structure, and repeated reporting windows. It should not appear as a current implemented gate in Demo 2 outputs. |
 | Current result | The planned contract is documented, and the repository-defined future-gate contract check passes. |
 | Checked by | `python3 eval/eval_future_comparability_gate_contract.py` |
 | Failure mode | Treating Demo 2 row-level diagnostic readiness as a pairwise comparability decision. |
