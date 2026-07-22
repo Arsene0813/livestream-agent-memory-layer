@@ -127,7 +127,7 @@ Both paths should preserve metric definitions, entity scope, period scope, sourc
 |---|---|---|
 | Data dictionary | Preserve backend metric meanings and canonical field names. | Existing Meituan backend metrics stay tied to documented definitions. |
 | SQL diagnostics | Compute store-period diagnostic evidence under the documented field contract. | SQL output remains diagnostic evidence, not a final operating decision. |
-| Generated memory facts | Store observed values, source fields, `calculation` metadata, confidence labels, and limitations. | Memory facts summarize evidence without replacing documented backend metric definitions. |
+| Generated memory facts | Store observed values, source fields, `calculation` metadata, evidence-trace confidence labels, and limitations. | Memory facts summarize evidence without replacing documented backend metric definitions. |
 | Boundary checks | Check entity scope, period scope, metric meanings, and comparison limits before answers are accepted. | Evaluation focuses on evidence discipline and answer scope. |
 | Future comparability gate | Judge whether two store-period records can be compared for one selected operating question. | The gate is question-specific and depends on broader store-period evidence. |
 

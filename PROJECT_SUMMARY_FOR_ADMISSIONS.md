@@ -87,7 +87,7 @@ Generated memory facts retain the entity, reporting period, evidence slot, sourc
 | --- | --- |
 | Metric dictionary | Preserves canonical project field names and the Chinese definitions of the Meituan backend metrics. |
 | SQL diagnostics | Reproduces selected diagnostic values and keeps transformations inspectable. |
-| Generated memory facts | Retains structured findings together with source fields, source paths, observed values, calculation metadata, confidence labels, and limitations. |
+| Generated memory facts | Retains structured findings together with source fields, source paths, observed values, calculation metadata, evidence-trace confidence labels, and limitations. |
 | Contract and lineage checks | Detects selected naming, formula, header, metadata, path, and source-to-output inconsistencies. |
 | Retrieval stress tests | Examines evidence routing under supported, unsupported, hard-negative, mismatched, ambiguous, and wording-variation queries. |
 | Boundary evaluations | Checks whether later answers preserve entity, period, metric-definition, and comparison limits. |
