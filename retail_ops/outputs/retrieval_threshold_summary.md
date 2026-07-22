@@ -13,7 +13,7 @@ The purpose is to inspect retrieval-threshold behavior. It is not a production-l
 - Retrieval documents loaded: 283
 - Corpus SHA-256: `db4af4728ae54a15f2332e77459c151fd2e32288817e16fba0f401c4a789b473`
 - Corpus builder: `eval/retail_retrieval_corpus.py::load_retail_retrieval_documents`
-- Execution commit: `e1e34faa839fef97049cac5a9d090c76331ec6ab`
+- Execution commit: `cb263686677068e1e8e0a8bde28e467a39405964`
 - Provenance note: the corpus SHA-256 identifies the evidence snapshot; the execution commit identifies the code state used for the run.
 - Retrieval threshold cases: 29
 - Embedding model: `bge-m3` via local Ollama
