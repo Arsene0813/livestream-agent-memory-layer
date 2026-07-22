@@ -50,7 +50,7 @@ Demo 2 keeps the `cross_store_comparability` file-path term for reference stabil
 | Retail Demo 1 | Store A month-over-month diagnostic across February, March, and April 2026. | Multi-metric interpretation rather than single-cause monthly explanation. |
 | Retail Demo 2 | Same-period B-F diagnostic for March 2026. | Same-period diagnostic evidence with explicit interpretation limits before pairwise comparability rules. |
 | Repeated-window panel | B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04. | Descriptive repeated-window evidence before future pairwise comparability rules. |
-| Memory facts | Converts diagnostic outputs into source-bounded facts with observed values, source fields, source paths, confidence labels, and limitations. | File-backed evidence records derived from manually structured source tables. |
+| Memory facts | Converts diagnostic outputs into source-bounded facts with observed values, source fields, source paths, evidence-trace confidence labels, and limitations. | File-backed evidence records derived from manually structured source tables. |
 | Answer-boundary checks | Tests whether answers stay within entity, period, metric-definition, source, and interpretation boundaries. | Scenario-based checks tied to the current evidence path; not broad LLM robustness tests. |
 | Factor-aware grounded review layer (RAC) | Provides deterministic factor expansion, evidence routing, critique, rule-based checks for unsupported claims and definition conflicts, review-state updates, and grounded report generation over local project evidence. | File-grounded review with explicit source paths, competing hypotheses, and limitations. |
 
@@ -61,7 +61,7 @@ This prototype emphasizes:
 - preserving Meituan backend metric semantics and reporting-window grain;
 - structuring store-period observations before pairwise comparison;
 - converting diagnostics into retrieval-facing evidence records with source fields and observed values;
-- carrying source paths, confidence labels, and limitations into memory facts;
+- carrying source paths, evidence-trace confidence labels, and limitations into memory facts;
 - checking whether generated answers remain tied to entity, period, metric definitions, and documented evidence boundaries;
 - returning boundary-preserving answers when the evidence does not support an operating conclusion.
 
