@@ -23,7 +23,7 @@ The retail data-contract validator is a static contract check over the selected 
 
 RAC grounded review remains an important technical layer. It uses local
 evidence from these stages to make multi-factor reasoning, critique, source
-paths, confidence updates, and unresolved limitations inspectable.
+paths, review-state updates, and unresolved limitations inspectable.
 
 ## First-Pass Reviewer Matrix
 
