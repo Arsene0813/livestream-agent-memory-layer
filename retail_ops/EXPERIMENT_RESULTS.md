@@ -85,7 +85,7 @@ March, and April 2026. It verifies repeated store-period coverage and reports de
 
 RAC remains an important technical part of the project. Its role here is to
 make multi-factor operating reasoning inspectable over local evidence through
-factor expansion, evidence routing, critique, fact checks, confidence updates,
+factor expansion, evidence routing, critique, rule-based checks for unsupported claims and definition conflicts, confidence updates,
 limitations, source paths, and local evidence snippets.
 
 ## Experiment 1: Store A Month-over-Month Diagnostic
