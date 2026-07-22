@@ -39,11 +39,13 @@
     },
     {
       "factor_id": "activity_intensity",
-      "name": "Activity intensity",
-      "description": "Promotion differences can distort comparison.",
+      "name": "Activity involvement and intensity",
+      "description": "Activity involvement and activity intensity can affect comparison context.",
       "evidence_needed": [
-        "activity orders",
-        "activity cost"
+        "activity_orders",
+        "activity_order_share_pct",
+        "activity_cost",
+        "activity_cost_ratio_pct"
       ]
     },
     {

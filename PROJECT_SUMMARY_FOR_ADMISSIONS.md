@@ -41,7 +41,7 @@ For standardized products such as contact lenses, care solutions, and related ey
 being seen
 -> being entered
 -> being ordered
--> being selected again or maintaining share
+-> being selected again / maintaining share
 ```
 
 Promotion, subsidy, pricing, SKU arrangement, ranking work, fulfillment support, and local competition can affect different parts of this path. Their interpretation depends on the store, reporting period, activity conditions, product structure, and evidence available for the question.
@@ -59,7 +59,7 @@ The central decision problem is therefore not simply which store or metric is hi
 | Repeated-window panel | Stores B-F across February, March, and April 2026 using the documented supporting-table coverage. |
 | Current analytical use | Descriptive diagnosis, value lineage, evidence routing, scope checks, and answer-boundary evaluation. |
 
-The repository supports analysis of these selected store-period records. Question-specific pairwise comparability is handled as a separate analytical step because matching reporting windows alone does not establish that two stores are suitable peers for a particular operating decision.
+The repository supports analysis of these selected store-period records. Question-specific pairwise comparability requires a separate analytical step beyond the current same-period diagnostic because matching reporting windows alone does not establish that two stores are suitable peers for a particular operating decision.
 
 ## Prototype Design
 
@@ -87,13 +87,11 @@ Generated memory facts retain the entity, reporting period, evidence slot, sourc
 | --- | --- |
 | Metric dictionary | Preserves canonical project field names and the Chinese definitions of the Meituan backend metrics. |
 | SQL diagnostics | Reproduces selected diagnostic values and keeps transformations inspectable. |
-| Generated memory facts | Retains structured findings together with source fields, source paths, observed values, calculation metadata, confidence labels, and limitations. |
+| Generated memory facts | Retains structured findings together with source fields, source paths, observed values, calculation metadata, evidence-trace confidence labels, and limitations. |
 | Contract and lineage checks | Detects selected naming, formula, header, metadata, path, and source-to-output inconsistencies. |
 | Retrieval stress tests | Examines evidence routing under supported, unsupported, hard-negative, mismatched, ambiguous, and wording-variation queries. |
 | Boundary evaluations | Checks whether later answers preserve entity, period, metric-definition, and comparison limits. |
-| RAC grounded review | Decomposes multi-factor questions, routes local or boundary evidence, develops competing hypotheses, applies critique and fact checks for selected claim and definition conflicts, updates evidence-coverage state, and produces an inspectable report. |
-
-The layers have distinct responsibilities. SQL establishes reproducible diagnostic values. Memory facts preserve evidence after transformation. Retrieval identifies potentially relevant local evidence. Boundary evaluations and RAC review examine whether later reasoning remains connected to the documented source and scope.
+| RAC grounded review | Decomposes multi-factor questions, routes local or boundary evidence, develops competing hypotheses, applies critique and rule-based checks for unsupported claims and definition conflicts, updates evidence-coverage state, and produces an inspectable report. |
 
 ## Evaluation Logic
 
@@ -108,24 +106,6 @@ The current results support three narrower conclusions:
 3. retrieval and review behavior can be inspected under both supported and difficult queries.
 
 Hard-negative, entity-mismatch, period-mismatch, and ambiguous-query results remain part of the evidence because they show where semantic similarity is insufficient on its own.
-
-## Next Analytical Experiment
-
-The next analytical experiment is a question-specific pairwise comparability gate. Its purpose is to evaluate whether two store-period records are suitable for one defined operating question before cross-store interpretation is attempted.
-
-Potential gate inputs include:
-
-- reporting-window alignment;
-- transaction order volume and transaction amount;
-- activity involvement and activity intensity;
-- store type;
-- repeated-window stability;
-- weak region context;
-- competition evidence;
-- SKU structure;
-- fulfillment and stockout context.
-
-The gate design is documented in `retail_ops/COMPARABILITY_GATE_V0.md`. It remains separate from the implemented same-period diagnostic so that future comparison rules can be tested explicitly.
 
 ## Current Implemented Retail Path
 
@@ -162,9 +142,9 @@ Main outputs:
 
 ## Factor-Aware Grounded Review Layer
 
-The project also includes a deterministic source-aware review layer over local project evidence. This is an important technical component because it makes multi-factor reasoning inspectable before an answer is written.
+RAC is a deterministic source-aware review layer over local project evidence.
 
-The layer decomposes an operating question into relevant factors, routes each factor to local evidence or boundary evidence, generates competing hypotheses, applies critique and fact checks for selected claim and definition conflicts, and produces a grounded report with template confidence labels, limitations, source paths, source-line audit pointers, and evidence fields.
+The layer decomposes an operating question into relevant factors, routes each factor to local evidence or boundary evidence, generates competing hypotheses, applies critique and rule-based checks for unsupported claims and definition conflicts, and produces a grounded report with scenario-template confidence labels, limitations, source paths, source-line audit pointers, and evidence fields.
 
 This layer is useful when current evidence is strong for one factor but weak, missing, or boundary-only for another. It helps prevent a grounded answer from hiding missing evidence behind a fluent conclusion.
 
@@ -177,9 +157,23 @@ Reviewer entry points:
 | `rac/outputs/grounded_rac_cross_store_comparability_001.md` | Demo 2 cross-store comparability boundary review. |
 | `rac/src/grounded_pipeline.py` | Deterministic grounded review pipeline. |
 
-## Future Market-Context Evidence
+## Next Analytical Experiment
 
-Future market-context classification should be added only after broader store coverage and supporting evidence are available. Useful future evidence may include repeated store-period records, local consumption-level evidence, competition evidence, delivery-radius evidence, activity-condition evidence, and stronger geographic context.
+The next analytical experiment is a question-specific pairwise comparability gate. Its purpose is to evaluate whether two store-period records are suitable for one defined operating question before cross-store interpretation is attempted.
+
+Potential gate inputs include:
+
+- reporting-window alignment;
+- transaction order volume and transaction amount;
+- activity involvement and activity intensity;
+- store type;
+- repeated-window stability;
+- weak region context;
+- competition evidence;
+- SKU structure;
+- fulfillment and stockout context.
+
+The gate design is documented in `retail_ops/COMPARABILITY_GATE_V0.md`. It remains separate from the implemented same-period diagnostic so that future comparison rules can be tested explicitly.
 
 ## Field Boundary Summary
 

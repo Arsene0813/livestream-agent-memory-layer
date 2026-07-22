@@ -13,7 +13,7 @@ The month labels use natural calendar-month windows: `2026-02` means `2026-02-01
 In this project, Meituan instant-retail stores are understood through a chain of operating conditions:
 
 ```text
-being seen -> being entered -> being ordered -> being selected again or maintaining share
+being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
 A store may use activity subsidy, pricing, ranking optimization, SKU mix, and fulfillment control as operating levers inside this chain.

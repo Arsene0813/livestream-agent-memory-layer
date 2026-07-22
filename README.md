@@ -2,9 +2,7 @@
 
 Repository: `livestream-agent-memory-layer`
 
-A local evidence-bounded decision-support prototype for multi-store Meituan instant-retail operations, built with SQL diagnostics, metric-boundary preservation, lifecycle-aware retrieval, and deterministic grounded review.
-
-The current implemented retail path applies the repository's lifecycle-aware evidence-boundary design to Meituan backend metrics, SQL diagnostic outputs, generated retail memory facts, answer-boundary checks, and RAC grounded review.
+A local evidence-bounded decision-support prototype that connects selected Meituan backend metrics, reproducible SQL diagnostics, source-bounded memory facts, retrieval and boundary tests, and deterministic grounded review.
 
 ## Core Research Question
 
@@ -18,7 +16,7 @@ For standardized instant-retail products, store competition is organized around 
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
-Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on store state, local competition, activity intensity, product mix, and reporting-window alignment.
+Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on store state, local competition, activity involvement, activity intensity, product mix, and reporting-window alignment.
 
 
 The project organizes multi-store operating evidence so that each decision can be traced to defined fields, reporting periods, and documented limits as the business expands.
@@ -50,9 +48,9 @@ Demo 2 keeps the `cross_store_comparability` file-path term for reference stabil
 | Retail Demo 1 | Store A month-over-month diagnostic across February, March, and April 2026. | Multi-metric interpretation rather than single-cause monthly explanation. |
 | Retail Demo 2 | Same-period B-F diagnostic for March 2026. | Same-period diagnostic evidence with explicit interpretation limits before pairwise comparability rules. |
 | Repeated-window panel | B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04. | Descriptive repeated-window evidence before future pairwise comparability rules. |
-| Memory facts | Converts diagnostic outputs into source-bounded facts with observed values, source fields, source paths, confidence labels, and limitations. | File-backed evidence records derived from manually structured source tables. |
+| Memory facts | Converts diagnostic outputs into source-bounded facts with observed values, source fields, source paths, evidence-trace confidence labels, and limitations. | File-backed evidence records derived from manually structured source tables. |
 | Answer-boundary checks | Tests whether answers stay within entity, period, metric-definition, source, and interpretation boundaries. | Scenario-based checks tied to the current evidence path; not broad LLM robustness tests. |
-| Factor-aware grounded review layer (RAC) | Provides deterministic factor expansion, evidence routing, critique, fact checks for selected claim and definition conflicts, review-state updates, and grounded report generation over local project evidence. | File-grounded review with explicit source paths, competing hypotheses, and limitations. |
+| Factor-aware grounded review layer (RAC) | Provides deterministic factor expansion, evidence routing, critique, rule-based checks for unsupported claims and definition conflicts, review-state updates, and grounded report generation over local project evidence. | File-grounded review with explicit source paths, competing hypotheses, and limitations. |
 
 ## Key Design Principles
 
@@ -61,7 +59,7 @@ This prototype emphasizes:
 - preserving Meituan backend metric semantics and reporting-window grain;
 - structuring store-period observations before pairwise comparison;
 - converting diagnostics into retrieval-facing evidence records with source fields and observed values;
-- carrying source paths, confidence labels, and limitations into memory facts;
+- carrying source paths, evidence-trace confidence labels, and limitations into memory facts;
 - checking whether generated answers remain tied to entity, period, metric definitions, and documented evidence boundaries;
 - returning boundary-preserving answers when the evidence does not support an operating conclusion.
 
@@ -100,7 +98,7 @@ part of the decision-support problem.
 |---|---|---|
 | Lifecycle-aware memory layer | Stores typed product facts, controls updates and active state, retrieves current evidence, and falls back when knowledge is unsupported. | `api/`, `scripts/`, `eval/` |
 | Retail evidence layer | Preserves merchant-backend metric definitions, structures store-period evidence with SQL, generates source-bounded memory facts, and validates lineage and interpretation limits. | `retail_ops/` |
-| Factor-aware grounded review layer (RAC) | Expands decision factors, routes local evidence, records competing hypotheses, applies critique and fact checks for selected claim and definition conflicts, and reports evidence coverage and limitations. | `rac/` |
+| Factor-aware grounded review layer (RAC) | Expands decision factors, routes local evidence, records competing hypotheses, applies critique and rule-based checks for unsupported claims and definition conflicts, and reports evidence coverage and limitations. | `rac/` |
 
 The reviewer-oriented evidence flow is:
 
@@ -174,8 +172,8 @@ The counts below summarize declared contract, fixture, lineage, and endpoint res
 | Retail Demo 2 answer-contract fixture validation | Six manually specified contracts covering activity-cost ratio, top-SKU evidence, search-entry comparison, strategy transfer, same-period readiness, and `region_type`. | 6/6 fixtures passed. This check evaluates required and forbidden wording; it does not call the endpoint or generate answers. |
 | Retail Demo 2 endpoint-boundary evaluation | Supported Store B-F questions, unsupported all-48-store scope, ranking and final-recommendation requests, pairwise strategy transfer, and out-of-scope entities. | 7 endpoint scenarios passed. |
 | Retail data-contract and value-lineage validation | Declared canonical fields, headers, aliases, formulas, source-to-output values, generated-fact values, paths, and metadata. | Current static-contract and Demo 1/Demo 2 lineage checks pass. |
-| Retrieval threshold inspection | 29 cases over 282 file-backed retrieval documents, including supported, unsupported, hard-negative, mismatched, and ambiguous queries. | Supported cases retained expected evidence at top-5 in 8/8 cases; unsupported cases had 0/6 expected hits. The `0.5767` threshold remains an exploratory reference. |
-| Query wording-variation stress test | 131 deterministic shortened, paraphrased, typo/noise, and keyword-order variants. | Supported variants retained expected evidence and crossed the reference threshold in 34/34 cases; unsupported variants had 0/30 expected hits and 0/30 threshold crossings. Hard-negative, entity/period-mismatch, and ambiguous variants still crossed the threshold in 23/33, 12/18, and 5/16 cases. |
+| Retrieval threshold inspection | 29 cases over 283 file-backed retrieval documents, including supported, unsupported, hard-negative, mismatched, and ambiguous queries. | Supported cases retained expected evidence at top-5 in 8/8 cases; unsupported cases had 0/6 expected hits. The `0.5767` threshold remains an exploratory reference. |
+| Query wording-variation stress test | 131 deterministic shortened, paraphrased, typo/noise, and keyword-order variants. | Supported variants retained expected evidence and crossed the reference threshold in 34/34 cases; unsupported variants had 0/30 expected hits and 0/30 threshold crossings. Hard-negative, entity/period-mismatch, and ambiguous variants still crossed the threshold in 23/33, 13/18, and 5/16 cases. |
 | Demo 2 guardrail sensitivity | Baseline notes compared with thresholds lowered and raised by five percentage points. | Four of five store rows changed under the harder-to-trigger plus-five-point scenario; Store B remained unchanged, and the easier-to-trigger scenario changed no rows. |
 
 The current evaluation supports contract consistency, value traceability, and inspectable evidence routing. The threshold-crossing failure cases show why semantic similarity remains one routing signal rather than a sufficient basis for an operating conclusion.
@@ -217,12 +215,6 @@ python3 eval/analyze_retail_query_robustness.py
 
 These retrieval checks inspect score distribution and wording-variation behavior over the current file-backed retail evidence corpus.
 
-## Key Evidence Files
-
-Use the Admissions Review Path above for the first-pass file order.
-
-Detailed retail file ownership is kept in `retail_ops/README.md`.
-
 ## Review Takeaway and Next Step
 
 This repository demonstrates a staged decision-support prototype for a real Meituan multi-store operating problem. Selected merchant-backend metrics are manually transcribed into source tables under documented definitions, transformed with SQL, converted into retrieval-facing memory facts, and checked against evidence boundaries before later answers make operating claims.
@@ -236,7 +228,7 @@ This repository demonstrates a staged decision-support prototype for a real Meit
 | Evaluation layer | Checks answer-boundary behavior, field meanings, entity scope, period scope, and comparison limits. | Keeps retrieval-backed answers tied to the current evidence path. |
 | Future comparability gate | Design contract is documented in `retail_ops/COMPARABILITY_GATE_V0.md`. | Should judge whether two store-period records can be compared for one selected operating question. |
 
-The next development step is to add more repeated store-period evidence and test whether the current diagnostic guardrails remain stable across more stores, months, activity conditions, and market contexts.
+The next analytical step is to test the documented question-specific pairwise comparability gate. This requires broader repeated store-period evidence and explicit tests of whether the current diagnostic guardrails remain stable across reporting windows, activity conditions, product structures, and operating contexts.
 
 ## Editing and Scope Guardrails
 
@@ -248,9 +240,9 @@ Future pairwise comparability-gate wording must follow `retail_ops/COMPARABILITY
 
 ## Factor-Aware Grounded Review (RAC)
 
-The `rac/` module is an important technical component of the current
-prototype. It operates over the structured retail evidence and makes the
-reasoning path visible before a grounded report is accepted.
+The `rac/` module operates over the structured retail evidence and records
+factor selection, evidence routing, competing hypotheses, rule-based checks,
+review-state updates, and unresolved limitations before a report is accepted.
 
 Its implemented workflow covers:
 
@@ -259,7 +251,7 @@ Its implemented workflow covers:
 - source-aware local evidence routing;
 - explicit boundary evidence for unavailable requirements;
 - competing hypotheses;
-- critique and fact checks for selected claim and definition conflicts;
+- critique and rule-based checks for unsupported claims and definition conflicts;
 - review-state updates that record evidence coverage and limitations;
 - grounded report generation;
 - a deterministic report-contract quality gate.

@@ -37,7 +37,7 @@ With many stores, the harder problem is deciding which stores can be compared, u
 In this project, instant-retail competition is understood through this operating chain:
 
 ```text
-being seen -> being entered -> being ordered -> being selected again or maintaining share
+being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
 Promotion, subsidy, price, SKU mix, ranking position, and fulfillment conditions are operating levers inside this chain. They should be interpreted through the store's current operating state and comparison limits, not as isolated goals.

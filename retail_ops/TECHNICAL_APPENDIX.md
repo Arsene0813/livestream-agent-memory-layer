@@ -127,7 +127,7 @@ Both paths should preserve metric definitions, entity scope, period scope, sourc
 |---|---|---|
 | Data dictionary | Preserve backend metric meanings and canonical field names. | Existing Meituan backend metrics stay tied to documented definitions. |
 | SQL diagnostics | Compute store-period diagnostic evidence under the documented field contract. | SQL output remains diagnostic evidence, not a final operating decision. |
-| Generated memory facts | Store observed values, source fields, `calculation` metadata, confidence labels, and limitations. | Memory facts summarize evidence without replacing documented backend metric definitions. |
+| Generated memory facts | Store observed values, source fields, `calculation` metadata, evidence-trace confidence labels, and limitations. | Memory facts summarize evidence without replacing documented backend metric definitions. |
 | Boundary checks | Check entity scope, period scope, metric meanings, and comparison limits before answers are accepted. | Evaluation focuses on evidence discipline and answer scope. |
 | Future comparability gate | Judge whether two store-period records can be compared for one selected operating question. | The gate is question-specific and depends on broader store-period evidence. |
 
@@ -138,7 +138,7 @@ Both paths should preserve metric definitions, entity scope, period scope, sourc
 | Backend evidence | Selected Meituan merchant-backend metrics and manually structured evidence tables. | Canonical CSV source files. | Not full automated ingestion. |
 | Metric contract | Canonical CSV fields and backend definitions. | `retail_ops/data/DATA_DICTIONARY.md` and the Source-to-Claim Lineage section below. | Existing Meituan backend metrics should not be silently renamed or redefined. |
 | SQL diagnostics | Store-period, search, activity, top-SKU evidence. | SQL output files with ratios, shares, guardrail notes, and limitation notes. | SQL should not assign fixed store-stage labels or final operating decisions. |
-| Generated memory facts | SQL outputs and supporting source tables. | Retrieval-facing memory facts with observed values, source fields, `calculation` metadata, confidence, and limitations. | Memory facts are summaries, not raw backend exports. |
+| Generated memory facts | SQL outputs and supporting source tables. | Retrieval-facing memory facts with observed values, source fields, `calculation` metadata, evidence-trace confidence labels, and limitations. | Memory facts are summaries, not raw backend exports. |
 | Offline evaluation | Generated facts, SQL outputs, and current-scope docs. | Eval result text files and consistency checks. | Evaluations check evidence boundaries; they are not causal business experiments. |
 
 ## Evidence Type Boundary
@@ -147,7 +147,7 @@ Both paths should preserve metric definitions, entity scope, period scope, sourc
 |---|---|---|---|
 | Backend-reported fields | `transaction_amount`, `entry_users`, `order_users`, `activity_orders` | Preserve Meituan backend metric meanings under canonical field names. | Observed metrics need context before stronger operating interpretation. |
 | SQL-derived diagnostics | `search_entry_rate_pct`, `search_entry_share_pct`, `activity_order_share_pct`, `comparison_limit_notes` | Expose visibility-entry structure, activity involvement, product-mix signals, and interpretation limits. | Diagnostic signals are not peer-selection rules. |
-| Retrieval-facing memory slots | `visibility_entry_profile`, `activity_lever_profile`, `transaction_conversion_profile`, `single_metric_attribution_guard`, `top3_sku_product_mix_note` | Store evidence with source fields, observed values, `calculation` metadata, confidence, and limitations. | Memory slots keep evidence traceable rather than creating undocumented fields. |
+| Retrieval-facing memory slots | `visibility_entry_profile`, `activity_lever_profile`, `transaction_conversion_profile`, `single_metric_attribution_guard`, `top3_sku_product_mix_note` | Store evidence with source fields, observed values, `calculation` metadata, evidence-trace confidence labels, and limitations. | Memory slots keep evidence traceable rather than creating undocumented fields. |
 | Future gate fields | `comparison_question_type`, `comparison_decision`, `market_area_type` | Planned contract fields for future pairwise comparability work. | These are future fields, not current Demo 2 output columns. |
 
 ## Implemented Source Files
@@ -549,7 +549,7 @@ This file also preserves the field-name and scope-change guardrails that protect
 - `region_type` remains weak region or market-context evidence only; it is not a hard market-area classification, store-stage label, or peer-store grouping rule.
 - Activity evidence should remain separated into involvement, intensity, and future explicit campaign status only when campaign-calendar or backend status evidence exists.
 - Retrieval-score analysis remains offline inspection, not production retrieval logic.
-- `rac/` is the deterministic source-aware review layer over the structured retail evidence path, with factor expansion, evidence routing, competing hypotheses, critique, fact checks, and explicit limitations.
+- `rac/` is the deterministic source-aware review layer over the structured retail evidence path, with factor expansion, evidence routing, competing hypotheses, critique, rule-based checks for unsupported claims and definition conflicts, and explicit limitations.
 
 
 ## Review Rule
