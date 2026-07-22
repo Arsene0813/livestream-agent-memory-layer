@@ -21,10 +21,6 @@ answerable.
 
 The retail data-contract validator is a static contract check over the selected required implemented fields listed in `REQUIRED_CANONICAL_FIELDS`, current source and output headers, forbidden aliases, generated-fact metadata, and required dictionary boundary phrases. It does not parse or semantically validate every field definition in `DATA_DICTIONARY.md`.
 
-RAC grounded review remains an important technical layer. It uses local
-evidence from these stages to make multi-factor reasoning, critique, source
-paths, review-state updates, and unresolved limitations inspectable.
-
 ## First-Pass Reviewer Matrix
 
 
@@ -39,21 +35,6 @@ paths, review-state updates, and unresolved limitations inspectable.
 | Repeated-window B-F panel           | Is there enough repeated store-period coverage to prepare future question-specific comparison rules?       | Stores B-F February-April 2026 panel records                             | Coverage output and descriptive repeated-window summary                               | Premature gate claims, store ranking, causal interpretation from short-window evidence |
 | Future comparability-gate contract  | What should the next pairwise decision layer decide, and what should it refuse?                            | Current evidence boundaries and planned gate design                      | Question-specific future gate contract                                                | Treating current Demo 2 as a completed pairwise gate                                   |
 
-
-## Experiment Dependency Map
-
-
-
-| Layer | Review question | Evidence output | Boundary protected |
-|---|---|---|---|
-| Field contract | Do the selected required implemented fields and declared static checks remain aligned? | Dictionary boundary phrases, source/output headers, aliases, and generated-fact structure | Declared alias drift, missing required fields, and unsupported generated-fact metadata |
-| Value lineage | Do values remain consistent across source tables, diagnostic outputs, and generated facts? | Demo 1 and Demo 2 value-lineage validation results | Silent value drift and unsupported retrieval-fact values |
-| SQL diagnostics | Can selected store-period records be structured without changing backend meanings? | Demo 1 month-over-month output and Demo 2 same-period B-F output | Single-metric attribution, store ranking, premature comparison |
-| Memory facts and answer boundaries | Can later answers preserve entity, period, source, metric, and limitation fields? | Generated retail memory facts, answer-behavior checks, endpoint checks | Unsupported advice, ROI/profit overclaim, scope mismatch |
-| Retrieval wording-variation stress test | Does wording variation still route to the intended evidence path? | Score-distribution and query-robustness outputs | Fluent answers hiding weak or mismatched evidence |
-| Repeated-window panel | Is there repeated B-F evidence before stronger comparison rules are attempted? | February-April 2026 coverage and descriptive summary outputs | Premature gate claims, causal interpretation, strategy-transfer approval |
-| RAC grounded review | Can multi-factor reasoning remain inspectable over local evidence? | Grounded review outputs with confidence, limitations, source paths, and evidence snippets | Hidden evidence jumps and overconfident synthesis |
-| Future gate contract | What should the next pairwise decision layer decide or refuse? | Future comparability-gate contract stub | Treating current Demo 2 as a completed pairwise gate |
 
 ## How to Read the Experiments
 
@@ -83,10 +64,10 @@ comparison limits.
 The repeated-window B-F panel extends the evidence base across February,
 March, and April 2026. It verifies repeated store-period coverage and reports descriptive movement in selected metrics. Monthly guardrail stability is a separate future test because the current panel does not contain repeated top-SKU evidence or monthly recomputed `comparison_limit_notes`.
 
-RAC remains an important technical part of the project. Its role here is to
-make multi-factor operating reasoning inspectable over local evidence through
-factor expansion, evidence routing, critique, rule-based checks for unsupported claims and definition conflicts, review-state updates,
-limitations, source paths, and local evidence snippets.
+RAC applies factor expansion, evidence routing, critique, rule-based checks
+for unsupported claims and definition conflicts, review-state updates,
+limitations, source paths, and local evidence snippets to the structured
+evidence produced by the earlier stages.
 
 ## Experiment 1: Store A Month-over-Month Diagnostic
 
