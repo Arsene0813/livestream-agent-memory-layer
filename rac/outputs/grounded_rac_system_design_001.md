@@ -59,11 +59,11 @@ The `Source Lines` column is an audit pointer to the local source-file line rang
 |---|---|---|---|---|---|
 | typed_memory | rac/README.md | default_evidence | keyword_matched | 1-2 | fact |
 | evidence_packets | rac/README.md | default_evidence | keyword_matched | 5-7 | evidence |
-| hypotheses | rac/README.md | default_evidence | keyword_matched | 26-28 | hypotheses, competing |
-| belief_records | rac/README.md | default_evidence | keyword_matched | 119-121 | belief |
-| confidence | rac/README.md | default_evidence | keyword_matched | 136-138 | confidence |
+| hypotheses | rac/README.md | default_evidence | keyword_matched | 41-43 | hypotheses, competing |
+| belief_records | rac/README.md | default_evidence | keyword_matched | 134-136 | belief |
+| confidence | rac/README.md | default_evidence | keyword_matched | 151-153 | confidence |
 | limitations | rac/README.md | default_evidence | keyword_matched | 7-9 | boundary |
-| retrieval_trace | rac/README.md | default_evidence | keyword_matched | 24-26 | source |
+| retrieval_trace | rac/README.md | default_evidence | keyword_matched | 39-41 | source |
 | active_state_filtering | rac/README.md | default_evidence | keyword_matched | 7-9 | state |
 
 
