@@ -91,7 +91,7 @@ Expected quality-gate result:
 |---|---|---|---|
 | rac_store_a_attribution_001 | Can Store A's April growth be attributed to search exposure? | Avoids single-cause attribution and considers traffic, conversion, promotion, SKU context, and evidence limits. | rac/outputs/grounded_rac_store_a_attribution_001.md |
 | rac_cross_store_comparability_001 | Are Stores B-F directly comparable in March 2026? | Routes quantitative factors to Demo 2 output evidence and routes unavailable comparability requirements to explicit boundary evidence. It does not implement a pairwise comparability gate. | rac/outputs/grounded_rac_cross_store_comparability_001.md |
-| rac_promotion_strategy_001 | What should be checked before changing promotions for a store? | Checks transaction amount alongside cost, conversion, margin, competitor context, and unresolved evidence. | rac/outputs/grounded_rac_promotion_strategy_001.md |
+| rac_promotion_strategy_001 | What should be checked before changing promotions for a store? | Routes available transaction, cost, and conversion evidence while retaining margin and competitor context as unresolved requirements. | rac/outputs/grounded_rac_promotion_strategy_001.md |
 | rac_system_design_001 | How should the RAC system be connected to the existing memory layer? | Shows how RAC uses typed memory records as inputs to a factor-aware grounded review path. | rac/outputs/grounded_rac_system_design_001.md |
 
 ## Cross-Store Grounding Hardening

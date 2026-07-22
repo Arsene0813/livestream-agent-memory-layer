@@ -59,7 +59,7 @@ The central decision problem is therefore not simply which store or metric is hi
 | Repeated-window panel | Stores B-F across February, March, and April 2026 using the documented supporting-table coverage. |
 | Current analytical use | Descriptive diagnosis, value lineage, evidence routing, scope checks, and answer-boundary evaluation. |
 
-The repository supports analysis of these selected store-period records. Question-specific pairwise comparability is handled as a separate analytical step because matching reporting windows alone does not establish that two stores are suitable peers for a particular operating decision.
+The repository supports analysis of these selected store-period records. Question-specific pairwise comparability requires a separate analytical step beyond the current same-period diagnostic because matching reporting windows alone does not establish that two stores are suitable peers for a particular operating decision.
 
 ## Prototype Design
 
@@ -162,7 +162,7 @@ Main outputs:
 
 ## Factor-Aware Grounded Review Layer
 
-The project also includes a deterministic source-aware review layer over local project evidence. This is an important technical component because it makes multi-factor reasoning inspectable before an answer is written.
+The project also includes a deterministic source-aware review layer over local project evidence.
 
 The layer decomposes an operating question into relevant factors, routes each factor to local evidence or boundary evidence, generates competing hypotheses, applies critique and rule-based checks for unsupported claims and definition conflicts, and produces a grounded report with scenario-template confidence labels, limitations, source paths, source-line audit pointers, and evidence fields.
 
