@@ -2,9 +2,7 @@
 
 Repository: `livestream-agent-memory-layer`
 
-A local evidence-bounded decision-support prototype for multi-store Meituan instant-retail operations, built with SQL diagnostics, metric-boundary preservation, lifecycle-aware retrieval, and deterministic grounded review.
-
-The current implemented retail path applies the repository's lifecycle-aware evidence-boundary design to Meituan backend metrics, SQL diagnostic outputs, generated retail memory facts, answer-boundary checks, and RAC grounded review.
+A local evidence-bounded decision-support prototype that connects selected Meituan backend metrics, reproducible SQL diagnostics, source-bounded memory facts, retrieval and boundary tests, and deterministic grounded review.
 
 ## Core Research Question
 
@@ -18,7 +16,7 @@ For standardized instant-retail products, store competition is organized around 
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
-Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on store state, local competition, activity intensity, product mix, and reporting-window alignment.
+Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on store state, local competition, activity involvement, cost intensity, product mix, and reporting-window alignment.
 
 
 The project organizes multi-store operating evidence so that each decision can be traced to defined fields, reporting periods, and documented limits as the business expands.
