@@ -93,8 +93,6 @@ Generated memory facts retain the entity, reporting period, evidence slot, sourc
 | Boundary evaluations | Checks whether later answers preserve entity, period, metric-definition, and comparison limits. |
 | RAC grounded review | Decomposes multi-factor questions, routes local or boundary evidence, develops competing hypotheses, applies critique and rule-based checks for unsupported claims and definition conflicts, updates evidence-coverage state, and produces an inspectable report. |
 
-The layers have distinct responsibilities. SQL establishes reproducible diagnostic values. Memory facts preserve evidence after transformation. Retrieval identifies potentially relevant local evidence. Boundary evaluations and RAC review examine whether later reasoning remains connected to the documented source and scope.
-
 ## Evaluation Logic
 
 The evaluation layer checks declared field contracts, value lineage, entity and reporting-period scope, answer boundaries, endpoint behavior, retrieval score distributions, wording variation, and threshold sensitivity.
@@ -108,24 +106,6 @@ The current results support three narrower conclusions:
 3. retrieval and review behavior can be inspected under both supported and difficult queries.
 
 Hard-negative, entity-mismatch, period-mismatch, and ambiguous-query results remain part of the evidence because they show where semantic similarity is insufficient on its own.
-
-## Next Analytical Experiment
-
-The next analytical experiment is a question-specific pairwise comparability gate. Its purpose is to evaluate whether two store-period records are suitable for one defined operating question before cross-store interpretation is attempted.
-
-Potential gate inputs include:
-
-- reporting-window alignment;
-- transaction order volume and transaction amount;
-- activity involvement and activity intensity;
-- store type;
-- repeated-window stability;
-- weak region context;
-- competition evidence;
-- SKU structure;
-- fulfillment and stockout context.
-
-The gate design is documented in `retail_ops/COMPARABILITY_GATE_V0.md`. It remains separate from the implemented same-period diagnostic so that future comparison rules can be tested explicitly.
 
 ## Current Implemented Retail Path
 
@@ -162,7 +142,7 @@ Main outputs:
 
 ## Factor-Aware Grounded Review Layer
 
-The project also includes a deterministic source-aware review layer over local project evidence.
+RAC is a deterministic source-aware review layer over local project evidence.
 
 The layer decomposes an operating question into relevant factors, routes each factor to local evidence or boundary evidence, generates competing hypotheses, applies critique and rule-based checks for unsupported claims and definition conflicts, and produces a grounded report with scenario-template confidence labels, limitations, source paths, source-line audit pointers, and evidence fields.
 
@@ -177,9 +157,23 @@ Reviewer entry points:
 | `rac/outputs/grounded_rac_cross_store_comparability_001.md` | Demo 2 cross-store comparability boundary review. |
 | `rac/src/grounded_pipeline.py` | Deterministic grounded review pipeline. |
 
-## Future Market-Context Evidence
+## Next Analytical Experiment
 
-Future market-context classification should be added only after broader store coverage and supporting evidence are available. Useful future evidence may include repeated store-period records, local consumption-level evidence, competition evidence, delivery-radius evidence, activity-condition evidence, and stronger geographic context.
+The next analytical experiment is a question-specific pairwise comparability gate. Its purpose is to evaluate whether two store-period records are suitable for one defined operating question before cross-store interpretation is attempted.
+
+Potential gate inputs include:
+
+- reporting-window alignment;
+- transaction order volume and transaction amount;
+- activity involvement and activity intensity;
+- store type;
+- repeated-window stability;
+- weak region context;
+- competition evidence;
+- SKU structure;
+- fulfillment and stockout context.
+
+The gate design is documented in `retail_ops/COMPARABILITY_GATE_V0.md`. It remains separate from the implemented same-period diagnostic so that future comparison rules can be tested explicitly.
 
 ## Field Boundary Summary
 
