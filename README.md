@@ -215,12 +215,6 @@ python3 eval/analyze_retail_query_robustness.py
 
 These retrieval checks inspect score distribution and wording-variation behavior over the current file-backed retail evidence corpus.
 
-## Key Evidence Files
-
-Use the Admissions Review Path above for the first-pass file order.
-
-Detailed retail file ownership is kept in `retail_ops/README.md`.
-
 ## Review Takeaway and Next Step
 
 This repository demonstrates a staged decision-support prototype for a real Meituan multi-store operating problem. Selected merchant-backend metrics are manually transcribed into source tables under documented definitions, transformed with SQL, converted into retrieval-facing memory facts, and checked against evidence boundaries before later answers make operating claims.
@@ -234,7 +228,7 @@ This repository demonstrates a staged decision-support prototype for a real Meit
 | Evaluation layer | Checks answer-boundary behavior, field meanings, entity scope, period scope, and comparison limits. | Keeps retrieval-backed answers tied to the current evidence path. |
 | Future comparability gate | Design contract is documented in `retail_ops/COMPARABILITY_GATE_V0.md`. | Should judge whether two store-period records can be compared for one selected operating question. |
 
-The next development step is to add more repeated store-period evidence and test whether the current diagnostic guardrails remain stable across more stores, months, activity conditions, and market contexts.
+The next analytical step is to test the documented question-specific pairwise comparability gate. This requires broader repeated store-period evidence and explicit tests of whether the current diagnostic guardrails remain stable across reporting windows, activity conditions, product structures, and operating contexts.
 
 ## Editing and Scope Guardrails
 
@@ -246,9 +240,9 @@ Future pairwise comparability-gate wording must follow `retail_ops/COMPARABILITY
 
 ## Factor-Aware Grounded Review (RAC)
 
-The `rac/` module is an important technical component of the current
-prototype. It operates over the structured retail evidence and makes the
-reasoning path visible before a grounded report is accepted.
+The `rac/` module operates over the structured retail evidence and records
+factor selection, evidence routing, competing hypotheses, rule-based checks,
+review-state updates, and unresolved limitations before a report is accepted.
 
 Its implemented workflow covers:
 
