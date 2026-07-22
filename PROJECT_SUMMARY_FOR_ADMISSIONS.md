@@ -41,7 +41,7 @@ For standardized products such as contact lenses, care solutions, and related ey
 being seen
 -> being entered
 -> being ordered
--> being selected again or maintaining share
+-> being selected again / maintaining share
 ```
 
 Promotion, subsidy, pricing, SKU arrangement, ranking work, fulfillment support, and local competition can affect different parts of this path. Their interpretation depends on the store, reporting period, activity conditions, product structure, and evidence available for the question.
