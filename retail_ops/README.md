@@ -81,13 +81,3 @@ The retail folder follows one practical workflow:
 | Store-period panel | `python3 scripts/validate_store_period_panel.py` |
 | Repeated-window summary | `python3 scripts/validate_repeated_window_panel_summary.py` |
 
-## Ownership
-
-| Topic | Owner file |
-|---|---|
-| Field names and metric definitions | `data/DATA_DICTIONARY.md` |
-| Retail experiment map and validation outcomes | `EXPERIMENT_RESULTS.md` |
-| Future pairwise-gate contract | `COMPARABILITY_GATE_V0.md` |
-| Technical lineage and architecture notes | `TECHNICAL_APPENDIX.md` |
-| Admissions-facing project summary | `../PROJECT_SUMMARY_FOR_ADMISSIONS.md` |
-| Repository-level architecture and run path | `../README.md` |

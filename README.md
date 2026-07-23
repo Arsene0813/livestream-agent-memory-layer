@@ -156,13 +156,6 @@ Retail demo details are kept under `retail_ops/`.
 | Retail experiment map and validation outcomes | `retail_ops/EXPERIMENT_RESULTS.md` |
 | Future comparability-gate contract | `retail_ops/COMPARABILITY_GATE_V0.md` |
 
-## Appendix Ownership
-
-The first review path should stay short. These files are retained for technical audit, but they are not separate entry points.
-
-| Appendix | Owns | Should not repeat |
-|---|---|---|
-| `retail_ops/TECHNICAL_APPENDIX.md` | Consolidated architecture, source-to-claim lineage, and field-usage review. | Admissions summary, field dictionary, future gate rationale, or experiment results. |
 
 ## Evaluation Questions
 
