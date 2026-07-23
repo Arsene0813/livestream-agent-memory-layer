@@ -1,6 +1,6 @@
 # Retail Operations Extension
 
-This folder owns the implemented retail evidence layer: source tables,
+This folder contains the implemented retail evidence layer: source tables,
 the canonical field dictionary, SQL diagnostics, generated facts,
 outputs, validation scripts, experiments, and technical references.
 
@@ -80,4 +80,3 @@ The retail folder follows one practical workflow:
 | Guardrail sensitivity | `python3 scripts/analyze_demo2_guardrail_sensitivity.py` |
 | Store-period panel | `python3 scripts/validate_store_period_panel.py` |
 | Repeated-window summary | `python3 scripts/validate_repeated_window_panel_summary.py` |
-

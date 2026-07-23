@@ -22,12 +22,7 @@ This appendix is for later audit of architecture, lineage, and field-usage consi
 
 ## Repository Document Roles
 
-| This file owns | Canonical file for related detail |
-|---|---|
-| Current retail evidence path | the Source-to-Claim Lineage section below for claim-to-data lineage |
-| Endpoint evidence modes | `api/main.py` for endpoint implementation |
-| Layer responsibilities | `retail_ops/data/DATA_DICTIONARY.md` for field meanings |
-| Architecture-level boundaries | `retail_ops/COMPARABILITY_GATE_V0.md` for future gate design |
+
 
 ## Current Retail Evidence Layers
 
@@ -219,19 +214,13 @@ Post-Demo2 repeated-window panel files:
 ## Source-to-Claim Lineage
 
 
-This file owns claim-to-data lineage for the retail-operations evidence path.
+This section traces claim-to-data lineage for the retail-operations evidence path.
 
 It traces how selected Meituan backend metrics move from source CSV files into SQL diagnostics, SQL outputs, generated memory facts, and answer-boundary evaluations.
 
 ## Lineage Document Roles
 
-| This file owns | Canonical file for related detail |
-|---|---|
-| Source-to-SQL-to-memory lineage | the Architecture section above for architecture structure |
-| Claim-to-field support | `retail_ops/data/DATA_DICTIONARY.md` for field meanings |
-| Metric interpretation rules | `retail_ops/data/DATA_DICTIONARY.md` for full definitions |
-| Current diagnostic boundaries | `retail_ops/EXPERIMENT_RESULTS.md` for experiment map, validation outcomes, and boundary checks |
-| Future pairwise comparability lineage | `retail_ops/COMPARABILITY_GATE_V0.md` for the future gate contract |
+
 
 Path names that include `cross_store_comparability` are retained for reference stability. In the current implementation, Demo 2 means same-period diagnostic evidence and guardrails. The future pairwise comparability gate is documented separately.
 
@@ -521,16 +510,11 @@ The panel keeps `store_type` values aligned with the existing source data: `self
 
 ## Field-Review Document Roles
 
-This file owns field-name and semantic-change review for the retail-operations evidence path.
+This section reviews field-name and semantic-change risk across the retail-operations evidence path.
 
 It should answer one narrow question: if a field name or field meaning changes, what existing dictionary definition, source file, SQL output, generated memory fact, and evaluation behavior could be affected?
 
-| This file owns | Canonical file for related detail |
-|---|---|
-| Field-name change review | `retail_ops/data/DATA_DICTIONARY.md` for authoritative field names and metric meanings |
-| Existing field usage review | Source CSV files, SQL outputs, generated memory facts, and eval files |
-| Future field-addition caution | `retail_ops/COMPARABILITY_GATE_V0.md` for future pairwise gate fields |
-| Rename decision tracking | The field review tables in this file |
+
 
 
 This section records field-name and semantic-change review for the retail evidence path.

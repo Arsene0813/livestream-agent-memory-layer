@@ -98,8 +98,7 @@ After the first pass:
 
 ## Architecture
 
-The repository has three connected layers. Each layer owns a different
-part of the decision-support problem.
+The repository has three connected layers.
 
 | Layer | Responsibility | Main files |
 |---|---|---|
