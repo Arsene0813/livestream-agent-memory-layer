@@ -94,6 +94,24 @@ CANONICAL_MEMORY_SLOTS = {
     "top3_sku_product_mix_note",
 }
 
+DEMO1_SUMMARY_FIELD_ORDER = (
+    "store_id",
+    "period_granularity",
+    "period_start",
+    "period_end",
+    "period_label",
+    "slot",
+    "summary",
+)
+
+DEMO1_SUMMARY_SLOT_ORDER = (
+    "visibility_entry_profile",
+    "activity_lever_profile",
+    "transaction_conversion_profile",
+    "single_metric_attribution_guard",
+    "top3_sku_product_mix_note",
+)
+
 KNOWN_HELPER_FIELDS = {
     "search_term",
     "search_term_en",
@@ -441,6 +459,54 @@ def main() -> int:
     demo1_summary_headers = read_csv_headers(
         "retail_ops/outputs/store_a_demo1_interpretation_summary.csv"
     )
+
+    if demo1_summary_headers != set(DEMO1_SUMMARY_FIELD_ORDER):
+        failures.append(
+            "Demo 1 interpretation summary headers must be exactly "
+            f"{list(DEMO1_SUMMARY_FIELD_ORDER)}"
+        )
+
+    with (
+        ROOT
+        / "retail_ops"
+        / "outputs"
+        / "store_a_demo1_interpretation_summary.csv"
+    ).open(
+        "r",
+        encoding="utf-8-sig",
+        newline="",
+    ) as summary_file:
+        summary_reader = csv.DictReader(summary_file)
+        summary_field_order = tuple(
+            summary_reader.fieldnames or ()
+        )
+        summary_rows = list(summary_reader)
+
+    summary_slot_order = tuple(
+        row.get("slot", "")
+        for row in summary_rows
+    )
+
+    if summary_field_order != DEMO1_SUMMARY_FIELD_ORDER:
+        failures.append(
+            "Demo 1 interpretation summary field order does not "
+            "match the canonical reviewer-summary contract"
+        )
+
+    if summary_slot_order != DEMO1_SUMMARY_SLOT_ORDER:
+        failures.append(
+            "Demo 1 interpretation summary slot order does not "
+            "match the canonical Demo 1 slot order"
+        )
+
+    if any(
+        not row.get("summary", "").strip()
+        for row in summary_rows
+    ):
+        failures.append(
+            "Demo 1 interpretation summary contains an empty "
+            "summary value"
+        )
     demo2_source_headers = read_csv_headers("retail_ops/data/demo2_store_period_metrics.csv")
     demo2_output_headers = read_csv_headers(
         "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
@@ -538,7 +604,7 @@ def main() -> int:
     report = [
         "Retail data contract validation PASSED.",
         "Checked selected required implemented field presence across the dictionary and current source/output files.",
-        "Checked Demo 1 source/output headers.",
+        "Checked Demo 1 source/output headers and canonical interpretation-summary slots.",
         "Checked Demo 2 source/output headers.",
         "Checked Demo 2 diagnostic-scope and limitation fields.",
         "Checked generated Demo 1 and Demo 2 memory fact structure, non-empty values and calculations, and period metadata.",

@@ -1,6 +1,6 @@
 Retail data contract validation PASSED.
 Checked selected required implemented field presence across the dictionary and current source/output files.
-Checked Demo 1 source/output headers.
+Checked Demo 1 source/output headers and canonical interpretation-summary slots.
 Checked Demo 2 source/output headers.
 Checked Demo 2 diagnostic-scope and limitation fields.
 Checked generated Demo 1 and Demo 2 memory fact structure, non-empty values and calculations, and period metadata.

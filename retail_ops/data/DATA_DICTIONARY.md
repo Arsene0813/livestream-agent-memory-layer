@@ -14,7 +14,10 @@ Demo 1:
 - `retail_ops/data/store_a_top_skus.csv`
 - `retail_ops/sql/01_store_a_month_over_month_diagnostic.sql`
 - `retail_ops/outputs/store_a_demo1_sql_output.csv`
+- `retail_ops/outputs/store_a_demo1_interpretation_summary.csv`
 - `retail_ops/outputs/generated_retail_memory_facts.json`
+
+`store_a_demo1_interpretation_summary.csv` is generated from the canonical Demo 1 memory-fact values and should not be edited independently.
 
 Demo 2:
 
