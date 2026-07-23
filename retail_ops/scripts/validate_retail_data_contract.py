@@ -94,6 +94,19 @@ CANONICAL_MEMORY_SLOTS = {
     "top3_sku_product_mix_note",
 }
 
+ALLOWED_FACT_CONFIDENCE = {
+    "high",
+    "medium",
+}
+
+EXPECTED_CONFIDENCE_BY_SLOT = {
+    "visibility_entry_profile": "high",
+    "activity_lever_profile": "high",
+    "transaction_conversion_profile": "high",
+    "single_metric_attribution_guard": "high",
+    "top3_sku_product_mix_note": "medium",
+}
+
 DEMO1_SUMMARY_FIELD_ORDER = (
     "store_id",
     "period_granularity",
@@ -359,6 +372,31 @@ def validate_generated_facts(
         if slot not in CANONICAL_MEMORY_SLOTS:
             failures.append(f"{relative_path} fact #{index} has non-canonical slot `{slot}`")
 
+        is_active = fact.get("is_active")
+        if not isinstance(is_active, bool):
+            failures.append(
+                f"{relative_path} fact #{index} has non-boolean is_active"
+            )
+
+        confidence = fact.get("confidence")
+        if confidence not in ALLOWED_FACT_CONFIDENCE:
+            failures.append(
+                f"{relative_path} fact #{index} has unsupported "
+                f"confidence `{confidence}`"
+            )
+        elif (
+            is_active is True
+            and slot in EXPECTED_CONFIDENCE_BY_SLOT
+        ):
+            expected_confidence = EXPECTED_CONFIDENCE_BY_SLOT[slot]
+
+            if confidence != expected_confidence:
+                failures.append(
+                    f"{relative_path} fact #{index} slot `{slot}` "
+                    f"requires confidence `{expected_confidence}`, "
+                    f"found `{confidence}`"
+                )
+
         validate_period_metadata(
             relative_path=relative_path,
             index=index,
@@ -370,6 +408,16 @@ def validate_generated_facts(
         if not isinstance(value, str) or not value.strip():
             failures.append(
                 f"{relative_path} fact #{index} has missing or empty value"
+            )
+
+        observed_values = fact.get("observed_values")
+        if (
+            not isinstance(observed_values, dict)
+            or not observed_values
+        ):
+            failures.append(
+                f"{relative_path} fact #{index} has missing "
+                "or empty observed_values"
             )
 
         calculation = fact.get("calculation")
@@ -392,9 +440,13 @@ def validate_generated_facts(
         )
 
         source_fields = fact.get("source_fields")
-        if not isinstance(source_fields, list):
+        if (
+            not isinstance(source_fields, list)
+            or not source_fields
+        ):
             failures.append(
-                f"{relative_path} fact #{index} has non-list source_fields"
+                f"{relative_path} fact #{index} has missing "
+                "or non-list source_fields"
             )
             continue
 
@@ -423,9 +475,30 @@ def validate_generated_facts(
                     "source/supporting CSV headers"
                 )
 
+        lineage_path = fact.get("lineage_path")
+        if not isinstance(lineage_path, str) or not lineage_path.strip():
+            failures.append(
+                f"{relative_path} fact #{index} has missing lineage_path"
+            )
+        elif not source_exists(lineage_path):
+            failures.append(
+                f"{relative_path} fact #{index} lineage_path "
+                f"does not exist: `{lineage_path}`"
+            )
+
         limitations = fact.get("limitations")
         if not isinstance(limitations, list) or not limitations:
-            failures.append(f"{relative_path} fact #{index} has missing limitations")
+            failures.append(
+                f"{relative_path} fact #{index} has missing limitations"
+            )
+        elif any(
+            not isinstance(item, str) or not item.strip()
+            for item in limitations
+        ):
+            failures.append(
+                f"{relative_path} fact #{index} contains an "
+                "empty or non-string limitation"
+            )
 
 
 def write_report(lines: list[str]) -> None:
@@ -607,7 +680,7 @@ def main() -> int:
         "Checked Demo 1 source/output headers and canonical interpretation-summary slots.",
         "Checked Demo 2 source/output headers.",
         "Checked Demo 2 diagnostic-scope and limitation fields.",
-        "Checked generated Demo 1 and Demo 2 memory fact structure, non-empty values and calculations, and period metadata.",
+        "Checked generated Demo 1 and Demo 2 memory fact structure, evidence-trace fields, period metadata, and slot-bounded confidence.",
         "Checked dictionary-bounded source_fields against declared source and supporting CSV headers.",
         "Checked critical metric-boundary phrases in DATA_DICTIONARY.md.",
         "Checked estimated_income_proxy remains supplementary context rather than a primary comparability-gate factor.",

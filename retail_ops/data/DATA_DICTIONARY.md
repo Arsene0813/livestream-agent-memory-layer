@@ -295,6 +295,13 @@ They are retrieval-facing summaries grounded in canonical source fields, SQL out
 - `supporting_source_paths` is an optional list of additional source files when a memory fact includes evidence that does not appear directly in `source_path`, such as top search-term or top-SKU source tables.
 - `confidence` means evidence-trace confidence: whether the fact is directly supported by available source fields and SQL output.
 - `confidence` does not mean causal confidence, profit confidence, or cross-store transferability.
+
+Current confidence contract:
+
+- **high**: the active fact is directly traceable through canonical source fields or SQL-derived diagnostics and includes non-empty `observed_values`, `calculation`, `source_fields`, `source_path`, `lineage_path`, and `limitations`. The current high-confidence slots are `visibility_entry_profile`, `activity_lever_profile`, `transaction_conversion_profile`, and `single_metric_attribution_guard`.
+- **medium**: the same trace fields are present, but the available evidence covers only a deliberately limited scope. In the current prototype, this applies to `top3_sku_product_mix_note`, because the evidence covers the listed top-3 SKU records rather than the store's full SKU or category structure.
+- No active retail fact currently uses **low**. A fact that does not meet the high or medium contract should remain inactive or be omitted until its evidence trace and limitations are documented.
+
 - `limitations` must state unsupported interpretations, such as cross-store transfer, causal attribution, unaudited profit, incomplete SKU classification, or unknown promotion cycles.
 
 Generated retail memory facts must not introduce new field names, new metric definitions, or new store-stage labels unless those names are first documented in this data dictionary, lineage file, and slot registry.
