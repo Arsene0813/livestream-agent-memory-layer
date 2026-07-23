@@ -1,32 +1,20 @@
 # Demo 2: Same-Period B-F Store Diagnostic
 
-## What a Reviewer Should Conclude from Demo 2
+## Demo Result
 
-Demo 2 supports same-period diagnostic reading across selected Stores B-F for March 2026.
-
-
-It exposes same-period store-period diagnostic evidence and records the interpretation limits that should be carried into future pairwise comparison.
-
-The future pairwise comparability gate remains separate from Demo 2.
-
+Demo 2 organizes selected Stores B-F under the March 2026 reporting window and the canonical field contract. The output combines row-level diagnostic evidence with `comparison_scope_flag` and `comparison_limit_notes`, so each record keeps its period, source, and interpretation limits.
 
 ## Naming Note
 
-This file keeps the historical `cross_store_comparability` path wording for reference stability. In the current implementation, Demo 2 means same-period B-F diagnostic evidence and interpretation guardrails, not a completed pairwise comparability gate.
+This file keeps the historical `cross_store_comparability` path wording for reference stability. Demo 2 itself remains a same-period B-F diagnostic rather than a completed pairwise comparability gate.
 
 <!-- stable-demo2-scope-boundary -->
 
-## Scope Boundary
+## Diagnostic Contract
 
-Demo 2 answers a narrow implementation question: can selected Stores B-F be organized under one March 2026 reporting window and one field contract without losing the original Meituan metric meanings?
+Demo 2 asks whether five anonymized store records can be structured under one March 2026 reporting window and one field contract without changing the original Meituan metric meanings.
 
-
-`comparison_scope_flag` is a row-level diagnostic-scope field. It means that a store-period row is structurally usable for the current Demo 2 diagnostic. It is not a pairwise store-matching decision.
-
-
-## Purpose
-
-This demo tests whether five anonymized instant-retail store records can be placed under the same reporting window and field contract before making any stronger operating interpretation. The purpose is to structure selected backend metrics into a same-period B-F diagnostic format and record the limits that should constrain later comparison.
+`comparison_scope_flag` records row-level readiness for this diagnostic. `comparison_limit_notes` records the interpretation limits attached to each row.
 
 ## Business Problem
 
@@ -40,7 +28,7 @@ In this project, instant-retail competition is understood through this operating
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
-Promotion, subsidy, price, SKU mix, ranking position, and fulfillment conditions are operating levers inside this chain. They should be interpreted through the store's current operating state and comparison limits, not as isolated goals.
+Promotion, subsidy, price, SKU mix, ranking position, and fulfillment conditions are operating levers inside this chain. They should be interpreted through the observed store-period context and documented comparison limits, not as isolated goals.
 
 ## Scope
 

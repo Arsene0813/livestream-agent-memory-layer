@@ -20,11 +20,11 @@ A store may use activity subsidy, pricing, ranking optimization, SKU mix, and fu
 
 
 
-## Reading Boundary
+## Evidence Scope
 
-This is a single-store month-over-month diagnostic for Store A. It supports cautious interpretation of observed metric movement inside February-April 2026.
+This demo examines Store A's February-April 2026 movement across visibility, entry, transaction, conversion, activity, and listed top-SKU signals under one canonical field contract.
 
-Cross-store comparison, store-stage classification, causal attribution, margin-aware recommendation, full SKU category-share analysis, and automated Meituan ingestion require additional evidence outside this demo.
+The interpretation stays at the observed store-period level. Questions that require cross-store evidence, causal identification, full category coverage, or financial settlement evidence use a different evidence grain.
 
 ## Source Files
 
@@ -134,11 +134,9 @@ This supports a cautious operating-signal reading: the store recovered scale, bu
 
 ## Top-SKU Evidence
 
-The top-SKU evidence is mainly care-solution-heavy.
+All nine listed monthly top-3 SKU records are tagged `care_solution` in the source table.
 
-This evidence is useful as a lightweight product-mix signal, but it is not full category-level sales-share analysis.
-
-The current demo does not manually classify all SKUs, and it does not claim full SKU-category coverage.
+These records provide product-mix context for the observed top-SKU set; they do not represent the store's full SKU or category sales structure.
 
 ## Single-Metric Attribution Guard
 

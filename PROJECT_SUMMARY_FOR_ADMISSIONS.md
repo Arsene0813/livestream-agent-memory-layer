@@ -95,19 +95,19 @@ Generated memory facts retain the entity, reporting period, evidence slot, sourc
 
 ## Evaluation Logic
 
-The evaluation layer checks declared field contracts, value lineage, entity and reporting-period scope, answer boundaries, endpoint behavior, retrieval score distributions, wording variation, and threshold sensitivity.
+The evaluation is organized around reproducibility, boundary preservation, retrieval failure modes, and grounded review.
 
-Repository pass counts refer to defined contract, fixture, lineage, and endpoint checks. Retrieval experiments are interpreted through score distributions and failure cases rather than as a general accuracy measure.
+Contract and lineage checks verify selected source-to-output values, formulas, field names, metadata, and repository paths. Endpoint and answer fixtures check whether entity, period, metric-definition, and comparison limits survive later responses. Retrieval experiments report score distributions, wording variations, and difficult cases rather than treating all checks as one accuracy measure.
 
-The current results support three narrower conclusions:
+The results support three narrow conclusions:
 
-1. selected diagnostic values can be reproduced from the committed sample data;
-2. generated findings can be traced to documented fields and source paths;
-3. retrieval and review behavior can be inspected under both supported and difficult queries.
+1. Selected diagnostic values can be reproduced from the committed sample data.
+2. Generated findings can be traced to documented fields and source paths.
+3. Retrieval and review behavior can be inspected under supported, unsupported, mismatched, and ambiguous questions.
 
 Hard-negative, entity-mismatch, period-mismatch, and ambiguous-query results remain part of the evidence because they show where semantic similarity is insufficient on its own.
 
-## Current Implemented Retail Path
+## Implemented Retail Path
 
 ### Demo 1: Store A Month-over-Month Diagnostic
 
@@ -127,7 +127,7 @@ Main file:
 
 A guardrail-sensitivity check is included because the current Demo 2 thresholds are prototype interpretation thresholds, not optimized business cutoffs. In the current B-F sample, four of five rows change when the existing SQL thresholds are raised by 5 percentage points, while the easier-to-trigger scenario produces no note changes. This is a small-sample sensitivity result, so the thresholds remain diagnostic warnings rather than optimized peer-comparison rules.
 
-A query-robustness inspection is also included to test whether supported, unsupported, hard-negative, entity or period mismatch, and ambiguous comparison queries behave consistently under small wording variations.
+A query-robustness inspection maps how supported, unsupported, hard-negative, entity or period mismatch, and ambiguous comparison queries respond to small wording variations. The mismatch and hard-negative cases are kept visible because some variants still cross the exploratory similarity threshold.
 
 ### Repeated-Window B-F Panel
 
@@ -157,11 +157,11 @@ Reviewer entry points:
 | `rac/outputs/grounded_rac_cross_store_comparability_001.md` | Demo 2 cross-store comparability boundary review. |
 | `rac/src/grounded_pipeline.py` | Deterministic grounded review pipeline. |
 
-## Next Analytical Experiment
+## Pairwise Comparability Experiment
 
-The next analytical experiment is a question-specific pairwise comparability gate. Its purpose is to evaluate whether two store-period records are suitable for one defined operating question before cross-store interpretation is attempted.
+The next testable extension is a question-specific pairwise comparability gate. It would assess whether two store-period records are suitable for one defined operating question before cross-store interpretation.
 
-Potential gate inputs include:
+Candidate inputs include:
 
 - reporting-window alignment;
 - transaction order volume and transaction amount;
@@ -173,7 +173,7 @@ Potential gate inputs include:
 - SKU structure;
 - fulfillment and stockout context.
 
-The gate design is documented in `retail_ops/COMPARABILITY_GATE_V0.md`. It remains separate from the implemented same-period diagnostic so that future comparison rules can be tested explicitly.
+The design is documented in `retail_ops/COMPARABILITY_GATE_V0.md`. It remains separate from Demo 2 so that its evidence requirements and thresholds can be tested explicitly rather than presented as an implemented comparison decision.
 
 ## Field Boundary Summary
 
@@ -189,8 +189,8 @@ These are the main fields that are easy to misread in application review. Full d
 | `transaction_amount` | Transaction amount / transaction scale in the current implemented evidence. It should not be renamed or treated as `gross_revenue` unless a future backend export provides that separate field under the dictionary definition. |
 | `top3_sku_transaction_amount_share_pct` | Lightweight top-SKU concentration evidence from selected ranking views. It is not full product-category sales share. |
 
-## Current Evidence Boundary
+## Evidence Boundary
 
-The current repository evidence covers six selected stores and selected reporting windows. It supports reproducible descriptive diagnostics, field-contract checks, lineage-aware memory facts, and answer-boundary evaluation.
+The repository evidence covers six selected stores and the documented reporting windows. It supports reproducible descriptive diagnostics, field-contract checks, lineage-aware memory facts, retrieval stress tests, and answer-boundary evaluation.
 
-Broader store ranking, promotion transfer, market-area classification, and causal attribution require additional store-period coverage and operating context beyond the current evidence.
+Claims about broader store ranking, strategy transfer, market-area classification, or causal attribution remain outside the committed evidence.

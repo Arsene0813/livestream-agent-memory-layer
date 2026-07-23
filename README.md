@@ -16,22 +16,29 @@ For standardized instant-retail products, store competition is organized around 
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
-Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on store state, local competition, activity involvement, activity intensity, product mix, and reporting-window alignment.
+Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on the observed store-period context, local competition, activity involvement, activity intensity, product mix, and reporting-window alignment.
 
 
 The project organizes multi-store operating evidence so that each decision can be traced to defined fields, reporting periods, and documented limits as the business expands.
 
-## Current Prototype Workflow
+## Evidence Workflow
 
-The current prototype follows one evidence path: selected merchant-backend metrics -> canonical field dictionary -> SQL diagnostic output -> generated retail memory facts -> boundary-preserving answer checks -> RAC grounded review.
+The repository follows one evidence path:
 
-Current source tables were manually transcribed from the merchant backend and anonymized at store level.
+```text
+selected merchant-backend metrics
+-> canonical field dictionary
+-> SQL diagnostic outputs
+-> source-bounded retail memory facts
+-> boundary and retrieval checks
+-> RAC grounded review
+```
 
-In practice, the project first preserves the documented metric definitions, then uses SQL to structure selected manually transcribed store-period records, and then converts diagnostic evidence into memory facts with source fields, observed values, source paths, and limitations. The final check is whether later answers stay inside the available evidence boundary.
+Store-level source tables are manually transcribed from the merchant backend and anonymized. Metric meanings and canonical field names are fixed before transformation.
 
-The single source of truth for retail field names and metric meanings is:
+SQL organizes the selected store-period records. Generated facts retain the entity, reporting period, source fields, observed values, source paths, evidence-trace confidence, and limitations. Later checks test whether retrieval and answers remain inside that evidence.
 
-- `retail_ops/data/DATA_DICTIONARY.md`
+`retail_ops/data/DATA_DICTIONARY.md` is the naming authority for retail fields and metric definitions.
 
 ## Current Implemented Scope
 
@@ -157,26 +164,22 @@ The first review path should stay short. These files are retained for technical 
 |---|---|---|
 | `retail_ops/TECHNICAL_APPENDIX.md` | Consolidated architecture, source-to-claim lineage, and field-usage review. | Admissions summary, field dictionary, future gate rationale, or experiment results. |
 
-## Evaluation Snapshot
+## Evaluation Questions
 
-For retail field names and metric meanings, `retail_ops/data/DATA_DICTIONARY.md` is authoritative. Generated diagnostic values and evaluation outputs are recorded under `retail_ops/outputs/` and `eval/retail_decision_support_eval_results/`.
+For retail field names and metric meanings, `retail_ops/data/DATA_DICTIONARY.md` is authoritative. Detailed procedures, case counts, outputs, and failure cases are recorded in `retail_ops/EXPERIMENT_RESULTS.md`, `retail_ops/outputs/`, and `eval/retail_decision_support_eval_results/`.
 
-The counts below summarize declared contract, fixture, lineage, and endpoint results. Retrieval stress tests are reported separately through score distributions and failure cases.
+The evaluation layer asks four questions:
 
-| Check | Scope | Current result |
-|---|---|---|
-| Livestream memory evaluation | Fact retrieval, overwrite behavior, entity separation, fallback/refusal, and non-fact filtering. | Current implemented cases pass. |
-| Store A retail retrieval evaluation | Store A retail-memory retrieval and unsupported-scope handling. | 8/8 repository-defined cases passed. |
-| Retail Demo 2 fact-contract coverage | Exact Store B-F coverage across five implemented evidence slots, required metadata, repository-backed paths, and slot-specific boundary terms. | 25/25 entity-slot contracts passed: five stores multiplied by five implemented slots. |
-| Retail Demo 2 scope-boundary evaluation | Required Demo 2 output fields, expected store IDs, row-level scope flag, and absence of future pairwise-gate schema. | 5/5 declared scope checks passed. |
-| Retail Demo 2 answer-contract fixture validation | Six manually specified contracts covering activity-cost ratio, top-SKU evidence, search-entry comparison, strategy transfer, same-period readiness, and `region_type`. | 6/6 fixtures passed. This check evaluates required and forbidden wording; it does not call the endpoint or generate answers. |
-| Retail Demo 2 endpoint-boundary evaluation | Supported Store B-F questions, unsupported all-48-store scope, ranking and final-recommendation requests, pairwise strategy transfer, and out-of-scope entities. | 7 endpoint scenarios passed. |
-| Retail data-contract and value-lineage validation | Declared canonical fields, headers, aliases, formulas, source-to-output values, generated-fact values, paths, and metadata. | Current static-contract and Demo 1/Demo 2 lineage checks pass. |
-| Retrieval threshold inspection | 29 cases over 283 file-backed retrieval documents, including supported, unsupported, hard-negative, mismatched, and ambiguous queries. | Supported cases retained expected evidence at top-5 in 8/8 cases; unsupported cases had 0/6 expected hits. The `0.5767` threshold remains an exploratory reference. |
-| Query wording-variation stress test | 131 deterministic shortened, paraphrased, typo/noise, and keyword-order variants. | Supported variants retained expected evidence and crossed the reference threshold in 34/34 cases; unsupported variants had 0/30 expected hits and 0/30 threshold crossings. Hard-negative, entity/period-mismatch, and ambiguous variants still crossed the threshold in 23/33, 13/18, and 5/16 cases. |
-| Demo 2 guardrail sensitivity | Baseline notes compared with thresholds lowered and raised by five percentage points. | Four of five store rows changed under the harder-to-trigger plus-five-point scenario; Store B remained unchanged, and the easier-to-trigger scenario changed no rows. |
+1. Can committed diagnostic values be regenerated and traced to their source fields and formulas?
+2. Do entity, period, metric-definition, and comparison boundaries remain intact through fact generation and endpoint answers?
+3. Where do retrieval thresholds and wording variations route unsupported or mismatched queries incorrectly?
+4. Does RAC keep a final judgment connected to relevant factors, source paths, competing hypotheses, and unresolved limitations?
 
-The current evaluation supports contract consistency, value traceability, and inspectable evidence routing. The threshold-crossing failure cases show why semantic similarity remains one routing signal rather than a sufficient basis for an operating conclusion.
+The committed sample passes the current data-contract, value-lineage, scope, and endpoint checks. These are repository-defined checks over declared evidence contracts, not a general model-accuracy result.
+
+The retrieval experiments retain failure cases rather than hiding them behind an aggregate score. Hard-negative, entity or period mismatch, and ambiguous variants can still cross the exploratory similarity threshold, showing why similarity is only one routing signal.
+
+The Demo 2 guardrail-sensitivity check also shows local threshold fragility: four of five rows change when the existing thresholds are raised by five percentage points, while the easier-to-trigger scenario changes no rows.
 
 ## Optional Local Run
 
@@ -215,20 +218,19 @@ python3 eval/analyze_retail_query_robustness.py
 
 These retrieval checks inspect score distribution and wording-variation behavior over the current file-backed retail evidence corpus.
 
-## Review Takeaway and Next Step
+## Repository Takeaway
 
-This repository demonstrates a staged decision-support prototype for a real Meituan multi-store operating problem. Selected merchant-backend metrics are manually transcribed into source tables under documented definitions, transformed with SQL, converted into retrieval-facing memory facts, and checked against evidence boundaries before later answers make operating claims.
+This repository presents a reproducible path from selected merchant-backend observations to evidence-bounded decision support.
 
-| Area | Current role | Next use |
-| --- | --- | --- |
-| Metric dictionary | Preserves selected Meituan backend metric meanings and canonical field names. | Keeps later SQL, memory facts, and reviewer-facing answers aligned. |
-| Demo 1 | Structures Store A February-April 2026 movement as a multi-metric operating profile. | Shows single-store temporal diagnosis. |
-| Demo 2 | Structures selected B-F March 2026 store-period records under one reporting window and one field contract. | Provides same-period diagnostic evidence before stronger pairwise comparison rules. |
-| Repeated-window panel | Adds B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04. | Prepares the evidence base for future question-specific comparability checks. |
-| Evaluation layer | Checks answer-boundary behavior, field meanings, entity scope, period scope, and comparison limits. | Keeps retrieval-backed answers tied to the current evidence path. |
-| Future comparability gate | Design contract is documented in `retail_ops/COMPARABILITY_GATE_V0.md`. | Should judge whether two store-period records can be compared for one selected operating question. |
+| Component | What it establishes |
+| --- | --- |
+| Metric dictionary | Preserves the selected Meituan backend definitions and canonical field names used by later transformations. |
+| Demo 1 | Reconstructs Store A's February-April 2026 movement as a multi-metric store-period diagnostic. |
+| Demo 2 | Structures selected B-F March 2026 records under one reporting window and records row-level interpretation limits. |
+| Repeated-window panel | Makes B-F coverage and descriptive movement across February-April 2026 inspectable. |
+| Evaluation and RAC | Tests value lineage, boundary preservation, retrieval failure modes, multi-factor evidence routing, and unresolved limitations. |
 
-The next analytical step is to test the documented question-specific pairwise comparability gate. This requires broader repeated store-period evidence and explicit tests of whether the current diagnostic guardrails remain stable across reporting windows, activity conditions, product structures, and operating contexts.
+The documented pairwise comparability gate remains a separate experiment. Its purpose is to test whether two store-period records are suitable for one defined operating question before a cross-store interpretation is made.
 
 ## Editing and Scope Guardrails
 
