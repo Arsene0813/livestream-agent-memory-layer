@@ -1057,43 +1057,36 @@ These columns are derived comparison outputs. They are not raw backend source
 fields, causal estimates, forecasts, or complete operating recommendations.
 Their current names are retained.
 
-### February and April count snapshots
+### February, March, and April store-month snapshots
 
-- `feb_activity_orders`
-- `feb_entry_users`
-- `feb_exposure_users`
-- `feb_search_entry_users`
-- `feb_search_exposure_users`
-- `feb_transaction_orders`
-- `apr_activity_orders`
-- `apr_entry_users`
-- `apr_exposure_users`
-- `apr_search_entry_users`
-- `apr_search_exposure_users`
-- `apr_transaction_orders`
+The following aliases expose the same canonical store-month metric for each
+observed month. The month prefix changes only the represented month; it does
+not change the dictionary definition, unit, denominator, or grain of the base
+field.
 
-Each `feb_` field is the corresponding February store-month value. Each
-`apr_` field is the corresponding April store-month value.
+| Canonical base field | February alias | March alias | April alias |
+|---|---|---|---|
+| `transaction_amount` | `feb_transaction_amount` | `mar_transaction_amount` | `apr_transaction_amount` |
+| `transaction_orders` | `feb_transaction_orders` | `mar_transaction_orders` | `apr_transaction_orders` |
+| `exposure_users` | `feb_exposure_users` | `mar_exposure_users` | `apr_exposure_users` |
+| `entry_users` | `feb_entry_users` | `mar_entry_users` | `apr_entry_users` |
+| `entry_conversion_rate_pct` | `feb_entry_conversion_rate_pct` | `mar_entry_conversion_rate_pct` | `apr_entry_conversion_rate_pct` |
+| `order_conversion_rate_pct` | `feb_order_conversion_rate_pct` | `mar_order_conversion_rate_pct` | `apr_order_conversion_rate_pct` |
+| `payment_conversion_rate_pct` | `feb_payment_conversion_rate_pct` | `mar_payment_conversion_rate_pct` | `apr_payment_conversion_rate_pct` |
+| `search_exposure_users` | `feb_search_exposure_users` | `mar_search_exposure_users` | `apr_search_exposure_users` |
+| `search_entry_users` | `feb_search_entry_users` | `mar_search_entry_users` | `apr_search_entry_users` |
+| `activity_orders` | `feb_activity_orders` | `mar_activity_orders` | `apr_activity_orders` |
+| `activity_cost_ratio_pct` | `feb_activity_cost_ratio_pct` | `mar_activity_cost_ratio_pct` | `apr_activity_cost_ratio_pct` |
 
-These fields preserve the unit and grain of their base metric. They do not
-represent a sum across February through April.
+Count and amount aliases preserve the unit and store-month grain of their base
+field. Percentage aliases preserve the already reported percentage value for
+that store-month; they are not recomputed funnel ratios and they are not
+percentage changes.
 
-### February and April percentage snapshots
-
-- `feb_activity_cost_ratio_pct`
-- `feb_entry_conversion_rate_pct`
-- `feb_order_conversion_rate_pct`
-- `feb_payment_conversion_rate_pct`
-- `apr_activity_cost_ratio_pct`
-- `apr_entry_conversion_rate_pct`
-- `apr_order_conversion_rate_pct`
-- `apr_payment_conversion_rate_pct`
-
-Each field is the corresponding February or April percentage metric already
-calculated for that store-month.
-
-The `_pct` suffix means the stored value is expressed in percentage units.
-These snapshot fields are not percentage changes.
+These aliases do not represent a sum or average across February through April.
+They support inspection of the observed three-month path. The separate
+`*_feb_to_apr_delta` and `*_feb_to_apr_pct` fields remain endpoint movement
+summaries.
 
 ### February-to-April absolute count deltas
 

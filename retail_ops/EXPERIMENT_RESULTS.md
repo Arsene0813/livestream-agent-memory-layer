@@ -202,11 +202,11 @@ Implemented Demo 2 evidence slots:
 |---|---|
 | Question | Do Stores B-F have complete February-April 2026 coverage, and what descriptive movement is visible in selected store-period metrics? |
 | Input | B-F store-period records across 2026-02, 2026-03, and 2026-04. |
-| Transformation | `retail_ops/sql/03_store_period_panel_coverage.sql` checks observed-month coverage and selected averages. `retail_ops/sql/04_repeated_window_panel_summary.sql` reports February-to-April levels, deltas, and percentage changes for selected metrics. |
+| Transformation | `retail_ops/sql/03_store_period_panel_coverage.sql` checks observed-month coverage and selected averages. `retail_ops/sql/04_repeated_window_panel_summary.sql` places February, March, and April values side by side for the selected metrics and retains February-to-April endpoint deltas and relative changes. |
 | Output | `retail_ops/outputs/store_period_panel_coverage_output.csv`; `retail_ops/outputs/repeated_window_panel_summary_output.csv`. |
 | Expected behavior | Confirm repeated-window coverage and report descriptive movement without converting short-window changes into store rankings, causal explanations, pairwise comparability decisions, or guardrail-stability claims. |
-| Current result | Stores B-F each contain three observed months. The summary reports February-to-April movement in selected transaction, traffic, conversion, search-entry, and activity-cost-ratio fields. |
-| Current use | Evidence preparation for future question-specific comparison rules. |
+| Current result | Stores B-F each contain three observed months. The summary exposes all February, March, and April values for 11 selected transaction, traffic, conversion, search-entry, and activity-cost-ratio metrics. The committed CSV matches a fresh execution of the summary SQL, and the February-to-April endpoint fields remain reproducible. |
+| Current use | Three-month descriptive review and evidence preparation for future question-specific comparison rules. The middle month is retained so endpoint changes are not read as the full observed path. |
 | Checked by | `python3 retail_ops/scripts/validate_store_period_panel.py`; `python3 retail_ops/scripts/validate_repeated_window_panel_summary.py` |
 | Failure mode | Treating the three-month descriptive panel as proof that March guardrail notes remain stable over time. |
 

@@ -1,5 +1,5 @@
 -- Repeated-window panel summary.
--- Purpose: produce descriptive February-to-April movement summaries for Stores B-F.
+-- Purpose: expose February, March, and April values for selected Stores B-F metrics while retaining February-to-April endpoint changes.
 -- Scope: descriptive review only; not a pairwise comparability gate, ranking model,
 -- causal test, or operating recommendation engine.
 
@@ -36,33 +36,43 @@ monthly_pivot AS (
         MAX(CASE WHEN period_month = '2026-04' THEN transaction_amount END) AS apr_transaction_amount,
 
         MAX(CASE WHEN period_month = '2026-02' THEN transaction_orders END) AS feb_transaction_orders,
+        MAX(CASE WHEN period_month = '2026-03' THEN transaction_orders END) AS mar_transaction_orders,
         MAX(CASE WHEN period_month = '2026-04' THEN transaction_orders END) AS apr_transaction_orders,
 
         MAX(CASE WHEN period_month = '2026-02' THEN exposure_users END) AS feb_exposure_users,
+        MAX(CASE WHEN period_month = '2026-03' THEN exposure_users END) AS mar_exposure_users,
         MAX(CASE WHEN period_month = '2026-04' THEN exposure_users END) AS apr_exposure_users,
 
         MAX(CASE WHEN period_month = '2026-02' THEN entry_users END) AS feb_entry_users,
+        MAX(CASE WHEN period_month = '2026-03' THEN entry_users END) AS mar_entry_users,
         MAX(CASE WHEN period_month = '2026-04' THEN entry_users END) AS apr_entry_users,
 
         MAX(CASE WHEN period_month = '2026-02' THEN entry_conversion_rate_pct END) AS feb_entry_conversion_rate_pct,
+        MAX(CASE WHEN period_month = '2026-03' THEN entry_conversion_rate_pct END) AS mar_entry_conversion_rate_pct,
         MAX(CASE WHEN period_month = '2026-04' THEN entry_conversion_rate_pct END) AS apr_entry_conversion_rate_pct,
 
         MAX(CASE WHEN period_month = '2026-02' THEN order_conversion_rate_pct END) AS feb_order_conversion_rate_pct,
+        MAX(CASE WHEN period_month = '2026-03' THEN order_conversion_rate_pct END) AS mar_order_conversion_rate_pct,
         MAX(CASE WHEN period_month = '2026-04' THEN order_conversion_rate_pct END) AS apr_order_conversion_rate_pct,
 
         MAX(CASE WHEN period_month = '2026-02' THEN payment_conversion_rate_pct END) AS feb_payment_conversion_rate_pct,
+        MAX(CASE WHEN period_month = '2026-03' THEN payment_conversion_rate_pct END) AS mar_payment_conversion_rate_pct,
         MAX(CASE WHEN period_month = '2026-04' THEN payment_conversion_rate_pct END) AS apr_payment_conversion_rate_pct,
 
         MAX(CASE WHEN period_month = '2026-02' THEN search_exposure_users END) AS feb_search_exposure_users,
+        MAX(CASE WHEN period_month = '2026-03' THEN search_exposure_users END) AS mar_search_exposure_users,
         MAX(CASE WHEN period_month = '2026-04' THEN search_exposure_users END) AS apr_search_exposure_users,
 
         MAX(CASE WHEN period_month = '2026-02' THEN search_entry_users END) AS feb_search_entry_users,
+        MAX(CASE WHEN period_month = '2026-03' THEN search_entry_users END) AS mar_search_entry_users,
         MAX(CASE WHEN period_month = '2026-04' THEN search_entry_users END) AS apr_search_entry_users,
 
         MAX(CASE WHEN period_month = '2026-02' THEN activity_orders END) AS feb_activity_orders,
+        MAX(CASE WHEN period_month = '2026-03' THEN activity_orders END) AS mar_activity_orders,
         MAX(CASE WHEN period_month = '2026-04' THEN activity_orders END) AS apr_activity_orders,
 
         MAX(CASE WHEN period_month = '2026-02' THEN activity_cost_ratio_pct END) AS feb_activity_cost_ratio_pct,
+        MAX(CASE WHEN period_month = '2026-03' THEN activity_cost_ratio_pct END) AS mar_activity_cost_ratio_pct,
         MAX(CASE WHEN period_month = '2026-04' THEN activity_cost_ratio_pct END) AS apr_activity_cost_ratio_pct
     FROM typed_panel
     GROUP BY store_id
@@ -84,6 +94,7 @@ summary AS (
         END AS transaction_amount_feb_to_apr_pct,
 
         feb_transaction_orders,
+        mar_transaction_orders,
         apr_transaction_orders,
         ROUND(apr_transaction_orders - feb_transaction_orders, 2) AS transaction_orders_feb_to_apr_delta,
         CASE
@@ -92,6 +103,7 @@ summary AS (
         END AS transaction_orders_feb_to_apr_pct,
 
         feb_exposure_users,
+        mar_exposure_users,
         apr_exposure_users,
         ROUND(apr_exposure_users - feb_exposure_users, 2) AS exposure_users_feb_to_apr_delta,
         CASE
@@ -100,6 +112,7 @@ summary AS (
         END AS exposure_users_feb_to_apr_pct,
 
         feb_entry_users,
+        mar_entry_users,
         apr_entry_users,
         ROUND(apr_entry_users - feb_entry_users, 2) AS entry_users_feb_to_apr_delta,
         CASE
@@ -108,6 +121,7 @@ summary AS (
         END AS entry_users_feb_to_apr_pct,
 
         feb_entry_conversion_rate_pct,
+        mar_entry_conversion_rate_pct,
         apr_entry_conversion_rate_pct,
         ROUND(
             apr_entry_conversion_rate_pct - feb_entry_conversion_rate_pct,
@@ -115,6 +129,7 @@ summary AS (
         ) AS entry_conversion_rate_pct_feb_to_apr_delta,
 
         feb_order_conversion_rate_pct,
+        mar_order_conversion_rate_pct,
         apr_order_conversion_rate_pct,
         ROUND(
             apr_order_conversion_rate_pct - feb_order_conversion_rate_pct,
@@ -122,6 +137,7 @@ summary AS (
         ) AS order_conversion_rate_pct_feb_to_apr_delta,
 
         feb_payment_conversion_rate_pct,
+        mar_payment_conversion_rate_pct,
         apr_payment_conversion_rate_pct,
         ROUND(
             apr_payment_conversion_rate_pct - feb_payment_conversion_rate_pct,
@@ -129,6 +145,7 @@ summary AS (
         ) AS payment_conversion_rate_pct_feb_to_apr_delta,
 
         feb_search_exposure_users,
+        mar_search_exposure_users,
         apr_search_exposure_users,
         ROUND(apr_search_exposure_users - feb_search_exposure_users, 2) AS search_exposure_users_feb_to_apr_delta,
         CASE
@@ -137,6 +154,7 @@ summary AS (
         END AS search_exposure_users_feb_to_apr_pct,
 
         feb_search_entry_users,
+        mar_search_entry_users,
         apr_search_entry_users,
         ROUND(apr_search_entry_users - feb_search_entry_users, 2) AS search_entry_users_feb_to_apr_delta,
         CASE
@@ -145,10 +163,12 @@ summary AS (
         END AS search_entry_users_feb_to_apr_pct,
 
         feb_activity_orders,
+        mar_activity_orders,
         apr_activity_orders,
         ROUND(apr_activity_orders - feb_activity_orders, 2) AS activity_orders_feb_to_apr_delta,
 
         feb_activity_cost_ratio_pct,
+        mar_activity_cost_ratio_pct,
         apr_activity_cost_ratio_pct,
         ROUND(apr_activity_cost_ratio_pct - feb_activity_cost_ratio_pct, 2) AS activity_cost_ratio_pct_feb_to_apr_delta,
 

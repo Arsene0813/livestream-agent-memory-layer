@@ -133,7 +133,7 @@ A query-robustness inspection maps how supported, unsupported, hard-negative, en
 
 The repeated-window panel adds selected Stores B-F across 2026-02, 2026-03, and 2026-04, making repeated store-period coverage visible for later question-specific comparability checks.
 
-The panel verifies three-month coverage and reports descriptive February-to-April movement for selected fields. It prepares the evidence base for future comparison rules. Testing monthly guardrail stability will require repeated top-SKU evidence and monthly recomputation of `comparison_limit_notes`.
+The panel verifies three-month coverage and places February, March, and April values side by side for selected fields. The existing February-to-April delta fields remain endpoint summaries; March is retained so the middle month is not hidden. The panel prepares the evidence base for future comparison rules. Testing monthly guardrail stability will require repeated top-SKU evidence and monthly recomputation of `comparison_limit_notes`.
 
 Main outputs:
 
