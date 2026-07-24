@@ -514,8 +514,9 @@ def main() -> None:
 
     print("[PASS] Repeated-window summary validation passed.")
     print(
-        f"[PASS] All {len(expected_aliases)} aliases for month fields "
-        "are registered in the data dictionary."
+        f"[PASS] All {len(expected_aliases)} month-specific metric aliases "
+        f"({len(MONTHS)} months × {len(METRICS)} metrics) are registered "
+        "in DATA_DICTIONARY.md."
     )
     print("[PASS] Source scope is Stores B-F across three months.")
     print("[PASS] Committed CSV matches fresh SQL execution.")

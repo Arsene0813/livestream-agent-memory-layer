@@ -1,5 +1,5 @@
 [PASS] Repeated-window summary validation passed.
-[PASS] All 33 aliases for month fields are registered in the data dictionary.
+[PASS] All 33 month-specific metric aliases (3 months × 11 metrics) are registered in DATA_DICTIONARY.md.
 [PASS] Source scope is Stores B-F across three months.
 [PASS] Committed CSV matches fresh SQL execution.
 [PASS] Monthly values match the canonical source panel.
