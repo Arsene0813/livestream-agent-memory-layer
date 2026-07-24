@@ -203,14 +203,17 @@ def execute_sql(
     return output_fields, output_rows
 
 
-def check_dictionary() -> None:
-    dictionary_text = DICTIONARY.read_text(encoding="utf-8")
-
-    expected_aliases = [
+def expected_month_aliases() -> set[str]:
+    return {
         f"{prefix}_{metric}"
         for _, prefix in MONTHS
         for metric in METRICS
-    ]
+    }
+
+
+def check_dictionary() -> None:
+    dictionary_text = DICTIONARY.read_text(encoding="utf-8")
+    expected_aliases = expected_month_aliases()
 
     missing = [
         alias
@@ -476,11 +479,7 @@ def main() -> None:
     source_index = index_source(source_fields, source_rows)
     output_index = index_output(output_rows)
 
-    expected_aliases = {
-        f"{prefix}_{metric}"
-        for _, prefix in MONTHS
-        for metric in METRICS
-    }
+    expected_aliases = expected_month_aliases()
 
     missing_aliases = sorted(
         expected_aliases - set(output_fields)
@@ -514,7 +513,10 @@ def main() -> None:
     )
 
     print("[PASS] Repeated-window summary validation passed.")
-    print("[PASS] All 33 month aliases are dictionary-registered.")
+    print(
+        f"[PASS] All {len(expected_aliases)} aliases for month fields "
+        "are registered in the data dictionary."
+    )
     print("[PASS] Source scope is Stores B-F across three months.")
     print("[PASS] Committed CSV matches fresh SQL execution.")
     print("[PASS] Monthly values match the canonical source panel.")
