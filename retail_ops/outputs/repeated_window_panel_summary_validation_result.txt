@@ -1,4 +1,7 @@
-[PASS] Repeated-window panel summary validation passed.
-[PASS] Summary output contains Stores B-F with 3 observed months each.
-[PASS] Summary uses canonical store_type values.
-[PASS] Summary remains descriptive and boundary-preserving.
+[PASS] Repeated-window summary validation passed.
+[PASS] All 33 month aliases are dictionary-registered.
+[PASS] Source scope is Stores B-F across three months.
+[PASS] Committed CSV matches fresh SQL execution.
+[PASS] Monthly values match the canonical source panel.
+[PASS] Endpoint movement formulas are reproducible.
+[PASS] Metadata and interpretation boundaries are preserved.

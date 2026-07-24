@@ -29,7 +29,6 @@ REQUIRED_KEYS = [
     "source_fields",
     "confidence",
     "source_path",
-    "supporting_source_paths",
     "lineage_path",
     "limitations",
     "is_active",
@@ -108,25 +107,79 @@ for fact in data:
     if not isinstance(fact["source_fields"], list) or not fact["source_fields"]:
         raise SystemExit(f"{pair}: source_fields must be a non-empty list")
 
-    if not isinstance(fact["supporting_source_paths"], list) or not fact["supporting_source_paths"]:
-        raise SystemExit(f"{pair}: supporting_source_paths must be a non-empty list")
+    supporting_paths = fact.get(
+        "supporting_source_paths"
+    )
 
-    if fact["source_path"] not in fact["supporting_source_paths"]:
-        raise SystemExit(f"{pair}: source_path must be included in supporting_source_paths")
+    if supporting_paths is not None:
+        if (
+            not isinstance(supporting_paths, list)
+            or not supporting_paths
+        ):
+            raise SystemExit(
+                f"{pair}: supporting_source_paths must be "
+                "a non-empty list when present"
+            )
 
-    if any(not isinstance(item, str) or not item for item in fact["supporting_source_paths"]):
-        raise SystemExit(f"{pair}: supporting_source_paths must contain non-empty strings")
+        if any(
+            not isinstance(item, str)
+            or not item
+            for item in supporting_paths
+        ):
+            raise SystemExit(
+                f"{pair}: supporting_source_paths must "
+                "contain non-empty strings"
+            )
+
+        if len(set(supporting_paths)) != len(
+            supporting_paths
+        ):
+            raise SystemExit(
+                f"{pair}: supporting_source_paths "
+                "contains duplicate paths"
+            )
+
+        if fact["source_path"] in supporting_paths:
+            raise SystemExit(
+                f"{pair}: supporting_source_paths must "
+                "not repeat source_path"
+            )
 
     if not isinstance(fact["limitations"], list) or not fact["limitations"]:
         raise SystemExit(f"{pair}: limitations must be a non-empty list")
 
-    if fact["slot"] == "visibility_entry_profile":
-        if "retail_ops/data/demo2_top_search_terms.csv" not in fact["supporting_source_paths"]:
-            raise SystemExit(f"{pair}: visibility fact must include top-search source path")
+    expected_supporting_paths = set()
 
-    if fact["slot"] == "top3_sku_product_mix_note":
-        if "retail_ops/data/demo2_top_skus_by_transaction_amount.csv" not in fact["supporting_source_paths"]:
-            raise SystemExit(f"{pair}: top-SKU fact must include top-SKU transaction amount source path")
+    if fact["slot"] == "visibility_entry_profile":
+        expected_supporting_paths = {
+            "retail_ops/data/"
+            "demo2_top_search_terms.csv"
+        }
+
+    elif (
+        fact["slot"]
+        == "top3_sku_product_mix_note"
+    ):
+        expected_supporting_paths = {
+            "retail_ops/data/"
+            "demo2_top_skus_by_transaction_amount.csv"
+        }
+
+    observed_supporting_paths = set(
+        supporting_paths or []
+    )
+
+    if (
+        observed_supporting_paths
+        != expected_supporting_paths
+    ):
+        raise SystemExit(
+            f"{pair}: supporting_source_paths mismatch; "
+            f"expected "
+            f"{sorted(expected_supporting_paths)}, "
+            f"found "
+            f"{sorted(observed_supporting_paths)}"
+        )
 
     if fact["slot"] == "transaction_conversion_profile":
         observed_fields = set(fact["observed_values"])

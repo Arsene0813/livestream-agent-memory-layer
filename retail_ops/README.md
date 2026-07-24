@@ -65,7 +65,7 @@ The retail folder follows one practical workflow:
 | `outputs/generated_retail_memory_facts.json` | Demo 1 generated memory facts. |
 | `outputs/generated_demo2_retail_memory_facts.json` | Demo 2 generated memory facts. |
 | `outputs/store_period_panel_coverage_output.csv` | Repeated-window B-F coverage output. |
-| `outputs/repeated_window_panel_summary_output.csv` | Repeated-window descriptive summary output. |
+| `outputs/repeated_window_panel_summary_output.csv` | February, March, and April values with February-to-April endpoint summaries. |
 | `outputs/retrieval_score_distribution.csv` | Retrieval score inspection output. |
 | `outputs/retrieval_query_robustness.csv` | Query robustness inspection output. |
 
@@ -79,4 +79,5 @@ The retail folder follows one practical workflow:
 | Demo 2 output | `python3 scripts/validate_demo2_comparability_output.py` |
 | Guardrail sensitivity | `python3 scripts/analyze_demo2_guardrail_sensitivity.py` |
 | Store-period panel | `python3 scripts/validate_store_period_panel.py` |
+| Repeated-window regeneration | `python3 scripts/regenerate_repeated_window_panel_summary.py` |
 | Repeated-window summary | `python3 scripts/validate_repeated_window_panel_summary.py` |

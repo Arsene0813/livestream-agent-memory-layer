@@ -292,7 +292,7 @@ They are retrieval-facing summaries grounded in canonical source fields, SQL out
 - `observed_values` may include baseline periods when the fact is comparative.
 - `source_fields` lists the canonical fields or SQL-derived diagnostics supporting the fact.
 - `source_path` records the primary generated output file supporting the memory fact.
-- `supporting_source_paths` is an optional list of additional source files when a memory fact includes evidence that does not appear directly in `source_path`, such as top search-term or top-SKU source tables.
+- `supporting_source_paths` is an optional list of additional source files when a memory fact includes evidence that does not appear directly in `source_path`, such as top search-term or top-SKU source tables. It must exclude the primary `source_path` itself and should be omitted when no additional source file is used.
 - `confidence` means evidence-trace confidence: whether the fact is directly supported by available source fields and SQL output.
 - `confidence` does not mean causal confidence, profit confidence, or cross-store transferability.
 
@@ -1057,43 +1057,36 @@ These columns are derived comparison outputs. They are not raw backend source
 fields, causal estimates, forecasts, or complete operating recommendations.
 Their current names are retained.
 
-### February and April count snapshots
+### February, March, and April store-month snapshots
 
-- `feb_activity_orders`
-- `feb_entry_users`
-- `feb_exposure_users`
-- `feb_search_entry_users`
-- `feb_search_exposure_users`
-- `feb_transaction_orders`
-- `apr_activity_orders`
-- `apr_entry_users`
-- `apr_exposure_users`
-- `apr_search_entry_users`
-- `apr_search_exposure_users`
-- `apr_transaction_orders`
+The following aliases expose the same canonical store-month metric for each
+observed month. The month prefix changes only the represented month; it does
+not change the dictionary definition, unit, denominator, or grain of the base
+field.
 
-Each `feb_` field is the corresponding February store-month value. Each
-`apr_` field is the corresponding April store-month value.
+| Canonical base field | February alias | March alias | April alias |
+|---|---|---|---|
+| `transaction_amount` | `feb_transaction_amount` | `mar_transaction_amount` | `apr_transaction_amount` |
+| `transaction_orders` | `feb_transaction_orders` | `mar_transaction_orders` | `apr_transaction_orders` |
+| `exposure_users` | `feb_exposure_users` | `mar_exposure_users` | `apr_exposure_users` |
+| `entry_users` | `feb_entry_users` | `mar_entry_users` | `apr_entry_users` |
+| `entry_conversion_rate_pct` | `feb_entry_conversion_rate_pct` | `mar_entry_conversion_rate_pct` | `apr_entry_conversion_rate_pct` |
+| `order_conversion_rate_pct` | `feb_order_conversion_rate_pct` | `mar_order_conversion_rate_pct` | `apr_order_conversion_rate_pct` |
+| `payment_conversion_rate_pct` | `feb_payment_conversion_rate_pct` | `mar_payment_conversion_rate_pct` | `apr_payment_conversion_rate_pct` |
+| `search_exposure_users` | `feb_search_exposure_users` | `mar_search_exposure_users` | `apr_search_exposure_users` |
+| `search_entry_users` | `feb_search_entry_users` | `mar_search_entry_users` | `apr_search_entry_users` |
+| `activity_orders` | `feb_activity_orders` | `mar_activity_orders` | `apr_activity_orders` |
+| `activity_cost_ratio_pct` | `feb_activity_cost_ratio_pct` | `mar_activity_cost_ratio_pct` | `apr_activity_cost_ratio_pct` |
 
-These fields preserve the unit and grain of their base metric. They do not
-represent a sum across February through April.
+Count and amount aliases preserve the unit and store-month grain of their base
+field. Percentage aliases preserve the already reported percentage value for
+that store-month; they are not recomputed funnel ratios and they are not
+percentage changes.
 
-### February and April percentage snapshots
-
-- `feb_activity_cost_ratio_pct`
-- `feb_entry_conversion_rate_pct`
-- `feb_order_conversion_rate_pct`
-- `feb_payment_conversion_rate_pct`
-- `apr_activity_cost_ratio_pct`
-- `apr_entry_conversion_rate_pct`
-- `apr_order_conversion_rate_pct`
-- `apr_payment_conversion_rate_pct`
-
-Each field is the corresponding February or April percentage metric already
-calculated for that store-month.
-
-The `_pct` suffix means the stored value is expressed in percentage units.
-These snapshot fields are not percentage changes.
+These aliases do not represent a sum or average across February through April.
+They support inspection of the observed three-month path. The separate
+`*_feb_to_apr_delta` and `*_feb_to_apr_pct` fields remain endpoint movement
+summaries.
 
 ### February-to-April absolute count deltas
 
@@ -1150,3 +1143,24 @@ and relative percent changes should be read together with the existing
 
 No repeated-window output alone proves that an activity, search term, product
 mix, subsidy, or store characteristic caused the observed change.
+
+## Generated Retail Fact Discriminator Contract
+
+The generated retail-fact metadata uses three separate discriminators:
+
+| Metadata field | Current definition | Current allowed value or role |
+|---|---|---|
+| `kind` | Top-level payload family. | `retail_memory_fact` |
+| `type` | Common generated retail-fact object category. It does not identify the diagnostic role. | `retail_metric_profile` |
+| `slot` | Diagnostic-role discriminator used for fact selection and coverage checks. | `visibility_entry_profile`, `activity_lever_profile`, `transaction_conversion_profile`, `single_metric_attribution_guard`, or `top3_sku_product_mix_note` |
+
+The `type` value remains common across the current Demo 1 and Demo 2 retail
+facts. The specific diagnostic role belongs in `slot`.
+
+A new `kind`, `type`, or `slot` value must be documented here before it is
+introduced into generated facts, validators, retrieval behavior, or
+reviewer-facing outputs.
+
+This metadata contract does not rename or redefine any Meituan backend field.
+The Chinese metric definitions and canonical business-field names elsewhere in
+this dictionary remain authoritative.

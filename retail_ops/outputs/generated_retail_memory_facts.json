@@ -158,7 +158,7 @@
   },
   {
     "kind": "retail_memory_fact",
-    "type": "retail_decision_guard",
+    "type": "retail_metric_profile",
     "entity_id": "store_A",
     "slot": "single_metric_attribution_guard",
     "period_label": "2026-02_to_2026-04",
@@ -206,7 +206,7 @@
   },
   {
     "kind": "retail_memory_fact",
-    "type": "retail_product_mix_note",
+    "type": "retail_metric_profile",
     "entity_id": "store_A",
     "slot": "top3_sku_product_mix_note",
     "period_label": "2026-02_to_2026-04",

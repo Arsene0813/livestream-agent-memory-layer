@@ -418,6 +418,9 @@ def main() -> int:
             "source_fields",
             [],
         )
+        source_path = fact.get(
+            "source_path"
+        )
         supporting_paths = fact.get(
             "supporting_source_paths",
             [],
@@ -430,14 +433,29 @@ def main() -> int:
             )
             source_fields = []
 
+        declared_paths: list[str] = []
+
+        if (
+            not isinstance(source_path, str)
+            or source_path not in csv_headers
+        ):
+            failures.append(
+                f"Fact {entity_id}/{slot} "
+                f"declares unsupported primary CSV "
+                f"path `{source_path}`"
+            )
+        else:
+            declared_paths.append(source_path)
+
+        if supporting_paths is None:
+            supporting_paths = []
+
         if not isinstance(supporting_paths, list):
             failures.append(
                 f"Fact {entity_id}/{slot} "
                 "has non-list supporting_source_paths"
             )
             supporting_paths = []
-
-        declared_headers: set[str] = set()
 
         for path in supporting_paths:
             if (
@@ -446,10 +464,26 @@ def main() -> int:
             ):
                 failures.append(
                     f"Fact {entity_id}/{slot} "
-                    f"declares unsupported CSV path `{path}`"
+                    f"declares unsupported additional "
+                    f"CSV path `{path}`"
                 )
                 continue
 
+            if path == source_path:
+                failures.append(
+                    f"Fact {entity_id}/{slot} "
+                    "repeats source_path in "
+                    "supporting_source_paths"
+                )
+                continue
+
+            declared_paths.append(path)
+
+        declared_headers: set[str] = set()
+
+        for path in dict.fromkeys(
+            declared_paths
+        ):
             declared_headers.update(
                 csv_headers[path]
             )

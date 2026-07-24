@@ -184,9 +184,11 @@ evidence_coverage_score
 | `no_missing_source_file_score` | 0.15 | Existing source paths are required for traceability. |
 | `no_fallback_score` | 0.15 | Unresolved fallback packets reduce evidence coverage. |
 
-The score summarizes local evidence-routing coverage. It is not a
-Bayesian posterior, calibrated probability, causal-confidence estimate,
-or predicted business-success rate.
+The score summarizes whether the current deterministic resolver found local
+evidence or recorded an explicit boundary for requested evidence routes. It
+does not measure evidence strength, conclusion correctness, business impact,
+decision quality, or model confidence. It is not used to select or rank the
+final judgment.
 
 Mock reports separately carry Scenario-Template Confidence. That value
 is assigned by deterministic question-type templates and is not merged

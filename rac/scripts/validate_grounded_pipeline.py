@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from rac.src.grounded_pipeline import run_grounded_pipeline, save_grounded_outputs
+from rac.src.grounded_pipeline import run_grounded_pipeline
 
 
 REQUIRED_REPORT_SECTIONS = [
@@ -97,8 +97,6 @@ def validate_promotion_grounded_rows(
 
 def main() -> None:
     cases = load_eval_cases()
-    output_dir = ROOT / "rac" / "outputs"
-
     if not cases:
         fail("No eval cases found")
 
@@ -109,8 +107,6 @@ def main() -> None:
 
     for case in cases:
         state = run_grounded_pipeline(case["question"], root=ROOT)
-        save_grounded_outputs(state, output_dir, case["case_id"])
-
         if "grounded_evidence" not in state:
             fail(f"{case['case_id']} missing grounded_evidence")
 
@@ -173,7 +169,7 @@ def main() -> None:
     print(f"[OK] Keyword matched packets: {total_keyword_matches}")
     print(f"[OK] Boundary matched packets: {total_boundary_matches}")
     print(f"[OK] Fallback packets: {total_fallbacks}")
-    print(f"[OK] Outputs written to: {output_dir}")
+    print("[OK] Validation completed without writing outputs")
 
 
 if __name__ == "__main__":

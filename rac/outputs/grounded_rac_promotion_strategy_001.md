@@ -74,12 +74,12 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 | Hypothesis | Confidence | Status | Weakness |
 |---|---:|---|---|
 | Promotion decisions should be checked against cost, conversion, SKU structure, margin, and competitor context. | 0.84 | strong | Final action still requires real margin and competitor evidence. |
-| The current evidence can support a bounded promotion review checklist, but not an automatic promotion change. | 0.68 | plausible | The mock pipeline does not calculate real cost trend. |
+| The current evidence can support a bounded promotion review checklist, but not an automatic promotion change. | 0.68 | plausible | The current grounded RAC pipeline does not calculate a real cost trend. |
 
 ## 6. Critic Findings
 
-- [high] The mock pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
-- [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.
+- [high] The grounded RAC pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
+- [medium] The grounded RAC pipeline uses deterministic local file evidence resolution rather than live backend or vector retrieval. Recommendation: State this limitation clearly.
 - [high] Promotion recommendations require margin and competitor context. Recommendation: Avoid final action recommendations without these checks.
 
 ## 7. Claim and Definition Check
@@ -115,7 +115,7 @@ Weight rationale:
 | `direct_evidence_rate` | 0.45 | Highest priority because actual local evidence should matter more than boundary-only evidence. |
 | `supported_or_boundary_rate` | 0.25 | Boundary evidence is valuable because it explicitly records missing requirements instead of hiding them. |
 | `no_missing_source_file_score` | 0.15 | Source files must exist, but this is a basic traceability check rather than evidence strength. |
-| `no_fallback_score` | 0.15 | Fallback evidence is acceptable as a warning, but should reduce confidence in coverage. |
+| `no_fallback_score` | 0.15 | Fallback packets indicate unresolved routing and reduce the current coverage score. |
 
 Formula limitation:
 
@@ -125,8 +125,8 @@ Formula limitation:
 
 Future sensitivity check:
 
-- A future version should run a small sensitivity check over alternative weight settings, similar to the Demo 2 guardrail sensitivity check.
-- If the final report interpretation changes sharply under small weight changes, the score should be treated as weight-sensitive evidence rather than a stable review signal.
+- A future sensitivity check should report how the numeric score changes under alternative weight settings.
+- Weight sensitivity indicates score instability only; it must not be used to change the report judgment.
 
 Current report inputs:
 
@@ -145,11 +145,12 @@ Interpretation boundary:
 - This is a deterministic evidence-routing coverage score for the current local report.
 - It is not a learned probability, Bayesian posterior, causal confidence score, or business-success probability.
 - Boundary-matched evidence can increase coverage because it explicitly records missing requirements instead of hiding them.
-- A high score means the report is well-covered by local evidence and explicit boundaries; it does not mean the business conclusion is certain.
+- A high score means more requested evidence routes were locally resolved or explicitly bounded under the current rules.
+- It does not measure evidence strength, conclusion correctness, decision quality, or business impact, and it is not used to select the final judgment.
 
 ## 10. What Cannot Be Concluded
 
-- The mock pipeline does not compute real margins.
+- The current grounded RAC pipeline does not compute real margins.
 - Competitor data may be incomplete.
 - One reporting window is insufficient for robust action attribution.
 
