@@ -604,11 +604,11 @@ These keys describe memory-layer structure and traceability. They are not canoni
 | `observed_values` | Structured evidence payload containing the metrics and helper values used by the fact. | Generated Demo 1 and Demo 2 retail-memory fact objects and endpoint responses. | Keep the existing key; no rename. |
 | `period_granularity` | Time-grain label for the fact period, such as month. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
 | `period_label` | Reviewer-readable identifier for the fact's reporting period. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
-| `slot` | Stable memory-layer category used to group facts by diagnostic purpose. | Generated facts, API filtering, and fact coverage evaluation. | Keep the existing key; no rename. |
+| `slot` | Diagnostic-role discriminator used to group and select retail facts by purpose. | Generated facts, API filtering, retrieval checks, and fact-coverage evaluation. | Keep the key and all five canonical values; no rename. |
 | `source_fields` | List of dictionary-bounded retail fields used to construct or support the fact. | Generated facts and retail data-contract validation. | Keep the existing key; no rename. |
 | `source_path` | Primary repository-relative file path backing the generated fact. | Generated facts, endpoint responses, and fact-contract evaluation. | Keep the existing key; no rename. |
 | `supporting_source_paths` | Additional repository-relative evidence paths used by the fact. | Generated facts and fact-contract evaluation. | Keep the existing key; no rename. |
-| `type` | Fact-type discriminator used by the memory and API payload contract. | Generated Demo 1 and Demo 2 retail-memory fact objects. | Keep the existing key; no rename. |
+| `type` | Common generated retail-fact object category. The current allowed value is `retail_metric_profile`; diagnostic roles belong in `slot`. | Generated Demo 1 and Demo 2 retail-memory facts and shared contract validation. | Keep the key; normalize the two legacy Demo 1 values to `retail_metric_profile`. |
 | `value` | Non-empty reviewer-facing fact statement; it is not a raw metric field. | Generated facts, endpoint responses, and data-contract validation. | Keep the existing key; no rename. |
 
 The canonical retail fields referenced by `source_fields` and `observed_values` remain governed by `retail_ops/data/DATA_DICTIONARY.md`.
@@ -748,3 +748,21 @@ Possible future fields such as `activity_status`, `market_area_type`, `market_ar
 ## Current Decision
 
 Current decision: no current source CSV field, SQL output field, generated memory slot, or evaluation field is renamed.
+
+## Generated-Fact Discriminator Value Review
+
+This review records the value-level change before modifying generated facts.
+It does not rename a metadata key, source field, SQL output field, business
+metric, or memory slot.
+
+| Existing field or value | Dictionary definition | Current use location | Rename decision |
+|---|---|---|---|
+| `kind = retail_memory_fact` | Top-level payload family for generated retail memory facts. | All Demo 1 and Demo 2 generated retail facts. | Keep the key and value; no rename. |
+| `type = retail_metric_profile` | Common generated retail-fact object category; diagnostic role is not encoded here. | All Demo 2 facts and three pre-existing Demo 1 facts. | Keep as the only current retail-fact `type` value. |
+| `type = retail_decision_guard` | Legacy Demo 1 value whose role is already represented by `slot = single_metric_attribution_guard`. | One Demo 1 generated fact. | Normalize the value to `retail_metric_profile`; keep the existing `slot`. |
+| `type = retail_product_mix_note` | Legacy Demo 1 value whose role is already represented by `slot = top3_sku_product_mix_note`. | One Demo 1 generated fact. | Normalize the value to `retail_metric_profile`; keep the existing `slot`. |
+| `slot` and its five canonical values | Diagnostic-role discriminator for the current retail evidence path. | Fact selection, API entity-and-slot filtering, retrieval checks, and fact-coverage evaluation. | Keep the key and all existing values; no rename. |
+
+The change affects two legacy metadata values only. It does not change fact
+statements, observed values, source fields, source paths, confidence labels,
+limitations, routing slots, or business interpretation.

@@ -86,6 +86,9 @@ REQUIRED_COMPARABILITY_GATE_PHRASES = [
     "Check whether transaction order volume and transaction amount are within a reasonable comparison band.",
 ]
 
+CANONICAL_RETAIL_FACT_KIND = "retail_memory_fact"
+CANONICAL_RETAIL_FACT_TYPE = "retail_metric_profile"
+
 CANONICAL_MEMORY_SLOTS = {
     "visibility_entry_profile",
     "activity_lever_profile",
@@ -360,6 +363,22 @@ def validate_generated_facts(
         if missing_keys:
             failures.append(
                 f"{relative_path} fact #{index} missing keys: {', '.join(missing_keys)}"
+            )
+
+        kind = fact.get("kind")
+        if kind != CANONICAL_RETAIL_FACT_KIND:
+            failures.append(
+                f"{relative_path} fact #{index} has unsupported "
+                f"kind `{kind}`; expected "
+                f"`{CANONICAL_RETAIL_FACT_KIND}`"
+            )
+
+        fact_type = fact.get("type")
+        if fact_type != CANONICAL_RETAIL_FACT_TYPE:
+            failures.append(
+                f"{relative_path} fact #{index} has unsupported "
+                f"type `{fact_type}`; expected "
+                f"`{CANONICAL_RETAIL_FACT_TYPE}`"
             )
 
         entity_id = fact.get("entity_id")
@@ -680,7 +699,7 @@ def main() -> int:
         "Checked Demo 1 source/output headers and canonical interpretation-summary slots.",
         "Checked Demo 2 source/output headers.",
         "Checked Demo 2 diagnostic-scope and limitation fields.",
-        "Checked generated Demo 1 and Demo 2 memory fact structure, evidence-trace fields, period metadata, and slot-bounded confidence.",
+        "Checked generated Demo 1 and Demo 2 memory fact kind/type discriminators, structure, evidence-trace fields, period metadata, and slot-bounded confidence.",
         "Checked dictionary-bounded source_fields against declared source and supporting CSV headers.",
         "Checked critical metric-boundary phrases in DATA_DICTIONARY.md.",
         "Checked estimated_income_proxy remains supplementary context rather than a primary comparability-gate factor.",

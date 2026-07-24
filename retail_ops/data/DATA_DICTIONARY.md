@@ -1143,3 +1143,24 @@ and relative percent changes should be read together with the existing
 
 No repeated-window output alone proves that an activity, search term, product
 mix, subsidy, or store characteristic caused the observed change.
+
+## Generated Retail Fact Discriminator Contract
+
+The generated retail-fact metadata uses three separate discriminators:
+
+| Metadata field | Current definition | Current allowed value or role |
+|---|---|---|
+| `kind` | Top-level payload family. | `retail_memory_fact` |
+| `type` | Common generated retail-fact object category. It does not identify the diagnostic role. | `retail_metric_profile` |
+| `slot` | Diagnostic-role discriminator used for fact selection and coverage checks. | `visibility_entry_profile`, `activity_lever_profile`, `transaction_conversion_profile`, `single_metric_attribution_guard`, or `top3_sku_product_mix_note` |
+
+The `type` value remains common across the current Demo 1 and Demo 2 retail
+facts. The specific diagnostic role belongs in `slot`.
+
+A new `kind`, `type`, or `slot` value must be documented here before it is
+introduced into generated facts, validators, retrieval behavior, or
+reviewer-facing outputs.
+
+This metadata contract does not rename or redefine any Meituan backend field.
+The Chinese metric definitions and canonical business-field names elsewhere in
+this dictionary remain authoritative.
