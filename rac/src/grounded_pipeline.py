@@ -395,9 +395,52 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+GROUNDED_WORDING_REPLACEMENTS = {
+    "Deterministic mock pipeline only.":
+        "Deterministic grounded RAC pipeline only.",
+    "The mock pipeline does not compute quantitative pairwise thresholds.":
+        "The current grounded RAC pipeline does not compute quantitative pairwise thresholds.",
+    "The mock pipeline does not calculate real cost trend.":
+        "The current grounded RAC pipeline does not calculate a real cost trend.",
+    "This mock pipeline does not call the existing API or vector database.":
+        "The current grounded RAC pipeline uses local file evidence and does not call the existing API or vector database.",
+    "The mock pipeline must not claim causal proof from observational evidence.":
+        "The grounded RAC pipeline must not claim causal proof from observational evidence.",
+    "The mock pipeline uses structured placeholder evidence rather than live retrieval.":
+        "The grounded RAC pipeline uses deterministic local file evidence resolution rather than live backend or vector retrieval.",
+    "No live backend retrieval in this mock pipeline.":
+        "No live backend retrieval is performed by the current grounded RAC pipeline.",
+    "The mock pipeline does not compute real margins.":
+        "The current grounded RAC pipeline does not compute real margins.",
+    "The mock pipeline does not call Qdrant, FastAPI, Ollama, or external LLMs yet.":
+        "The current grounded RAC pipeline does not call Qdrant, FastAPI, Ollama, or external LLMs.",
+}
+
+
+def normalize_grounded_state_wording(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {
+            key: normalize_grounded_state_wording(child)
+            for key, child in value.items()
+        }
+
+    if isinstance(value, list):
+        return [
+            normalize_grounded_state_wording(child)
+            for child in value
+        ]
+
+    if isinstance(value, str):
+        for source, replacement in GROUNDED_WORDING_REPLACEMENTS.items():
+            value = value.replace(source, replacement)
+
+    return value
+
+
 def run_grounded_pipeline(question: str, *, root: Path) -> dict[str, Any]:
     state = run_mock_pipeline(question)
     grounded = resolve_state_evidence(state, root=root)
+    state = normalize_grounded_state_wording(state)
 
     state["grounded_evidence"] = grounded
     state["grounded_evidence_rows"] = build_grounded_evidence_rows(grounded)

@@ -76,12 +76,12 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 | Hypothesis | Confidence | Status | Weakness |
 |---|---:|---|---|
 | Stores B-F can be staged in a same-period diagnostic table. | 0.78 | strong | Same-period staging does not equal robust comparability. |
-| Stores B-F should not be treated as directly comparable without pairwise gates. | 0.86 | strong | The mock pipeline does not compute quantitative pairwise thresholds. |
+| Stores B-F should not be treated as directly comparable without pairwise gates. | 0.86 | strong | The current grounded RAC pipeline does not compute quantitative pairwise thresholds. |
 
 ## 6. Critic Findings
 
-- [high] The mock pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
-- [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.
+- [high] The grounded RAC pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
+- [medium] The grounded RAC pipeline uses deterministic local file evidence resolution rather than live backend or vector retrieval. Recommendation: State this limitation clearly.
 - [critical] Same-period staging must not be described as a completed pairwise comparability gate. Recommendation: Separate same-period diagnostic comparison from pairwise comparability.
 
 ## 7. Claim and Definition Check

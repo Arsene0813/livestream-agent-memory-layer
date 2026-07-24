@@ -74,12 +74,12 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 | Hypothesis | Confidence | Status | Weakness |
 |---|---:|---|---|
 | Promotion decisions should be checked against cost, conversion, SKU structure, margin, and competitor context. | 0.84 | strong | Final action still requires real margin and competitor evidence. |
-| The current evidence can support a bounded promotion review checklist, but not an automatic promotion change. | 0.68 | plausible | The mock pipeline does not calculate real cost trend. |
+| The current evidence can support a bounded promotion review checklist, but not an automatic promotion change. | 0.68 | plausible | The current grounded RAC pipeline does not calculate a real cost trend. |
 
 ## 6. Critic Findings
 
-- [high] The mock pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
-- [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.
+- [high] The grounded RAC pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
+- [medium] The grounded RAC pipeline uses deterministic local file evidence resolution rather than live backend or vector retrieval. Recommendation: State this limitation clearly.
 - [high] Promotion recommendations require margin and competitor context. Recommendation: Avoid final action recommendations without these checks.
 
 ## 7. Claim and Definition Check
@@ -150,7 +150,7 @@ Interpretation boundary:
 
 ## 10. What Cannot Be Concluded
 
-- The mock pipeline does not compute real margins.
+- The current grounded RAC pipeline does not compute real margins.
 - Competitor data may be incomplete.
 - One reporting window is insufficient for robust action attribution.
 

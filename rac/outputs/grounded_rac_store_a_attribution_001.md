@@ -73,8 +73,8 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 
 ## 6. Critic Findings
 
-- [high] The mock pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
-- [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.
+- [high] The grounded RAC pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
+- [medium] The grounded RAC pipeline uses deterministic local file evidence resolution rather than live backend or vector retrieval. Recommendation: State this limitation clearly.
 
 ## 7. Claim and Definition Check
 
@@ -145,7 +145,7 @@ Interpretation boundary:
 ## 10. What Cannot Be Concluded
 
 - No randomized experiment.
-- No live backend retrieval in this mock pipeline.
+- No live backend retrieval is performed by the current grounded RAC pipeline.
 - No complete competitor-side evidence.
 
 ## 11. Review-State Update

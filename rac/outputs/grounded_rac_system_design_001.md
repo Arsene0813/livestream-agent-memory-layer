@@ -73,13 +73,13 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 
 | Hypothesis | Confidence | Status | Weakness |
 |---|---:|---|---|
-| RAC should be implemented as a reasoning layer above the existing typed memory layer. | 0.86 | strong | This mock pipeline does not call the existing API or vector database. |
+| RAC should be implemented as a reasoning layer above the existing typed memory layer. | 0.86 | strong | The current grounded RAC pipeline uses local file evidence and does not call the existing API or vector database. |
 | The first implementation should remain deterministic before adding LLM calls. | 0.80 | strong | Deterministic logic is less flexible than model-based reasoning. |
 
 ## 6. Critic Findings
 
-- [high] The mock pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
-- [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.
+- [high] The grounded RAC pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
+- [medium] The grounded RAC pipeline uses deterministic local file evidence resolution rather than live backend or vector retrieval. Recommendation: State this limitation clearly.
 
 ## 7. Claim and Definition Check
 
@@ -149,7 +149,7 @@ Interpretation boundary:
 
 ## 10. What Cannot Be Concluded
 
-- The mock pipeline does not call Qdrant, FastAPI, Ollama, or external LLMs yet.
+- The current grounded RAC pipeline does not call Qdrant, FastAPI, Ollama, or external LLMs.
 
 ## 11. Review-State Update
 
