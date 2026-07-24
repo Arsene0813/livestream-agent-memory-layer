@@ -292,7 +292,7 @@ They are retrieval-facing summaries grounded in canonical source fields, SQL out
 - `observed_values` may include baseline periods when the fact is comparative.
 - `source_fields` lists the canonical fields or SQL-derived diagnostics supporting the fact.
 - `source_path` records the primary generated output file supporting the memory fact.
-- `supporting_source_paths` is an optional list of additional source files when a memory fact includes evidence that does not appear directly in `source_path`, such as top search-term or top-SKU source tables.
+- `supporting_source_paths` is an optional list of additional source files when a memory fact includes evidence that does not appear directly in `source_path`, such as top search-term or top-SKU source tables. It must exclude the primary `source_path` itself and should be omitted when no additional source file is used.
 - `confidence` means evidence-trace confidence: whether the fact is directly supported by available source fields and SQL output.
 - `confidence` does not mean causal confidence, profit confidence, or cross-store transferability.
 

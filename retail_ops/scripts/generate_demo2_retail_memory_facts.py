@@ -63,7 +63,7 @@ def make_fact(
     source_path: str = SOURCE_PATH,
     supporting_source_paths: list[str] | None = None,
 ) -> dict[str, Any]:
-    return {
+    fact: dict[str, Any] = {
         "kind": "retail_memory_fact",
         "type": "retail_metric_profile",
         "entity_id": entity_id,
@@ -77,12 +77,27 @@ def make_fact(
         "source_fields": source_fields,
         "confidence": confidence,
         "source_path": source_path,
-        "supporting_source_paths": supporting_source_paths or [source_path],
         "lineage_path": LINEAGE_PATH,
         "limitations": limitations,
         "is_active": True,
         "period_granularity": "month",
     }
+
+    if supporting_source_paths:
+        additional_paths = [
+            path
+            for path in dict.fromkeys(
+                supporting_source_paths
+            )
+            if path != source_path
+        ]
+
+        if additional_paths:
+            fact["supporting_source_paths"] = (
+                additional_paths
+            )
+
+    return fact
 
 
 comparability_rows = read_csv(COMPARABILITY_OUTPUT)
@@ -174,7 +189,7 @@ for row in comparability_rows:
             ],
             confidence="high",
             limitations=common_limitations,
-            supporting_source_paths=[SOURCE_PATH, TOP_SEARCH_TERMS_SOURCE_PATH],
+            supporting_source_paths=[TOP_SEARCH_TERMS_SOURCE_PATH],
         )
     )
 
@@ -300,7 +315,7 @@ for row in comparability_rows:
             ],
             confidence="medium",
             source_path=SOURCE_PATH,
-            supporting_source_paths=[SOURCE_PATH, TOP_SKUS_BY_AMOUNT_SOURCE_PATH],
+            supporting_source_paths=[TOP_SKUS_BY_AMOUNT_SOURCE_PATH],
             limitations=[
                 "top-3 SKU evidence only",
                 "not full SKU category-share analysis",
