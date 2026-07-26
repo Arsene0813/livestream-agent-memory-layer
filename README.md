@@ -171,7 +171,7 @@ The committed sample passes the current data-contract, value-lineage, scope, and
 
 The retrieval experiments retain failure cases rather than hiding them behind an aggregate score. Hard-negative, entity or period mismatch, and ambiguous variants can still cross the exploratory similarity threshold, showing why similarity is only one routing signal.
 
-The Demo 2 guardrail-sensitivity check also shows local threshold fragility: four of five rows change when the existing thresholds are raised by five percentage points, while the easier-to-trigger scenario changes no rows.
+The Demo 2 guardrail-sensitivity check shows one-sided sensitivity in the current five-row fixture: four of five rows change when the existing thresholds are raised by five percentage points, while the easier-to-trigger scenario changes no rows.
 
 ## Optional Local Run
 
