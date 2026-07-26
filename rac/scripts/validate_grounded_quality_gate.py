@@ -55,12 +55,12 @@ MIN_SNIPPET_CHARS = 8
 CROSS_STORE_REQUIRED_QUANTITATIVE_SOURCES = {
     "order_volume": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "transaction_amount": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-    "sku_structure": "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
+    "sku_structure": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
+    "repeated_reporting_windows": "retail_ops/outputs/repeated_window_panel_summary_output.csv"
 }
 
 CROSS_STORE_REQUIRED_BOUNDARY_SOURCES = {
     "competition": "retail_ops/COMPARABILITY_GATE_V0.md",
-    "repeated_reporting_windows": "retail_ops/COMPARABILITY_GATE_V0.md"
 }
 
 
@@ -387,7 +387,7 @@ def write_markdown_summary(results: list[dict[str, Any]], output_path: Path) -> 
     lines.append("- transaction_amount -> retail_ops/outputs/demo2_cross_store_comparability_output.csv")
     lines.append("- sku_structure -> retail_ops/outputs/demo2_cross_store_comparability_output.csv")
     lines.append("- competition -> retail_ops/COMPARABILITY_GATE_V0.md as boundary_evidence")
-    lines.append("- repeated_reporting_windows -> retail_ops/COMPARABILITY_GATE_V0.md as boundary_evidence")
+    lines.append("- repeated_reporting_windows -> retail_ops/outputs/repeated_window_panel_summary_output.csv as quantitative_evidence")
     lines.append("")
     lines.append("## Report-Contract Issues")
     lines.append("")

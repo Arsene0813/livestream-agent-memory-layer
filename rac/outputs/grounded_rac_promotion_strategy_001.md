@@ -57,14 +57,14 @@ The `Source Lines` column is an audit pointer to the local source-file line rang
 
 | Factor | Source | Evidence Type | Status | Source Lines | Evidence Fields |
 |---|---|---|---|---|---|
-| activity_orders | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 135-137 | activity_orders |
-| activity_cost | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 136-138 | activity_cost |
-| merchant_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 136-138 | merchant_subsidy |
-| platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 136-138 | platform_subsidy |
-| order_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 77-79 | order conversion |
-| payment_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 510-512 | 支付人数 |
+| activity_orders | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 138-140 | activity_orders |
+| activity_cost | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 139-141 | activity_cost |
+| merchant_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 139-141 | merchant_subsidy |
+| platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 139-141 | platform_subsidy |
+| order_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 80-82 | order conversion |
+| payment_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 520-522 | 支付人数 |
 | sku_margin_structure | retail_ops/data/DATA_DICTIONARY.md | boundary_evidence | boundary_matched | 13-15 | sku |
-| competitor_context | retail_ops/data/DATA_DICTIONARY.md | boundary_evidence | boundary_matched | 75-77 | competition |
+| competitor_context | retail_ops/data/DATA_DICTIONARY.md | boundary_evidence | boundary_matched | 78-80 | competition |
 
 
 ## 5. Competing Hypotheses

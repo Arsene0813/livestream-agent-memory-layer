@@ -55,7 +55,7 @@ The `Source Lines` column is an audit pointer to the local source-file line rang
 | Factor | Source | Evidence Type | Status | Source Lines | Evidence Fields |
 |---|---|---|---|---|---|
 | search_exposure | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 82-84 | search |
-| entry_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 49-51 | entry |
+| entry_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 24-26 | entry |
 | order_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 74-76 | order conversion |
 | promotion_intensity | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 18-20 | activity |
 | transaction_orders | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 74-76 | transaction orders |

@@ -107,11 +107,12 @@ RAC distinguishes three evidence-routing outcomes.
 | Boundary evidence | A local source explicitly records that a required field, gate, or condition is not implemented or not available. | The report records the missing requirement instead of inventing supporting evidence. |
 | Fallback evidence | No sufficiently specific direct or boundary source was resolved. | Evidence coverage is reduced and the limitation remains visible. |
 
-For the cross-store comparability case, requirements such as competition
-context and repeated reporting windows can be routed to
-`retail_ops/COMPARABILITY_GATE_V0.md` as boundary evidence. This allows
-the report to distinguish a documented missing requirement from a
-missing source-resolution result.
+For the cross-store comparability case, the implemented February-April
+2026 B-F panel provides direct repeated-window evidence for descriptive
+review. Competition context and the unfinished pairwise gate remain
+boundary evidence in `retail_ops/COMPARABILITY_GATE_V0.md`. This keeps
+the available multi-period evidence separate from the stronger evidence
+still required for stable pairwise comparability.
 
 ## Factor Weight Generation
 

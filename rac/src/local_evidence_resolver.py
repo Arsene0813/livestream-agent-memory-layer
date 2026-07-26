@@ -346,6 +346,18 @@ COMPARABILITY_SOURCE_OVERRIDES: dict[str, list[dict[str, str]]] = {
     ],
     "repeated_reporting_windows": [
         {
+            "source_path": "retail_ops/outputs/repeated_window_panel_summary_output.csv",
+            "grounding_role": "quantitative_evidence"
+        },
+        {
+            "source_path": "retail_ops/outputs/store_period_panel_coverage_output.csv",
+            "grounding_role": "coverage_evidence"
+        },
+        {
+            "source_path": "retail_ops/data/store_period_panel_metrics.csv",
+            "grounding_role": "source_table_evidence"
+        },
+        {
             "source_path": "retail_ops/COMPARABILITY_GATE_V0.md",
             "grounding_role": "boundary_evidence"
         }

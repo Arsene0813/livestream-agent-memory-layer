@@ -69,7 +69,7 @@ FACTOR_LIBRARY: dict[str, list[dict[str, Any]]] = {
         {"factor_id": "region_context", "name": "Region context", "description": "Region and market context affect demand.", "evidence_needed": ["region type", "business district context"]},
         {"factor_id": "competition", "name": "Competition", "description": "Competitor behavior can independently affect performance.", "evidence_needed": ["competitor price", "competitor order trend"]},
         {"factor_id": "sku_structure", "name": "SKU structure", "description": "SKU mix can change margins and conversion.", "evidence_needed": ["top SKUs", "SKU transaction amount"]},
-        {"factor_id": "repeated_reporting_windows", "name": "Repeated reporting windows", "description": "Repeated windows are needed before treating patterns as stable.", "evidence_needed": ["multi-period data"]}
+        {"factor_id": "repeated_reporting_windows", "name": "Repeated reporting windows", "description": "Three monthly B-F reporting windows are available for descriptive review, but they do not establish stable pairwise comparability.", "evidence_needed": ["multi-period data"]}
     ],
     "strategic_recommendation": [
         {"factor_id": "activity_orders", "name": "Activity orders", "description": "Shows how much order volume is tied to promotions.", "evidence_needed": ["activity order count"]},
@@ -459,7 +459,7 @@ def build_belief_update(question_type: str) -> dict[str, Any]:
             "confidence": 0.86,
             "status": "active",
             "validity_conditions": ["Demo 2 March 2026 B-F context."],
-            "limitations": ["Pairwise comparability gate is future work.", "Region type remains weak context.", "Repeated reporting windows are still needed."]
+            "limitations": ["Pairwise comparability gate is future work.", "Region type remains weak context.", "Three monthly B-F reporting windows are available; they do not by themselves establish stable pairwise comparability."]
         }
 
     if question_type == "strategic_recommendation":

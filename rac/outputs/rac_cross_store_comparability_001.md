@@ -79,7 +79,7 @@ How this value is assigned:
 
 - Pairwise comparability gate is future work.
 - Region type remains weak context.
-- Repeated reporting windows are still needed.
+- Three monthly B-F reporting windows are available; they do not by themselves establish stable pairwise comparability.
 
 ## 10. Review-State Update
 

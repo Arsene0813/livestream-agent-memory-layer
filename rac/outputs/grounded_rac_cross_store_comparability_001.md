@@ -49,8 +49,8 @@ Weighting limitations:
 ## 4. Local Evidence Grounding
 
 - Total evidence packets: 9
-- Keyword matched packets: 7
-- Boundary matched packets: 2
+- Keyword matched packets: 8
+- Boundary matched packets: 1
 - Fallback packets: 0
 - Missing source files: 0
 
@@ -63,10 +63,10 @@ The `Source Lines` column is an audit pointer to the local source-file line rang
 | order_volume | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | transaction_orders |
 | transaction_amount | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | transaction_amount |
 | activity_intensity | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | activity_orders, activity_order_share_pct, activity_cost, activity_cost_ratio_pct |
-| region_context | retail_ops/data/DATA_DICTIONARY.md | definition_evidence | keyword_matched | 69-71 | region_type |
+| region_context | retail_ops/data/DATA_DICTIONARY.md | definition_evidence | keyword_matched | 72-74 | region_type |
 | competition | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | 44-46 | future comparability-gate competition context |
 | sku_structure | retail_ops/outputs/demo2_cross_store_comparability_output.csv | product_mix_evidence | keyword_matched | 1-2 | top3_sku_transaction_amount, top3_sku_transaction_amount_share_pct, SKU source tables |
-| repeated_reporting_windows | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | 1-2 | store_period_panel_metrics, repeated reporting windows |
+| repeated_reporting_windows | retail_ops/outputs/repeated_window_panel_summary_output.csv | quantitative_evidence | keyword_matched | 1-2 | store_period_panel_metrics, repeated reporting windows |
 
 
 ## 5. Competing Hypotheses
@@ -98,7 +98,7 @@ The judgment remains conservative because local snippet matching grounds the evi
 
 ## 9. Evidence-Coverage Score
 
-0.90
+0.95
 
 How this score is calculated:
 
@@ -133,11 +133,11 @@ Future sensitivity check:
 Current report inputs:
 
 - total_packets = 9
-- keyword_matched_packets = 7
-- boundary_matched_packets = 2
+- keyword_matched_packets = 8
+- boundary_matched_packets = 1
 - fallback_packets = 0
 - missing_source_files = 0
-- direct_evidence_rate = keyword_matched_packets / total_packets = 0.78
+- direct_evidence_rate = keyword_matched_packets / total_packets = 0.89
 - supported_or_boundary_rate = (keyword_matched_packets + boundary_matched_packets) / total_packets = 1.00
 - no_missing_source_file_score = 1.00
 - no_fallback_score = 1.00
@@ -154,7 +154,7 @@ Interpretation boundary:
 
 - Pairwise comparability gate is future work.
 - Region type remains weak context.
-- Repeated reporting windows are still needed.
+- Three monthly B-F reporting windows are available; they do not by themselves establish stable pairwise comparability.
 
 ## 11. Review-State Update
 
