@@ -8,7 +8,7 @@ The current implemented retail scope includes:
 2. Demo 2: Stores B-F same-period diagnostic structure.
 3. Repeated-window panel: Stores B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04.
 
-The repeated-window panel prepares coverage and stability evidence; it is not a completed pairwise comparability gate. This document specifies the next question-specific pairwise decision layer.
+The repeated-window panel prepares coverage and repeated-window descriptive evidence; it is not a completed pairwise comparability gate. This document specifies the next question-specific pairwise decision layer.
 
 ## Why This Gate Matters
 

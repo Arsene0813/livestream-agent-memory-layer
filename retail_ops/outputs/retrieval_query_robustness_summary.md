@@ -13,7 +13,8 @@ It is a diagnostic evaluation for the current file-backed retail decision-suppor
 - Demo 2 memory facts: `retail_ops/outputs/generated_demo2_retail_memory_facts.json`
 - Dictionary context: `retail_ops/data/DATA_DICTIONARY.md`
 - Demo 2 source notes: `retail_ops/data/demo2_source_notes.md`
-- Corpus documents: 286
+- Retrieval units: 286
+- Unit definition: one generated memory fact or one chunked field-contract/source-note segment; this is not a store count or a count of independent business observations.
 - Corpus SHA-256: `39f39e7f10c35c9c849bbc577020dedbf3bd08f6bf24e6f8816c264bcefdc6e6`
 - Corpus builder: `eval/retail_retrieval_corpus.py::load_retail_retrieval_documents`
 - Execution commit: `be35bfb8e47ed940f655e31a39c5c6feda6cc37d`
@@ -34,7 +35,7 @@ Each original query is evaluated with deterministic wording variants:
 
 ## Expected-Hit Contract
 
-For each non-negative case, `expected_hit_at_5` is true only when at least one top-5 document satisfies all applicable `entity_id`, slot, period, and expected-term constraints.
+For each non-negative case, `expected_hit_at_5` is true only when at least one top-5 retrieval unit satisfies all applicable `entity_id`, slot, period, and expected-term constraints.
 
 `negative_unsupported` cases are always recorded without an expected evidence hit. Semantic similarity or a single matching keyword is not sufficient.
 

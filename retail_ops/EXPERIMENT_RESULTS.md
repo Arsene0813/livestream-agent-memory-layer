@@ -100,13 +100,13 @@ evidence produced by the earlier stages.
 
 | Item | Content |
 |---|---|
-| Question | Are the current Demo 2 `comparison_limit_notes` stable under small threshold changes? |
+| Question | How do the current Demo 2 `comparison_limit_notes` change when the implemented thresholds are shifted by 5 percentage points in either direction? |
 | Input | `retail_ops/outputs/demo2_cross_store_comparability_output.csv`. |
 | Transformation | `retail_ops/scripts/analyze_demo2_guardrail_sensitivity.py` reads the implemented thresholds from the current SQL, reproduces every current-row `comparison_limit_notes` value, then lowers and raises those thresholds by 5 percentage points. |
 | Output | `retail_ops/outputs/demo2_guardrail_sensitivity_summary.csv`; `retail_ops/outputs/demo2_guardrail_sensitivity_result.txt`. |
 | Expected behavior | The check should not optimize thresholds or turn them into peer-selection rules. It should only show whether the current threshold-based guardrail notes are sensitive to small threshold shifts. |
 | Current result | Completed current guardrail sensitivity inspection. Baseline reproduction passes for all five rows. Four rows (C, D, E, and F) change under the harder-to-trigger +5 percentage-point scenario; the easier-to-trigger -5 percentage-point scenario produces no note changes, and Store B remains unchanged. |
-| Interpretation | The current thresholds should be treated as diagnostic warnings, not stable peer-comparison rules. |
+| Interpretation | In this five-row fixture, the notes show one-sided sensitivity to stricter thresholds. The thresholds remain prototype diagnostic warnings rather than validated peer-comparison rules. |
 | Checked by | `python3 retail_ops/scripts/analyze_demo2_guardrail_sensitivity.py` |
 
 ## Experiment 3: Demo 2 Memory-Fact Generation

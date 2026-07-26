@@ -404,7 +404,7 @@ def load_retail_retrieval_documents(
 
     if not docs:
         raise ValueError(
-            "No retrieval documents loaded"
+            "No retrieval units loaded"
         )
 
     return docs

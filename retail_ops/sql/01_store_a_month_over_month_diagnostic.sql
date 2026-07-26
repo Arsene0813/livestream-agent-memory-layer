@@ -131,7 +131,10 @@ with_previous AS (
         LAG(order_conversion_rate_pct) OVER (
             PARTITION BY store_id
             ORDER BY period_start
-        ) AS prev_order_conversion_rate_pct
+        ) AS prev_order_conversion_rate_pct,
+        MAX(period_start) OVER (
+            PARTITION BY store_id
+        ) AS latest_period_start
     FROM store_monthly_metrics
 ),
 
@@ -234,7 +237,8 @@ final_output AS (
         search_average_rank - prev_search_average_rank AS search_average_rank_change,
 
         CASE
-            WHEN transaction_amount > prev_transaction_amount
+            WHEN period_start = latest_period_start
+             AND transaction_amount > prev_transaction_amount
              AND transaction_orders > prev_transaction_orders
              AND order_conversion_rate_pct < prev_order_conversion_rate_pct
              AND average_order_value < prev_average_order_value
