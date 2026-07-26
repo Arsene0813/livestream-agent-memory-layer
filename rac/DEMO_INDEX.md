@@ -80,8 +80,8 @@ Expected quality-gate result:
   [OK] RAC report-contract quality gate passed
   [OK] Cases checked: 4
   [OK] Total grounded packets: 30
-  [OK] Keyword matched packets: 26
-  [OK] Boundary matched packets: 4
+  [OK] Keyword matched packets: 27
+  [OK] Boundary matched packets: 3
   [OK] Fallback packets: 0
   [OK] Missing source files: 0
 
@@ -101,8 +101,8 @@ The cross-store case uses factor-specific source requirements for quantitative, 
 Current result for rac_cross_store_comparability_001:
 
 - Total evidence packets: 9
-- Keyword matched packets: 7
-- Boundary matched packets: 2
+- Keyword matched packets: 8
+- Boundary matched packets: 1
 - Fallback packets: 0
 - Missing source files: 0
 
@@ -112,9 +112,8 @@ Required source routing:
 |---|---|---|
 | order_volume | `retail_ops/outputs/demo2_cross_store_comparability_output.csv` | quantitative_evidence |
 | transaction_amount | `retail_ops/outputs/demo2_cross_store_comparability_output.csv` | quantitative_evidence |
-| current_b_f_repeated_window_panel | `retail_ops/outputs/store_period_panel_coverage_output.csv` and `retail_ops/outputs/repeated_window_panel_summary_output.csv` | descriptive_evidence |
+| repeated_reporting_windows | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | quantitative_evidence |
 | competition | `retail_ops/COMPARABILITY_GATE_V0.md` | boundary_evidence |
-| broader_repeated_window_stability | `retail_ops/COMPARABILITY_GATE_V0.md` | boundary_evidence |
 
 The implemented scope is a factor-routing audit. Current B-F repeated-window panel evidence covers 2026-02 to 2026-04. Broader stability across additional stores, months, activity conditions, and market contexts remains required for a future pairwise comparability gate.
 
