@@ -10,7 +10,8 @@ The purpose is to inspect retrieval-threshold behavior. It is not a production-l
 
 ## Corpus
 
-- Retrieval documents loaded: 286
+- Retrieval units loaded: 286
+- Unit definition: one generated memory fact or one chunked field-contract/source-note segment; this is not a store count or a count of independent business observations.
 - Corpus SHA-256: `39f39e7f10c35c9c849bbc577020dedbf3bd08f6bf24e6f8816c264bcefdc6e6`
 - Corpus builder: `eval/retail_retrieval_corpus.py::load_retail_retrieval_documents`
 - Execution commit: `be35bfb8e47ed940f655e31a39c5c6feda6cc37d`

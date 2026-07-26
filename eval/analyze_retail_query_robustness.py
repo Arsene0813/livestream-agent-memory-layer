@@ -292,7 +292,7 @@ def main() -> None:
 
     docs = build_corpus()
     if not docs:
-        raise SystemExit("[FAIL] No corpus documents found.")
+        raise SystemExit("[FAIL] No retrieval units found in the corpus.")
 
     provenance = corpus_provenance(
         docs,
@@ -306,13 +306,13 @@ def main() -> None:
     )
 
     print(f"[INFO] Loaded cases: {len(cases)}")
-    print(f"[INFO] Built corpus docs: {len(docs)}")
+    print(f"[INFO] Built retrieval units: {len(docs)}")
     print(f"[INFO] Embedding corpus with model={args.model}")
 
     doc_embeddings = []
     for i, doc in enumerate(docs, start=1):
         if i % 25 == 0 or i == 1 or i == len(docs):
-            print(f"[INFO] Embedding doc {i}/{len(docs)}")
+            print(f"[INFO] Embedding unit {i}/{len(docs)}")
         emb = ollama_embed(doc["text"], args.model, args.ollama_url)
         doc_embeddings.append(emb)
 
@@ -523,7 +523,9 @@ It is a diagnostic evaluation for the current file-backed retail decision-suppor
 - Demo 2 memory facts: `retail_ops/outputs/generated_demo2_retail_memory_facts.json`
 - Dictionary context: `retail_ops/data/DATA_DICTIONARY.md`
 - Demo 2 source notes: `retail_ops/data/demo2_source_notes.md`
-- Corpus documents: {provenance["corpus_document_count"]}
+- Retrieval units: {provenance["corpus_document_count"]}
+
+- Unit definition: one generated memory fact or one chunked field-contract/source-note segment; this is not a store count or a count of independent business observations.
 - Corpus SHA-256: `{provenance["corpus_sha256"]}`
 - Corpus builder: `{provenance["corpus_builder"]}`
 - Execution commit: `{provenance["generated_from_commit"]}`
@@ -544,7 +546,7 @@ Each original query is evaluated with deterministic wording variants:
 
 ## Expected-Hit Contract
 
-For each non-negative case, `expected_hit_at_5` is true only when at least one top-5 document satisfies all applicable `entity_id`, slot, period, and expected-term constraints.
+For each non-negative case, `expected_hit_at_5` is true only when at least one top-5 retrieval unit satisfies all applicable `entity_id`, slot, period, and expected-term constraints.
 
 `negative_unsupported` cases are always recorded without an expected evidence hit. Semantic similarity or a single matching keyword is not sufficient.
 

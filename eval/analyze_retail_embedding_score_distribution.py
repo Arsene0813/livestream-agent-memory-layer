@@ -174,9 +174,9 @@ def main() -> int:
     provenance = corpus_provenance(docs, EMBED_MODEL)
 
     print(f"Loaded {len(cases)} retrieval threshold cases.")
-    print(f"Loaded {len(docs)} retrieval documents.")
+    print(f"Loaded {len(docs)} retrieval units.")
     print(f"Embedding model: {EMBED_MODEL}")
-    print("Embedding documents...")
+    print("Embedding retrieval units...")
 
     doc_embeddings = [embed(doc["text"]) for doc in docs]
 
@@ -277,7 +277,14 @@ def main() -> int:
         "",
         "## Corpus",
         "",
-        f"- Retrieval documents loaded: {provenance['corpus_document_count']}",
+        f"- Retrieval units loaded: {provenance['corpus_document_count']}",
+        (
+            "- Unit definition: one generated "
+            "memory fact or one chunked field-contract/"
+            "source-note segment; this is not a store "
+            "count or a count of independent business "
+            "observations."
+        ),
         f"- Corpus SHA-256: `{provenance['corpus_sha256']}`",
         f"- Corpus builder: `{provenance['corpus_builder']}`",
         f"- Execution commit: `{provenance['generated_from_commit']}`",
