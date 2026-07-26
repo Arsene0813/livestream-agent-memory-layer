@@ -557,6 +557,7 @@ def main() -> int:
 
     output_checks = 0
     previous: dict[str, str] | None = None
+    latest_period = PERIODS[-1]
 
     for period in PERIODS:
         key = (STORE, period)
@@ -694,7 +695,10 @@ def main() -> int:
 
         tradeoff = False
 
-        if previous is not None:
+        if (
+            period == latest_period
+            and previous is not None
+        ):
             tradeoff = (
                 float(
                     output_row[
