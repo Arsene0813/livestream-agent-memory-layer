@@ -42,6 +42,18 @@ except ModuleNotFoundError:
         period_term_match,
     )
 
+try:
+    from check_retrieval_result_applicability import (
+        THRESHOLD_EXPERIMENT_SCOPE_PATHS,
+        ensure_scope_clean,
+        scope_sha256,
+    )
+except ModuleNotFoundError:
+    from eval.check_retrieval_result_applicability import (
+        THRESHOLD_EXPERIMENT_SCOPE_PATHS,
+        ensure_scope_clean,
+        scope_sha256,
+    )
 
 
 ROOT = Path(".")
@@ -164,6 +176,11 @@ def make_plot(rows: list[dict[str, Any]]) -> None:
 
 
 def main() -> int:
+    ensure_scope_clean(
+        THRESHOLD_EXPERIMENT_SCOPE_PATHS,
+        "retrieval threshold inspection",
+    )
+
     raw_cases = load_json(CASES_PATH)
     cases = validate_retrieval_cases(
         raw_cases,
@@ -172,6 +189,9 @@ def main() -> int:
 
     docs = load_documents()
     provenance = corpus_provenance(docs, EMBED_MODEL)
+    provenance["experiment_scope_sha256"] = scope_sha256(
+        THRESHOLD_EXPERIMENT_SCOPE_PATHS
+    )
 
     print(f"Loaded {len(cases)} retrieval threshold cases.")
     print(f"Loaded {len(docs)} retrieval units.")
@@ -287,12 +307,18 @@ def main() -> int:
         ),
         f"- Corpus SHA-256: `{provenance['corpus_sha256']}`",
         f"- Corpus builder: `{provenance['corpus_builder']}`",
-        f"- Execution commit: `{provenance['generated_from_commit']}`",
+        f"- Run commit: `{provenance['generated_from_commit']}`",
         (
-            "- Provenance note: the corpus SHA-256 "
-            "identifies the evidence snapshot; the "
-            "execution commit identifies the code "
-            "state used for the run."
+            "- Experiment scope SHA-256: "
+            f"`{provenance['experiment_scope_sha256']}`"
+        ),
+        (
+            "- Applicability note: the scope hash identifies the "
+            "clean experiment-relevant code and input snapshot. "
+            "The run commit is retained for navigation. Later "
+            "unrelated commits do not invalidate the result. Run "
+            "`python3 eval/check_retrieval_result_applicability.py` "
+            "to check the current scope."
         ),
         f"- Retrieval threshold cases: {len(cases)}",
         f"- Embedding model: `{provenance['embedding_model']}` via local Ollama",

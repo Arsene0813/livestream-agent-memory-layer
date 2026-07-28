@@ -50,6 +50,20 @@ try:
 except ModuleNotFoundError:
     from eval.retrieval_contract_match import expected_hit_at_k
 
+try:
+    from check_retrieval_result_applicability import (
+        ROBUSTNESS_EXPERIMENT_SCOPE_PATHS,
+        ensure_scope_clean,
+        parse_reference_threshold,
+        scope_sha256,
+    )
+except ModuleNotFoundError:
+    from eval.check_retrieval_result_applicability import (
+        ROBUSTNESS_EXPERIMENT_SCOPE_PATHS,
+        ensure_scope_clean,
+        parse_reference_threshold,
+        scope_sha256,
+    )
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -58,7 +72,6 @@ DEFAULT_CASES_PATH = ROOT / "eval" / "retrieval_threshold_cases.json"
 DEFAULT_OUTPUT_DIR = ROOT / "retail_ops" / "outputs"
 
 
-REFERENCE_THRESHOLD_DEFAULT = 0.5767
 REFERENCE_THRESHOLD_SOURCE_DEFAULT = (
     "retail_ops/outputs/"
     "retrieval_threshold_summary.md"
@@ -67,6 +80,15 @@ REFERENCE_THRESHOLD_SOURCE_DEFAULT = (
 
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def resolve_repo_path(path_value: str | Path) -> Path:
+    path = Path(path_value)
+
+    if path.is_absolute():
+        return path
+
+    return ROOT / path
 
 
 def extract_cases(
@@ -268,7 +290,16 @@ def main() -> None:
     parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
     parser.add_argument("--model", default="bge-m3")
     parser.add_argument("--ollama-url", default="http://127.0.0.1:11434")
-    parser.add_argument("--reference-threshold", type=float, default=REFERENCE_THRESHOLD_DEFAULT)
+    parser.add_argument(
+        "--reference-threshold",
+        type=float,
+        default=None,
+        help=(
+            "Optional explicit override. By default, read the "
+            "exploratory reference value from "
+            "--reference-threshold-source."
+        ),
+    )
     parser.add_argument(
         "--reference-threshold-source",
         default=REFERENCE_THRESHOLD_SOURCE_DEFAULT,
@@ -276,8 +307,37 @@ def main() -> None:
     parser.add_argument("--top-k", type=int, default=5)
     args = parser.parse_args()
 
-    cases_path = Path(args.cases)
-    output_dir = Path(args.output_dir)
+    cases_path = resolve_repo_path(args.cases)
+    output_dir = resolve_repo_path(args.output_dir)
+
+    reference_threshold_source_path = resolve_repo_path(
+        args.reference_threshold_source
+    )
+
+    if args.reference_threshold is None:
+        reference_threshold = parse_reference_threshold(
+            reference_threshold_source_path
+        )
+        reference_threshold_mode = "summary_source"
+    else:
+        reference_threshold = args.reference_threshold
+        reference_threshold_mode = "cli_override"
+
+    try:
+        reference_threshold_source_label = (
+            reference_threshold_source_path
+            .relative_to(ROOT)
+            .as_posix()
+        )
+    except ValueError:
+        reference_threshold_source_label = str(
+            reference_threshold_source_path
+        )
+
+    ensure_scope_clean(
+        ROBUSTNESS_EXPERIMENT_SCOPE_PATHS,
+        "retrieval query wording-variation stress test",
+    )
 
     if not cases_path.exists():
         raise SystemExit(f"[FAIL] Cases file not found: {cases_path}")
@@ -300,8 +360,16 @@ def main() -> None:
     )
     provenance.update(
         {
-            "reference_threshold": args.reference_threshold,
-            "reference_threshold_source": args.reference_threshold_source,
+            "reference_threshold": reference_threshold,
+            "reference_threshold_source": (
+                reference_threshold_source_label
+            ),
+            "reference_threshold_mode": (
+                reference_threshold_mode
+            ),
+            "experiment_scope_sha256": scope_sha256(
+                ROBUSTNESS_EXPERIMENT_SCOPE_PATHS
+            ),
         }
     )
 
@@ -356,6 +424,8 @@ def main() -> None:
                 "generated_from_commit": provenance["generated_from_commit"],
                 "reference_threshold": provenance["reference_threshold"],
                 "reference_threshold_source": provenance["reference_threshold_source"],
+                "reference_threshold_mode": provenance["reference_threshold_mode"],
+                "experiment_scope_sha256": provenance["experiment_scope_sha256"],
                 "original_query": case["query"],
                 "variant_query": variant_query,
                 "top1_score": round(top1_score, 6),
@@ -366,7 +436,9 @@ def main() -> None:
                 "top5_slots": " | ".join(top5_slots),
                 "top5_entities": " | ".join(top5_entities),
                 "expected_hit_at_5": str(bool(hit_at_k)),
-                "above_reference_threshold": str(bool(top1_score >= args.reference_threshold)),
+                "above_reference_threshold": str(
+                    bool(top1_score >= reference_threshold)
+                ),
                 "top1_changed_from_original": "",
                 "score_delta_from_original": "",
             }
@@ -400,6 +472,8 @@ def main() -> None:
         "generated_from_commit",
         "reference_threshold",
         "reference_threshold_source",
+        "reference_threshold_mode",
+        "experiment_scope_sha256",
         "original_query",
         "variant_query",
         "top1_score",
@@ -444,6 +518,8 @@ def main() -> None:
                     "generated_from_commit": provenance["generated_from_commit"],
                     "reference_threshold": provenance["reference_threshold"],
                     "reference_threshold_source": provenance["reference_threshold_source"],
+                    "reference_threshold_mode": provenance["reference_threshold_mode"],
+                    "experiment_scope_sha256": provenance["experiment_scope_sha256"],
                     "variant_count": variant_count,
                     "above_threshold_count": above_count,
                     "above_threshold_rate_pct": pct(above_count, variant_count),
@@ -463,6 +539,8 @@ def main() -> None:
         "generated_from_commit",
         "reference_threshold",
         "reference_threshold_source",
+        "reference_threshold_mode",
+        "experiment_scope_sha256",
         "variant_count",
         "above_threshold_count",
         "above_threshold_rate_pct",
@@ -528,11 +606,13 @@ It is a diagnostic evaluation for the current file-backed retail decision-suppor
 - Unit definition: one generated memory fact or one chunked field-contract/source-note segment; this is not a store count or a count of independent business observations.
 - Corpus SHA-256: `{provenance["corpus_sha256"]}`
 - Corpus builder: `{provenance["corpus_builder"]}`
-- Execution commit: `{provenance["generated_from_commit"]}`
-- Provenance note: the corpus SHA-256 identifies the evidence snapshot; the execution commit identifies the code state used for the run.
+- Run commit: `{provenance["generated_from_commit"]}`
+- Experiment scope SHA-256: `{provenance["experiment_scope_sha256"]}`
+- Applicability note: the scope hash identifies the clean experiment-relevant code and input snapshot. The run commit is retained for navigation. Later unrelated commits do not invalidate the result. Run `python3 eval/check_retrieval_result_applicability.py` to check the current scope.
 - Embedding model: `{provenance["embedding_model"]}`
 - Reference threshold: `{provenance["reference_threshold"]}`
 - Reference threshold source: `{provenance["reference_threshold_source"]}`
+- Reference threshold mode: `{provenance["reference_threshold_mode"]}`
 
 ## Variant Types
 
