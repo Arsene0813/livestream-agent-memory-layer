@@ -2370,6 +2370,12 @@ def demo2_retail_facts_to_points(facts: list[dict]) -> list[dict]:
     ]
 
 
+# Endpoint-level heuristic for Demo 2 vector-fallback refusal.
+# This is separate from the offline exploratory reference reported in
+# retail_ops/outputs/retrieval_threshold_summary.md and is not an answer-decision rule.
+RETAIL_DEMO2_VECTOR_FALLBACK_MIN_SCORE = 0.45
+
+
 @app.post("/chat_retail_ops_demo2_kb")
 async def chat_retail_ops_demo2_kb(req: RetailOpsDemo2KbReq):
     unsupported_reason = is_unsupported_demo2_retail_scope(req.message, req.entity_id)
@@ -2462,7 +2468,7 @@ async def chat_retail_ops_kb(req: RetailOpsKbReq):
         }
 
     top_score = vector_points[0].get("score") or 0
-    if top_score < 0.45:
+    if top_score < RETAIL_DEMO2_VECTOR_FALLBACK_MIN_SCORE:
         return {
             "supported": False,
             "answer": "The retrieved retail facts were too weakly matched to answer safely.",
