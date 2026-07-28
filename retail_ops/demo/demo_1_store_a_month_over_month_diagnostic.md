@@ -192,7 +192,7 @@ Stronger operating interpretation would require additional evidence such as:
 
 ## Future Work
 
-Demo 1 already feeds the current Demo 2 same-period diagnostic path. The next step is to expand repeated store-period evidence under the same field contract, then use a future pairwise comparability gate to judge whether selected records can support one specific operating question.
+Demo 1 establishes the single-store diagnostic contract and traceable memory-fact structure. Demo 2 applies the same field contract to separate Stores B-F records for same-period diagnostic review. Repeated-window evidence can support later testing of a question-specific pairwise comparability gate.
 
 Future expansion should check whether candidate records are comparable by:
 
