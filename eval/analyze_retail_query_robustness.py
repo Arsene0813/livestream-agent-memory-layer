@@ -667,6 +667,8 @@ Hard-negative, entity/period-mismatch, and ambiguous comparison cases may still 
 
 Unsupported cases should not become answerable merely because wording changes.
 
+`top1_changed_non_original_rate` is descriptive of the current corpus and embedding runtime; it is not evidence of model improvement. The experiment records the model name but does not fingerprint the local Ollama model binary.
+
 Final answer behavior should still depend on entity, period, slot, source-path, and interpretation-boundary checks.
 """
 
