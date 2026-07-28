@@ -157,23 +157,9 @@ Reviewer entry points:
 | `rac/outputs/grounded_rac_cross_store_comparability_001.md` | Demo 2 cross-store comparability boundary review. |
 | `rac/src/grounded_pipeline.py` | Deterministic grounded review pipeline. |
 
-## Pairwise Comparability Experiment
+## Deferred Comparability Contract
 
-The next testable extension is a question-specific pairwise comparability gate. It would assess whether two store-period records are suitable for one defined operating question before cross-store interpretation.
-
-Candidate inputs include:
-
-- reporting-window alignment;
-- transaction order volume and transaction amount;
-- activity involvement and activity intensity;
-- store type;
-- repeated-window stability;
-- weak region context;
-- competition evidence;
-- SKU structure;
-- fulfillment and stockout context.
-
-The design is documented in `retail_ops/COMPARABILITY_GATE_V0.md`. It remains separate from Demo 2 so that its evidence requirements and thresholds can be tested explicitly rather than presented as an implemented comparison decision.
+`retail_ops/COMPARABILITY_GATE_V0.md` records the additional evidence requirements for any future question-specific pairwise decision. The current prototype ends at same-period diagnostic review with explicit comparison limits; aligned reporting windows alone do not establish peer-store suitability or support strategy-transfer decisions.
 
 ## Field Boundary Summary
 
