@@ -13,15 +13,18 @@ It is a diagnostic evaluation for the current file-backed retail decision-suppor
 - Demo 2 memory facts: `retail_ops/outputs/generated_demo2_retail_memory_facts.json`
 - Dictionary context: `retail_ops/data/DATA_DICTIONARY.md`
 - Demo 2 source notes: `retail_ops/data/demo2_source_notes.md`
-- Retrieval units: 286
+- Retrieval units: 302
+
 - Unit definition: one generated memory fact or one chunked field-contract/source-note segment; this is not a store count or a count of independent business observations.
-- Corpus SHA-256: `39f39e7f10c35c9c849bbc577020dedbf3bd08f6bf24e6f8816c264bcefdc6e6`
+- Corpus SHA-256: `76d706b500fc81090a2d00b9e3069e4c46c1d6a2cd052a439ec8b9df7302aa77`
 - Corpus builder: `eval/retail_retrieval_corpus.py::load_retail_retrieval_documents`
-- Execution commit: `be35bfb8e47ed940f655e31a39c5c6feda6cc37d`
-- Provenance note: the corpus SHA-256 identifies the evidence snapshot; the execution commit identifies the code state used for the run.
+- Run commit: `9b2a966fac83b758f34278c14a6860d86f2a9570`
+- Experiment scope SHA-256: `e4bfe8f239da4f4249b72abff9500ef0fdc4f1c005f1e7eca5a8d822079bdcd3`
+- Applicability note: the scope hash identifies the clean experiment-relevant code and input snapshot. The run commit is retained for navigation. Later unrelated commits do not invalidate the result. Run `python3 eval/check_retrieval_result_applicability.py` to check the current scope.
 - Embedding model: `bge-m3`
-- Reference threshold: `0.5769`
+- Reference threshold: `0.5776`
 - Reference threshold source: `retail_ops/outputs/retrieval_threshold_summary.md`
+- Reference threshold mode: `summary_source`
 
 ## Variant Types
 
@@ -43,10 +46,10 @@ For each non-negative case, `expected_hit_at_5` is true only when at least one t
 
 | case_type | variant_count | expected_hit_at_5_count | expected_hit_at_5_rate | above_reference_threshold_count | above_reference_threshold_rate | top1_changed_non_original_count | top1_changed_non_original_rate |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| ambiguous_comparison | 16 | 11 | 68.75% | 5 | 31.25% | 5 | 41.67% |
-| entity_period_mismatch | 18 | 2 | 11.11% | 13 | 72.22% | 5 | 35.71% |
-| hard_negative_boundary | 33 | 25 | 75.76% | 23 | 69.7% | 7 | 26.92% |
-| negative_unsupported | 30 | 0 | 0.0% | 0 | 0.0% | 4 | 16.67% |
+| ambiguous_comparison | 16 | 11 | 68.75% | 5 | 31.25% | 3 | 25.0% |
+| entity_period_mismatch | 18 | 2 | 11.11% | 14 | 77.78% | 4 | 28.57% |
+| hard_negative_boundary | 33 | 25 | 75.76% | 23 | 69.7% | 6 | 23.08% |
+| negative_unsupported | 30 | 0 | 0.0% | 0 | 0.0% | 7 | 29.17% |
 | positive_supported | 34 | 34 | 100.0% | 34 | 100.0% | 4 | 15.38% |
 
 ## Threshold Sweep
@@ -57,8 +60,8 @@ This sweep is not an optimization procedure. It shows how many query variants re
 | --- | --- | --- |
 | 0.5 | 115 | 87.79% |
 | 0.55 | 88 | 67.18% |
-| 0.6 | 60 | 45.8% |
-| 0.65 | 35 | 26.72% |
+| 0.6 | 64 | 48.85% |
+| 0.65 | 36 | 27.48% |
 | 0.7 | 14 | 10.69% |
 
 The full threshold sweep by case type is stored in:
