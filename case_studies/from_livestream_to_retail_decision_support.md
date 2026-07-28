@@ -39,11 +39,11 @@ This is the practical role of the memory layer in the retail setting: it stores 
 
 ## Local LLM Backend
 
-The project began as a simple local model-serving setup for conversational use in a livestream-oriented setting. The initial goal was to make local generation work reliably enough to support product explanation and customer-facing interaction.
+The initial implementation used local model serving for conversational product explanation and customer-facing interaction in a livestream-oriented setting.
 
 ## Raw Vector Chat Memory
 
-The next step was to add vector-based recall so that past exchanges could be retrieved instead of being discarded entirely.
+Vector-based recall retained relevant past exchanges instead of discarding them entirely.
 
 This made the system more context-aware, but it also exposed an important limitation: retrieval alone did not make memory reliable. Past content could be surfaced based on similarity without any clear standard for whether it should still matter.
 
@@ -57,7 +57,7 @@ I also added traceable evidence in retrieval outputs so that memory usage could 
 
 Once retrieval became more controlled, the next issue became clearer: storing past text was still not the same as representing knowledge in a stable form.
 
-The system therefore moved from unstructured recall toward structured fact extraction and typed memory, allowing different categories of information to be stored and handled more consistently.
+Structured fact extraction and typed memory represent different categories of information with explicit handling rules.
 
 ## Update Policies and Overwrite Control
 
@@ -67,13 +67,13 @@ Older facts were preserved through soft deactivation instead of being deleted wi
 
 ## Lifecycle-Aware Retrieval
 
-The project then evolved into a lifecycle-aware memory layer. Stored facts were no longer treated as timeless entries, but as knowledge objects with timestamps, active-state flags, freshness windows, and reuse metadata.
+Lifecycle-aware memory treats stored facts as knowledge objects with timestamps, active-state flags, freshness windows, and reuse metadata.
 
 This allowed retrieval to prefer currently valid knowledge while filtering out inactive or stale facts when appropriate.
 
 ## Livestream Commerce Knowledge Routing
 
-The next iteration extended the same memory architecture into livestream commerce knowledge. Structured facts such as product price, promotions, stock status, shipping policy, and product features could be written into typed memory and retrieved later through the same lifecycle-aware logic.
+The same memory architecture supports livestream commerce knowledge such as product price, promotions, stock status, shipping policy, and product features.
 
 On top of that, I added policy-guided fact-type routing so that livestream questions could be matched against configured fact categories without requiring the caller to manually specify the knowledge type.
 
@@ -81,13 +81,13 @@ On top of that, I added policy-guided fact-type routing so that livestream quest
 
 As the number of fact types increased, hard-coded rules for overwrite, freshness, routing thresholds, scope, and storage semantics became difficult to maintain.
 
-To address this, the system moved toward a centralized in-code fact-policy registry, making storage and retrieval behavior easier to extend and reason about.
+A centralized in-code fact-policy registry keeps storage, retrieval, overwrite, freshness, routing, and scope behavior inspectable.
 
 ## Product-Level Entity Separation
 
 Once livestream facts became more structured, it was no longer sufficient to store all product knowledge under a single default product context.
 
-The system therefore introduced lightweight product reference extraction so that facts could be attached to specific product entities when possible, while still falling back to a default product scope when no explicit reference was available.
+Lightweight product reference extraction attaches facts to specific product entities when possible and falls back to a default product scope when no explicit reference is available.
 
 ## Consolidated Extraction and Non-Fact Filtering
 
@@ -109,7 +109,7 @@ The same lifecycle-aware memory principle is now applied to Meituan instant-reta
 
 The practical problem is different from livestream product memory. Meituan's merchant backend provides rich single-store metrics, but multi-store operation requires a stricter question: which store-period records can be compared, under what limits, and which claims should be refused because the evidence is incomplete or not aligned.
 
-The retail extension therefore uses SQL and documented metric definitions before retrieval. The SQL layer organizes selected store-period, traffic, activity, search-term, and top-SKU evidence into same-period, contract-aligned diagnostic outputs.
+The retail extension uses SQL and documented metric definitions before retrieval. The SQL layer organizes selected store-period, traffic, activity, search-term, and top-SKU evidence into same-period, contract-aligned diagnostic outputs.
 
 The memory layer records store-period evidence, `calculation` metadata, confidence, and limitations so that March data is not casually mixed with April data, activity-heavy stores are not treated like low-activity stores, and lightweight top-SKU evidence is not overstated as full category-share analysis.
 
