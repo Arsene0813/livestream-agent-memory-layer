@@ -295,7 +295,7 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
                 "claim": "Stores B-F can be organized in a same-period diagnostic table.",
                 "confidence": 0.78,
                 "supporting_factors": ["same_reporting_period"],
-                "weaknesses": ["Same-period staging does not equal robust comparability."],
+                "weaknesses": ["Same-period diagnostic organization does not establish robust comparability."],
                 "status": "strong"
             },
             {
