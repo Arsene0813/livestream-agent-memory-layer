@@ -2,7 +2,7 @@
 
 ## 1. Direct Answer
 
-Stores B-F can be staged for same-period diagnostic review, but should not be treated as directly comparable without pairwise gates.
+Stores B-F can be organized for same-period diagnostic review, but should not be treated as directly comparable without pairwise gates.
 
 This is a deterministic mock result. It confirms that the current fixed fixture can generate the expected artifacts end-to-end, but it does not claim live retrieval or autonomous world modeling.
 
@@ -45,18 +45,18 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 
 | Hypothesis | Confidence | Status | Weakness |
 |---|---:|---|---|
-| Stores B-F can be staged in a same-period diagnostic table. | 0.78 | strong | Same-period staging does not equal robust comparability. |
+| Stores B-F can be organized in a same-period diagnostic table. | 0.78 | strong | Same-period diagnostic organization does not establish robust comparability. |
 | Stores B-F should not be treated as directly comparable without pairwise gates. | 0.86 | strong | The mock pipeline does not compute quantitative pairwise thresholds. |
 
 ## 6. Critic Findings
 
 - [high] The mock pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
 - [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.
-- [critical] Same-period staging must not be described as a completed pairwise comparability gate. Recommendation: Separate same-period diagnostic comparison from pairwise comparability.
+- [critical] Same-period diagnostic organization must not be described as a completed pairwise comparability gate. Recommendation: Separate same-period diagnostic review from pairwise comparability.
 
 ## 7. Final Judgment
 
-Stores B-F can be staged for same-period diagnostic review, but should not be treated as directly comparable without pairwise gates.
+Stores B-F can be organized for same-period diagnostic review, but should not be treated as directly comparable without pairwise gates.
 
 The conclusion is conservative because this mock pipeline uses structured placeholder evidence and does not perform live retrieval.
 
