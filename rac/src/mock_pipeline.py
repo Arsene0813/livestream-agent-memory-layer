@@ -292,7 +292,7 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
         return [
             {
                 "hypothesis_id": "H1",
-                "claim": "Stores B-F can be staged in a same-period diagnostic table.",
+                "claim": "Stores B-F can be organized in a same-period diagnostic table.",
                 "confidence": 0.78,
                 "supporting_factors": ["same_reporting_period"],
                 "weaknesses": ["Same-period staging does not equal robust comparability."],
@@ -396,9 +396,9 @@ def critique(question_type: str) -> list[dict[str, str]]:
 
     if question_type == "comparability_judgment":
         findings.append({
-            "issue": "Same-period staging must not be described as a completed pairwise comparability gate.",
+            "issue": "Same-period diagnostic organization must not be described as a completed pairwise comparability gate.",
             "severity": "critical",
-            "recommendation": "Separate same-period diagnostic comparison from pairwise comparability."
+            "recommendation": "Separate same-period diagnostic review from pairwise comparability."
         })
 
     if question_type == "strategic_recommendation":
@@ -455,7 +455,7 @@ def build_belief_update(question_type: str) -> dict[str, Any]:
     if question_type == "comparability_judgment":
         return {
             "belief_id": "stores_b_f_same_period_not_directly_comparable",
-            "claim": "Stores B-F can be staged for same-period diagnostic review, but should not be treated as directly comparable without pairwise gates.",
+            "claim": "Stores B-F can be organized for same-period diagnostic review, but should not be treated as directly comparable without pairwise gates.",
             "confidence": 0.86,
             "status": "active",
             "validity_conditions": ["Demo 2 March 2026 B-F context."],
