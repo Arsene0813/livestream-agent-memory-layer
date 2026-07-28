@@ -5,10 +5,7 @@ serving, vector recall, retrieval gating, typed facts, overwrite control,
 lifecycle-aware retrieval, product-level routing, evaluation, and the
 later retail decision-support extension.
 
-The application first-pass path begins with the current retail evidence
-and RAC implementation. This file then shows how the earlier memory-layer
-work produced the update, traceability, active-state, refusal, and
-evidence-boundary principles used in the current architecture.
+The application first-pass path begins with the current retail evidence and RAC implementation. The remaining sections document the memory-layer mechanisms for update control, traceability, active-state filtering, refusal behavior, and evidence boundaries.
 
 ## Why the Retail Setting Required Stricter Evidence Boundaries
 
