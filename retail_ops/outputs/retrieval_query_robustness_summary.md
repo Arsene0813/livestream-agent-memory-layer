@@ -18,8 +18,8 @@ It is a diagnostic evaluation for the current file-backed retail decision-suppor
 - Unit definition: one generated memory fact or one chunked field-contract/source-note segment; this is not a store count or a count of independent business observations.
 - Corpus SHA-256: `76d706b500fc81090a2d00b9e3069e4c46c1d6a2cd052a439ec8b9df7302aa77`
 - Corpus builder: `eval/retail_retrieval_corpus.py::load_retail_retrieval_documents`
-- Run commit: `9b2a966fac83b758f34278c14a6860d86f2a9570`
-- Experiment scope SHA-256: `e4bfe8f239da4f4249b72abff9500ef0fdc4f1c005f1e7eca5a8d822079bdcd3`
+- Run commit: `2dbc9694c57ae644de3e0b898ae3c244904404bc`
+- Experiment scope SHA-256: `0a0d6c96ec670ef5892ef48da1552426da10a4d6353767ba843d549b5246a41f`
 - Applicability note: the scope hash identifies the clean experiment-relevant code and input snapshot. The run commit is retained for navigation. Later unrelated commits do not invalidate the result. Run `python3 eval/check_retrieval_result_applicability.py` to check the current scope.
 - Embedding model: `bge-m3`
 - Reference threshold: `0.5776`
@@ -75,5 +75,7 @@ Supported cases should generally retain expected evidence in top-k under small w
 Hard-negative, entity/period-mismatch, and ambiguous comparison cases may still remain semantically close to valid evidence. That behavior reinforces the current design: retrieval threshold is useful as one signal, but it cannot be treated as an answer-decision rule.
 
 Unsupported cases should not become answerable merely because wording changes.
+
+`top1_changed_non_original_rate` is descriptive of the current corpus and embedding runtime; it is not evidence of model improvement. The experiment records the model name but does not fingerprint the local Ollama model binary.
 
 Final answer behavior should still depend on entity, period, slot, source-path, and interpretation-boundary checks.
