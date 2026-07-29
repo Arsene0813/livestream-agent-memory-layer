@@ -7,7 +7,7 @@
     "period_label": "2026-02_to_2026-04",
     "period_start": "2026-02-01",
     "period_end": "2026-04-30",
-    "value": "Store A's visibility and entry structure can be described from `exposure_users`, `store_average_rank`, `entry_users`, `search_exposure_users`, `search_average_rank`, and `search_entry_users` across February, March, and April 2026. These metrics are used to understand whether the store was being seen and entered, not to assign a fixed store label.\nIn this business context, being visible, being entered, and being selected are core competitive conditions for Meituan instant retail stores.",
+    "value": "Store A's visibility and entry structure can be described from `exposure_users`, `store_average_rank`, `entry_users`, `search_exposure_users`, `search_average_rank`, and `search_entry_users` across February, March, and April 2026. These metrics are used to understand whether the store was being seen and entered, not to assign a fixed store label.\nIn this business context, the operating path is being seen → being entered → being ordered → being selected again / maintaining share.",
     "observed_values": {
       "2026-02": {
         "exposure_users": 6118,
