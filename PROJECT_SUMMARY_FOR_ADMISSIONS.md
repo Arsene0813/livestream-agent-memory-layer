@@ -171,7 +171,6 @@ These are the main fields that are easy to misread in application review. Full d
 | `activity_cost_ratio_pct` | Activity cost divided by activity original transaction amount. It is not traditional ROI, profit margin, or audited return. |
 | `comparison_scope_flag` | Row-level diagnostic-readiness flag for the current Demo 2 evidence layer. It is not a pairwise comparability decision. |
 | `comparison_limit_notes` | Interpretation-limit notes that document how far the current diagnostic evidence can be used. |
-| `estimated_income_proxy` | Platform-displayed estimated income proxy. It is retained as weak backend-reported context only and should not be used as audited profit, settlement evidence, ROI, or a primary comparability factor. |
 | `transaction_amount` | Transaction amount / transaction scale in the current implemented evidence. It should not be renamed or treated as `gross_revenue` unless a future backend export provides that separate field under the dictionary definition. |
 | `top3_sku_transaction_amount_share_pct` | Lightweight top-SKU concentration evidence from selected ranking views. It is not full product-category sales share. |
 
