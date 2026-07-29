@@ -85,9 +85,9 @@
     ]
   },
   {
-    "case_id": "positive_store_f_estimated_income_proxy",
+    "case_id": "positive_store_f_transaction_profile",
     "case_type": "positive_supported",
-    "query": "How should Store F's estimated_income_proxy be interpreted?",
+    "query": "What were Store F's March 2026 transaction amount and average order value?",
     "expected_entity": "store_F",
     "expected_slot": "transaction_conversion_profile",
     "expected_period_terms": [
@@ -95,7 +95,8 @@
       "March 2026"
     ],
     "expected_terms": [
-      "estimated_income_proxy"
+      "transaction_amount",
+      "average_order_value"
     ]
   },
   {
