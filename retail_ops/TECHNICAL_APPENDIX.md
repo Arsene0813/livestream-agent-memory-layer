@@ -714,7 +714,7 @@ This table summarizes selected fields referenced across the current retail evide
 | `transaction_amount` | Backend transaction amount for same-day paid and same-day not-cancelled orders under the selected scope. It must not be mixed with `gross_revenue`, `estimated_income_proxy`, `order_amount`, `payment_amount`, or SKU-level `sku_transaction_amount`. | Source CSVs, SQL output, transaction/conversion facts. | No. |
 | `transaction_orders` | Backend transaction-order count for same-day paid and same-day not-cancelled orders. | Source CSVs, SQL output, transaction/conversion facts. | No. |
 | `average_order_value` | Backend average-order-value field read with `transaction_amount` and `transaction_orders`. | Source CSVs, SQL output. | No. |
-| `estimated_income_proxy` | Platform-displayed estimated income / estimated order income proxy. It is not audited profit. | Source CSVs, SQL output, transaction/conversion facts, evidence-boundary docs. | No. |
+| `estimated_income_proxy` | Platform-displayed estimated income / estimated order income proxy. It is not audited profit. | Source CSVs, SQL output, evidence-boundary docs. | No. |
 | `activity_original_transaction_amount` | Original transaction amount of orders that used activities. | Source CSVs, SQL output, activity facts. | No. |
 | `activity_orders` | Backend activity-driven order count. | Source CSVs, SQL output, activity facts. | No. |
 | `activity_cost` | Backend activity-cost field. | Source CSVs, SQL output, activity facts. | No. |
