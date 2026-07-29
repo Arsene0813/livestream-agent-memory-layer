@@ -12,10 +12,10 @@ The purpose is to inspect retrieval-threshold behavior. It is not a production-l
 
 - Retrieval units loaded: 302
 - Unit definition: one generated memory fact or one chunked field-contract/source-note segment; this is not a store count or a count of independent business observations.
-- Corpus SHA-256: `76d706b500fc81090a2d00b9e3069e4c46c1d6a2cd052a439ec8b9df7302aa77`
+- Corpus SHA-256: `3747c4d2a936a3d648a1cd49d80b5b5b9f5511f7ce161ebdc1d993c8ffcd30bc`
 - Corpus builder: `eval/retail_retrieval_corpus.py::load_retail_retrieval_documents`
-- Run commit: `aacf411db0806485857eb495e3c2abc3ca5eddbc`
-- Experiment scope SHA-256: `e0b90ad743080baa5bbacde2075f889bafafcffb45a36532efc4b2e3692120ec`
+- Run commit: `f094db90ac51f7645ea7bbf9150831a46b0f39bd`
+- Experiment scope SHA-256: `d829423d0aa17f749f965247b264454a13850e8fd6cdfc89066da6971c6700d3`
 - Applicability note: the scope hash identifies the clean experiment-relevant code and input snapshot. The run commit is retained for navigation. Later unrelated commits do not invalidate the result. Run `python3 eval/check_retrieval_result_applicability.py` to check the current scope.
 - Retrieval threshold cases: 29
 - Embedding model: `bge-m3` via local Ollama
@@ -40,17 +40,17 @@ The purpose is to inspect retrieval-threshold behavior. It is not a production-l
 
 | Case type | Cases | Top-1 min | Top-1 p25 | Top-1 median | Top-1 p75 | Top-1 max | Median margin | Expected hit@5 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| ambiguous_comparison | 4 | 0.5275 | 0.5373 | 0.5429 | 0.5597 | 0.6033 | 0.0026 | 3/4 |
-| entity_period_mismatch | 4 | 0.5555 | 0.5738 | 0.5952 | 0.6205 | 0.6504 | 0.0093 | 1/4 |
+| ambiguous_comparison | 4 | 0.5275 | 0.5373 | 0.5427 | 0.5544 | 0.5828 | 0.0055 | 3/4 |
+| entity_period_mismatch | 4 | 0.5555 | 0.5823 | 0.6001 | 0.6193 | 0.6504 | 0.0150 | 1/4 |
 | hard_negative_boundary | 7 | 0.5055 | 0.5711 | 0.6271 | 0.6784 | 0.7139 | 0.0085 | 5/7 |
-| negative_unsupported | 6 | 0.4566 | 0.4930 | 0.4957 | 0.5290 | 0.5561 | 0.0112 | 0/6 |
-| positive_supported | 8 | 0.6134 | 0.6261 | 0.6507 | 0.7108 | 0.7593 | 0.0397 | 8/8 |
+| negative_unsupported | 6 | 0.4566 | 0.4930 | 0.4957 | 0.5290 | 0.5561 | 0.0098 | 0/6 |
+| positive_supported | 8 | 0.5776 | 0.6150 | 0.6441 | 0.7108 | 0.7593 | 0.0364 | 8/8 |
 
 ## Threshold Interpretation
 
 A reference threshold can be inspected for the trade-off between unsupported retrieval noise and supported evidence retention.
 
-An exploratory reference threshold from this small corpus is around `0.5776`, midway between the positive-supported p25 score `0.6261` and the negative-unsupported p75 score `0.5290`. This is an inspection reference, not a production cutoff or an answer-decision rule.
+An exploratory reference threshold from this small corpus is around `0.5720`, midway between the positive-supported p25 score `0.6150` and the negative-unsupported p75 score `0.5290`. This is an inspection reference, not a production cutoff or an answer-decision rule.
 
 High scores in hard-negative boundary cases are expected. They show that a semantically related fact can be retrieved even when the correct answer should still refuse or qualify the requested conclusion.
 
