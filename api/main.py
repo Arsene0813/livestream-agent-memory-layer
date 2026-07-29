@@ -2127,7 +2127,26 @@ def is_unsupported_retail_scope(message: str, entity_id: str | None) -> str | No
     q = (message or "").lower()
     eid = normalize_retail_entity_id(entity_id)
 
-    if any(x in q for x in ["store b", "store c", "store_b", "store_c", "b店", "c店"]):
+    if any(
+        x in q
+        for x in [
+            "store b",
+            "store c",
+            "store d",
+            "store e",
+            "store f",
+            "store_b",
+            "store_c",
+            "store_d",
+            "store_e",
+            "store_f",
+            "b店",
+            "c店",
+            "d店",
+            "e店",
+            "f店",
+        ]
+    ):
         return "The current retail demo only supports Store A facts."
 
     if any(x in q for x in ["48 stores", "all stores", "cross-store", "compare stores", "across stores", "全部门店", "跨店", "所有门店"]):
@@ -2370,10 +2389,11 @@ def demo2_retail_facts_to_points(facts: list[dict]) -> list[dict]:
     ]
 
 
-# Endpoint-level heuristic for Demo 2 vector-fallback refusal.
+# Endpoint-level heuristic for the Qdrant-backed Demo 1 vector fallback.
+# The deterministic Demo 2 endpoint above does not use vector retrieval.
 # This is separate from the offline exploratory reference reported in
 # retail_ops/outputs/retrieval_threshold_summary.md and is not an answer-decision rule.
-RETAIL_DEMO2_VECTOR_FALLBACK_MIN_SCORE = 0.45
+RETAIL_DEMO1_VECTOR_FALLBACK_MIN_SCORE = 0.45
 
 
 @app.post("/chat_retail_ops_demo2_kb")
@@ -2468,7 +2488,7 @@ async def chat_retail_ops_kb(req: RetailOpsKbReq):
         }
 
     top_score = vector_points[0].get("score") or 0
-    if top_score < RETAIL_DEMO2_VECTOR_FALLBACK_MIN_SCORE:
+    if top_score < RETAIL_DEMO1_VECTOR_FALLBACK_MIN_SCORE:
         return {
             "supported": False,
             "answer": "The retrieved retail facts were too weakly matched to answer safely.",

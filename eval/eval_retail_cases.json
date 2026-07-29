@@ -78,13 +78,42 @@
     ]
   },
   {
-    "name": "cross_store_comparability_not_implemented",
+    "name": "store_d_message_scope_refusal",
+    "message": "What is Store D's current operating stage?",
+    "should_support": false,
+    "expected_slots": [],
+    "expected_substrings": [
+      "only supports Store A"
+    ]
+  },
+  {
+    "name": "store_e_message_scope_refusal",
+    "message": "What is Store E's current operating stage?",
+    "should_support": false,
+    "expected_slots": [],
+    "expected_substrings": [
+      "only supports Store A"
+    ]
+  },
+  {
+    "name": "store_f_message_scope_refusal",
+    "message": "What is Store F's current operating stage?",
+    "should_support": false,
+    "expected_slots": [],
+    "expected_substrings": [
+      "only supports Store A"
+    ]
+  },
+  {
+    "name": "full_48_store_scope_refusal",
     "message": "Compare all 48 stores and tell me which store should receive more activity subsidy.",
     "entity_id": "store_A",
     "should_support": false,
     "expected_slots": [],
     "expected_substrings": [
-      "Cross-store",
+      "supports only Store A",
+      "Demo 2 same-period B-F diagnostic",
+      "full 48-store automation",
       "not implemented"
     ]
   }

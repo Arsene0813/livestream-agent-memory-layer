@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Validate Demo 2 cross-store comparability output.
+"""Validate the current Demo 2 same-period diagnostic output.
 
-This validator checks that Demo 2 output stays within the current dictionary-defined comparison schema.
+This validator checks that the output stays within the dictionary-defined
+same-period diagnostic schema.
 """
 
 from __future__ import annotations
@@ -35,6 +36,7 @@ REQUIRED_COLUMNS = [
     "store_type",
     "transaction_amount",
     "transaction_orders",
+    "estimated_income_proxy",
     "average_order_value",
     "exposure_users",
     "exposure_times",

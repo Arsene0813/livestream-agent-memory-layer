@@ -207,7 +207,7 @@ def main() -> int:
                 f"{fmt(b, 'activity_cost_ratio_pct')}; Store C activity_order_share_pct="
                 f"{fmt(c, 'activity_order_share_pct')} and activity_cost_ratio_pct="
                 f"{fmt(c, 'activity_cost_ratio_pct')}. Any transfer claim must also "
-                "comparison_scope_flag and "
+                "check comparison_scope_flag and "
                 "comparison_limit_notes. The supported answer is qualified comparison, "
                 "not direct strategy transfer."
                 " Activity evidence should cite activity_orders, activity_cost_ratio_pct, merchant_subsidy_amount, and platform_subsidy_amount before discussing any promotion transfer."
