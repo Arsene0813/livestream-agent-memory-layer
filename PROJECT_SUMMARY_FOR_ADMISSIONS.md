@@ -44,7 +44,7 @@ being seen
 -> being selected again / maintaining share
 ```
 
-Promotion, subsidy, pricing, SKU arrangement, ranking work, fulfillment support, and local competition can affect different parts of this path. Their interpretation depends on the store, reporting period, activity conditions, product structure, and evidence available for the question.
+Promotion, subsidy, pricing, SKU arrangement, ranking work, fulfillment support, and local competition provide operating context for different parts of this path. Their interpretation depends on the store, reporting period, activity conditions, product structure, and evidence available for the question.
 
 The central decision problem is therefore not simply which store or metric is highest. It is whether an operating interpretation can be reproduced from documented fields, matched to the correct entity and reporting period, and kept within the limits of the available evidence.
 
