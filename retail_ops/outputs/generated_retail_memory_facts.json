@@ -50,7 +50,7 @@
       "single-store demo",
       "traffic-source users may overlap",
       "visibility and entry metrics do not prove causal growth",
-      "cross-store comparability is not implemented yet"
+      "Store A February-April 2026 evidence only"
     ],
     "is_active": true,
     "period_granularity": "month_range"
@@ -199,7 +199,7 @@
     "limitations": [
       "single-store demo",
       "not causal attribution",
-      "cross-store comparability is not implemented yet"
+      "Store A February-April 2026 evidence only"
     ],
     "is_active": true,
     "period_granularity": "month_range"
