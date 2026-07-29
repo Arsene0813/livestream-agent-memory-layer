@@ -16,13 +16,13 @@ It is a diagnostic evaluation for the current file-backed retail decision-suppor
 - Retrieval units: 302
 
 - Unit definition: one generated memory fact or one chunked field-contract/source-note segment; this is not a store count or a count of independent business observations.
-- Corpus SHA-256: `76d706b500fc81090a2d00b9e3069e4c46c1d6a2cd052a439ec8b9df7302aa77`
+- Corpus SHA-256: `3747c4d2a936a3d648a1cd49d80b5b5b9f5511f7ce161ebdc1d993c8ffcd30bc`
 - Corpus builder: `eval/retail_retrieval_corpus.py::load_retail_retrieval_documents`
-- Run commit: `2dbc9694c57ae644de3e0b898ae3c244904404bc`
-- Experiment scope SHA-256: `0a0d6c96ec670ef5892ef48da1552426da10a4d6353767ba843d549b5246a41f`
+- Run commit: `cd4b72bcefab8dba92f83ffd24a9276b813ab4e0`
+- Experiment scope SHA-256: `4b15d82b17be61c282720aeca08705fd6e32f93581acb55bff8e8e4313e1afd1`
 - Applicability note: the scope hash identifies the clean experiment-relevant code and input snapshot. The run commit is retained for navigation. Later unrelated commits do not invalidate the result. Run `python3 eval/check_retrieval_result_applicability.py` to check the current scope.
 - Embedding model: `bge-m3`
-- Reference threshold: `0.5776`
+- Reference threshold: `0.572`
 - Reference threshold source: `retail_ops/outputs/retrieval_threshold_summary.md`
 - Reference threshold mode: `summary_source`
 
@@ -46,11 +46,11 @@ For each non-negative case, `expected_hit_at_5` is true only when at least one t
 
 | case_type | variant_count | expected_hit_at_5_count | expected_hit_at_5_rate | above_reference_threshold_count | above_reference_threshold_rate | top1_changed_non_original_count | top1_changed_non_original_rate |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| ambiguous_comparison | 16 | 11 | 68.75% | 5 | 31.25% | 3 | 25.0% |
-| entity_period_mismatch | 18 | 2 | 11.11% | 14 | 77.78% | 4 | 28.57% |
+| ambiguous_comparison | 16 | 13 | 81.25% | 5 | 31.25% | 2 | 16.67% |
+| entity_period_mismatch | 18 | 2 | 11.11% | 15 | 83.33% | 2 | 14.29% |
 | hard_negative_boundary | 33 | 25 | 75.76% | 23 | 69.7% | 6 | 23.08% |
-| negative_unsupported | 30 | 0 | 0.0% | 0 | 0.0% | 7 | 29.17% |
-| positive_supported | 34 | 34 | 100.0% | 34 | 100.0% | 4 | 15.38% |
+| negative_unsupported | 30 | 0 | 0.0% | 1 | 3.33% | 8 | 33.33% |
+| positive_supported | 34 | 34 | 100.0% | 34 | 100.0% | 2 | 7.69% |
 
 ## Threshold Sweep
 
@@ -60,7 +60,7 @@ This sweep is not an optimization procedure. It shows how many query variants re
 | --- | --- | --- |
 | 0.5 | 115 | 87.79% |
 | 0.55 | 88 | 67.18% |
-| 0.6 | 64 | 48.85% |
+| 0.6 | 61 | 46.56% |
 | 0.65 | 36 | 27.48% |
 | 0.7 | 14 | 10.69% |
 
