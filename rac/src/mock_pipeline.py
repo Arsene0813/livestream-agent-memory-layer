@@ -187,12 +187,7 @@ def build_factor_weighting_explanation(
         "bucket_reasons": FACTOR_WEIGHT_REASONS,
         "bucket_members": bucket_rows,
         "limitations": [
-            "Weights are assigned by deterministic factor-id buckets.",
-            "Weights are not learned from historical data.",
-            "Weights are not calculated directly from observed metric tables.",
-            "Weights are not probabilities.",
-            "Weights are not optimized business thresholds.",
-            "Weights only indicate review priority inside the current evidence-bounded RAC scaffold.",
+            "Use the weights only to order review attention within the current evidence-bounded RAC scaffold.",
         ],
     }
 

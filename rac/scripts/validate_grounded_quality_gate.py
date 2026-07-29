@@ -280,8 +280,8 @@ def validate_state(case: dict[str, Any], state: dict[str, Any]) -> dict[str, Any
         "deterministic heuristic bucket assignment",
         "not by a learned model",
         "not by direct calculation from observed metric tables",
-        "Weights are not probabilities.",
-        "Weights are not optimized business thresholds.",
+        "not as probabilities",
+        "not as optimized business thresholds",
     ]
 
     for phrase in required_weighting_phrases:
