@@ -46,10 +46,7 @@ SLOT_TERMS = {
         "transaction_amount",
         "order_conversion_rate_pct",
         "payment_conversion_rate_pct",
-        (
-            "estimated_income_proxy is platform-displayed "
-            "and not audited profit"
-        ),
+        "average_order_value",
     ),
     "top3_sku_product_mix_note": (
         "top3_sku_transaction_amount_share_pct",
@@ -70,6 +67,15 @@ EXPECTED_PERIOD = {
     "period_granularity": "month",
 }
 
+EXPECTED_SUPPORTING_SOURCE_PATHS = {
+    "visibility_entry_profile": (
+        "retail_ops/data/demo2_top_search_terms.csv",
+    ),
+    "top3_sku_product_mix_note": (
+        "retail_ops/data/demo2_top_skus_by_transaction_amount.csv",
+    ),
+}
+
 REQUIRED_FIELDS = (
     "kind",
     "type",
@@ -85,7 +91,6 @@ REQUIRED_FIELDS = (
     "source_fields",
     "confidence",
     "source_path",
-    "supporting_source_paths",
     "lineage_path",
     "limitations",
     "is_active",
@@ -180,11 +185,23 @@ def validate_fact(
         errors,
     )
 
-    supporting_paths = validate_string_list(
-        fact.get("supporting_source_paths"),
-        "supporting_source_paths",
-        errors,
+    supporting_paths: list[str] = []
+    if "supporting_source_paths" in fact:
+        supporting_paths = validate_string_list(
+            fact.get("supporting_source_paths"),
+            "supporting_source_paths",
+            errors,
+        )
+
+    expected_supporting_paths = (
+        EXPECTED_SUPPORTING_SOURCE_PATHS.get(slot, ())
     )
+    for expected_path in expected_supporting_paths:
+        if expected_path not in supporting_paths:
+            errors.append(
+                "supporting_source_paths must include "
+                f"{expected_path}"
+            )
 
     validate_string_list(
         fact.get("limitations"),

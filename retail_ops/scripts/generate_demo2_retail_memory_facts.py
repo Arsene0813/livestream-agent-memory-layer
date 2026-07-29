@@ -143,9 +143,9 @@ for row in comparability_rows:
             entity_id=entity_id,
             slot="visibility_entry_profile",
             value=(
-                f"Store {store_id}'s March 2026 visibility and entry profile can be described from exposure, rank, entry, "
-                f"and search-entry metrics. The record supports cautious comparison of whether the store was being seen "
-                f"and entered, but it does not prove causal performance differences."
+                f"Store {store_id}'s March 2026 visibility and entry profile records exposure, rank, entry, "
+                f"and search-entry metrics across the being seen → being entered stages. "
+                f"It should be read alongside transaction, conversion, activity, and SKU evidence."
             ),
             observed_values={
                 "region_type": row["region_type"],
@@ -241,15 +241,14 @@ for row in comparability_rows:
             entity_id=entity_id,
             slot="transaction_conversion_profile",
             value=(
-                f"Store {store_id}'s March 2026 transaction and conversion profile describes transaction scale, "
-                f"order-submission conversion, payment conversion, estimated income proxy, and average order value. "
-                f"These fields help compare funnel and transaction structure, but they should not be used alone to call the store better or worse."
+                f"Store {store_id}'s March 2026 transaction and conversion profile records transaction amount, order volume, "
+                f"order-submission conversion, payment conversion, and average order value within the being ordered stage. "
+                f"It should be read alongside visibility, entry, activity, and SKU evidence."
             ),
             observed_values={
                 "transaction_amount": as_float(row["transaction_amount"]),
                 "transaction_orders": as_int(row["transaction_orders"]),
                 "average_order_value": as_float(row["average_order_value"]),
-                "estimated_income_proxy": as_float(row["estimated_income_proxy"]),
                 "order_users": as_int(row["order_users"]),
                 "order_times": as_int(row["order_times"]),
                 "order_conversion_rate_pct": as_float(row["order_conversion_rate_pct"]),
@@ -268,7 +267,6 @@ for row in comparability_rows:
                 "transaction_amount",
                 "transaction_orders",
                 "average_order_value",
-                "estimated_income_proxy",
                 "order_users",
                 "order_times",
                 "order_conversion_rate_pct",
@@ -282,7 +280,6 @@ for row in comparability_rows:
             limitations=[
                 "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
                 "same-period March 2026 comparison only",
-                "estimated_income_proxy is platform-displayed and not audited profit",
                 "order_conversion_rate_pct follows the backend definition and must not be recomputed from transaction-order counts",
                 "transaction and conversion metrics do not prove causality or final operating quality by themselves",
             ],

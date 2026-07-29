@@ -39,7 +39,6 @@ REQUIRED_TRANSACTION_FIELDS = {
     "transaction_amount",
     "transaction_orders",
     "average_order_value",
-    "estimated_income_proxy",
     "order_users",
     "order_times",
     "order_conversion_rate_pct",
