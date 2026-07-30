@@ -16,6 +16,8 @@ For standardized instant-retail products, store competition is organized around 
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
+This chain frames the business problem rather than a set of separately observed data stages. Monthly transaction records are used as the continuous sales outcome across reporting periods. Later-month sales may include repeat selection, but the current data cannot separate it from new-customer orders or other demand, and it does not directly measure customer retention or market-share movement. `Maintaining share` therefore remains a business objective, not a reported metric or demonstrated result.
+
 Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on the observed store-period context, local competition, activity involvement, activity intensity, product mix, and reporting-window alignment.
 
 

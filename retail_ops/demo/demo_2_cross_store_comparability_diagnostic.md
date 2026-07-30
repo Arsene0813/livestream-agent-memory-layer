@@ -28,6 +28,8 @@ In this project, instant-retail competition is understood through this operating
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
+Monthly transaction records are used as the continuous sales outcome across reporting periods. Later-month sales may include repeat selection, but the current data does not separate it from other order sources or directly measure customer retention or market-share movement.
+
 Promotion, subsidy, price, SKU mix, ranking position, and fulfillment conditions are operating levers inside this chain. They should be interpreted through the observed store-period context and documented comparison limits, not as isolated goals.
 
 ## Scope
@@ -115,7 +117,7 @@ Demo 2 supports same-period diagnostic reading, but it should not be used for th
 2. transferring subsidy, pricing, SKU, ranking, or fulfillment actions from one store to another;
 3. generalizing the B-F March 2026 sample into a full 48-store decision system.
 
-Profit analysis, complete SKU category-share analysis, automated backend ingestion, causal attribution, and pairwise comparability gating require additional evidence beyond the current Demo 2 scope.
+Profit analysis, separate customer-retention or market-share measurement, complete SKU category-share analysis, automated backend ingestion, causal attribution, and pairwise comparability gating require additional evidence beyond the current Demo 2 scope.
 
 ## Why This Matters for the Memory Layer
 

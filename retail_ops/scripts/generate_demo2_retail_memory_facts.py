@@ -231,7 +231,7 @@ for row in comparability_rows:
                 "activity mechanism details are not included",
                 "promotion cycle dates are unknown",
                 "activity metrics describe tool usage, not causal proof",
-                "activity-cost ratio is a platform-defined activity cost divided by activity original transaction amount; operating interpretation should consider visibility, market-share defense, operating context, and local competition.",
+                "activity-cost ratio is a platform-defined activity cost divided by activity original transaction amount; operating interpretation should consider visibility, transaction outcomes, operating context, and local competition. It does not measure customer retention or market-share movement.",
             ],
         )
     )
@@ -242,7 +242,7 @@ for row in comparability_rows:
             slot="transaction_conversion_profile",
             value=(
                 f"Store {store_id}'s March 2026 transaction and conversion profile records transaction amount, order volume, "
-                f"order-submission conversion, payment conversion, and average order value within the being ordered stage. "
+                f"order-submission conversion, payment conversion, and average order value as transaction outcomes in the current monthly evidence. "
                 f"It should be read alongside visibility, entry, activity, and SKU evidence."
             ),
             observed_values={

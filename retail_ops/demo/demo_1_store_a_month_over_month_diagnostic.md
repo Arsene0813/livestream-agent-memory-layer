@@ -16,6 +16,8 @@ In this project, Meituan instant-retail stores are understood through a chain of
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
+Monthly transaction records are used as the continuous sales outcome across reporting periods. Later-month sales may include repeat selection, but the current data does not separate it from other order sources or directly measure customer retention or market-share movement.
+
 A store may use activity subsidy, pricing, ranking optimization, SKU mix, and fulfillment control as operating levers inside this chain.
 
 

@@ -44,6 +44,8 @@ being seen
 -> being selected again / maintaining share
 ```
 
+This chain frames the business problem rather than a set of separately observed data stages. Monthly transaction records are used as the continuous sales outcome across reporting periods. Later-month sales may include repeat selection, but the current data cannot separate it from new-customer orders or other demand, and it does not directly measure customer retention or market-share movement. `Maintaining share` therefore remains a business objective, not a reported metric or demonstrated result.
+
 Promotion, subsidy, pricing, SKU arrangement, ranking work, fulfillment support, and local competition provide operating context for different parts of this path. Their interpretation depends on the store, reporting period, activity conditions, product structure, and evidence available for the question.
 
 The central decision problem is therefore not simply which store or metric is highest. It is whether an operating interpretation can be reproduced from documented fields, matched to the correct entity and reporting period, and kept within the limits of the available evidence.
@@ -178,4 +180,4 @@ These are the main fields that are easy to misread in application review. Full d
 
 The repository evidence covers six selected stores and the documented reporting windows. It supports reproducible descriptive diagnostics, field-contract checks, lineage-aware memory facts, retrieval stress tests, and answer-boundary evaluation.
 
-Claims about broader store ranking, strategy transfer, market-area classification, or causal attribution remain outside the committed evidence.
+Separate claims about repeat selection, customer retention, market-share movement, broader store ranking, strategy transfer, market-area classification, or causal attribution remain outside the committed evidence. The monthly transaction series is used only as a continuous sales outcome.

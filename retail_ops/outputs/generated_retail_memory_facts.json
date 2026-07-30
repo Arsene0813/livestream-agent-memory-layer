@@ -7,7 +7,7 @@
     "period_label": "2026-02_to_2026-04",
     "period_start": "2026-02-01",
     "period_end": "2026-04-30",
-    "value": "Store A's visibility and entry structure can be described from `exposure_users`, `store_average_rank`, `entry_users`, `search_exposure_users`, `search_average_rank`, and `search_entry_users` across February, March, and April 2026. These metrics are used to understand whether the store was being seen and entered, not to assign a fixed store label.\nIn this business context, the operating path is being seen → being entered → being ordered → being selected again / maintaining share.",
+    "value": "Store A's visibility and entry structure can be described from `exposure_users`, `store_average_rank`, `entry_users`, `search_exposure_users`, `search_average_rank`, and `search_entry_users` across February, March, and April 2026. These metrics are used to understand whether the store was being seen and entered, not to assign a fixed store label.\nIn this business context, the operating path is being seen → being entered → being ordered → being selected again / maintaining share.\nThe monthly transaction records are used as a continuous sales outcome across reporting periods. Later-month sales may include repeat selection, but the current data does not separate it from other order sources or directly measure customer retention or market-share movement.",
     "observed_values": {
       "2026-02": {
         "exposure_users": 6118,
@@ -103,7 +103,7 @@
       "single-store demo",
       "promotion cycle dates are unknown",
       "activity metrics describe tool usage, not causal proof",
-      "activity-cost interpretation should consider visibility, market-share defense, operating context, and local competition"
+      "activity-cost interpretation should consider visibility, transaction outcomes, operating context, and local competition; it does not measure customer retention or market-share movement"
     ],
     "is_active": true,
     "period_granularity": "month_range"

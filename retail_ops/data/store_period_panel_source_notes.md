@@ -25,6 +25,8 @@ The operating chain is:
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ~~~
 
+This chain is the business framing, not a set of separately measured stages. The monthly panel records continuous sales outcomes across reporting periods; it does not separately identify repeat selection, customer retention, or market-share movement.
+
 Refund backend fields retained in the current panel are:
 
 - `refund_amount`

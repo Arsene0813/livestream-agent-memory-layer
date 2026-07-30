@@ -218,7 +218,7 @@ Evidence required before a monthly guardrail-stability test:
 | Monthly recomputation of `comparison_limit_notes` under the implemented SQL contract | Stability must compare like-for-like monthly note sets rather than infer stability from unrelated store-level metrics. |
 | Broader repeated store-period records beyond the current B-F three-month panel | More stores and months are needed before treating a local sensitivity pattern as reusable. |
 | Activity calendar or campaign-condition evidence | Activity involvement should not be interpreted as full campaign status without operating context. |
-| Local competition, price-pressure, fulfillment, or stockout evidence | These factors are needed before promotion, pricing, market-share, or strategy-transfer interpretation. |
+| Local competition, price-pressure, fulfillment, or stockout evidence | Without these factors, the current results do not support claims about promotion or pricing effects, customer retention, market-share movement, or strategy transfer. |
 
 ## Experiment 8: Future Gate Contract Check
 

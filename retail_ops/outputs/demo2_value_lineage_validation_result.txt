@@ -3,7 +3,7 @@ Checked source store-period rows: 5
 Checked output store-period rows: 5
 Checked source-to-output and derived-value comparisons: 250
 Checked generated memory facts: 25
-Checked fact period and observed-value comparisons: 325
+Checked fact period and observed-value comparisons: 320
 Checked top-search-term and top-SKU nested evidence against supporting CSV rows.
 Checked each observed field against output-row values and declared source_fields.
 Saved result path: retail_ops/outputs/demo2_value_lineage_validation_result.txt

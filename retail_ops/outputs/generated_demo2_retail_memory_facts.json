@@ -121,7 +121,7 @@
       "activity mechanism details are not included",
       "promotion cycle dates are unknown",
       "activity metrics describe tool usage, not causal proof",
-      "activity-cost ratio is a platform-defined activity cost divided by activity original transaction amount; operating interpretation should consider visibility, market-share defense, operating context, and local competition."
+      "activity-cost ratio is a platform-defined activity cost divided by activity original transaction amount; operating interpretation should consider visibility, transaction outcomes, operating context, and local competition. It does not measure customer retention or market-share movement."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -134,7 +134,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store B's March 2026 transaction and conversion profile records transaction amount, order volume, order-submission conversion, payment conversion, and average order value within the being ordered stage. It should be read alongside visibility, entry, activity, and SKU evidence.",
+    "value": "Store B's March 2026 transaction and conversion profile records transaction amount, order volume, order-submission conversion, payment conversion, and average order value as transaction outcomes in the current monthly evidence. It should be read alongside visibility, entry, activity, and SKU evidence.",
     "observed_values": {
       "transaction_amount": 11665.5,
       "transaction_orders": 299,
@@ -404,7 +404,7 @@
       "activity mechanism details are not included",
       "promotion cycle dates are unknown",
       "activity metrics describe tool usage, not causal proof",
-      "activity-cost ratio is a platform-defined activity cost divided by activity original transaction amount; operating interpretation should consider visibility, market-share defense, operating context, and local competition."
+      "activity-cost ratio is a platform-defined activity cost divided by activity original transaction amount; operating interpretation should consider visibility, transaction outcomes, operating context, and local competition. It does not measure customer retention or market-share movement."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -417,7 +417,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store C's March 2026 transaction and conversion profile records transaction amount, order volume, order-submission conversion, payment conversion, and average order value within the being ordered stage. It should be read alongside visibility, entry, activity, and SKU evidence.",
+    "value": "Store C's March 2026 transaction and conversion profile records transaction amount, order volume, order-submission conversion, payment conversion, and average order value as transaction outcomes in the current monthly evidence. It should be read alongside visibility, entry, activity, and SKU evidence.",
     "observed_values": {
       "transaction_amount": 7064.09,
       "transaction_orders": 175,
@@ -687,7 +687,7 @@
       "activity mechanism details are not included",
       "promotion cycle dates are unknown",
       "activity metrics describe tool usage, not causal proof",
-      "activity-cost ratio is a platform-defined activity cost divided by activity original transaction amount; operating interpretation should consider visibility, market-share defense, operating context, and local competition."
+      "activity-cost ratio is a platform-defined activity cost divided by activity original transaction amount; operating interpretation should consider visibility, transaction outcomes, operating context, and local competition. It does not measure customer retention or market-share movement."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -700,7 +700,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store D's March 2026 transaction and conversion profile records transaction amount, order volume, order-submission conversion, payment conversion, and average order value within the being ordered stage. It should be read alongside visibility, entry, activity, and SKU evidence.",
+    "value": "Store D's March 2026 transaction and conversion profile records transaction amount, order volume, order-submission conversion, payment conversion, and average order value as transaction outcomes in the current monthly evidence. It should be read alongside visibility, entry, activity, and SKU evidence.",
     "observed_values": {
       "transaction_amount": 18078.7,
       "transaction_orders": 404,
@@ -970,7 +970,7 @@
       "activity mechanism details are not included",
       "promotion cycle dates are unknown",
       "activity metrics describe tool usage, not causal proof",
-      "activity-cost ratio is a platform-defined activity cost divided by activity original transaction amount; operating interpretation should consider visibility, market-share defense, operating context, and local competition."
+      "activity-cost ratio is a platform-defined activity cost divided by activity original transaction amount; operating interpretation should consider visibility, transaction outcomes, operating context, and local competition. It does not measure customer retention or market-share movement."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -983,7 +983,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store E's March 2026 transaction and conversion profile records transaction amount, order volume, order-submission conversion, payment conversion, and average order value within the being ordered stage. It should be read alongside visibility, entry, activity, and SKU evidence.",
+    "value": "Store E's March 2026 transaction and conversion profile records transaction amount, order volume, order-submission conversion, payment conversion, and average order value as transaction outcomes in the current monthly evidence. It should be read alongside visibility, entry, activity, and SKU evidence.",
     "observed_values": {
       "transaction_amount": 5784.87,
       "transaction_orders": 158,
@@ -1253,7 +1253,7 @@
       "activity mechanism details are not included",
       "promotion cycle dates are unknown",
       "activity metrics describe tool usage, not causal proof",
-      "activity-cost ratio is a platform-defined activity cost divided by activity original transaction amount; operating interpretation should consider visibility, market-share defense, operating context, and local competition."
+      "activity-cost ratio is a platform-defined activity cost divided by activity original transaction amount; operating interpretation should consider visibility, transaction outcomes, operating context, and local competition. It does not measure customer retention or market-share movement."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1266,7 +1266,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store F's March 2026 transaction and conversion profile records transaction amount, order volume, order-submission conversion, payment conversion, and average order value within the being ordered stage. It should be read alongside visibility, entry, activity, and SKU evidence.",
+    "value": "Store F's March 2026 transaction and conversion profile records transaction amount, order volume, order-submission conversion, payment conversion, and average order value as transaction outcomes in the current monthly evidence. It should be read alongside visibility, entry, activity, and SKU evidence.",
     "observed_values": {
       "transaction_amount": 9301.8,
       "transaction_orders": 266,
