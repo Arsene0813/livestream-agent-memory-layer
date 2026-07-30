@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from rac.src.grounded_pipeline import run_grounded_pipeline, save_grounded_outputs
+from rac.src.local_evidence_resolver import SOURCE_FACTOR_KEYWORDS
 
 
 REQUIRED_REPORT_SECTIONS = [
@@ -137,6 +138,42 @@ def validate_grounded_rows(rows: list[dict[str, Any]]) -> tuple[list[str], dict[
 
         if len(snippet.strip()) < MIN_SNIPPET_CHARS:
             issues.append(f"row {index} snippet too short for factor {factor_id}")
+
+        required_anchors = SOURCE_FACTOR_KEYWORDS.get(
+            (
+                factor_id,
+                source_path,
+            )
+        )
+
+        if required_anchors:
+            normalized_snippet = normalize(
+                snippet
+            )
+
+            anchor_matched = any(
+                normalize(anchor)
+                in normalized_snippet
+                for anchor in required_anchors
+            )
+
+            if (
+                status
+                == "source_found_no_keyword_match"
+            ):
+                issues.append(
+                    f"row {index} used fallback "
+                    "context for anchored factor "
+                    f"{factor_id}"
+                )
+
+            if not anchor_matched:
+                issues.append(
+                    f"row {index} semantic anchor "
+                    f"mismatch for {factor_id}: "
+                    f"expected one of "
+                    f"{required_anchors!r}"
+                )
 
     return issues, status_counts
 

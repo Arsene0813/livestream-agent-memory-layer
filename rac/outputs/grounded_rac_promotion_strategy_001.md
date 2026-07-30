@@ -52,14 +52,14 @@ The `Source Lines` column is an audit pointer to the local source-file line rang
 
 | Factor | Source | Evidence Type | Status | Source Lines | Evidence Fields |
 |---|---|---|---|---|---|
-| activity_orders | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 138-140 | activity_orders |
-| activity_cost | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 139-141 | activity_cost |
-| merchant_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 139-141 | merchant_subsidy |
-| platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 139-141 | platform_subsidy |
-| order_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 80-82 | order conversion |
-| payment_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 520-522 | 支付人数 |
-| sku_margin_structure | retail_ops/data/DATA_DICTIONARY.md | boundary_evidence | boundary_matched | 13-15 | sku |
-| competitor_context | retail_ops/data/DATA_DICTIONARY.md | boundary_evidence | boundary_matched | 78-80 | competition |
+| activity_orders | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 618-620 | ### `activity_orders` |
+| activity_cost | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 624-626 | ### `activity_cost` |
+| merchant_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 630-632 | ### `merchant_subsidy_amount` |
+| platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 636-638 | ### `platform_subsidy_amount` |
+| order_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 482-484 | ### `order_conversion_rate_pct` |
+| payment_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 534-536 | ### `payment_conversion_rate_pct` |
+| sku_margin_structure | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | 137-139 | margin-aware structure |
+| competitor_context | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | 71-73 | competitor reaction |
 
 
 ## 5. Competing Hypotheses

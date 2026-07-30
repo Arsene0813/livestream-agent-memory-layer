@@ -263,16 +263,88 @@ FACTOR_KEYWORDS: dict[str, list[str]] = {
 }
 
 
+
+# Canonical definitions and explicit evidence boundaries use narrower
+# source-specific anchors. General factor keywords remain available for
+# unregistered source-factor pairs, but cannot replace these anchors.
+SOURCE_FACTOR_KEYWORDS: dict[
+    tuple[str, str],
+    list[str],
+] = {
+    (
+        "region_context",
+        "retail_ops/data/DATA_DICTIONARY.md",
+    ): [
+        "### `region_type`",
+    ],
+    (
+        "activity_orders",
+        "retail_ops/data/DATA_DICTIONARY.md",
+    ): [
+        "### `activity_orders`",
+    ],
+    (
+        "activity_cost",
+        "retail_ops/data/DATA_DICTIONARY.md",
+    ): [
+        "### `activity_cost`",
+    ],
+    (
+        "merchant_subsidy",
+        "retail_ops/data/DATA_DICTIONARY.md",
+    ): [
+        "### `merchant_subsidy_amount`",
+    ],
+    (
+        "platform_subsidy",
+        "retail_ops/data/DATA_DICTIONARY.md",
+    ): [
+        "### `platform_subsidy_amount`",
+    ],
+    (
+        "order_conversion",
+        "retail_ops/data/DATA_DICTIONARY.md",
+    ): [
+        "### `order_conversion_rate_pct`",
+    ],
+    (
+        "payment_conversion",
+        "retail_ops/data/DATA_DICTIONARY.md",
+    ): [
+        "### `payment_conversion_rate_pct`",
+    ],
+    (
+        "competition",
+        "retail_ops/COMPARABILITY_GATE_V0.md",
+    ): [
+        "Competition context | Not currently structured",
+    ],
+    (
+        "sku_margin_structure",
+        "retail_ops/COMPARABILITY_GATE_V0.md",
+    ): [
+        "margin-aware structure",
+    ],
+    (
+        "competitor_context",
+        "retail_ops/COMPARABILITY_GATE_V0.md",
+    ): [
+        "competitor reaction",
+        "competitor density",
+        "price pressure",
+    ],
+}
+
 STRATEGIC_SOURCE_OVERRIDES: dict[str, list[dict[str, str]]] = {
     "sku_margin_structure": [
         {
-            "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+            "source_path": "retail_ops/COMPARABILITY_GATE_V0.md",
             "grounding_role": "boundary_evidence",
         }
     ],
     "competitor_context": [
         {
-            "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+            "source_path": "retail_ops/COMPARABILITY_GATE_V0.md",
             "grounding_role": "boundary_evidence",
         }
     ],
@@ -502,6 +574,24 @@ def candidate_sources_for_packet(
     ]
 
 
+
+def keywords_for_source(
+    factor_id: str,
+    source_path: str,
+) -> list[str]:
+    """Return strict anchors for registered source-factor pairs."""
+    strict_keywords = SOURCE_FACTOR_KEYWORDS.get(
+        (factor_id, source_path)
+    )
+
+    if strict_keywords is not None:
+        return strict_keywords
+
+    return FACTOR_KEYWORDS.get(
+        factor_id,
+        [factor_id.replace("_", " ")],
+    )
+
 def resolve_single_source(
     packet: dict[str, Any],
     *,
@@ -510,7 +600,10 @@ def resolve_single_source(
     grounding_role: str,
     root: Path
 ) -> dict[str, Any]:
-    keywords = FACTOR_KEYWORDS.get(factor_id, [factor_id.replace("_", " ")])
+    keywords = keywords_for_source(
+        factor_id,
+        source_path,
+    )
     absolute_path, text = read_source_text(root, source_path)
 
     resolved: dict[str, Any] = {
@@ -551,18 +644,24 @@ def resolve_single_source(
     fallback = fallback_snippet(text)
 
     if fallback:
+        resolved["grounding_status"] = (
+            "source_found_no_keyword_match"
+        )
+        resolved["resolver_limitations"].append(
+            "No registered factor anchor matched; "
+            "fallback context was returned."
+        )
+
         if grounding_role == "boundary_evidence":
-            resolved["grounding_status"] = "boundary_matched"
             resolved["resolver_limitations"].append(
-                "Boundary source was used even though no exact keyword match was found."
-            )
-        else:
-            resolved["grounding_status"] = "source_found_no_keyword_match"
-            resolved["resolver_limitations"].append(
-                "No keyword match was found; fallback context was returned."
+                "A boundary source is not treated as matched "
+                "without an explicit boundary anchor."
             )
 
-        resolved["snippets"] = [snippet.to_dict() for snippet in fallback]
+        resolved["snippets"] = [
+            snippet.to_dict()
+            for snippet in fallback
+        ]
         return resolved
 
     resolved["grounding_status"] = "source_empty"

@@ -17,13 +17,86 @@ def markdown_escape(value: object) -> str:
     return text
 
 
-def compact_snippet(text: str, *, max_chars: int = 320) -> str:
-    text = re.sub(r"\s+", " ", text).strip()
+def compact_snippet(
+    text: str,
+    *,
+    matched_terms: list[str] | None = None,
+    max_chars: int = 320,
+) -> str:
+    """Compact a snippet without hiding its matched evidence term."""
+    compacted = re.sub(
+        r"\s+",
+        " ",
+        text,
+    ).strip()
 
-    if len(text) <= max_chars:
-        return text
+    if len(compacted) <= max_chars:
+        return compacted
 
-    return text[: max_chars - 3].rstrip() + "..."
+    normalized_terms = [
+        term.strip().lower()
+        for term in (matched_terms or [])
+        if term.strip()
+    ]
+
+    lowered = compacted.lower()
+
+    matched_positions = [
+        lowered.find(term)
+        for term in normalized_terms
+        if lowered.find(term) >= 0
+    ]
+
+    if not matched_positions:
+        return (
+            compacted[
+                : max_chars - 3
+            ].rstrip()
+            + "..."
+        )
+
+    focus_position = min(
+        matched_positions
+    )
+
+    content_chars = max(
+        1,
+        max_chars - 6,
+    )
+
+    context_before = min(
+        96,
+        content_chars // 3,
+    )
+
+    start = max(
+        0,
+        focus_position - context_before,
+    )
+
+    end = min(
+        len(compacted),
+        start + content_chars,
+    )
+
+    if end - start < content_chars:
+        start = max(
+            0,
+            end - content_chars,
+        )
+
+    prefix = "..." if start > 0 else ""
+    suffix = (
+        "..."
+        if end < len(compacted)
+        else ""
+    )
+
+    return (
+        prefix
+        + compacted[start:end].strip()
+        + suffix
+    )
 
 
 def build_grounded_evidence_rows(resolver_result: dict[str, Any]) -> list[dict[str, Any]]:
@@ -58,7 +131,13 @@ def build_grounded_evidence_rows(resolver_result: dict[str, Any]) -> list[dict[s
             "grounding_status": packet["grounding_status"],
             "line_range": line_range,
             "matched_terms": first.get("matched_terms", []),
-            "snippet": compact_snippet(first.get("text", ""))
+            "snippet": compact_snippet(
+                first.get("text", ""),
+                matched_terms=first.get(
+                    "matched_terms",
+                    [],
+                ),
+            )
         })
 
     return rows
