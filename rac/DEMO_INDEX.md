@@ -55,7 +55,7 @@ contract, and fixed evaluation cases.
 | Component | Current Status | Evidence or Next Validation |
 |---|---|---|
 | Structured review contracts | Implemented | `rac/prompts/`, `rac/schemas/`, and `rac/eval/` define the current review inputs, state, and fixed cases. |
-| Deterministic mock pipeline | Implemented | `rac/src/mock_pipeline.py` establishes the typed review-state and report contracts. |
+| Deterministic review pipeline | Implemented | `rac/src/mock_pipeline.py` establishes the typed review-state and report contracts. |
 | Local evidence resolver | Implemented | `rac/src/local_evidence_resolver.py` routes factors to local source snippets or explicit boundary evidence. |
 | Grounded RAC pipeline | Implemented | `rac/src/grounded_pipeline.py` generates source-aware JSON and Markdown reports. |
 | Report-contract quality gate | Implemented | `rac/scripts/validate_grounded_quality_gate.py` validates report structure, evidence references, limitations, and selected claim boundaries. |

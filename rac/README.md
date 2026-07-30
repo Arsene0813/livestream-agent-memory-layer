@@ -222,7 +222,7 @@ question-specific context required for comparison.
 | Grounded deterministic pipeline | `python3 rac/scripts/run_grounded_pipeline.py --all-eval` | `python3 rac/scripts/validate_grounded_pipeline.py` | `rac/outputs/grounded_*.json` and `rac/outputs/grounded_*.md` |
 | Report-contract quality gate | Generated with the grounded pipeline | `python3 rac/scripts/validate_grounded_quality_gate.py` | `grounded_quality_summary.json` and `grounded_quality_summary.md` |
 
-The mock pipeline establishes the review-state contract. The local
+The deterministic review pipeline establishes the review-state contract. The local
 resolver connects factors to repository evidence. The grounded pipeline
 combines both layers into inspectable reports. The quality gate checks
 whether those reports preserve the required evidence structure.
