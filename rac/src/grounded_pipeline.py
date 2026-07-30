@@ -434,16 +434,19 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append("| `no_missing_source_file_score` | 0.15 | Source files must exist, but this is a basic traceability check rather than evidence strength. |")
     lines.append("| `no_fallback_score` | 0.15 | Fallback packets indicate unresolved routing and reduce the current coverage score. |")
     lines.append("")
-    lines.append("Formula limitation:")
+    lines.append("Score contract:")
     lines.append("")
-    lines.append("- These weights are fixed prototype heuristics.")
-    lines.append("- They are not learned parameters, optimized thresholds, calibrated probabilities, or business-performance predictors.")
-    lines.append("- The score is intended to make evidence-routing coverage inspectable, not to prove that a business conclusion is correct.")
-    lines.append("")
-    lines.append("Future sensitivity check:")
-    lines.append("")
-    lines.append("- A future sensitivity check should report how the numeric score changes under alternative weight settings.")
-    lines.append("- Weight sensitivity indicates score instability only; it must not be used to change the report judgment.")
+    lines.append(
+        "- Component weights are fixed prototype heuristics."
+    )
+    lines.append(
+        "- The score summarizes evidence-routing coverage "
+        "under the current rules."
+    )
+    lines.append(
+        "- Alternative weights are a formula sensitivity check; "
+        "the report judgment is produced separately."
+    )
     lines.append("")
     lines.append("Current report inputs:")
     lines.append("")
@@ -457,13 +460,21 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append(f"- no_missing_source_file_score = {coverage_score['no_missing_source_file_score']:.2f}")
     lines.append(f"- no_fallback_score = {coverage_score['no_fallback_score']:.2f}")
     lines.append("")
-    lines.append("Interpretation boundary:")
+    lines.append("Reading the score:")
     lines.append("")
-    lines.append("- This is a deterministic evidence-routing coverage score for the current local report.")
-    lines.append("- It is not a learned probability, Bayesian posterior, causal confidence score, or business-success probability.")
-    lines.append("- Boundary-matched evidence can increase coverage because it explicitly records missing requirements instead of hiding them.")
-    lines.append("- A high score means more requested evidence routes were locally resolved or explicitly bounded under the current rules.")
-    lines.append("- It does not measure evidence strength, conclusion correctness, decision quality, or business impact, and it is not used to select the final judgment.")
+    lines.append(
+        "- A higher value means more requested evidence routes "
+        "were resolved or explicitly bounded."
+    )
+    lines.append(
+        "- Boundary evidence contributes when it documents "
+        "a missing requirement."
+    )
+    lines.append(
+        "- Read the score as coverage rather than evidence "
+        "strength, causal validity, decision quality, "
+        "or business impact."
+    )
     lines.append("")
 
     lines.append("## 10. What Cannot Be Concluded")

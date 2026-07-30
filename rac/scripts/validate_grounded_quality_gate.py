@@ -314,12 +314,17 @@ def validate_state(case: dict[str, Any], state: dict[str, Any]) -> dict[str, Any
         issues.append("zero keyword-or-boundary matched packets")
 
     required_report_contract_phrases = [
-        "Deterministic local-file review",
-        "fixed review-priority buckets assigned by explicit rules",
-        "Scenario-Template Confidence",
-        "Unsupported claims detected by current rules",
-        "Definition conflicts detected by current rules",
-        "The judgment is bounded by the cited local evidence",
+        'Deterministic local-file review',
+        'fixed review-priority buckets assigned by explicit rules',
+        'Scenario-Template Confidence',
+        'Unsupported claims detected by current rules',
+        'Definition conflicts detected by current rules',
+        'The judgment is bounded by the cited local evidence',
+        'Score contract:',
+        'The score summarizes evidence-routing coverage under the current rules.',
+        'Alternative weights are a formula sensitivity check; the report judgment is produced separately.',
+        'Reading the score:',
+        'Read the score as coverage rather than evidence strength, causal validity, decision quality, or business impact.',
     ]
 
     for phrase in required_report_contract_phrases:
@@ -330,13 +335,19 @@ def validate_state(case: dict[str, Any], state: dict[str, Any]) -> dict[str, Any
             )
 
     legacy_defensive_phrases = [
-        "It does not call an LLM, vector database, or live backend service.",
-        "not by a learned model",
-        "not by direct calculation from observed metric tables",
-        "They are not learned probabilities, calibrated likelihoods",
-        "Unsupported claims: none",
-        "Definition conflicts: none",
-        "but it does not prove causality or replace a full retrieval system.",
+        'It does not call an LLM, vector database, or live backend service.',
+        'not by a learned model',
+        'not by direct calculation from observed metric tables',
+        'They are not learned probabilities, calibrated likelihoods',
+        'Unsupported claims: none',
+        'Definition conflicts: none',
+        'but it does not prove causality or replace a full retrieval system.',
+        'Formula limitation:',
+        'Future sensitivity check:',
+        'They are not learned parameters, optimized thresholds, calibrated probabilities, or business-performance predictors.',
+        'This is a deterministic evidence-routing coverage score for the current local report.',
+        'It is not a learned probability, Bayesian posterior, causal confidence score, or business-success probability.',
+        'It does not measure evidence strength, conclusion correctness, decision quality, or business impact',
     ]
 
     for phrase in legacy_defensive_phrases:

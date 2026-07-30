@@ -114,16 +114,11 @@ Weight rationale:
 | `no_missing_source_file_score` | 0.15 | Source files must exist, but this is a basic traceability check rather than evidence strength. |
 | `no_fallback_score` | 0.15 | Fallback packets indicate unresolved routing and reduce the current coverage score. |
 
-Formula limitation:
+Score contract:
 
-- These weights are fixed prototype heuristics.
-- They are not learned parameters, optimized thresholds, calibrated probabilities, or business-performance predictors.
-- The score is intended to make evidence-routing coverage inspectable, not to prove that a business conclusion is correct.
-
-Future sensitivity check:
-
-- A future sensitivity check should report how the numeric score changes under alternative weight settings.
-- Weight sensitivity indicates score instability only; it must not be used to change the report judgment.
+- Component weights are fixed prototype heuristics.
+- The score summarizes evidence-routing coverage under the current rules.
+- Alternative weights are a formula sensitivity check; the report judgment is produced separately.
 
 Current report inputs:
 
@@ -137,13 +132,11 @@ Current report inputs:
 - no_missing_source_file_score = 1.00
 - no_fallback_score = 1.00
 
-Interpretation boundary:
+Reading the score:
 
-- This is a deterministic evidence-routing coverage score for the current local report.
-- It is not a learned probability, Bayesian posterior, causal confidence score, or business-success probability.
-- Boundary-matched evidence can increase coverage because it explicitly records missing requirements instead of hiding them.
-- A high score means more requested evidence routes were locally resolved or explicitly bounded under the current rules.
-- It does not measure evidence strength, conclusion correctness, decision quality, or business impact, and it is not used to select the final judgment.
+- A higher value means more requested evidence routes were resolved or explicitly bounded.
+- Boundary evidence contributes when it documents a missing requirement.
+- Read the score as coverage rather than evidence strength, causal validity, decision quality, or business impact.
 
 ## 10. What Cannot Be Concluded
 
