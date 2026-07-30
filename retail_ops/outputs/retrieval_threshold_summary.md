@@ -12,10 +12,10 @@ The purpose is to inspect retrieval-threshold behavior. It is not a production-l
 
 - Retrieval units loaded: 302
 - Unit definition: one generated memory fact or one chunked field-contract/source-note segment; this is not a store count or a count of independent business observations.
-- Corpus SHA-256: `3747c4d2a936a3d648a1cd49d80b5b5b9f5511f7ce161ebdc1d993c8ffcd30bc`
+- Corpus SHA-256: `1f8fd5a7b42d875d2a4f72105d1f43db0a9e05883a6a8cc3fafc4717799eb850`
 - Corpus builder: `eval/retail_retrieval_corpus.py::load_retail_retrieval_documents`
-- Run commit: `f094db90ac51f7645ea7bbf9150831a46b0f39bd`
-- Experiment scope SHA-256: `d829423d0aa17f749f965247b264454a13850e8fd6cdfc89066da6971c6700d3`
+- Run commit: `8e697d2be6bc2eef96ce5252fb6ee9fbca62c80d`
+- Experiment scope SHA-256: `d92a7bb3ca12d08fac907a89ad1178b5b6782e136e1f6ef5760028bdd4e68431`
 - Applicability note: the scope hash identifies the clean experiment-relevant code and input snapshot. The run commit is retained for navigation. Later unrelated commits do not invalidate the result. Run `python3 eval/check_retrieval_result_applicability.py` to check the current scope.
 - Retrieval threshold cases: 29
 - Embedding model: `bge-m3` via local Ollama
@@ -40,11 +40,11 @@ The purpose is to inspect retrieval-threshold behavior. It is not a production-l
 
 | Case type | Cases | Top-1 min | Top-1 p25 | Top-1 median | Top-1 p75 | Top-1 max | Median margin | Expected hit@5 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| ambiguous_comparison | 4 | 0.5275 | 0.5373 | 0.5427 | 0.5544 | 0.5828 | 0.0055 | 3/4 |
-| entity_period_mismatch | 4 | 0.5555 | 0.5823 | 0.6001 | 0.6193 | 0.6504 | 0.0150 | 1/4 |
+| ambiguous_comparison | 4 | 0.5279 | 0.5374 | 0.5427 | 0.5549 | 0.5852 | 0.0043 | 3/4 |
+| entity_period_mismatch | 4 | 0.5555 | 0.5776 | 0.5999 | 0.6238 | 0.6504 | 0.0088 | 1/4 |
 | hard_negative_boundary | 7 | 0.5055 | 0.5711 | 0.6271 | 0.6784 | 0.7139 | 0.0085 | 5/7 |
-| negative_unsupported | 6 | 0.4566 | 0.4930 | 0.4957 | 0.5290 | 0.5561 | 0.0098 | 0/6 |
-| positive_supported | 8 | 0.5776 | 0.6150 | 0.6441 | 0.7108 | 0.7593 | 0.0364 | 8/8 |
+| negative_unsupported | 6 | 0.4566 | 0.4933 | 0.4957 | 0.5290 | 0.5561 | 0.0085 | 0/6 |
+| positive_supported | 8 | 0.5809 | 0.6150 | 0.6441 | 0.7108 | 0.7593 | 0.0213 | 8/8 |
 
 ## Threshold Interpretation
 
