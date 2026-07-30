@@ -1,4 +1,6 @@
 {
+  "validation_scope": "Current deterministic report-contract checks: report structure, source traceability, semantic anchors, and selected claim boundaries.",
+  "pass_interpretation": "A passed case satisfies the current rule set; it does not establish causal validity, decision quality, or business impact.",
   "total_cases": 4,
   "passed_cases": 4,
   "failed_cases": 0,
