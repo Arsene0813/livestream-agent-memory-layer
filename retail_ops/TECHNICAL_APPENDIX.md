@@ -71,7 +71,7 @@ The repository contains more than one retrieval path. They should not be read as
 | `/chat_retail_ops_demo2_kb` | File-backed generated Demo 2 retail memory facts. | Tests whether B-F same-period diagnostic facts can be returned or refused inside the current evidence boundary. | Not retrieval-score evaluation, production Meituan API integration, or a pairwise comparability gate. |
 | Future pairwise comparability gate | Not implemented. | Planned gate for judging whether two store-period records can be compared for a specific operating question. | Should be implemented only after broader store-period coverage, repeated windows, and stronger market-context evidence exist. |
 
-The retrieval-threshold calibration is a separate offline inspection over the file-backed evidence corpus. It should not be read as the runtime selection logic of `/chat_retail_ops_demo2_kb`.
+The retrieval-threshold inspection is a separate offline analysis over the file-backed evidence corpus. It should not be read as the runtime selection logic of `/chat_retail_ops_demo2_kb`.
 
 ### Retail Retrieval Flow
 

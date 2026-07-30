@@ -174,12 +174,12 @@ Implemented Demo 2 evidence slots:
 
 | Item | Content |
 |---|---|
-| Question | Can the current retrieval threshold be explained from score distributions rather than isolated successful examples? |
+| Question | What score distribution does the current file-backed corpus produce, and what exploratory reference threshold can be inspected from it? |
 | Input | `eval/retrieval_threshold_cases.json`; generated Demo 1 and Demo 2 retail memory facts; selected field-contract notes such as `DATA_DICTIONARY.md` and `demo2_source_notes.md`. |
 | Transformation | `eval/analyze_retail_embedding_score_distribution.py` embeds each query and retrieval document with local Ollama `bge-m3`, retrieves top-k evidence, records scores, top-1/top-2 margins, expected matches, entity matches, slot matches, and period-scope checks. |
 | Output | `retail_ops/outputs/retrieval_score_distribution.csv`; `retail_ops/outputs/retrieval_threshold_summary.md`; `retail_ops/outputs/retrieval_score_distribution.png`. |
 | Expected behavior | The inspection records retrieval behavior across supported, unsupported, hard-negative, entity/period mismatch, and ambiguous comparison queries. |
-| Current result | Completed across 29 cases and 302 retrieval units. Positive-supported cases retained expected evidence at top-5 in 8/8 cases, while negative-unsupported cases had 0/6 expected hits. The exploratory reference threshold is `0.5776`, midway between the positive-supported p25 score `0.6261` and negative-unsupported p75 score `0.5290`. |
+| Current result | Completed across 29 cases and 302 retrieval units. Positive-supported cases retained expected evidence at top-5 in 8/8 cases, while negative-unsupported cases had 0/6 expected hits. The exploratory reference threshold is `0.5720`, midway between the positive-supported p25 score `0.6150` and negative-unsupported p75 score `0.5290`. This is a descriptive inspection reference for the current corpus, not a calibrated production cutoff. |
 | Boundary | Offline reference-threshold inspection only. Retrieval scores make evidence routing inspectable, but final operating claims still require entity, period, source-path, metric-definition, and interpretation-boundary checks. |
 | Failure mode | Treating a high retrieval score as sufficient evidence for an operating conclusion, or claiming a production-level threshold from the current small file-backed corpus. |
 
@@ -192,9 +192,9 @@ Implemented Demo 2 evidence slots:
 | Transformation | `eval/analyze_retail_query_robustness.py` tests shortened, paraphrased, typo/noise, and keyword-order query variants. |
 | Output | `retail_ops/outputs/retrieval_query_robustness.csv`; `retail_ops/outputs/retrieval_query_threshold_sweep.csv`; `retail_ops/outputs/retrieval_query_robustness_summary.md`. |
 | Expected behavior | Supported cases should generally retain expected evidence in top-k under small wording changes. Unsupported, hard-negative, entity/period-mismatch, and ambiguous comparison cases should still require entity, period, slot, source-path, and interpretation-boundary checks. |
-| Current result | Completed over 131 deterministic query variants. Positive-supported variants retained expected evidence and remained above `0.5776` in 34/34 variants; negative-unsupported variants had 0/30 expected hits and 0/30 above the reference threshold. Hard-negative, entity/period-mismatch, and ambiguous variants still crossed the threshold in 23/33, 14/18, and 5/16 variants, respectively. |
+| Current result | Completed over 131 declared deterministic query variants across 29 cases. Positive-supported variants retained expected evidence in 34/34 variants, and all 34/34 remained above the `0.5720` reference threshold. Negative-unsupported variants had 0/30 expected hits, while 1/30 still crossed the threshold. Hard-negative, entity/period-mismatch, and ambiguous variants crossed it in 23/33, 15/18, and 5/16 variants, respectively. |
 | Boundary | Top-k retention or a score above the reference threshold does not make a query answerable; entity, period, slot, source-path, and answer-boundary checks remain required. |
-| Boundary example | For the Store D February `refund_amount` mismatch case, one shortened variant scored `0.581321`, slightly above the reference threshold, but had no expected top-5 hit. Its top result was a dictionary definition with no entity or slot, so it does not support a February Store D refund amount or an original-order-quality claim. |
+| Boundary example | Entity/period-mismatch variants crossed the reference threshold in 15/18 variants, while only 3/18 retained an expected top-5 evidence hit. Semantic proximity therefore does not establish that evidence exists for the requested entity, reporting period, or demo scope. |
 
 ## Experiment 7: Repeated-Window Coverage and Descriptive Movement Check
 
