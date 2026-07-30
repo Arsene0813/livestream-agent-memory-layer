@@ -313,17 +313,38 @@ def validate_state(case: dict[str, Any], state: dict[str, Any]) -> dict[str, Any
     if (summary.get("keyword_matched_count", 0) + summary.get("boundary_matched_count", 0)) == 0:
         issues.append("zero keyword-or-boundary matched packets")
 
-    required_weighting_phrases = [
-        "deterministic heuristic bucket assignment",
-        "not by a learned model",
-        "not by direct calculation from observed metric tables",
-        "not as probabilities",
-        "not as optimized business thresholds",
+    required_report_contract_phrases = [
+        "Deterministic local-file review",
+        "fixed review-priority buckets assigned by explicit rules",
+        "Scenario-Template Confidence",
+        "Unsupported claims detected by current rules",
+        "Definition conflicts detected by current rules",
+        "The judgment is bounded by the cited local evidence",
     ]
 
-    for phrase in required_weighting_phrases:
+    for phrase in required_report_contract_phrases:
         if phrase not in report:
-            issues.append(f"report missing factor-weighting explanation phrase: {phrase}")
+            issues.append(
+                "report missing concise contract phrase: "
+                f"{phrase}"
+            )
+
+    legacy_defensive_phrases = [
+        "It does not call an LLM, vector database, or live backend service.",
+        "not by a learned model",
+        "not by direct calculation from observed metric tables",
+        "They are not learned probabilities, calibrated likelihoods",
+        "Unsupported claims: none",
+        "Definition conflicts: none",
+        "but it does not prove causality or replace a full retrieval system.",
+    ]
+
+    for phrase in legacy_defensive_phrases:
+        if phrase in report:
+            issues.append(
+                "legacy defensive report phrase found: "
+                f"{phrase}"
+            )
 
     for row in state.get("factor_weights", []):
         if "weight_bucket" not in row:
