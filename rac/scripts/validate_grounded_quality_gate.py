@@ -250,7 +250,7 @@ def validate_cross_store_grounding(state: dict[str, Any]) -> list[str]:
     required_report_phrases = [
         "same-period diagnostic review",
         "should not be treated as directly comparable",
-        "Pairwise comparability gate is future work"
+        "Pairwise quantitative gates are not defined in the current contract."
     ]
 
     for phrase in required_report_phrases:

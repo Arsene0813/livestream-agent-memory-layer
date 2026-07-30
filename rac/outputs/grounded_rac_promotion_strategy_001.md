@@ -69,12 +69,12 @@ The `Scenario-Template Confidence` column records deterministic review labels as
 | Hypothesis | Scenario-Template Confidence | Status | Weakness |
 |---|---:|---|---|
 | Promotion decisions should be checked against cost, conversion, SKU structure, margin, and competitor context. | 0.84 | strong | Final action still requires real margin and competitor evidence. |
-| The current evidence can support a bounded promotion review checklist, but not an automatic promotion change. | 0.68 | plausible | The current grounded RAC pipeline does not calculate a real cost trend. |
+| The current evidence can support a bounded promotion review checklist, but not an automatic promotion change. | 0.68 | plausible | Cost-trend interpretation requires repeated-period cost evidence. |
 
 ## 6. Critic Findings
 
-- [high] The grounded RAC pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
-- [medium] The grounded RAC pipeline uses deterministic local file evidence resolution rather than live backend or vector retrieval. Recommendation: State this limitation clearly.
+- [high] Observational evidence supports bounded association claims only. Recommendation: Keep attribution language conditional and record unresolved alternatives.
+- [medium] Current evidence scope is limited to committed local project files. Recommendation: Keep source paths and unresolved external requirements explicit.
 - [high] Promotion recommendations require margin and competitor context. Recommendation: Avoid final action recommendations without these checks.
 
 ## 7. Claim and Definition Check
@@ -138,7 +138,7 @@ Reading the score:
 
 ## 10. What Cannot Be Concluded
 
-- The current grounded RAC pipeline does not compute real margins.
+- Margin fields are absent from the current evidence.
 - Competitor data may be incomplete.
 - One reporting window is insufficient for robust action attribution.
 

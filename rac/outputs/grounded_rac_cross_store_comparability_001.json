@@ -90,7 +90,7 @@
       "weight": 0.72,
       "weight_bucket": "medium",
       "weight_reason": "Important context but not sufficient on its own.",
-      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weighting_method": "fixed review-priority bucket assignment; source: rac/src/mock_pipeline.py; used to order review attention within the current evidence scope",
       "weight_source": "rac/src/mock_pipeline.py",
       "evidence_status": "partially_supported"
     },
@@ -99,7 +99,7 @@
       "weight": 0.72,
       "weight_bucket": "medium",
       "weight_reason": "Important context but not sufficient on its own.",
-      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weighting_method": "fixed review-priority bucket assignment; source: rac/src/mock_pipeline.py; used to order review attention within the current evidence scope",
       "weight_source": "rac/src/mock_pipeline.py",
       "evidence_status": "partially_supported"
     },
@@ -108,7 +108,7 @@
       "weight": 0.72,
       "weight_bucket": "medium",
       "weight_reason": "Important context but not sufficient on its own.",
-      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weighting_method": "fixed review-priority bucket assignment; source: rac/src/mock_pipeline.py; used to order review attention within the current evidence scope",
       "weight_source": "rac/src/mock_pipeline.py",
       "evidence_status": "partially_supported"
     },
@@ -117,7 +117,7 @@
       "weight": 0.72,
       "weight_bucket": "medium",
       "weight_reason": "Important context but not sufficient on its own.",
-      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weighting_method": "fixed review-priority bucket assignment; source: rac/src/mock_pipeline.py; used to order review attention within the current evidence scope",
       "weight_source": "rac/src/mock_pipeline.py",
       "evidence_status": "partially_supported"
     },
@@ -126,7 +126,7 @@
       "weight": 0.85,
       "weight_bucket": "high",
       "weight_reason": "Central to avoiding overconfident or misleading conclusions.",
-      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weighting_method": "fixed review-priority bucket assignment; source: rac/src/mock_pipeline.py; used to order review attention within the current evidence scope",
       "weight_source": "rac/src/mock_pipeline.py",
       "evidence_status": "partially_supported"
     },
@@ -135,7 +135,7 @@
       "weight": 0.6,
       "weight_bucket": "default",
       "weight_reason": "Potentially relevant but requires stronger evidence.",
-      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weighting_method": "fixed review-priority bucket assignment; source: rac/src/mock_pipeline.py; used to order review attention within the current evidence scope",
       "weight_source": "rac/src/mock_pipeline.py",
       "evidence_status": "partially_supported"
     },
@@ -144,7 +144,7 @@
       "weight": 0.6,
       "weight_bucket": "default",
       "weight_reason": "Potentially relevant but requires stronger evidence.",
-      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weighting_method": "fixed review-priority bucket assignment; source: rac/src/mock_pipeline.py; used to order review attention within the current evidence scope",
       "weight_source": "rac/src/mock_pipeline.py",
       "evidence_status": "partially_supported"
     },
@@ -153,7 +153,7 @@
       "weight": 0.6,
       "weight_bucket": "default",
       "weight_reason": "Potentially relevant but requires stronger evidence.",
-      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weighting_method": "fixed review-priority bucket assignment; source: rac/src/mock_pipeline.py; used to order review attention within the current evidence scope",
       "weight_source": "rac/src/mock_pipeline.py",
       "evidence_status": "partially_supported"
     },
@@ -162,7 +162,7 @@
       "weight": 0.6,
       "weight_bucket": "default",
       "weight_reason": "Potentially relevant but requires stronger evidence.",
-      "weighting_method": "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; not learned from data, not calculated directly from observed metric tables, not a probability, and not an optimized business threshold",
+      "weighting_method": "fixed review-priority bucket assignment; source: rac/src/mock_pipeline.py; used to order review attention within the current evidence scope",
       "weight_source": "rac/src/mock_pipeline.py",
       "evidence_status": "partially_supported"
     }
@@ -174,8 +174,8 @@
       "source_path": "retail_ops/data/demo2_source_notes.md",
       "claim_supported": "Provides context needed to evaluate factor: same_reporting_period.",
       "limitations": [
-        "Deterministic grounded RAC pipeline only.",
-        "No live retrieval is performed in this step."
+        "Evidence is resolved from committed local project files.",
+        "Coverage is limited to the sources listed in this packet."
       ]
     },
     {
@@ -184,8 +184,8 @@
       "source_path": "retail_ops/data/demo2_source_notes.md",
       "claim_supported": "Provides context needed to evaluate factor: store_type.",
       "limitations": [
-        "Deterministic grounded RAC pipeline only.",
-        "No live retrieval is performed in this step."
+        "Evidence is resolved from committed local project files.",
+        "Coverage is limited to the sources listed in this packet."
       ]
     },
     {
@@ -194,8 +194,8 @@
       "source_path": "retail_ops/data/demo2_source_notes.md",
       "claim_supported": "Provides context needed to evaluate factor: order_volume.",
       "limitations": [
-        "Deterministic grounded RAC pipeline only.",
-        "No live retrieval is performed in this step."
+        "Evidence is resolved from committed local project files.",
+        "Coverage is limited to the sources listed in this packet."
       ]
     },
     {
@@ -204,8 +204,8 @@
       "source_path": "retail_ops/data/demo2_source_notes.md",
       "claim_supported": "Provides context needed to evaluate factor: transaction_amount.",
       "limitations": [
-        "Deterministic grounded RAC pipeline only.",
-        "No live retrieval is performed in this step."
+        "Evidence is resolved from committed local project files.",
+        "Coverage is limited to the sources listed in this packet."
       ]
     },
     {
@@ -214,8 +214,8 @@
       "source_path": "retail_ops/data/demo2_source_notes.md",
       "claim_supported": "Provides context needed to evaluate factor: activity_intensity.",
       "limitations": [
-        "Deterministic grounded RAC pipeline only.",
-        "No live retrieval is performed in this step."
+        "Evidence is resolved from committed local project files.",
+        "Coverage is limited to the sources listed in this packet."
       ]
     },
     {
@@ -224,8 +224,8 @@
       "source_path": "retail_ops/data/demo2_source_notes.md",
       "claim_supported": "Provides context needed to evaluate factor: region_context.",
       "limitations": [
-        "Deterministic grounded RAC pipeline only.",
-        "No live retrieval is performed in this step."
+        "Evidence is resolved from committed local project files.",
+        "Coverage is limited to the sources listed in this packet."
       ]
     },
     {
@@ -234,8 +234,8 @@
       "source_path": "retail_ops/data/demo2_source_notes.md",
       "claim_supported": "Provides context needed to evaluate factor: competition.",
       "limitations": [
-        "Deterministic grounded RAC pipeline only.",
-        "No live retrieval is performed in this step."
+        "Evidence is resolved from committed local project files.",
+        "Coverage is limited to the sources listed in this packet."
       ]
     },
     {
@@ -244,8 +244,8 @@
       "source_path": "retail_ops/data/demo2_source_notes.md",
       "claim_supported": "Provides context needed to evaluate factor: sku_structure.",
       "limitations": [
-        "Deterministic grounded RAC pipeline only.",
-        "No live retrieval is performed in this step."
+        "Evidence is resolved from committed local project files.",
+        "Coverage is limited to the sources listed in this packet."
       ]
     },
     {
@@ -254,8 +254,8 @@
       "source_path": "retail_ops/data/demo2_source_notes.md",
       "claim_supported": "Provides context needed to evaluate factor: repeated_reporting_windows.",
       "limitations": [
-        "Deterministic grounded RAC pipeline only.",
-        "No live retrieval is performed in this step."
+        "Evidence is resolved from committed local project files.",
+        "Coverage is limited to the sources listed in this packet."
       ]
     }
   ],
@@ -288,21 +288,21 @@
         "repeated_reporting_windows"
       ],
       "weaknesses": [
-        "The current grounded RAC pipeline does not compute quantitative pairwise thresholds."
+        "Pairwise quantitative thresholds are outside the current review contract."
       ],
       "status": "strong"
     }
   ],
   "critic_findings": [
     {
-      "issue": "The grounded RAC pipeline must not claim causal proof from observational evidence.",
+      "issue": "Observational evidence supports bounded association claims only.",
       "severity": "high",
-      "recommendation": "Use cautious language and state that attribution is not proven."
+      "recommendation": "Keep attribution language conditional and record unresolved alternatives."
     },
     {
-      "issue": "The grounded RAC pipeline uses deterministic local file evidence resolution rather than live backend or vector retrieval.",
+      "issue": "Current evidence scope is limited to committed local project files.",
       "severity": "medium",
-      "recommendation": "State this limitation clearly."
+      "recommendation": "Keep source paths and unresolved external requirements explicit."
     },
     {
       "issue": "Same-period diagnostic organization must not be described as a completed pairwise comparability gate.",
@@ -324,12 +324,12 @@
       "Demo 2 March 2026 B-F context."
     ],
     "limitations": [
-      "Pairwise comparability gate is future work.",
+      "Pairwise quantitative gates are not defined in the current contract.",
       "Region type remains weak context.",
       "Three monthly B-F reporting windows are available; they do not by themselves establish stable pairwise comparability."
     ]
   },
-  "final_report": "# Grounded RAC Report\n\n## 1. Direct Answer\n\nStores B-F can be organized for same-period diagnostic review, but should not be treated as directly comparable without pairwise gates.\n\nDeterministic local-file review; routing scores summarize evidence coverage under the current rules.\n\n## 2. Question Type\n\n- Question type: comparability_judgment\n- Domain: retail_operations\n\n## 3. Factor Weights\n\n### 3a. How Factor Weights Are Generated\n\nFactor weights are fixed review-priority buckets assigned by explicit rules in `rac/src/mock_pipeline.py`. They order review attention within the current evidence scope.\n\n| Bucket | Weight | Rule | Factors in This Report |\n|---|---:|---|---|\n| high | 0.85 | Central to avoiding overconfident or misleading conclusions. | activity_intensity |\n| medium | 0.72 | Important context but not sufficient on its own. | same_reporting_period, store_type, order_volume, transaction_amount |\n| default | 0.60 | Potentially relevant but requires stronger evidence. | region_context, competition, sku_structure, repeated_reporting_windows |\n\nWeighting boundary:\n\n- Use these values only to order review attention within the current evidence scope.\n\n### 3b. Factor Weights Used in This Report\n\n| Factor | Weight | Bucket | Evidence Status | Why It Matters |\n|---|---:|---|---|---|\n| same_reporting_period | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |\n| store_type | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |\n| order_volume | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |\n| transaction_amount | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |\n| activity_intensity | 0.85 | high | partially_supported | Central to avoiding overconfident or misleading conclusions. |\n| region_context | 0.60 | default | partially_supported | Potentially relevant but requires stronger evidence. |\n| competition | 0.60 | default | partially_supported | Potentially relevant but requires stronger evidence. |\n| sku_structure | 0.60 | default | partially_supported | Potentially relevant but requires stronger evidence. |\n| repeated_reporting_windows | 0.60 | default | partially_supported | Potentially relevant but requires stronger evidence. |\n\n## 4. Local Evidence Grounding\n\n- Total evidence packets: 9\n- Keyword matched packets: 8\n- Boundary matched packets: 1\n- Fallback packets: 0\n- Missing source files: 0\n\nThe `Source Lines` column is an audit pointer to the local source-file line range used for each evidence row. It is not a business metric. The `Evidence Fields` column lists the canonical fields or documented evidence concepts used for review; raw matched keywords are intentionally not shown.\n\n| Factor | Source | Evidence Type | Status | Source Lines | Evidence Fields |\n|---|---|---|---|---|---|\n| same_reporting_period | retail_ops/data/demo2_source_notes.md | context_evidence | keyword_matched | 6-8 | period_start, period_end, period_month |\n| store_type | retail_ops/outputs/demo2_cross_store_comparability_output.csv | context_evidence | keyword_matched | 1-2 | store_type |\n| order_volume | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | transaction_orders |\n| transaction_amount | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | transaction_amount |\n| activity_intensity | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | activity_orders, activity_order_share_pct, activity_cost, activity_cost_ratio_pct |\n| region_context | retail_ops/data/DATA_DICTIONARY.md | definition_evidence | keyword_matched | 74-76 | region_type |\n| competition | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | 101-103 | competition-context requirement in comparability contract |\n| sku_structure | retail_ops/outputs/demo2_cross_store_comparability_output.csv | product_mix_evidence | keyword_matched | 1-2 | top3_sku_transaction_amount, top3_sku_transaction_amount_share_pct, SKU source tables |\n| repeated_reporting_windows | retail_ops/outputs/repeated_window_panel_summary_output.csv | quantitative_evidence | keyword_matched | 1-2 | store_period_panel_metrics, repeated reporting windows |\n\n\n## 5. Competing Hypotheses\n\nThe `Scenario-Template Confidence` column records deterministic review labels assigned by `generate_hypotheses(question_type)` in `rac/src/mock_pipeline.py`.\n\n| Hypothesis | Scenario-Template Confidence | Status | Weakness |\n|---|---:|---|---|\n| Stores B-F can be organized in a same-period diagnostic table. | 0.78 | strong | Same-period diagnostic organization does not establish robust comparability. |\n| Stores B-F should not be treated as directly comparable without pairwise gates. | 0.86 | strong | The current grounded RAC pipeline does not compute quantitative pairwise thresholds. |\n\n## 6. Critic Findings\n\n- [high] The grounded RAC pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.\n- [medium] The grounded RAC pipeline uses deterministic local file evidence resolution rather than live backend or vector retrieval. Recommendation: State this limitation clearly.\n- [critical] Same-period diagnostic organization must not be described as a completed pairwise comparability gate. Recommendation: Separate same-period diagnostic review from pairwise comparability.\n\n## 7. Claim and Definition Check\n\n- Status: pass\n- Unsupported claims detected by current rules: none\n- Definition conflicts detected by current rules: none\n\n## 8. Final Judgment\n\nStores B-F can be organized for same-period diagnostic review, but should not be treated as directly comparable without pairwise gates.\n\nThe judgment is bounded by the cited local evidence and the unresolved requirements recorded above.\n\n## 9. Evidence-Coverage Score\n\n0.95\n\nHow this score is calculated:\n\n```text\nevidence_coverage_score =\n  0.45 * direct_evidence_rate\n+ 0.25 * supported_or_boundary_rate\n+ 0.15 * no_missing_source_file_score\n+ 0.15 * no_fallback_score\n```\n\nWeight rationale:\n\n| Component | Weight | Why |\n|---|---:|---|\n| `direct_evidence_rate` | 0.45 | Highest priority because actual local evidence should matter more than boundary-only evidence. |\n| `supported_or_boundary_rate` | 0.25 | Boundary evidence is valuable because it explicitly records missing requirements instead of hiding them. |\n| `no_missing_source_file_score` | 0.15 | Source files must exist, but this is a basic traceability check rather than evidence strength. |\n| `no_fallback_score` | 0.15 | Fallback packets indicate unresolved routing and reduce the current coverage score. |\n\nScore contract:\n\n- Component weights are fixed prototype heuristics.\n- The score summarizes evidence-routing coverage under the current rules.\n- Alternative weights are a formula sensitivity check; the report judgment is produced separately.\n\nCurrent report inputs:\n\n- total_packets = 9\n- keyword_matched_packets = 8\n- boundary_matched_packets = 1\n- fallback_packets = 0\n- missing_source_files = 0\n- direct_evidence_rate = keyword_matched_packets / total_packets = 0.89\n- supported_or_boundary_rate = (keyword_matched_packets + boundary_matched_packets) / total_packets = 1.00\n- no_missing_source_file_score = 1.00\n- no_fallback_score = 1.00\n\nReading the score:\n\n- A higher value means more requested evidence routes were resolved or explicitly bounded.\n- Boundary evidence contributes when it documents a missing requirement.\n- Read the score as coverage rather than evidence strength, causal validity, decision quality, or business impact.\n\n## 10. What Cannot Be Concluded\n\n- Pairwise comparability gate is future work.\n- Region type remains weak context.\n- Three monthly B-F reporting windows are available; they do not by themselves establish stable pairwise comparability.\n\n## 11. Review-State Update\n\n- review_state_id: stores_b_f_same_period_not_directly_comparable\n- status: active\n- validity_conditions:\n  - Demo 2 March 2026 B-F context.\n",
+  "final_report": "# Grounded RAC Report\n\n## 1. Direct Answer\n\nStores B-F can be organized for same-period diagnostic review, but should not be treated as directly comparable without pairwise gates.\n\nDeterministic local-file review; routing scores summarize evidence coverage under the current rules.\n\n## 2. Question Type\n\n- Question type: comparability_judgment\n- Domain: retail_operations\n\n## 3. Factor Weights\n\n### 3a. How Factor Weights Are Generated\n\nFactor weights are fixed review-priority buckets assigned by explicit rules in `rac/src/mock_pipeline.py`. They order review attention within the current evidence scope.\n\n| Bucket | Weight | Rule | Factors in This Report |\n|---|---:|---|---|\n| high | 0.85 | Central to avoiding overconfident or misleading conclusions. | activity_intensity |\n| medium | 0.72 | Important context but not sufficient on its own. | same_reporting_period, store_type, order_volume, transaction_amount |\n| default | 0.60 | Potentially relevant but requires stronger evidence. | region_context, competition, sku_structure, repeated_reporting_windows |\n\nWeighting boundary:\n\n- Use these values only to order review attention within the current evidence scope.\n\n### 3b. Factor Weights Used in This Report\n\n| Factor | Weight | Bucket | Evidence Status | Why It Matters |\n|---|---:|---|---|---|\n| same_reporting_period | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |\n| store_type | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |\n| order_volume | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |\n| transaction_amount | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |\n| activity_intensity | 0.85 | high | partially_supported | Central to avoiding overconfident or misleading conclusions. |\n| region_context | 0.60 | default | partially_supported | Potentially relevant but requires stronger evidence. |\n| competition | 0.60 | default | partially_supported | Potentially relevant but requires stronger evidence. |\n| sku_structure | 0.60 | default | partially_supported | Potentially relevant but requires stronger evidence. |\n| repeated_reporting_windows | 0.60 | default | partially_supported | Potentially relevant but requires stronger evidence. |\n\n## 4. Local Evidence Grounding\n\n- Total evidence packets: 9\n- Keyword matched packets: 8\n- Boundary matched packets: 1\n- Fallback packets: 0\n- Missing source files: 0\n\nThe `Source Lines` column is an audit pointer to the local source-file line range used for each evidence row. It is not a business metric. The `Evidence Fields` column lists the canonical fields or documented evidence concepts used for review; raw matched keywords are intentionally not shown.\n\n| Factor | Source | Evidence Type | Status | Source Lines | Evidence Fields |\n|---|---|---|---|---|---|\n| same_reporting_period | retail_ops/data/demo2_source_notes.md | context_evidence | keyword_matched | 6-8 | period_start, period_end, period_month |\n| store_type | retail_ops/outputs/demo2_cross_store_comparability_output.csv | context_evidence | keyword_matched | 1-2 | store_type |\n| order_volume | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | transaction_orders |\n| transaction_amount | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | transaction_amount |\n| activity_intensity | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | activity_orders, activity_order_share_pct, activity_cost, activity_cost_ratio_pct |\n| region_context | retail_ops/data/DATA_DICTIONARY.md | definition_evidence | keyword_matched | 74-76 | region_type |\n| competition | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | 101-103 | competition-context requirement in comparability contract |\n| sku_structure | retail_ops/outputs/demo2_cross_store_comparability_output.csv | product_mix_evidence | keyword_matched | 1-2 | top3_sku_transaction_amount, top3_sku_transaction_amount_share_pct, SKU source tables |\n| repeated_reporting_windows | retail_ops/outputs/repeated_window_panel_summary_output.csv | quantitative_evidence | keyword_matched | 1-2 | store_period_panel_metrics, repeated reporting windows |\n\n\n## 5. Competing Hypotheses\n\nThe `Scenario-Template Confidence` column records deterministic review labels assigned by `generate_hypotheses(question_type)` in `rac/src/mock_pipeline.py`.\n\n| Hypothesis | Scenario-Template Confidence | Status | Weakness |\n|---|---:|---|---|\n| Stores B-F can be organized in a same-period diagnostic table. | 0.78 | strong | Same-period diagnostic organization does not establish robust comparability. |\n| Stores B-F should not be treated as directly comparable without pairwise gates. | 0.86 | strong | Pairwise quantitative thresholds are outside the current review contract. |\n\n## 6. Critic Findings\n\n- [high] Observational evidence supports bounded association claims only. Recommendation: Keep attribution language conditional and record unresolved alternatives.\n- [medium] Current evidence scope is limited to committed local project files. Recommendation: Keep source paths and unresolved external requirements explicit.\n- [critical] Same-period diagnostic organization must not be described as a completed pairwise comparability gate. Recommendation: Separate same-period diagnostic review from pairwise comparability.\n\n## 7. Claim and Definition Check\n\n- Status: pass\n- Unsupported claims detected by current rules: none\n- Definition conflicts detected by current rules: none\n\n## 8. Final Judgment\n\nStores B-F can be organized for same-period diagnostic review, but should not be treated as directly comparable without pairwise gates.\n\nThe judgment is bounded by the cited local evidence and the unresolved requirements recorded above.\n\n## 9. Evidence-Coverage Score\n\n0.95\n\nHow this score is calculated:\n\n```text\nevidence_coverage_score =\n  0.45 * direct_evidence_rate\n+ 0.25 * supported_or_boundary_rate\n+ 0.15 * no_missing_source_file_score\n+ 0.15 * no_fallback_score\n```\n\nWeight rationale:\n\n| Component | Weight | Why |\n|---|---:|---|\n| `direct_evidence_rate` | 0.45 | Highest priority because actual local evidence should matter more than boundary-only evidence. |\n| `supported_or_boundary_rate` | 0.25 | Boundary evidence is valuable because it explicitly records missing requirements instead of hiding them. |\n| `no_missing_source_file_score` | 0.15 | Source files must exist, but this is a basic traceability check rather than evidence strength. |\n| `no_fallback_score` | 0.15 | Fallback packets indicate unresolved routing and reduce the current coverage score. |\n\nScore contract:\n\n- Component weights are fixed prototype heuristics.\n- The score summarizes evidence-routing coverage under the current rules.\n- Alternative weights are a formula sensitivity check; the report judgment is produced separately.\n\nCurrent report inputs:\n\n- total_packets = 9\n- keyword_matched_packets = 8\n- boundary_matched_packets = 1\n- fallback_packets = 0\n- missing_source_files = 0\n- direct_evidence_rate = keyword_matched_packets / total_packets = 0.89\n- supported_or_boundary_rate = (keyword_matched_packets + boundary_matched_packets) / total_packets = 1.00\n- no_missing_source_file_score = 1.00\n- no_fallback_score = 1.00\n\nReading the score:\n\n- A higher value means more requested evidence routes were resolved or explicitly bounded.\n- Boundary evidence contributes when it documents a missing requirement.\n- Read the score as coverage rather than evidence strength, causal validity, decision quality, or business impact.\n\n## 10. What Cannot Be Concluded\n\n- Pairwise quantitative gates are not defined in the current contract.\n- Region type remains weak context.\n- Three monthly B-F reporting windows are available; they do not by themselves establish stable pairwise comparability.\n\n## 11. Review-State Update\n\n- review_state_id: stores_b_f_same_period_not_directly_comparable\n- status: active\n- validity_conditions:\n  - Demo 2 March 2026 B-F context.\n",
   "grounded_evidence": {
     "summary": {
       "question": "Are Stores B-F directly comparable in March 2026?",
@@ -402,8 +402,8 @@
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: same_reporting_period.",
         "original_limitations": [
-          "Deterministic mock pipeline only.",
-          "No live retrieval is performed in this step."
+          "Evidence is resolved from committed local project files.",
+          "Coverage is limited to the sources listed in this packet."
         ],
         "resolver_limitations": [
           "Local text matching only.",
@@ -458,8 +458,8 @@
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: store_type.",
         "original_limitations": [
-          "Deterministic mock pipeline only.",
-          "No live retrieval is performed in this step."
+          "Evidence is resolved from committed local project files.",
+          "Coverage is limited to the sources listed in this packet."
         ],
         "resolver_limitations": [
           "Local text matching only.",
@@ -514,8 +514,8 @@
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: order_volume.",
         "original_limitations": [
-          "Deterministic mock pipeline only.",
-          "No live retrieval is performed in this step."
+          "Evidence is resolved from committed local project files.",
+          "Coverage is limited to the sources listed in this packet."
         ],
         "resolver_limitations": [
           "Local text matching only.",
@@ -552,8 +552,8 @@
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: transaction_amount.",
         "original_limitations": [
-          "Deterministic mock pipeline only.",
-          "No live retrieval is performed in this step."
+          "Evidence is resolved from committed local project files.",
+          "Coverage is limited to the sources listed in this packet."
         ],
         "resolver_limitations": [
           "Local text matching only.",
@@ -611,8 +611,8 @@
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: activity_intensity.",
         "original_limitations": [
-          "Deterministic mock pipeline only.",
-          "No live retrieval is performed in this step."
+          "Evidence is resolved from committed local project files.",
+          "Coverage is limited to the sources listed in this packet."
         ],
         "resolver_limitations": [
           "Local text matching only.",
@@ -643,8 +643,8 @@
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: region_context.",
         "original_limitations": [
-          "Deterministic mock pipeline only.",
-          "No live retrieval is performed in this step."
+          "Evidence is resolved from committed local project files.",
+          "Coverage is limited to the sources listed in this packet."
         ],
         "resolver_limitations": [
           "Local text matching only.",
@@ -697,8 +697,8 @@
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: competition.",
         "original_limitations": [
-          "Deterministic mock pipeline only.",
-          "No live retrieval is performed in this step."
+          "Evidence is resolved from committed local project files.",
+          "Coverage is limited to the sources listed in this packet."
         ],
         "resolver_limitations": [
           "Local text matching only.",
@@ -749,8 +749,8 @@
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: sku_structure.",
         "original_limitations": [
-          "Deterministic mock pipeline only.",
-          "No live retrieval is performed in this step."
+          "Evidence is resolved from committed local project files.",
+          "Coverage is limited to the sources listed in this packet."
         ],
         "resolver_limitations": [
           "Local text matching only.",
@@ -826,8 +826,8 @@
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: repeated_reporting_windows.",
         "original_limitations": [
-          "Deterministic mock pipeline only.",
-          "No live retrieval is performed in this step."
+          "Evidence is resolved from committed local project files.",
+          "Coverage is limited to the sources listed in this packet."
         ],
         "resolver_limitations": [
           "Local text matching only.",

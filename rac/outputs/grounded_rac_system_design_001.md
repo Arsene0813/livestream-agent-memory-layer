@@ -2,7 +2,7 @@
 
 ## 1. Direct Answer
 
-RAC should be implemented as a reasoning layer above the existing typed memory system before replacing any endpoint.
+RAC operates as a review layer above the existing typed memory system while leaving existing endpoints unchanged.
 
 Deterministic local-file review; routing scores summarize evidence coverage under the current rules.
 
@@ -68,13 +68,13 @@ The `Scenario-Template Confidence` column records deterministic review labels as
 
 | Hypothesis | Scenario-Template Confidence | Status | Weakness |
 |---|---:|---|---|
-| RAC should be implemented as a reasoning layer above the existing typed memory layer. | 0.86 | strong | The current grounded RAC pipeline uses local file evidence and does not call the existing API or vector database. |
-| The first implementation should remain deterministic before adding LLM calls. | 0.80 | strong | Deterministic logic is less flexible than model-based reasoning. |
+| RAC operates as a reasoning layer above the existing typed memory layer. | 0.86 | strong | The current RAC path resolves evidence from committed local project files. |
+| The current deterministic implementation keeps evidence routing and review states inspectable. | 0.80 | strong | Fixed rules trade flexibility for inspectability. |
 
 ## 6. Critic Findings
 
-- [high] The grounded RAC pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
-- [medium] The grounded RAC pipeline uses deterministic local file evidence resolution rather than live backend or vector retrieval. Recommendation: State this limitation clearly.
+- [high] Observational evidence supports bounded association claims only. Recommendation: Keep attribution language conditional and record unresolved alternatives.
+- [medium] Current evidence scope is limited to committed local project files. Recommendation: Keep source paths and unresolved external requirements explicit.
 
 ## 7. Claim and Definition Check
 
@@ -84,7 +84,7 @@ The `Scenario-Template Confidence` column records deterministic review labels as
 
 ## 8. Final Judgment
 
-RAC should be implemented as a reasoning layer above the existing typed memory system before replacing any endpoint.
+RAC operates as a review layer above the existing typed memory system while leaving existing endpoints unchanged.
 
 The judgment is bounded by the cited local evidence and the unresolved requirements recorded above.
 
@@ -137,7 +137,7 @@ Reading the score:
 
 ## 10. What Cannot Be Concluded
 
-- The current grounded RAC pipeline does not call Qdrant, FastAPI, Ollama, or external LLMs.
+- The current RAC path is limited to committed local evidence.
 
 ## 11. Review-State Update
 

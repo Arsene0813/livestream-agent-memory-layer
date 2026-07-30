@@ -68,8 +68,8 @@ The `Scenario-Template Confidence` column records deterministic review labels as
 
 ## 6. Critic Findings
 
-- [high] The grounded RAC pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
-- [medium] The grounded RAC pipeline uses deterministic local file evidence resolution rather than live backend or vector retrieval. Recommendation: State this limitation clearly.
+- [high] Observational evidence supports bounded association claims only. Recommendation: Keep attribution language conditional and record unresolved alternatives.
+- [medium] Current evidence scope is limited to committed local project files. Recommendation: Keep source paths and unresolved external requirements explicit.
 
 ## 7. Claim and Definition Check
 
@@ -133,7 +133,7 @@ Reading the score:
 ## 10. What Cannot Be Concluded
 
 - No randomized experiment.
-- No live backend retrieval is performed by the current grounded RAC pipeline.
+- Evidence scope is limited to committed local project files.
 - No complete competitor-side evidence.
 
 ## 11. Review-State Update

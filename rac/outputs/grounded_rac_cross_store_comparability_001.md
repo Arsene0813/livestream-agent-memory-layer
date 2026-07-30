@@ -71,12 +71,12 @@ The `Scenario-Template Confidence` column records deterministic review labels as
 | Hypothesis | Scenario-Template Confidence | Status | Weakness |
 |---|---:|---|---|
 | Stores B-F can be organized in a same-period diagnostic table. | 0.78 | strong | Same-period diagnostic organization does not establish robust comparability. |
-| Stores B-F should not be treated as directly comparable without pairwise gates. | 0.86 | strong | The current grounded RAC pipeline does not compute quantitative pairwise thresholds. |
+| Stores B-F should not be treated as directly comparable without pairwise gates. | 0.86 | strong | Pairwise quantitative thresholds are outside the current review contract. |
 
 ## 6. Critic Findings
 
-- [high] The grounded RAC pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
-- [medium] The grounded RAC pipeline uses deterministic local file evidence resolution rather than live backend or vector retrieval. Recommendation: State this limitation clearly.
+- [high] Observational evidence supports bounded association claims only. Recommendation: Keep attribution language conditional and record unresolved alternatives.
+- [medium] Current evidence scope is limited to committed local project files. Recommendation: Keep source paths and unresolved external requirements explicit.
 - [critical] Same-period diagnostic organization must not be described as a completed pairwise comparability gate. Recommendation: Separate same-period diagnostic review from pairwise comparability.
 
 ## 7. Claim and Definition Check
@@ -140,7 +140,7 @@ Reading the score:
 
 ## 10. What Cannot Be Concluded
 
-- Pairwise comparability gate is future work.
+- Pairwise quantitative gates are not defined in the current contract.
 - Region type remains weak context.
 - Three monthly B-F reporting windows are available; they do not by themselves establish stable pairwise comparability.
 

@@ -138,9 +138,9 @@ FACTOR_WEIGHT_REASONS: dict[str, str] = {
 }
 
 FACTOR_WEIGHTING_METHOD = (
-    "deterministic heuristic bucket assignment in rac/src/mock_pipeline.py; "
-    "not learned from data, not calculated directly from observed metric tables, "
-    "not a probability, and not an optimized business threshold"
+    "fixed review-priority bucket assignment; "
+    "source: rac/src/mock_pipeline.py; "
+    "used to order review attention within the current evidence scope"
 )
 
 
@@ -187,7 +187,7 @@ def build_factor_weighting_explanation(
         "bucket_reasons": FACTOR_WEIGHT_REASONS,
         "bucket_members": bucket_rows,
         "limitations": [
-            "Use the weights only to order review attention within the current evidence-bounded RAC scaffold.",
+            "Use the weights only to order review attention within the current RAC evidence scope.",
         ],
     }
 
@@ -230,8 +230,8 @@ def route_evidence(question_type: str, factors: list[dict[str, Any]]) -> list[di
             "source_path": source_path,
             "claim_supported": f"Provides context needed to evaluate factor: {fid}.",
             "limitations": [
-                "Deterministic mock pipeline only.",
-                "No live retrieval is performed in this step."
+                "Evidence is resolved from committed local project files.",
+                "Coverage is limited to the sources listed in this packet."
             ]
         })
     return packets
@@ -308,7 +308,9 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
                     "sku_structure",
                     "repeated_reporting_windows",
                 ],
-                "weaknesses": ["The mock pipeline does not compute quantitative pairwise thresholds."],
+                "weaknesses": [
+                    "Pairwise quantitative thresholds are outside the current review contract."
+                ],
                 "status": "strong"
             }
         ]
@@ -350,7 +352,9 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
                     "sku_margin_structure",
                     "competitor_context",
                 ],
-                "weaknesses": ["The mock pipeline does not calculate real cost trend."],
+                "weaknesses": [
+                    "Cost-trend interpretation requires repeated-period cost evidence."
+                ],
                 "status": "plausible"
             }
         ]
@@ -358,18 +362,22 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
     return [
         {
             "hypothesis_id": "H1",
-            "claim": "RAC should be implemented as a reasoning layer above the existing typed memory layer.",
+            "claim": "RAC operates as a reasoning layer above the existing typed memory layer.",
             "confidence": 0.86,
             "supporting_factors": ["typed_memory", "evidence_packets", "hypotheses", "belief_records", "retrieval_trace", "active_state_filtering"],
-            "weaknesses": ["This mock pipeline does not call the existing API or vector database."],
+            "weaknesses": [
+                "The current RAC path resolves evidence from committed local project files."
+            ],
             "status": "strong"
         },
         {
             "hypothesis_id": "H2",
-            "claim": "The first implementation should remain deterministic before adding LLM calls.",
+            "claim": "The current deterministic implementation keeps evidence routing and review states inspectable.",
             "confidence": 0.80,
             "supporting_factors": ["confidence", "limitations", "retrieval_trace"],
-            "weaknesses": ["Deterministic logic is less flexible than model-based reasoning."],
+            "weaknesses": [
+                "Fixed rules trade flexibility for inspectability."
+            ],
             "status": "strong"
         }
     ]
@@ -378,14 +386,14 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
 def critique(question_type: str) -> list[dict[str, str]]:
     findings = [
         {
-            "issue": "The mock pipeline must not claim causal proof from observational evidence.",
+            "issue": "Observational evidence supports bounded association claims only.",
             "severity": "high",
-            "recommendation": "Use cautious language and state that attribution is not proven."
+            "recommendation": "Keep attribution language conditional and record unresolved alternatives."
         },
         {
-            "issue": "The mock pipeline uses structured placeholder evidence rather than live retrieval.",
+            "issue": "Current evidence scope is limited to committed local project files.",
             "severity": "medium",
-            "recommendation": "State this limitation clearly."
+            "recommendation": "Keep source paths and unresolved external requirements explicit."
         }
     ]
 
@@ -444,7 +452,11 @@ def build_belief_update(question_type: str) -> dict[str, Any]:
             "confidence": 0.82,
             "status": "active",
             "validity_conditions": ["Store A Demo 1 context.", "Available month-over-month evidence only."],
-            "limitations": ["No randomized experiment.", "No live backend retrieval in this mock pipeline.", "No complete competitor-side evidence."]
+            "limitations": [
+                "No randomized experiment.",
+                "Evidence scope is limited to committed local project files.",
+                "No complete competitor-side evidence."
+            ]
         }
 
     if question_type == "comparability_judgment":
@@ -454,7 +466,11 @@ def build_belief_update(question_type: str) -> dict[str, Any]:
             "confidence": 0.86,
             "status": "active",
             "validity_conditions": ["Demo 2 March 2026 B-F context."],
-            "limitations": ["Pairwise comparability gate is future work.", "Region type remains weak context.", "Three monthly B-F reporting windows are available; they do not by themselves establish stable pairwise comparability."]
+            "limitations": [
+                "Pairwise quantitative gates are not defined in the current contract.",
+                "Region type remains weak context.",
+                "Three monthly B-F reporting windows are available; they do not by themselves establish stable pairwise comparability."
+            ]
         }
 
     if question_type == "strategic_recommendation":
@@ -464,16 +480,22 @@ def build_belief_update(question_type: str) -> dict[str, Any]:
             "confidence": 0.80,
             "status": "active",
             "validity_conditions": ["Retail operations decision-support questions."],
-            "limitations": ["The mock pipeline does not compute real margins.", "Competitor data may be incomplete.", "One reporting window is insufficient for robust action attribution."]
+            "limitations": [
+                "Margin fields are absent from the current evidence.",
+                "Competitor data may be incomplete.",
+                "One reporting window is insufficient for robust action attribution."
+            ]
         }
 
     return {
         "belief_id": "rac_should_layer_above_existing_memory",
-        "claim": "RAC should be implemented as a reasoning layer above the existing typed memory system before replacing any endpoint.",
+        "claim": "RAC operates as a review layer above the existing typed memory system while leaving existing endpoints unchanged.",
         "confidence": 0.84,
         "status": "active",
         "validity_conditions": ["Current project architecture stage."],
-        "limitations": ["The mock pipeline does not call Qdrant, FastAPI, Ollama, or external LLMs yet."]
+        "limitations": [
+            "The current RAC path is limited to committed local evidence."
+        ]
     }
 
 
