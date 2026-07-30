@@ -16,10 +16,10 @@ It is a diagnostic evaluation for the current file-backed retail decision-suppor
 - Retrieval units: 302
 
 - Unit definition: one generated memory fact or one chunked field-contract/source-note segment; this is not a store count or a count of independent business observations.
-- Corpus SHA-256: `3747c4d2a936a3d648a1cd49d80b5b5b9f5511f7ce161ebdc1d993c8ffcd30bc`
+- Corpus SHA-256: `1f8fd5a7b42d875d2a4f72105d1f43db0a9e05883a6a8cc3fafc4717799eb850`
 - Corpus builder: `eval/retail_retrieval_corpus.py::load_retail_retrieval_documents`
-- Run commit: `cd4b72bcefab8dba92f83ffd24a9276b813ab4e0`
-- Experiment scope SHA-256: `4b15d82b17be61c282720aeca08705fd6e32f93581acb55bff8e8e4313e1afd1`
+- Run commit: `77ed40a33b5f4b43afa2d5e3c39e309cb157bca8`
+- Experiment scope SHA-256: `b0139d4052b6b9be67a1b0eef08a11e14167528599a5508552fb4e77c06d47d1`
 - Applicability note: the scope hash identifies the clean experiment-relevant code and input snapshot. The run commit is retained for navigation. Later unrelated commits do not invalidate the result. Run `python3 eval/check_retrieval_result_applicability.py` to check the current scope.
 - Embedding model: `bge-m3`
 - Reference threshold: `0.572`
@@ -46,10 +46,10 @@ For each non-negative case, `expected_hit_at_5` is true only when at least one t
 
 | case_type | variant_count | expected_hit_at_5_count | expected_hit_at_5_rate | above_reference_threshold_count | above_reference_threshold_rate | top1_changed_non_original_count | top1_changed_non_original_rate |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| ambiguous_comparison | 16 | 13 | 81.25% | 5 | 31.25% | 2 | 16.67% |
-| entity_period_mismatch | 18 | 2 | 11.11% | 15 | 83.33% | 2 | 14.29% |
+| ambiguous_comparison | 16 | 13 | 81.25% | 5 | 31.25% | 5 | 41.67% |
+| entity_period_mismatch | 18 | 3 | 16.67% | 15 | 83.33% | 2 | 14.29% |
 | hard_negative_boundary | 33 | 25 | 75.76% | 23 | 69.7% | 6 | 23.08% |
-| negative_unsupported | 30 | 0 | 0.0% | 1 | 3.33% | 8 | 33.33% |
+| negative_unsupported | 30 | 0 | 0.0% | 1 | 3.33% | 9 | 37.5% |
 | positive_supported | 34 | 34 | 100.0% | 34 | 100.0% | 2 | 7.69% |
 
 ## Threshold Sweep
