@@ -1,10 +1,6 @@
 # Retail Operations Technical Appendix
 
-This file consolidates the technical appendix material for the retail decision-support prototype.
-
-This appendix is the technical audit layer for the retail evidence path.
-
-This appendix is for later audit of architecture, lineage, and field-usage consistency.
+This appendix is the technical audit layer for the retail decision-support prototype, covering architecture, source-to-claim lineage, and field-usage consistency.
 
 ## Contents
 
@@ -14,17 +10,11 @@ This appendix is for later audit of architecture, lineage, and field-usage consi
 | Source-to-Claim Lineage | Traces selected backend fields through SQL outputs, generated facts, and answer-boundary checks. |
 | Field-Usage Review | Tracks field-name and semantic-change risk across source CSVs, SQL outputs, generated facts, reviewer-facing docs, and eval cases. |
 
-
 ---
 
 ## Architecture
 
-
-## Repository Document Roles
-
-
-
-## Current Retail Evidence Layers
+### Current Retail Evidence Layers
 
 | Layer | Status | Current role | Reviewer reading |
 |---|---|---|---|
@@ -33,7 +23,7 @@ This appendix is for later audit of architecture, lineage, and field-usage consi
 | Post-Demo2 repeated-window panel | Implemented | Adds February-April 2026 repeated-window coverage for Stores B-F. | Evidence for checking whether same-store signals persist across reporting windows. |
 | Pairwise comparability gate | Documented future work | Plans a question-specific decision contract for judging whether selected store-period records can be compared. | Future decision-support design built from broader evidence coverage. |
 
-## Current Evidence Path
+### Current Evidence Path
 
 The current file-based data path is:
 
@@ -60,7 +50,7 @@ graph TD
 
 The design is intentionally file-based at this stage. The priority is to keep each diagnostic claim traceable before expanding toward broader 48-store workflow support.
 
-## Retrieval Mode Boundary
+### Retrieval Mode Boundary
 
 The repository contains more than one retrieval path. They should not be read as the same level of implementation maturity.
 
@@ -73,7 +63,7 @@ The repository contains more than one retrieval path. They should not be read as
 
 The retrieval-threshold inspection is a separate offline analysis over the file-backed evidence corpus. It should not be read as the runtime selection logic of `/chat_retail_ops_demo2_kb`.
 
-### Retail Retrieval Flow
+#### Retail Retrieval Flow
 
 The current retail retrieval path should not treat semantic similarity as sufficient evidence for an operating answer.
 
@@ -105,7 +95,7 @@ This flow is a local prototype retrieval pattern. It is not a production monitor
 
 The same scope checks are used to interpret the offline retrieval-threshold and query-robustness inspections summarized in `retail_ops/EXPERIMENT_RESULTS.md`.
 
-## Endpoint Evidence Modes
+### Endpoint Evidence Modes
 
 The current retail endpoints do not use one identical evidence path.
 
@@ -116,7 +106,7 @@ The current retail endpoints do not use one identical evidence path.
 
 Both paths should preserve metric definitions, entity scope, period scope, source limits, and comparison boundaries before returning an answer.
 
-## Responsibility Split
+### Responsibility Split
 
 | Layer | Responsibility | Boundary |
 |---|---|---|
@@ -126,7 +116,7 @@ Both paths should preserve metric definitions, entity scope, period scope, sourc
 | Boundary checks | Check entity scope, period scope, metric meanings, and comparison limits before answers are accepted. | Evaluation focuses on evidence discipline and answer scope. |
 | Future comparability gate | Judge whether two store-period records can be compared for one selected operating question. | The gate is question-specific and depends on broader store-period evidence. |
 
-## Layer Contract
+### Layer Contract
 
 | Layer | Input | Output | Boundary |
 |---|---|---|---|
@@ -136,7 +126,7 @@ Both paths should preserve metric definitions, entity scope, period scope, sourc
 | Generated memory facts | SQL outputs and supporting source tables. | Retrieval-facing memory facts with observed values, source fields, `calculation` metadata, evidence-trace confidence labels, and limitations. | Memory facts are summaries, not raw backend exports. |
 | Offline evaluation | Generated facts, SQL outputs, and current-scope docs. | Eval result text files and consistency checks. | Evaluations check evidence boundaries; they are not causal business experiments. |
 
-## Evidence Type Boundary
+### Evidence Type Boundary
 
 | Evidence type | Examples | Current role | Interpretation limit |
 |---|---|---|---|
@@ -145,7 +135,7 @@ Both paths should preserve metric definitions, entity scope, period scope, sourc
 | Retrieval-facing memory slots | `visibility_entry_profile`, `activity_lever_profile`, `transaction_conversion_profile`, `single_metric_attribution_guard`, `top3_sku_product_mix_note` | Store evidence with source fields, observed values, `calculation` metadata, evidence-trace confidence labels, and limitations. | Memory slots keep evidence traceable rather than creating undocumented fields. |
 | Future gate fields | `comparison_question_type`, `comparison_decision`, `market_area_type` | Planned contract fields for future pairwise comparability work. | These are future fields, not current Demo 2 output columns. |
 
-## Implemented Source Files
+### Implemented Source Files
 
 Current source files include:
 
@@ -157,14 +147,14 @@ Current source files include:
 - `retail_ops/data/demo2_top_skus_by_sales_volume.csv`
 - `retail_ops/data/store_period_panel_metrics.csv`
 
-## Implemented SQL Files
+### Implemented SQL Files
 
 - `retail_ops/sql/01_store_a_month_over_month_diagnostic.sql`
 - `retail_ops/sql/02_demo2_cross_store_comparability.sql`
 
 The second file keeps its historical path name for reference stability; its current implemented meaning is a same-period cross-store diagnostic.
 
-## Implemented Memory Outputs
+### Implemented Memory Outputs
 
 - `retail_ops/outputs/generated_retail_memory_facts.json`
 - `retail_ops/outputs/generated_demo2_retail_memory_facts.json`
@@ -179,9 +169,7 @@ The memory-facing facts record:
 - evidence-trace confidence
 - limitations
 
-
-
-## Current Retail Implementation Scope
+### Current Retail Implementation Scope
 
 The current retail path has three implemented evidence layers.
 
@@ -209,23 +197,17 @@ Post-Demo2 repeated-window panel files:
 | `retail_ops/outputs/store_period_panel_validation_result.txt` | Saved validation result for the panel coverage layer. |
 | `retail_ops/outputs/repeated_window_panel_summary_validation_result.txt` | Saved validation result for the repeated-window summary layer. |
 
-
 ---
 
 ## Source-to-Claim Lineage
-
 
 This section traces claim-to-data lineage for the retail-operations evidence path.
 
 It traces how selected Meituan backend metrics move from source CSV files into SQL diagnostics, SQL outputs, generated memory facts, and answer-boundary evaluations.
 
-## Lineage Document Roles
-
-
-
 Path names that include `cross_store_comparability` are retained for reference stability. In the current implementation, Demo 2 means same-period diagnostic evidence and guardrails. The future pairwise comparability gate is documented separately.
 
-## Shared Lineage Contract
+### Shared Lineage Contract
 
 Existing Meituan backend metrics are kept under one canonical English field name. This avoids mixing multiple English names for the same Chinese backend metric.
 
@@ -251,7 +233,7 @@ Main output files:
 - `retail_ops/outputs/generated_retail_memory_facts.json`
 - `retail_ops/outputs/generated_demo2_retail_memory_facts.json`
 
-## Demo 1 Scope
+### Demo 1 Scope
 
 | Item | Value |
 |---|---|
@@ -262,7 +244,7 @@ Main output files:
 | Output | SQL-derived CSV, markdown diagnostic, generated retail memory facts |
 | Limitation | Single-store demo; not causal attribution; not cross-store comparison |
 
-## Demo 1 Claim-to-Data Lineage
+### Demo 1 Claim-to-Data Lineage
 
 | Claim / diagnostic | Source fields | SQL output / derived metric | Memory slot | Limitation |
 |---|---|---|---|---|
@@ -272,9 +254,9 @@ Main output files:
 | Store A's changes should not be explained by one metric alone. | Visibility, entry, transaction, conversion, activity, and SKU evidence | Combined multi-signal interpretation | `single_metric_attribution_guard` | The demo supports structured comparison of signals, not causal attribution. |
 | All nine listed Store A top-three monthly SKU rows are tagged `care_solution`. | Top-3 SKU records and the manually curated `sku_category_note` helper field | Observation over the listed rows | `top3_sku_product_mix_note` | Listed-row evidence only; not the store's full catalogue, category sales share, or total product mix. |
 
-## Metric Lineage Rules
+### Metric Lineage Rules
 
-### Conversion Rate
+#### Conversion Rate
 
 `order_conversion_rate_pct` is the store-period backend funnel metric used with `entry_users` and `order_users`.
 
@@ -284,13 +266,13 @@ order_conversion_rate_pct = order_users / entry_users * 100
 
 This keeps the conversion metric tied to its documented denominator and reporting grain.
 
-### Traffic Source
+#### Traffic Source
 
 Traffic-source users may overlap. The same customer may see the store through multiple exposure sources, so source-level exposure users should not be summed into total exposure users.
 
 `search_entry_users / entry_users` is used only as a directional source-entry structure signal.
 
-### Activity and Promotion
+#### Activity and Promotion
 
 `activity_cost_ratio_pct` follows the backend formula:
 
@@ -300,7 +282,7 @@ activity_cost_ratio_pct = activity_cost / activity_original_transaction_amount *
 
 Under the documented formula, a smaller value means lower recorded `activity_cost` per unit of `activity_original_transaction_amount` in the same reporting scope. The field remains `activity_cost_ratio_pct` because this is a cost ratio rather than traditional ROI. Incremental efficiency, lift, margin, or campaign effectiveness would require additional operating context and counterfactual evidence.
 
-### Transaction Metrics
+#### Transaction Metrics
 
 `transaction_amount` and `transaction_orders` refer to same-day paid and same-day not-cancelled orders.
 
@@ -312,17 +294,15 @@ average_order_value = transaction_amount / transaction_orders
 
 If another backend page defines 单均价 using a different backend-reported denominator, it should be treated as a separate backend-reported metric rather than mixed with transaction fields.
 
-### Estimated Income
+#### Estimated Income
 
 `estimated_income_proxy` is treated as a platform-displayed income proxy. It should not be interpreted as audited profit because the current demo does not contain the full platform calculation breakdown.
 
-
-
-### Ranking
+#### Ranking
 
 Business-district ranking is only comparable among merchants in the same main category and business district. Ranking may be unavailable when the store has no honeycomb or grid information, or no sales activity.
 
-## SKU Evidence Grain Note
+### SKU Evidence Grain Note
 
 Top-SKU evidence uses SKU-level fields.
 
@@ -342,7 +322,7 @@ Lineage rules:
 - Top-SKU evidence is used only as lightweight product-mix support.
 - Top-SKU evidence is not full category-level sales-share analysis.
 
-## Demo 2 Same-Period Diagnostic Lineage
+### Demo 2 Same-Period Diagnostic Lineage
 
 Demo 2 extends the retail operations prototype from a single-store month-over-month diagnostic to a same-period cross-store diagnostic.
 
@@ -364,7 +344,7 @@ All Demo 2 records use the same reporting window:
 
 Demo 2 structures selected backend metrics under the same reporting window and field contract, derives cautious diagnostic signals, and preserves interpretation limits before any operating recommendation is made.
 
-## Demo 2 Source Data
+### Demo 2 Source Data
 
 Demo 2 source data is stored in:
 
@@ -378,7 +358,7 @@ The source metrics are manually transcribed from the Meituan merchant-backend UI
 
 Original Chinese backend search terms and SKU names are retained for traceability. English helper columns are included only for readability.
 
-## Demo 2 SQL Diagnostic Output
+### Demo 2 SQL Diagnostic Output
 
 Demo 2 SQL is stored in:
 
@@ -410,7 +390,7 @@ These derived fields are diagnostic summaries. They do not replace Meituan backe
 
 `same_period_diagnostic_ready` is intentionally narrower than all-column completeness. For the current fixture, it checks the fixed March 2026 date window and non-missing `transaction_amount`, `transaction_orders`, `exposure_users`, `entry_users`, `search_exposure_users`, `search_entry_users`, `activity_orders`, and `top3_sku_transaction_amount`. Other carried-through metrics remain available for interpretation, but their presence is not certified by this flag.
 
-## Demo 2 Claim-to-Field Mapping
+### Demo 2 Claim-to-Field Mapping
 
 | Claim / diagnostic | Supporting fields | Interpretation limit |
 |---|---|---|
@@ -420,7 +400,7 @@ These derived fields are diagnostic summaries. They do not replace Meituan backe
 | Top search terms provide lightweight demand evidence. | `search_term`, `search_term_exposure_times`, `search_term_click_times`, `search_term_order_times` | Top search terms are store-period evidence, not complete regional consumer-preference proof. |
 | Top SKU evidence provides lightweight product-mix evidence. | `sku_name`, `sku_transaction_amount`, `sales_volume`, `top3_sku_transaction_amount_share_pct` | Top-3 evidence is not full SKU category-share analysis. |
 
-## Demo 2 Memory Fact Output
+### Demo 2 Memory Fact Output
 
 Demo 2 generated memory facts are stored in:
 
@@ -444,7 +424,7 @@ Demo 2 reuses existing canonical retail memory slots:
 
 Demo 2 does not introduce store-stage labels or best-store rankings.
 
-## Demo 2 Carry-Through Note: Order and Payment Amount Fields
+### Demo 2 Carry-Through Note: Order and Payment Amount Fields
 
 The current implementation carries `order_amount` and `payment_amount` from:
 
@@ -461,7 +441,7 @@ Interpretation boundary:
 - `payment_amount` is read with `payment_users` and `payment_conversion_rate_pct`.
 - `transaction_amount` remains a separate transaction metric and should not be merged with order-submission or payment-funnel amount fields.
 
-## Future Comparability-Gate Lineage
+### Future Comparability-Gate Lineage
 
 The current implemented retail lineage includes Demo 1, Demo 2, and the post-Demo2 repeated-window panel evidence-preparation layer. Demo 1 traces Store A month-over-month evidence, Demo 2 traces same-period B-F diagnostic evidence, and the panel lineage traces B-F repeated-window coverage and descriptive summary outputs.
 
@@ -477,7 +457,7 @@ The future pairwise comparability gate should extend this lineage only after str
 
 - `retail_ops/COMPARABILITY_GATE_V0.md`
 
-## Post-Demo2 Repeated-Window Panel Lineage
+### Post-Demo2 Repeated-Window Panel Lineage
 
 The repeated-window panel extension follows the same dictionary-first rule as Demo 1 and Demo 2.
 
@@ -509,23 +489,13 @@ The panel keeps `store_type` values aligned with the existing source data: `self
 
 ## Field-Usage Review
 
-
-## Field-Review Document Roles
-
-This section reviews field-name and semantic-change risk across the retail-operations evidence path.
-
-It should answer one narrow question: if a field name or field meaning changes, what existing dictionary definition, source file, SQL output, generated memory fact, and evaluation behavior could be affected?
-
-
-
-
-This section records field-name and semantic-change review for the retail evidence path.
+This section records field-name and semantic-change risk across the retail evidence path. It answers one question: if a field name or meaning changes, which dictionary definition, source file, SQL output, generated fact, API response, or evaluation behavior could be affected?
 
 Current decision: **no existing source CSV field, SQL output field, generated memory slot, or evaluation field is renamed.**
 
-The purpose of this review is to protect the Meituan merchant-backend metric contract before future comparability-gate work. Backend-reported fields, SQL-derived diagnostic fields, and retrieval-facing memory slots should not be mixed, renamed, or promoted into new meanings without an explicit mapping review.
+Backend-reported fields, SQL-derived diagnostics, retrieval-facing memory slots, and API metadata remain separate namespaces. Any future change must first be reviewed against the dictionary and the usage tables below.
 
-## Consolidated Scope Notes
+### Consolidated Scope Notes
 
 This file also preserves the field-name and scope-change guardrails that protect the current retail evidence path.
 
@@ -537,14 +507,13 @@ This file also preserves the field-name and scope-change guardrails that protect
 - Retrieval-score analysis remains offline inspection, not production retrieval logic.
 - `rac/` is the deterministic source-aware review layer over the structured retail evidence path, with factor expansion, evidence routing, competing hypotheses, critique, rule-based checks for unsupported claims and definition conflicts, and explicit limitations.
 
-
-## Review Rule
+### Review Rule
 
 Before implementation, any field-name or semantic change must record the existing field, its dictionary definition, current usage, and rename decision. The completed mappings for the current project are listed in the review tables below.
 
 Future fields such as `activity_status`, `market_area_type`, `market_area_type_source`, `market_area_type_confidence`, `comparison_question_type`, or `comparison_decision` must not be introduced into source CSVs, SQL outputs, generated facts, or eval cases until they are first documented in `retail_ops/data/DATA_DICTIONARY.md` and linked through the Source-to-Claim Lineage section of this appendix.
 
-## Search-Term Source Field Review
+### Search-Term Source Field Review
 
 This review records the existing search-term source fields before any future
 field-name or semantic change. These fields remain in their current source
@@ -562,7 +531,7 @@ table and generated-fact evidence locations.
 No CSV header, generated-fact field, memory slot, API response key, or metric
 formula is changed by this review.
 
-## Repeated-Window Analytical Field Review
+### Repeated-Window Analytical Field Review
 
 This review records the month-prefixed output aliases against their canonical
 dictionary fields before any future naming or semantic change. No canonical
@@ -589,7 +558,7 @@ metrics. February and April values and the existing endpoint movement formulas
 remain unchanged. March values expose the observed middle month without adding
 a trend label, ranking, causal interpretation, or recommendation.
 
-## Generated-Fact Metadata Field Review
+### Generated-Fact Metadata Field Review
 
 This review records the top-level generated-fact metadata contract.
 These keys describe memory-layer structure and traceability. They are not canonical retail source fields or SQL-derived business metrics.
@@ -614,7 +583,7 @@ These keys describe memory-layer structure and traceability. They are not canoni
 The canonical retail fields referenced by `source_fields` and `observed_values` remain governed by `retail_ops/data/DATA_DICTIONARY.md`.
 No generated-fact key, value, slot, source path, or API behavior is changed by this review.
 
-## Generated-Fact Payload Helper Key Review
+### Generated-Fact Payload Helper Key Review
 
 This review records structured helper keys that exist inside generated-fact `observed_values`.
 They organize evidence for reviewer readability and do not introduce new raw retail metrics.
@@ -628,7 +597,7 @@ They organize evidence for reviewer readability and do not introduce new raw ret
 `top_search_terms` and `top_skus_by_transaction_amount` represent limited listed evidence only; they are not complete search or product catalog coverage.
 No payload key, source field, generated fact, memory slot, or numerical result is changed by this review.
 
-## API Response Metadata Review
+### API Response Metadata Review
 
 This review covers API response metadata only. These keys are not canonical
 Meituan source fields, SQL-derived retail metrics, or generated memory slots.
@@ -643,7 +612,7 @@ fields carried by endpoint facts.
 | `score` | Fact-level response metadata, not a retail metric | Shared answer builder and endpoint facts | Demo 2 uses `null`; retrieval-backed paths preserve actual scores |
 | `confidence` | Generated-fact trace confidence | Generated facts and endpoint responses | Key and values retained |
 
-### Implemented Demo 2 response metadata
+#### Implemented Demo 2 response metadata
 
 Supported Demo 2 responses now use:
 
@@ -663,7 +632,7 @@ confidence in an operating recommendation.
 These metadata changes do not modify source CSV fields, SQL output fields,
 metric formulas, generated memory slots, or evidence interpretations.
 
-## Field-Change Migration Order
+### Field-Change Migration Order
 
 Any future field rename or semantic change must be migrated in this order:
 
@@ -678,8 +647,7 @@ Any future field rename or semantic change must be migrated in this order:
 
 This rule is intentionally conservative. The project should prefer adding clearly documented future fields over silently changing the meaning of existing Meituan backend-reported fields.
 
-
-## Field Definition and Usage Review
+### Field Definition and Usage Review
 
 This table summarizes selected fields referenced across the current retail evidence path. Complete field definitions and canonical naming remain governed by `retail_ops/data/DATA_DICTIONARY.md`.
 
@@ -735,7 +703,7 @@ This table summarizes selected fields referenced across the current retail evide
 | `single_metric_attribution_guard` | Retrieval-facing memory slot that prevents unsupported interpretation from one metric alone. | Generated retail memory facts. | No. |
 | `top3_sku_product_mix_note` | Retrieval-facing memory slot for limited top-SKU evidence. It is not full category-share analysis. | Generated retail memory facts. | No. |
 
-## Future Comparability-Gate Field Review
+### Future Comparability-Gate Field Review
 
 Pairwise comparability-gate fields are outside the current implemented retail scope.
 
@@ -745,11 +713,11 @@ At the current sample size, `region_type` remains weak context only. It must not
 
 Possible future fields such as `activity_status`, `market_area_type`, `market_area_type_source`, `market_area_type_confidence`, `comparison_question_type`, or `comparison_decision` should only be added after they are documented in `retail_ops/data/DATA_DICTIONARY.md` and linked through the Source-to-Claim Lineage section of this appendix.
 
-## Current Decision
+### Current Decision
 
 Current decision: no current source CSV field, SQL output field, generated memory slot, or evaluation field is renamed.
 
-## Generated-Fact Discriminator Value Review
+### Generated-Fact Discriminator Value Review
 
 This review records the value-level change before modifying generated facts.
 It does not rename a metadata key, source field, SQL output field, business
@@ -767,7 +735,7 @@ The change affects two legacy metadata values only. It does not change fact
 statements, observed values, source fields, source paths, confidence labels,
 limitations, routing slots, or business interpretation.
 
-## Supporting Source Path Contract Review
+### Supporting Source Path Contract Review
 
 This review records the path-metadata change before modifying generated facts.
 It does not rename a key, source file, source field, metric, memory slot, or
