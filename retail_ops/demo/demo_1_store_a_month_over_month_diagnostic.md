@@ -32,7 +32,7 @@ The interpretation stays at the observed store-period level. Questions that requ
 
 | File | Purpose |
 |---|---|
-| `retail_ops/data/store_a_monthly_metrics.csv` | Store-period backend metrics manually organized from Meituan-style data. |
+| `retail_ops/data/store_a_monthly_metrics.csv` | Store-period metrics manually transcribed from anonymized Meituan merchant-backend evidence. |
 | `retail_ops/data/store_a_top_skus.csv` | Top-SKU evidence for each month. |
 | `retail_ops/data/DATA_DICTIONARY.md` | Canonical field definitions and metric rules. |
 | `retail_ops/sql/01_store_a_month_over_month_diagnostic.sql` | Offline SQL diagnostic query. |
@@ -210,4 +210,4 @@ Future expansion should check whether candidate records are comparable by:
 - data completeness;
 - repeated reporting-window stability.
 
-Stronger cross-store interpretation should come after this evidence check. Store-stage diagnosis would require stronger evidence on promotion cycles, competition, fulfillment conditions, rating/review signals, and stockout history.
+Stronger cross-store interpretation should come after this evidence check. Store-stage diagnosis asks whether the same metric should be interpreted differently for a new-store customer-acquisition period and a mature-store steady-state period. It would require stronger evidence on store opening age, promotion cycles, competition, fulfillment conditions, rating/review signals, and stockout history; the current demo does not infer a store stage from one metric or threshold.

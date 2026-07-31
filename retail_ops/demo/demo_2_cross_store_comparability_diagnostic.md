@@ -47,7 +47,7 @@ Promotion, subsidy, price, SKU mix, ranking position, and fulfillment conditions
 
 Some source traffic-channel fields are retained in the structured source file but not carried into the current Demo 2 diagnostic output. Demo 2 focuses on selected same-period diagnostic signals rather than exhaustive traffic-source decomposition.
 
-The top-SKU source tables are intentionally partial: one view is ranked by sales volume and the other by transaction amount. The available backend evidence for this demo did not provide both `sales_volume` and `sku_transaction_amount` for every ranking view, and missing values are not back-calculated because SKU prices can vary by store, operating stage, activity condition, and local competitive pressure.
+The top-SKU source tables are intentionally partial: one view is ranked by sales volume and the other by transaction amount. The available backend evidence for this demo did not provide both `sales_volume` and `sku_transaction_amount` for every ranking view, and missing values are not back-calculated because SKU prices can vary by store, store lifecycle context such as a new-store customer-acquisition period or mature-store steady-state period, activity condition, and local competitive pressure.
 
 `region_type` is kept as weak regional context only. In the current sample, it should not be read as a mature market-area classification or as a hard comparability condition.
 

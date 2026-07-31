@@ -218,7 +218,7 @@ Purpose: `comparison_scope_flag` records whether a store-period row is inside th
 Current values:
 
 - `same_period_diagnostic_ready`: the row matches the fixed Demo 2 reporting window and contains the core fields used by the current row-level diagnostic.
-- `not_comparable_period_mismatch`: the row does not match the Demo 2 reporting window.
+- `not_comparable_period_mismatch`: the row does not match the Demo 2 reporting window. This value means that the row is outside the fixed Demo 2 period scope; it is not a pairwise store-comparability decision.
 - `insufficient_data`: one or more core diagnostic fields are missing.
 
 Core readiness contract for the current Demo 2 fixture:
@@ -682,6 +682,10 @@ English definition: Number of successfully refunded orders under the selected ac
 
 English definition: Number of successfully refunded orders under the selected account, store, conditions, and time period, including both full refunds and partial refunds. The date is based on refund-success date.
 
+项目解释边界：上述退款字段记录退款成功结果，并按退款成功日期归入统计周期。当前数据不包含退款原因，因此不能仅凭这些字段判断商品质量、履约问题、服务质量或具体经营原因。
+
+Interpretation boundary: These refund fields record successful refund outcomes under the refund-success-date reporting rule. The current data does not include refund reasons, so these fields must not be used by themselves to infer product quality, fulfillment failure, service quality, or a specific operating cause.
+
 
 
 ### `sku_rank` / SKU 排名
@@ -828,9 +832,9 @@ Traffic-source user counts may overlap.
 
 规则 3：将活动与补贴视为经营工具证据，而不是因果证明。
 
-High activity-order share or a low activity cost ratio does not prove that activity caused growth.
+High activity-order share or a low activity cost ratio does not prove that activity caused growth. Here, store stage means lifecycle context such as a new-store customer-acquisition period versus a mature-store steady-state period. It is an interpretation context supported by multiple observations, not a fixed label inferred from one metric or threshold.
 
-高活动订单占比或较低活动成本率，不证明增长一定由活动导致。活动、补贴、价格、SKU 结构、排名和履约信号应结合门店阶段与竞争环境一起解释。
+高活动订单占比或较低活动成本率，不证明增长一定由活动导致。活动、补贴、价格、SKU 结构、排名和履约信号应结合门店阶段与竞争环境一起解释。这里的“门店阶段”指新店获客期与成熟店稳态经营期等经营生命周期背景；它需要由多项证据共同支持，不是根据单一指标或阈值自动生成的固定标签。
 
 
 

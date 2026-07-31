@@ -49,7 +49,7 @@ It should not be described as ROI, profit margin, or operating return.
 
 Top-SKU evidence is used as lightweight product-mix evidence. It is not treated as complete product-category sales share.
 
-The two top-SKU tables reflect two different backend ranking views. The available backend evidence for this demo did not provide both `sales_volume` and `sku_transaction_amount` for every ranking view. Because SKU prices can differ by store, operating stage, activity condition, and local competitive pressure, this project does not back-calculate missing sales volume or transaction amount from the other column.
+The two top-SKU tables reflect two different backend ranking views. The available backend evidence for this demo did not provide both `sales_volume` and `sku_transaction_amount` for every ranking view. Because SKU prices can differ by store, store lifecycle context such as a new-store customer-acquisition period or mature-store steady-state period, activity condition, and local competitive pressure, this project does not back-calculate missing sales volume or transaction amount from the other column.
 
 These tables support selected SKU-concentration notes, not complete category-share, price, margin, or catalogue-level product-mix analysis.
 

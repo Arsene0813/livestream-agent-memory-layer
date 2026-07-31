@@ -11,7 +11,7 @@ The application first-pass path begins with the current retail evidence and RAC 
 
 In livestream product interaction, a memory layer mainly needs to manage changing product knowledge, such as price, promotion, stock status, shipping policy, and product features.
 
-In instant-retail operations, the lifecycle problem is stricter. Store-level metrics also change over time, but they are tied to reporting windows, store type, activity involvement, activity intensity, SKU structure, ranking context, refund pressure, and weak market context. A metric that is useful for one store-period record may not be safe to reuse for another store or another month.
+In instant-retail operations, the lifecycle problem is stricter. Store-level metrics also change over time, but they are tied to reporting windows, store type, activity involvement, activity intensity, SKU structure, ranking context, refund records under the refund-success-date reporting rule, and weak market context. A metric that is useful for one store-period record may not be safe to reuse for another store or another month.
 
 The shared technical problem is knowledge lifecycle management: deciding what information should be stored, when it should be updated, when it becomes stale, how it should be retrieved, and when it should not be reused.
 
