@@ -170,8 +170,79 @@ def read_csv_headers(relative_path: str) -> set[str]:
         return set(next(reader))
 
 
-def extract_backticked_fields(text: str) -> set[str]:
-    return set(re.findall(r"`([a-zA-Z_][a-zA-Z0-9_]*)`", text))
+def extract_dictionary_fields(text: str) -> set[str]:
+    """Read fields from explicit dictionary registration locations."""
+
+    token_pattern = re.compile(
+        r"`([a-zA-Z_][a-zA-Z0-9_]*)`"
+    )
+    mom_field_pattern = re.compile(
+        r"- `([a-zA-Z_][a-zA-Z0-9_]*)`"
+    )
+
+    fields: set[str] = set()
+    in_mom_diagnostics = False
+
+    for line in text.splitlines():
+        stripped = line.strip()
+
+        if stripped == "#### Month-over-month diagnostics":
+            in_mom_diagnostics = True
+            continue
+
+        heading_match = re.match(
+            r"^#{3,6}\s+(.+)$",
+            stripped,
+        )
+
+        if heading_match is not None:
+            in_mom_diagnostics = False
+            fields.update(
+                token_pattern.findall(
+                    heading_match.group(1)
+                )
+            )
+            continue
+
+        if in_mom_diagnostics:
+            mom_match = mom_field_pattern.fullmatch(stripped)
+
+            if mom_match is not None:
+                fields.add(mom_match.group(1))
+
+    explicit_declarations = {
+        "store_id": (
+            "`store_id` is the canonical store identifier used in "
+            "source CSV files, SQL diagnostics, and metric outputs."
+        ),
+        "store_average_rank_change": (
+            "`store_average_rank_change` and "
+            "`search_average_rank_change` compare the current month "
+            "with the previous available month for the same "
+            "`store_id`."
+        ),
+        "search_average_rank_change": (
+            "`store_average_rank_change` and "
+            "`search_average_rank_change` compare the current month "
+            "with the previous available month for the same "
+            "`store_id`."
+        ),
+        "transaction_recovered_with_conversion_aov_tradeoff": (
+            "`transaction_recovered_with_conversion_aov_tradeoff` "
+            "is a SQL-derived supporting observation."
+        ),
+    }
+
+    for field, declaration in explicit_declarations.items():
+        if text.count(declaration) != 1:
+            raise ValueError(
+                "Expected one explicit dictionary declaration for "
+                f"`{field}`"
+            )
+
+        fields.add(field)
+
+    return fields
 
 
 def tracked_files() -> list[Path]:
@@ -187,6 +258,8 @@ def tracked_files() -> list[Path]:
         for line in result.stdout.splitlines()
         if (ROOT / line).exists()
     ]
+
+
 def source_exists(relative_path: str) -> bool:
     return (ROOT / relative_path).exists()
 
@@ -604,7 +677,16 @@ def main() -> int:
         "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     )
 
-    documented_fields = extract_backticked_fields(dictionary)
+    try:
+        documented_fields = extract_dictionary_fields(
+            dictionary
+        )
+    except ValueError as exc:
+        failures.append(
+            "Dictionary field-registry extraction failed: "
+            f"{exc}"
+        )
+        documented_fields = set()
     current_source_output_fields = (
         demo1_source_headers
         | demo1_top_sku_headers
@@ -639,10 +721,16 @@ def main() -> int:
                 failures.append(f"Forbidden alias `{alias}` found in {path.relative_to(ROOT)}")
 
     for field in REQUIRED_CANONICAL_FIELDS:
-        if field not in dictionary:
-            failures.append(f"Required canonical field `{field}` missing from DATA_DICTIONARY.md")
+        if field not in documented_fields:
+            failures.append(
+                f"Required canonical field `{field}` missing from "
+                "explicit DATA_DICTIONARY.md field registrations"
+            )
         if field not in current_source_output_fields:
-            failures.append(f"Required canonical field `{field}` missing from current source/output fields")
+            failures.append(
+                f"Required canonical field `{field}` missing from "
+                "current source/output fields"
+            )
 
     for phrase in REQUIRED_BOUNDARY_PHRASES:
         if phrase not in dictionary:
@@ -695,12 +783,12 @@ def main() -> int:
 
     report = [
         "Retail data contract validation PASSED.",
-        "Checked selected required implemented field presence across the dictionary and current source/output files.",
+        "Checked selected required implemented fields against explicit dictionary registrations and current source/output files.",
         "Checked Demo 1 source/output headers and canonical interpretation-summary slots.",
         "Checked Demo 2 source/output headers.",
         "Checked Demo 2 diagnostic-scope and limitation fields.",
         "Checked generated Demo 1 and Demo 2 memory fact kind/type discriminators, structure, evidence-trace fields, period metadata, and slot-bounded confidence.",
-        "Checked dictionary-bounded source_fields against declared source and supporting CSV headers.",
+        "Checked generated source_fields against explicit dictionary field registrations and declared source/supporting CSV headers.",
         "Checked critical metric-boundary phrases in DATA_DICTIONARY.md.",
         "Checked estimated_income_proxy remains supplementary context rather than a primary comparability-gate factor.",
         "Checked registered non-canonical aliases while preserving DATA_DICTIONARY.md as the naming authority.",
