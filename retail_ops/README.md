@@ -43,18 +43,28 @@ The retail folder follows one practical workflow:
 | Generated memory facts | Source-aware retail facts with observed values, source fields, confidence labels, and limitations. |
 | Evaluation | Data-contract, Demo 2 output, generated-fact, answer-boundary, retrieval-inspection, and future-gate contract checks. |
 
-## Reading Order
+## Admissions Review Path
 
-| Step | File |
-|---:|---|
-| 1 | `../PROJECT_SUMMARY_FOR_ADMISSIONS.md` |
-| 2 | `../README.md` |
-| 3 | `data/DATA_DICTIONARY.md` |
-| 4 | `demo/demo_1_store_a_month_over_month_diagnostic.md` |
-| 5 | `demo/demo_2_cross_store_comparability_diagnostic.md` |
-| 6 | `EXPERIMENT_RESULTS.md` |
-| 7 | `COMPARABILITY_GATE_V0.md` |
-| 8 | `TECHNICAL_APPENDIX.md` |
+The application-level entry point is the
+[project summary](../PROJECT_SUMMARY_FOR_ADMISSIONS.md). Within the retail
+evidence layer, use this order:
+
+| Step | File | Purpose |
+|---:|---|---|
+| 1 | [Demo 1: Store A month-over-month diagnostic](demo/demo_1_store_a_month_over_month_diagnostic.md) | Review repeated-window single-store evidence and multi-metric interpretation. |
+| 2 | [Demo 2: same-period B-F diagnostic](demo/demo_2_cross_store_comparability_diagnostic.md) | Review multi-store evidence organization and interpretation limits. |
+| 3 | [Store-period panel coverage](outputs/store_period_panel_coverage_output.csv) and [repeated-window summary](outputs/repeated_window_panel_summary_output.csv) | Inspect February-April B-F coverage and descriptive movement. |
+| 4 | [Experiment results](EXPERIMENT_RESULTS.md) | Review validation procedures, outcomes, sensitivity checks, and failure modes. |
+| 5 | [RAC demo index](../rac/DEMO_INDEX.md) | Continue from structured retail evidence into factor-aware grounded review. |
+
+Technical references:
+
+- [Data dictionary](data/DATA_DICTIONARY.md): canonical field names,
+  backend metric definitions, formulas, grains, and interpretation limits.
+- [Technical appendix](TECHNICAL_APPENDIX.md): source-to-claim lineage and
+  architecture-level evidence details.
+- [Comparability Gate V0](COMPARABILITY_GATE_V0.md): future
+  question-specific pairwise comparability requirements.
 
 ## Main Outputs
 

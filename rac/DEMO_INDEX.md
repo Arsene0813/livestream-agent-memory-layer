@@ -38,7 +38,7 @@ The implemented review process:
 2. Assign interpretable factor weights.
 3. Route each factor to local evidence.
 4. Distinguish quantitative evidence from boundary evidence.
-5. Record source paths, source-line audit pointers, and evidence fields.
+5. Record source paths, structured-record locators for CSV evidence, source-line pointers for text evidence, and canonical evidence fields.
 6. Generate competing hypotheses.
 7. Critique weak claims.
 8. Check unsupported claims and definition conflicts.
@@ -56,7 +56,7 @@ contract, and fixed evaluation cases.
 |---|---|---|
 | Structured review contracts | Implemented | `rac/prompts/`, `rac/schemas/`, and `rac/eval/` define the current review inputs, state, and fixed cases. |
 | Deterministic review pipeline | Implemented | `rac/src/mock_pipeline.py` establishes the typed review-state and report contracts. |
-| Local evidence resolver | Implemented | `rac/src/local_evidence_resolver.py` routes factors to local source snippets or explicit boundary evidence. |
+| Local evidence resolver | Implemented | `rac/src/local_evidence_resolver.py` routes factors to structured CSV records, local text snippets, or explicit boundary evidence. |
 | Grounded RAC pipeline | Implemented | `rac/src/grounded_pipeline.py` generates source-aware JSON and Markdown reports. |
 | Report-contract quality gate | Implemented | `rac/scripts/validate_grounded_quality_gate.py` validates report structure, evidence references, limitations, and selected claim boundaries. |
 | LangGraph-style orchestration | Planned experiment | Evaluate when conditional re-retrieval, repeated critique, recoverable branches, or human-review checkpoints make the sequential path difficult to inspect. |
@@ -80,7 +80,8 @@ Expected quality-gate result:
   [OK] RAC report-contract quality gate passed
   [OK] Cases checked: 4
   [OK] Total grounded packets: 30
-  [OK] Keyword matched packets: 27
+  [OK] Record matched packets: 5
+  [OK] Keyword matched packets: 22
   [OK] Boundary matched packets: 3
   [OK] Fallback packets: 0
   [OK] Missing source files: 0
@@ -89,10 +90,10 @@ Expected quality-gate result:
 
 | Case | Question | What It Demonstrates | Grounded Report |
 |---|---|---|---|
-| rac_store_a_attribution_001 | Can Store A's April growth be attributed to search exposure? | Avoids single-cause attribution and considers traffic, conversion, promotion, SKU context, and evidence limits. | rac/outputs/grounded_rac_store_a_attribution_001.md |
-| rac_cross_store_comparability_001 | Are Stores B-F directly comparable in March 2026? | Routes quantitative factors to Demo 2 output evidence and routes unavailable comparability requirements to explicit boundary evidence. It does not implement a pairwise comparability gate. | rac/outputs/grounded_rac_cross_store_comparability_001.md |
-| rac_promotion_strategy_001 | What should be checked before changing promotions for a store? | Routes available transaction, cost, and conversion evidence while retaining margin and competitor context as unresolved requirements. | rac/outputs/grounded_rac_promotion_strategy_001.md |
-| rac_system_design_001 | How should the RAC system be connected to the existing memory layer? | Shows how RAC uses typed memory records as inputs to a factor-aware grounded review path. | rac/outputs/grounded_rac_system_design_001.md |
+| `rac_store_a_attribution_001` | Can Store A's April growth be attributed to search exposure? | Grounds search exposure, entry conversion, order conversion, promotion intensity, and transaction orders to the March-April Store A CSV records while rejecting single-cause attribution. | [Store A attribution report](outputs/grounded_rac_store_a_attribution_001.md) |
+| `rac_cross_store_comparability_001` | Are Stores B-F directly comparable in March 2026? | Routes available quantitative evidence to Demo 2 sources and unavailable pairwise requirements to explicit boundary evidence. | [Cross-store boundary report](outputs/grounded_rac_cross_store_comparability_001.md) |
+| `rac_promotion_strategy_001` | What should be checked before changing promotions for a store? | Routes available transaction, cost, and conversion evidence while retaining margin and competitor context as unresolved requirements. | [Promotion-strategy report](outputs/grounded_rac_promotion_strategy_001.md) |
+| `rac_system_design_001` | How should RAC connect to the existing memory layer? | Shows how typed memory records feed a factor-aware grounded review path. | [System-design report](outputs/grounded_rac_system_design_001.md) |
 
 ## Cross-Store Grounding Hardening
 
@@ -121,18 +122,19 @@ The implemented scope is a factor-routing audit. Current B-F repeated-window pan
 
 For a quick review, read these files in order:
 
-1. rac/DEMO_INDEX.md
-2. rac/outputs/grounded_rac_store_a_attribution_001.md
-3. rac/outputs/grounded_rac_cross_store_comparability_001.md
-4. rac/outputs/grounded_quality_summary.md
-5. rac/README.md
+1. [RAC demo index](DEMO_INDEX.md)
+2. [Store A attribution-boundary report](outputs/grounded_rac_store_a_attribution_001.md)
+3. [Cross-store comparability-boundary report](outputs/grounded_rac_cross_store_comparability_001.md)
+4. [Report-contract quality summary](outputs/grounded_quality_summary.md)
+5. [RAC implementation guide](README.md)
 
 For code review, inspect:
 
-1. rac/src/mock_pipeline.py
-2. rac/src/local_evidence_resolver.py
-3. rac/src/grounded_pipeline.py
-4. rac/scripts/validate_grounded_quality_gate.py
+1. [`mock_pipeline.py`](src/mock_pipeline.py)
+2. [`local_evidence_resolver.py`](src/local_evidence_resolver.py)
+3. [`store_a_csv_grounding.py`](src/store_a_csv_grounding.py)
+4. [`grounded_pipeline.py`](src/grounded_pipeline.py)
+5. [`validate_grounded_quality_gate.py`](scripts/validate_grounded_quality_gate.py)
 
 ## What The Grounded Reports Show
 
@@ -142,7 +144,7 @@ Each grounded report includes:
 - the detected question type;
 - factor weights and their interpretation limits;
 - local evidence source paths and grounding roles;
-- source-line audit pointers;
+- structured-record locators for CSV evidence and source-line audit pointers for text evidence;
 - canonical evidence fields;
 - competing hypotheses with scenario-template confidence labels;
 - critic findings;
@@ -163,7 +165,7 @@ A reviewer can assess each grounded output at three linked levels:
 2. **Evidence routing:** whether each factor was linked to an appropriate local source or recorded as explicit boundary evidence.
 3. **Judgment boundary:** whether the final judgment remains within the evidence, definitions, entity scope, and reporting period available to the case.
 
-Each evidence record retains its source path, grounding role, source-line audit pointer, and evidence fields. Missing requirements remain visible in the review trace rather than being replaced by an unsupported conclusion.
+Each evidence record retains its source path, grounding role, and canonical evidence fields. Structured CSV evidence records the selected row keys and values; text evidence records a local line pointer. Missing requirements remain visible in the review trace rather than being replaced by an unsupported conclusion.
 
 ## Current Evidence and Integration Boundary
 

@@ -74,29 +74,30 @@ This prototype emphasizes:
 
 ## Admissions Review Path
 
-`PROJECT_SUMMARY_FOR_ADMISSIONS.md` is the single application-facing
-starting point. The first pass follows the business problem, implemented
-evidence, experiments, and RAC in one order.
+[`PROJECT_SUMMARY_FOR_ADMISSIONS.md`](PROJECT_SUMMARY_FOR_ADMISSIONS.md)
+is the single application-facing starting point. A first-pass review can
+follow five files in one narrative order:
 
 | Step | File | Review purpose |
 |---:|---|---|
-| 1 | `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Understand the business problem, evidence coverage, implemented scope, and decision boundary. |
-| 2 | `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` | Inspect the Store A repeated-window diagnostic and its multi-metric interpretation. |
-| 3 | `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` | Inspect the same-period B-F diagnostic and its interpretation guardrails. |
-| 4 | `retail_ops/outputs/store_period_panel_coverage_output.csv` and `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Check repeated-window B-F coverage and descriptive movement. |
-| 5 | `retail_ops/EXPERIMENT_RESULTS.md` | Review validation questions, procedures, results, and failure boundaries. |
-| 6 | `rac/DEMO_INDEX.md` | Inspect the factor-aware grounded review pipeline, reports, and quality gate. |
+| 1 | [Project summary](PROJECT_SUMMARY_FOR_ADMISSIONS.md) | Understand the business origin, evidence coverage, implemented architecture, and decision boundary. |
+| 2 | [Design evolution: from livestream product memory to retail decision support](case_studies/from_livestream_to_retail_decision_support.md) | See how lifecycle-aware product memory developed into store-period evidence management. |
+| 3 | [Demo 1: Store A month-over-month diagnostic](retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md) | Inspect repeated-window Store A evidence and multi-metric interpretation. |
+| 4 | [Demo 2: same-period B-F diagnostic](retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md) | Inspect multi-store evidence organization and interpretation guardrails. |
+| 5 | [RAC grounded-review demo index](rac/DEMO_INDEX.md) | Inspect factor routing, structured-record grounding, boundary evidence, competing hypotheses, and report validation. |
 
-After the first pass:
+Supporting evidence after the first pass:
 
-- `case_studies/from_livestream_to_retail_decision_support.md`
-  preserves the complete system evolution from livestream product memory
-  to retail decision support.
-- `retail_ops/data/DATA_DICTIONARY.md` and
-  `retail_ops/TECHNICAL_APPENDIX.md` are the field-contract and technical
-  audit references.
-- `retail_ops/COMPARABILITY_GATE_V0.md` records the future
-  question-specific pairwise comparability contract.
+- [Repeated-window B-F coverage](retail_ops/outputs/store_period_panel_coverage_output.csv)
+  and [descriptive summary](retail_ops/outputs/repeated_window_panel_summary_output.csv)
+  show the implemented February-April panel.
+- [Experiment results](retail_ops/EXPERIMENT_RESULTS.md) records validation
+  questions, procedures, outcomes, and visible failure modes.
+- [Data dictionary](retail_ops/data/DATA_DICTIONARY.md) and
+  [technical appendix](retail_ops/TECHNICAL_APPENDIX.md) provide the
+  field contract and source-to-claim audit references.
+- [Comparability Gate V0](retail_ops/COMPARABILITY_GATE_V0.md) documents
+  the future question-specific pairwise comparability contract.
 
 ## Architecture
 

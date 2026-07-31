@@ -14,24 +14,29 @@ The repository turns selected backend observations into a traceable decision-sup
 
 ## Reviewer Reading Path
 
-This file is the single application-facing entry point.
+This file is the single application-facing entry point. Continue through
+the project in this five-step order:
 
 | Step | File | What to inspect |
 |---:|---|---|
-| 1 | `PROJECT_SUMMARY_FOR_ADMISSIONS.md` | Business origin, evidence coverage, architecture, implemented scope, and decision boundary. |
-| 2 | `retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md` | Store A month-over-month evidence and multi-metric interpretation. |
-| 3 | `retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md` | Same-period B-F evidence and interpretation guardrails. |
-| 4 | `retail_ops/outputs/store_period_panel_coverage_output.csv` and `retail_ops/outputs/repeated_window_panel_summary_output.csv` | Repeated-window B-F coverage and descriptive summary. |
-| 5 | `retail_ops/EXPERIMENT_RESULTS.md` | Experiment questions, procedures, results, and failure modes. |
-| 6 | `rac/DEMO_INDEX.md` | Factor-aware grounded review cases, reports, pipeline stages, and quality gate. |
+| 1 | [Project summary](PROJECT_SUMMARY_FOR_ADMISSIONS.md) | Business origin, evidence scope, architecture, implemented work, and decision boundary. |
+| 2 | [Design evolution](case_studies/from_livestream_to_retail_decision_support.md) | The progression from livestream product memory to lifecycle-aware retail evidence. |
+| 3 | [Demo 1: Store A month-over-month diagnostic](retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md) | Store A repeated-window evidence and multi-metric interpretation. |
+| 4 | [Demo 2: same-period B-F diagnostic](retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md) | Multi-store evidence structure and comparison guardrails. |
+| 5 | [RAC grounded-review demo index](rac/DEMO_INDEX.md) | Factor-aware evidence routing, record grounding, unresolved requirements, and report-contract validation. |
 
-The full project evolution is preserved in
-`case_studies/from_livestream_to_retail_decision_support.md`.
+After this first pass, use:
 
-Use `retail_ops/data/DATA_DICTIONARY.md`,
-`retail_ops/TECHNICAL_APPENDIX.md`, and
-`retail_ops/COMPARABILITY_GATE_V0.md` as contract and technical
-references while reviewing the implemented evidence.
+- [Repeated-window B-F coverage](retail_ops/outputs/store_period_panel_coverage_output.csv)
+  and [summary](retail_ops/outputs/repeated_window_panel_summary_output.csv)
+  for the February-April supporting panel;
+- [experiment results](retail_ops/EXPERIMENT_RESULTS.md) for procedures,
+  outcomes, retrieval stress cases, and failure modes;
+- the [data dictionary](retail_ops/data/DATA_DICTIONARY.md) and
+  [technical appendix](retail_ops/TECHNICAL_APPENDIX.md) for field and
+  source-to-claim review;
+- [Comparability Gate V0](retail_ops/COMPARABILITY_GATE_V0.md) for the
+  deferred question-specific pairwise evidence contract.
 
 ## Business Decision Problem
 
@@ -146,7 +151,7 @@ Main outputs:
 
 RAC is a deterministic source-aware review layer over local project evidence.
 
-The layer decomposes an operating question into relevant factors, routes each factor to local evidence or boundary evidence, generates competing hypotheses, applies critique and rule-based checks for unsupported claims and definition conflicts, and produces a grounded report with scenario-template confidence labels, limitations, source paths, source-line audit pointers, and evidence fields.
+The layer decomposes an operating question into relevant factors, routes each factor to local evidence or boundary evidence, generates competing hypotheses, applies critique and rule-based checks for unsupported claims and definition conflicts, and produces a grounded report with scenario-template confidence labels, limitations, source paths, structured-record locators for CSV evidence, source-line pointers for text evidence, and canonical evidence fields.
 
 This layer is useful when current evidence is strong for one factor but weak, missing, or boundary-only for another. It helps prevent a grounded answer from hiding missing evidence behind a fluent conclusion.
 
@@ -154,10 +159,10 @@ Reviewer entry points:
 
 | File | Purpose |
 |---|---|
-| `rac/DEMO_INDEX.md` | Index of deterministic RAC demo cases. |
-| `rac/outputs/grounded_rac_store_a_attribution_001.md` | Store A attribution-boundary review. |
-| `rac/outputs/grounded_rac_cross_store_comparability_001.md` | Demo 2 cross-store comparability boundary review. |
-| `rac/src/grounded_pipeline.py` | Deterministic grounded review pipeline. |
+| [RAC demo index](rac/DEMO_INDEX.md) | Reviewer-facing index of deterministic RAC cases. |
+| [Store A attribution-boundary report](rac/outputs/grounded_rac_store_a_attribution_001.md) | Shows deterministic CSV record grounding and multi-factor attribution limits. |
+| [Cross-store comparability-boundary report](rac/outputs/grounded_rac_cross_store_comparability_001.md) | Shows quantitative evidence routing and explicit unavailable requirements. |
+| [Grounded pipeline](rac/src/grounded_pipeline.py) | Deterministic review and report-generation implementation. |
 
 ## Deferred Comparability Contract
 
