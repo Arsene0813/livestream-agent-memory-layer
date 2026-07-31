@@ -40,20 +40,21 @@ Weighting boundary:
 ## 4. Local Evidence Grounding
 
 - Total evidence packets: 5
-- Keyword matched packets: 5
+- Record matched packets: 5
+- Keyword matched packets: 0
 - Boundary matched packets: 0
 - Fallback packets: 0
 - Missing source files: 0
 
-The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence row. It is not a business metric. The `Evidence Fields` column lists the canonical fields or documented evidence concepts used for review; raw matched keywords are intentionally not shown.
+For CSV evidence, `Source Locator` shows the selected record scope and `Selected Values` shows values read from those records. For Markdown evidence, the locator remains a local line-range pointer.
 
-| Factor | Source | Evidence Type | Status | Source Lines | Evidence Fields |
-|---|---|---|---|---|---|
-| search_exposure | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 82-84 | search |
-| entry_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 24-26 | entry |
-| order_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 74-76 | order conversion |
-| promotion_intensity | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 18-20 | activity |
-| transaction_orders | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | default_evidence | keyword_matched | 74-76 | transaction orders |
+| Factor | Source | Evidence Type | Status | Source Locator | Evidence Fields | Selected Values |
+|---|---|---|---|---|---|---|
+| search_exposure | retail_ops/data/store_a_monthly_metrics.csv | quantitative_evidence | record_matched | records: store_id=A; period_month=2026-03, 2026-04; rows=2 | search_exposure_users, search_average_rank, search_entry_users | store_id=A, period_month=2026-03: search_exposure_users=4172, search_average_rank=20, search_entry_users=445<br>store_id=A, period_month=2026-04: search_exposure_users=7736, search_average_rank=18, search_entry_users=839 |
+| entry_conversion | retail_ops/data/store_a_monthly_metrics.csv | quantitative_evidence | record_matched | records: store_id=A; period_month=2026-03, 2026-04; rows=2 | exposure_users, entry_users, entry_conversion_rate_pct | store_id=A, period_month=2026-03: exposure_users=4663, entry_users=522, entry_conversion_rate_pct=11.19<br>store_id=A, period_month=2026-04: exposure_users=8366, entry_users=906, entry_conversion_rate_pct=10.83 |
+| order_conversion | retail_ops/data/store_a_monthly_metrics.csv | quantitative_evidence | record_matched | records: store_id=A; period_month=2026-03, 2026-04; rows=2 | entry_users, order_users, order_conversion_rate_pct | store_id=A, period_month=2026-03: entry_users=522, order_users=221, order_conversion_rate_pct=42.34<br>store_id=A, period_month=2026-04: entry_users=906, order_users=339, order_conversion_rate_pct=37.42 |
+| promotion_intensity | retail_ops/data/store_a_monthly_metrics.csv | quantitative_evidence | record_matched | records: store_id=A; period_month=2026-03, 2026-04; rows=2 | activity_original_transaction_amount, activity_orders, activity_cost, merchant_subsidy_amount, platform_subsidy_amount, activity_cost_ratio_pct | store_id=A, period_month=2026-03: activity_original_transaction_amount=10035.00, activity_orders=201, activity_cost=3868.16, merchant_subsidy_amount=3727.16, platform_subsidy_amount=141.00, activity_cost_ratio_pct=38.55<br>store_id=A, period_month=2026-04: activity_original_transaction_amount=15006.90, activity_orders=329, activity_cost=6105.86, merchant_subsidy_amount=5947.36, platform_subsidy_amount=158.50, activity_cost_ratio_pct=40.69 |
+| transaction_orders | retail_ops/data/store_a_monthly_metrics.csv | quantitative_evidence | record_matched | records: store_id=A; period_month=2026-03, 2026-04; rows=2 | transaction_orders | store_id=A, period_month=2026-03: transaction_orders=207<br>store_id=A, period_month=2026-04: transaction_orders=337 |
 
 
 ## 5. Competing Hypotheses
@@ -115,12 +116,13 @@ Score contract:
 Current report inputs:
 
 - total_packets = 5
-- keyword_matched_packets = 5
+- record_matched_packets = 5
+- keyword_matched_packets = 0
 - boundary_matched_packets = 0
 - fallback_packets = 0
 - missing_source_files = 0
-- direct_evidence_rate = keyword_matched_packets / total_packets = 1.00
-- supported_or_boundary_rate = (keyword_matched_packets + boundary_matched_packets) / total_packets = 1.00
+- direct_evidence_rate = (record_matched_packets + keyword_matched_packets) / total_packets = 1.00
+- supported_or_boundary_rate = (record_matched_packets + keyword_matched_packets + boundary_matched_packets) / total_packets = 1.00
 - no_missing_source_file_score = 1.00
 - no_fallback_score = 1.00
 

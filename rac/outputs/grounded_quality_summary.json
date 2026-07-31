@@ -1,5 +1,5 @@
 {
-  "validation_scope": "Current deterministic report-contract checks: report structure, source traceability, semantic anchors, and selected claim boundaries.",
+  "validation_scope": "Current deterministic report-contract checks: report structure, source traceability, structured CSV value checks, semantic anchors, and selected claim boundaries.",
   "pass_interpretation": "A passed case satisfies the current rule set; it does not establish causal validity, decision quality, or business impact.",
   "total_cases": 4,
   "passed_cases": 4,
@@ -18,12 +18,13 @@
         "limitation_count": 3,
         "grounded_row_count": 5,
         "total_packets": 5,
-        "keyword_matched_count": 5,
+        "record_matched_count": 5,
+        "keyword_matched_count": 0,
         "boundary_matched_count": 0,
         "fallback_count": 0,
         "source_missing_count": 0,
         "row_status_counts": {
-          "keyword_matched": 5
+          "record_matched": 5
         }
       }
     },
@@ -40,6 +41,7 @@
         "limitation_count": 3,
         "grounded_row_count": 9,
         "total_packets": 9,
+        "record_matched_count": 0,
         "keyword_matched_count": 8,
         "boundary_matched_count": 1,
         "fallback_count": 0,
@@ -63,6 +65,7 @@
         "limitation_count": 3,
         "grounded_row_count": 8,
         "total_packets": 8,
+        "record_matched_count": 0,
         "keyword_matched_count": 6,
         "boundary_matched_count": 2,
         "fallback_count": 0,
@@ -86,6 +89,7 @@
         "limitation_count": 1,
         "grounded_row_count": 8,
         "total_packets": 8,
+        "record_matched_count": 0,
         "keyword_matched_count": 8,
         "boundary_matched_count": 0,
         "fallback_count": 0,

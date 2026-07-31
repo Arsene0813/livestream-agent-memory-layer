@@ -4,6 +4,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from rac.src.store_a_csv_grounding import (
+    SOURCE_PATH as STORE_A_SOURCE_PATH,
+    resolve_store_a_record,
+    supports_store_a_record,
+)
+
 
 FACTOR_KEYWORDS: dict[str, list[str]] = {
     "search_exposure": [
@@ -554,6 +560,17 @@ def candidate_sources_for_packet(
 ) -> list[dict[str, str]]:
     factor_id = infer_factor_id(packet)
 
+    if supports_store_a_record(
+        question_type,
+        factor_id,
+    ):
+        return [
+            {
+                "source_path": STORE_A_SOURCE_PATH,
+                "grounding_role": "quantitative_evidence",
+            }
+        ]
+
     if (
         question_type == "strategic_recommendation"
         and factor_id in STRATEGIC_SOURCE_OVERRIDES
@@ -568,11 +585,12 @@ def candidate_sources_for_packet(
 
     return [
         {
-            "source_path": str(packet.get("source_path", "")),
-            "grounding_role": "default_evidence"
+            "source_path": str(
+                packet.get("source_path", "")
+            ),
+            "grounding_role": "default_evidence",
         }
     ]
-
 
 
 def keywords_for_source(
@@ -672,6 +690,9 @@ def resolve_single_source(
 def status_score(packet: dict[str, Any]) -> int:
     status = packet["grounding_status"]
 
+    if status == "record_matched":
+        return 5
+
     if status == "keyword_matched":
         return 4
 
@@ -693,16 +714,33 @@ def resolve_evidence_packet(
     factor_id = infer_factor_id(packet)
     candidates = candidate_sources_for_packet(packet, question_type=question_type)
 
-    resolved_candidates = [
-        resolve_single_source(
-            packet,
-            factor_id=factor_id,
-            source_path=candidate["source_path"],
-            grounding_role=candidate["grounding_role"],
-            root=root
-        )
-        for candidate in candidates
-    ]
+    resolved_candidates = []
+
+    for candidate in candidates:
+        source_path = candidate["source_path"]
+
+        if supports_store_a_record(
+            question_type,
+            factor_id,
+            source_path,
+        ):
+            resolved = resolve_store_a_record(
+                packet,
+                factor_id=factor_id,
+                root=root,
+            )
+        else:
+            resolved = resolve_single_source(
+                packet,
+                factor_id=factor_id,
+                source_path=source_path,
+                grounding_role=candidate[
+                    "grounding_role"
+                ],
+                root=root,
+            )
+
+        resolved_candidates.append(resolved)
 
     resolved_candidates.sort(
         key=lambda item: (
@@ -758,6 +796,7 @@ def resolve_state_evidence(
         "status_counts": status_counts,
         "role_counts": role_counts,
         "source_missing_count": status_counts.get("source_missing", 0),
+        "record_matched_count": status_counts.get("record_matched", 0),
         "keyword_matched_count": status_counts.get("keyword_matched", 0),
         "boundary_matched_count": status_counts.get("boundary_matched", 0),
         "fallback_count": status_counts.get("source_found_no_keyword_match", 0)

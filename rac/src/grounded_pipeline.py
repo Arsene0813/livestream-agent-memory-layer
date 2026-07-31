@@ -99,72 +99,209 @@ def compact_snippet(
     )
 
 
-def build_grounded_evidence_rows(resolver_result: dict[str, Any]) -> list[dict[str, Any]]:
+def build_grounded_evidence_rows(
+    resolver_result: dict[str, Any],
+) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
 
     for packet in resolver_result["resolved_packets"]:
+        common = {
+            "factor_id": packet["factor_id"],
+            "evidence_id": packet["evidence_id"],
+            "source_path": packet["source_path"],
+            "grounding_role": packet.get(
+                "grounding_role",
+                "unknown",
+            ),
+            "grounding_status": packet[
+                "grounding_status"
+            ],
+        }
+
+        if (
+            packet["grounding_status"]
+            == "record_matched"
+        ):
+            rows.append(
+                {
+                    **common,
+                    "line_range": "n/a",
+                    "matched_terms": [],
+                    "snippet": "",
+                    "record_scope": packet[
+                        "record_scope"
+                    ],
+                    "evidence_fields": packet[
+                        "evidence_fields"
+                    ],
+                    "evidence_values": packet[
+                        "evidence_values"
+                    ],
+                }
+            )
+            continue
+
         snippets = packet.get("snippets", [])
 
         if not snippets:
-            rows.append({
-                "factor_id": packet["factor_id"],
-                "evidence_id": packet["evidence_id"],
-                "source_path": packet["source_path"],
-                "grounding_role": packet.get("grounding_role", "unknown"),
-                "grounding_status": packet["grounding_status"],
-                "line_range": "n/a",
-                "matched_terms": [],
-                "snippet": ""
-            })
+            rows.append(
+                {
+                    **common,
+                    "line_range": "n/a",
+                    "matched_terms": [],
+                    "snippet": "",
+                }
+            )
             continue
 
         first = snippets[0]
         line_start = first.get("line_start")
         line_end = first.get("line_end")
-        line_range = f"{line_start}-{line_end}" if line_start and line_end else "n/a"
+        line_range = (
+            f"{line_start}-{line_end}"
+            if line_start and line_end
+            else "n/a"
+        )
 
-        rows.append({
-            "factor_id": packet["factor_id"],
-            "evidence_id": packet["evidence_id"],
-            "source_path": packet["source_path"],
-            "grounding_role": packet.get("grounding_role", "unknown"),
-            "grounding_status": packet["grounding_status"],
-            "line_range": line_range,
-            "matched_terms": first.get("matched_terms", []),
-            "snippet": compact_snippet(
-                first.get("text", ""),
-                matched_terms=first.get(
+        rows.append(
+            {
+                **common,
+                "line_range": line_range,
+                "matched_terms": first.get(
                     "matched_terms",
                     [],
                 ),
-            )
-        })
+                "snippet": compact_snippet(
+                    first.get("text", ""),
+                    matched_terms=first.get(
+                        "matched_terms",
+                        [],
+                    ),
+                ),
+            }
+        )
 
     return rows
 
 
+def format_record_scope(
+    record_scope: dict[str, Any],
+) -> str:
+    row_keys = record_scope.get("row_keys", [])
+
+    if not row_keys:
+        return ""
+
+    stores = sorted(
+        {
+            str(row["store_id"])
+            for row in row_keys
+            if row.get("store_id")
+        }
+    )
+    months = [
+        str(row["period_month"])
+        for row in row_keys
+        if row.get("period_month")
+    ]
+
+    parts = []
+
+    if stores:
+        parts.append(
+            "store_id=" + ", ".join(stores)
+        )
+
+    if months:
+        parts.append(
+            "period_month=" + ", ".join(months)
+        )
+
+    parts.append(
+        "rows="
+        + str(
+            record_scope.get(
+                "row_count",
+                len(row_keys),
+            )
+        )
+    )
+
+    return "; ".join(parts)
 
 
+def format_evidence_values(
+    evidence_values: list[dict[str, Any]],
+) -> str:
+    rendered = []
 
-def calculate_evidence_coverage_score(state: dict[str, Any]) -> dict[str, Any]:
+    for item in evidence_values:
+        key_text = ", ".join(
+            f"{field}={value}"
+            for field, value
+            in item["row_key"].items()
+        )
+        value_text = ", ".join(
+            f"{field}={value}"
+            for field, value
+            in item["values"].items()
+        )
+        rendered.append(
+            f"{key_text}: {value_text}"
+        )
+
+    return "<br>".join(rendered)
+
+
+def calculate_evidence_coverage_score(
+    state: dict[str, Any],
+) -> dict[str, Any]:
     grounded = state.get("grounded_evidence", {})
-    summary = grounded.get("summary", {}) if isinstance(grounded, dict) else {}
+    summary = (
+        grounded.get("summary", {})
+        if isinstance(grounded, dict)
+        else {}
+    )
 
-    total_packets = int(summary.get("total_packets", 0))
-    keyword_matched_packets = int(summary.get("keyword_matched_count", 0))
-    boundary_matched_packets = int(summary.get("boundary_matched_count", 0))
-    fallback_packets = int(summary.get("fallback_count", 0))
-    missing_source_files = int(summary.get("source_missing_count", 0))
+    total_packets = int(
+        summary.get("total_packets", 0)
+    )
+    record_matched_packets = int(
+        summary.get("record_matched_count", 0)
+    )
+    keyword_matched_packets = int(
+        summary.get("keyword_matched_count", 0)
+    )
+    boundary_matched_packets = int(
+        summary.get("boundary_matched_count", 0)
+    )
+    fallback_packets = int(
+        summary.get("fallback_count", 0)
+    )
+    missing_source_files = int(
+        summary.get("source_missing_count", 0)
+    )
 
     if total_packets == 0:
         direct_evidence_rate = 0.0
         supported_or_boundary_rate = 0.0
     else:
-        direct_evidence_rate = keyword_matched_packets / total_packets
-        supported_or_boundary_rate = (keyword_matched_packets + boundary_matched_packets) / total_packets
+        direct_evidence_rate = (
+            record_matched_packets
+            + keyword_matched_packets
+        ) / total_packets
+        supported_or_boundary_rate = (
+            record_matched_packets
+            + keyword_matched_packets
+            + boundary_matched_packets
+        ) / total_packets
 
-    no_missing_source_file_score = 1.0 if missing_source_files == 0 else 0.0
-    no_fallback_score = 1.0 if fallback_packets == 0 else 0.0
+    no_missing_source_file_score = (
+        1.0 if missing_source_files == 0 else 0.0
+    )
+    no_fallback_score = (
+        1.0 if fallback_packets == 0 else 0.0
+    )
 
     score = (
         0.45 * direct_evidence_rate
@@ -173,18 +310,27 @@ def calculate_evidence_coverage_score(state: dict[str, Any]) -> dict[str, Any]:
         + 0.15 * no_fallback_score
     )
 
-    score = max(0.0, min(1.0, score))
-
     return {
-        "score": score,
+        "score": max(0.0, min(1.0, score)),
         "total_packets": total_packets,
-        "keyword_matched_packets": keyword_matched_packets,
-        "boundary_matched_packets": boundary_matched_packets,
+        "record_matched_packets": (
+            record_matched_packets
+        ),
+        "keyword_matched_packets": (
+            keyword_matched_packets
+        ),
+        "boundary_matched_packets": (
+            boundary_matched_packets
+        ),
         "fallback_packets": fallback_packets,
         "missing_source_files": missing_source_files,
         "direct_evidence_rate": direct_evidence_rate,
-        "supported_or_boundary_rate": supported_or_boundary_rate,
-        "no_missing_source_file_score": no_missing_source_file_score,
+        "supported_or_boundary_rate": (
+            supported_or_boundary_rate
+        ),
+        "no_missing_source_file_score": (
+            no_missing_source_file_score
+        ),
         "no_fallback_score": no_fallback_score,
     }
 
@@ -277,16 +423,48 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append("")
     lines.append("## 4. Local Evidence Grounding")
     lines.append("")
-    lines.append(f"- Total evidence packets: {summary['total_packets']}")
-    lines.append(f"- Keyword matched packets: {summary['keyword_matched_count']}")
-    lines.append(f"- Boundary matched packets: {summary.get('boundary_matched_count', 0)}")
-    lines.append(f"- Fallback packets: {summary['fallback_count']}")
-    lines.append(f"- Missing source files: {summary['source_missing_count']}")
+    lines.append(
+        f"- Total evidence packets: "
+        f"{summary['total_packets']}"
+    )
+    lines.append(
+        f"- Record matched packets: "
+        f"{summary.get('record_matched_count', 0)}"
+    )
+    lines.append(
+        f"- Keyword matched packets: "
+        f"{summary['keyword_matched_count']}"
+    )
+    lines.append(
+        f"- Boundary matched packets: "
+        f"{summary.get('boundary_matched_count', 0)}"
+    )
+    lines.append(
+        f"- Fallback packets: "
+        f"{summary['fallback_count']}"
+    )
+    lines.append(
+        f"- Missing source files: "
+        f"{summary['source_missing_count']}"
+    )
     lines.append("")
-    lines.append("The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence row. It is not a business metric. The `Evidence Fields` column lists the canonical fields or documented evidence concepts used for review; raw matched keywords are intentionally not shown.")
+    lines.append(
+        "For CSV evidence, `Source Locator` "
+        "shows the selected record scope and "
+        "`Selected Values` shows values read "
+        "from those records. For Markdown "
+        "evidence, the locator remains a local "
+        "line-range pointer."
+    )
     lines.append("")
-    lines.append("| Factor | Source | Evidence Type | Status | Source Lines | Evidence Fields |")
-    lines.append("|---|---|---|---|---|---|")
+    lines.append(
+        "| Factor | Source | Evidence Type "
+        "| Status | Source Locator "
+        "| Evidence Fields | Selected Values |"
+    )
+    lines.append(
+        "|---|---|---|---|---|---|---|"
+    )
 
     report_evidence_type_overrides = {
         "store_type": "context_evidence",
@@ -311,10 +489,31 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
             factor_id,
             row["grounding_role"],
         )
-        evidence_fields = report_evidence_fields.get(
-            factor_id,
-            ", ".join(row["matched_terms"]),
+        evidence_fields = (
+            ", ".join(
+                row.get("evidence_fields", [])
+            )
+            or report_evidence_fields.get(
+                factor_id,
+                ", ".join(row["matched_terms"]),
+            )
         )
+
+        record_scope = format_record_scope(
+            row.get("record_scope", {})
+        )
+        source_locator = (
+            "records: " + record_scope
+            if record_scope
+            else "lines " + row["line_range"]
+        )
+        selected_values = (
+            format_evidence_values(
+                row.get("evidence_values", [])
+            )
+            or "n/a"
+        )
+
         lines.append(
             "| "
             + markdown_escape(factor_id)
@@ -325,14 +524,17 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
             + " | "
             + markdown_escape(row["grounding_status"])
             + " | "
-            + markdown_escape(row["line_range"])
+            + markdown_escape(source_locator)
             + " | "
             + markdown_escape(evidence_fields)
+            + " | "
+            + markdown_escape(selected_values)
             + " |"
         )
 
     lines.append("")
     lines.append("")
+
     lines.append("## 5. Competing Hypotheses")
     lines.append("")
     lines.append(
@@ -451,12 +653,27 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append("Current report inputs:")
     lines.append("")
     lines.append(f"- total_packets = {coverage_score['total_packets']}")
+    lines.append(
+        f"- record_matched_packets = "
+        f"{coverage_score['record_matched_packets']}"
+    )
     lines.append(f"- keyword_matched_packets = {coverage_score['keyword_matched_packets']}")
     lines.append(f"- boundary_matched_packets = {coverage_score['boundary_matched_packets']}")
     lines.append(f"- fallback_packets = {coverage_score['fallback_packets']}")
     lines.append(f"- missing_source_files = {coverage_score['missing_source_files']}")
-    lines.append(f"- direct_evidence_rate = keyword_matched_packets / total_packets = {coverage_score['direct_evidence_rate']:.2f}")
-    lines.append(f"- supported_or_boundary_rate = (keyword_matched_packets + boundary_matched_packets) / total_packets = {coverage_score['supported_or_boundary_rate']:.2f}")
+    lines.append(
+        "- direct_evidence_rate = "
+        "(record_matched_packets + "
+        "keyword_matched_packets) / total_packets = "
+        f"{coverage_score['direct_evidence_rate']:.2f}"
+    )
+    lines.append(
+        "- supported_or_boundary_rate = "
+        "(record_matched_packets + "
+        "keyword_matched_packets + "
+        "boundary_matched_packets) / total_packets = "
+        f"{coverage_score['supported_or_boundary_rate']:.2f}"
+    )
     lines.append(f"- no_missing_source_file_score = {coverage_score['no_missing_source_file_score']:.2f}")
     lines.append(f"- no_fallback_score = {coverage_score['no_fallback_score']:.2f}")
     lines.append("")

@@ -8,6 +8,11 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from rac.src.grounded_pipeline import run_grounded_pipeline
+from rac.src.store_a_csv_grounding import (
+    FACTOR_FIELDS as STORE_A_FACTOR_FIELDS,
+    PERIOD_MONTHS as STORE_A_PERIOD_MONTHS,
+    SOURCE_PATH as STORE_A_SOURCE_PATH,
+)
 
 
 REQUIRED_REPORT_SECTIONS = [
@@ -26,6 +31,7 @@ REQUIRED_REPORT_SECTIONS = [
 ]
 
 ALLOWED_GROUNDING_STATUSES = {
+    "record_matched",
     "keyword_matched",
     "boundary_matched",
     "source_found_no_keyword_match"
@@ -95,12 +101,87 @@ def validate_promotion_grounded_rows(
             )
 
 
+def validate_store_a_grounded_case(
+    case_id: str,
+    state: dict,
+) -> None:
+    rows = state.get(
+        "grounded_evidence_rows",
+        [],
+    )
+    record_rows = {
+        row["factor_id"]: row
+        for row in rows
+        if row["grounding_status"]
+        == "record_matched"
+    }
+
+    if case_id != "rac_store_a_attribution_001":
+        if record_rows:
+            fail(
+                f"{case_id} unexpectedly used "
+                "record grounding"
+            )
+        return
+
+    if set(record_rows) != set(STORE_A_FACTOR_FIELDS):
+        fail("Store A grounded factor mismatch")
+
+    if (
+        state["grounded_evidence"]["summary"].get(
+            "record_matched_count"
+        )
+        != 5
+    ):
+        fail("Store A record count is not five")
+
+    for factor_id, row in record_rows.items():
+        if row["source_path"] != STORE_A_SOURCE_PATH:
+            fail(
+                f"{factor_id} used unexpected source"
+            )
+
+        if row["evidence_fields"] != list(
+            STORE_A_FACTOR_FIELDS[factor_id]
+        ):
+            fail(
+                f"{factor_id} evidence fields mismatch"
+            )
+
+        months = tuple(
+            item["row_key"]["period_month"]
+            for item in row["evidence_values"]
+        )
+
+        if months != STORE_A_PERIOD_MONTHS:
+            fail(
+                f"{factor_id} period selection mismatch"
+            )
+
+    for fragment in [
+        "Record matched packets: 5",
+        (
+            "records: store_id=A; "
+            "period_month=2026-03, 2026-04; rows=2"
+        ),
+        "search_exposure_users=4172",
+        "transaction_orders=337",
+        "activity_cost_ratio_pct=40.69",
+    ]:
+        if fragment not in state["final_report"]:
+            fail(
+                "Store A report missing: "
+                + fragment
+            )
+
+
 def main() -> None:
     cases = load_eval_cases()
     if not cases:
         fail("No eval cases found")
 
     total_packets = 0
+    total_record_matches = 0
     total_keyword_matches = 0
     total_boundary_matches = 0
     total_fallbacks = 0
@@ -131,8 +212,23 @@ def main() -> None:
             if not row["source_path"]:
                 fail(f"{case['case_id']} has row without source path")
 
-            if not row["snippet"]:
-                fail(f"{case['case_id']} has row without local snippet")
+            if (
+                row["grounding_status"]
+                == "record_matched"
+            ):
+                if (
+                    row["line_range"] != "n/a"
+                    or row["snippet"]
+                ):
+                    fail(
+                        f"{case['case_id']} record row "
+                        "claims text-line grounding"
+                    )
+            elif not row["snippet"]:
+                fail(
+                    f"{case['case_id']} has row "
+                    "without local snippet"
+                )
 
             if not row.get("grounding_role"):
                 fail(f"{case['case_id']} has row without grounding_role")
@@ -144,21 +240,34 @@ def main() -> None:
                 )
 
         report = state["final_report"]
+        validate_store_a_grounded_case(
+            case["case_id"],
+            state,
+        )
 
         for section in REQUIRED_REPORT_SECTIONS:
             if section not in report:
                 fail(f"{case['case_id']} report missing section: {section}")
 
-        if "Source Lines" not in report or "Evidence Fields" not in report:
-            fail(
-                f"{case['case_id']} report does not expose "
-                "source-line audit pointers and evidence fields"
-            )
+        for column in [
+            "Source Locator",
+            "Evidence Fields",
+            "Selected Values",
+        ]:
+            if column not in report:
+                fail(
+                    f"{case['case_id']} report "
+                    f"does not expose {column}"
+                )
 
         if "Missing source files: 0" not in report:
             fail(f"{case['case_id']} report does not show zero missing sources")
 
         total_packets += summary["total_packets"]
+        total_record_matches += summary.get(
+            "record_matched_count",
+            0,
+        )
         total_keyword_matches += summary["keyword_matched_count"]
         total_boundary_matches += summary.get("boundary_matched_count", 0)
         total_fallbacks += summary["fallback_count"]
@@ -166,6 +275,10 @@ def main() -> None:
     print("[OK] RAC grounded pipeline validation passed")
     print(f"[OK] Eval cases checked: {len(cases)}")
     print(f"[OK] Total grounded packets: {total_packets}")
+    print(
+        f"[OK] Record matched packets: "
+        f"{total_record_matches}"
+    )
     print(f"[OK] Keyword matched packets: {total_keyword_matches}")
     print(f"[OK] Boundary matched packets: {total_boundary_matches}")
     print(f"[OK] Fallback packets: {total_fallbacks}")

@@ -43,23 +43,24 @@ Weighting boundary:
 ## 4. Local Evidence Grounding
 
 - Total evidence packets: 8
+- Record matched packets: 0
 - Keyword matched packets: 8
 - Boundary matched packets: 0
 - Fallback packets: 0
 - Missing source files: 0
 
-The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence row. It is not a business metric. The `Evidence Fields` column lists the canonical fields or documented evidence concepts used for review; raw matched keywords are intentionally not shown.
+For CSV evidence, `Source Locator` shows the selected record scope and `Selected Values` shows values read from those records. For Markdown evidence, the locator remains a local line-range pointer.
 
-| Factor | Source | Evidence Type | Status | Source Lines | Evidence Fields |
-|---|---|---|---|---|---|
-| typed_memory | rac/README.md | default_evidence | keyword_matched | 1-2 | fact |
-| evidence_packets | rac/README.md | default_evidence | keyword_matched | 5-7 | evidence |
-| hypotheses | rac/README.md | default_evidence | keyword_matched | 41-43 | hypotheses, competing |
-| belief_records | rac/README.md | default_evidence | keyword_matched | 135-137 | belief |
-| confidence | rac/README.md | default_evidence | keyword_matched | 152-154 | confidence |
-| limitations | rac/README.md | default_evidence | keyword_matched | 7-9 | boundary |
-| retrieval_trace | rac/README.md | default_evidence | keyword_matched | 39-41 | source |
-| active_state_filtering | rac/README.md | default_evidence | keyword_matched | 7-9 | state |
+| Factor | Source | Evidence Type | Status | Source Locator | Evidence Fields | Selected Values |
+|---|---|---|---|---|---|---|
+| typed_memory | rac/README.md | default_evidence | keyword_matched | lines 1-2 | fact | n/a |
+| evidence_packets | rac/README.md | default_evidence | keyword_matched | lines 5-7 | evidence | n/a |
+| hypotheses | rac/README.md | default_evidence | keyword_matched | lines 41-43 | hypotheses, competing | n/a |
+| belief_records | rac/README.md | default_evidence | keyword_matched | lines 135-137 | belief | n/a |
+| confidence | rac/README.md | default_evidence | keyword_matched | lines 152-154 | confidence | n/a |
+| limitations | rac/README.md | default_evidence | keyword_matched | lines 7-9 | boundary | n/a |
+| retrieval_trace | rac/README.md | default_evidence | keyword_matched | lines 39-41 | source | n/a |
+| active_state_filtering | rac/README.md | default_evidence | keyword_matched | lines 7-9 | state | n/a |
 
 
 ## 5. Competing Hypotheses
@@ -120,12 +121,13 @@ Score contract:
 Current report inputs:
 
 - total_packets = 8
+- record_matched_packets = 0
 - keyword_matched_packets = 8
 - boundary_matched_packets = 0
 - fallback_packets = 0
 - missing_source_files = 0
-- direct_evidence_rate = keyword_matched_packets / total_packets = 1.00
-- supported_or_boundary_rate = (keyword_matched_packets + boundary_matched_packets) / total_packets = 1.00
+- direct_evidence_rate = (record_matched_packets + keyword_matched_packets) / total_packets = 1.00
+- supported_or_boundary_rate = (record_matched_packets + keyword_matched_packets + boundary_matched_packets) / total_packets = 1.00
 - no_missing_source_file_score = 1.00
 - no_fallback_score = 1.00
 

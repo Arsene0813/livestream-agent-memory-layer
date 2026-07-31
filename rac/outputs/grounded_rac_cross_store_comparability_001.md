@@ -44,24 +44,25 @@ Weighting boundary:
 ## 4. Local Evidence Grounding
 
 - Total evidence packets: 9
+- Record matched packets: 0
 - Keyword matched packets: 8
 - Boundary matched packets: 1
 - Fallback packets: 0
 - Missing source files: 0
 
-The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence row. It is not a business metric. The `Evidence Fields` column lists the canonical fields or documented evidence concepts used for review; raw matched keywords are intentionally not shown.
+For CSV evidence, `Source Locator` shows the selected record scope and `Selected Values` shows values read from those records. For Markdown evidence, the locator remains a local line-range pointer.
 
-| Factor | Source | Evidence Type | Status | Source Lines | Evidence Fields |
-|---|---|---|---|---|---|
-| same_reporting_period | retail_ops/data/demo2_source_notes.md | context_evidence | keyword_matched | 6-8 | period_start, period_end, period_month |
-| store_type | retail_ops/outputs/demo2_cross_store_comparability_output.csv | context_evidence | keyword_matched | 1-2 | store_type |
-| order_volume | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | transaction_orders |
-| transaction_amount | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | transaction_amount |
-| activity_intensity | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | 1-2 | activity_orders, activity_order_share_pct, activity_cost, activity_cost_ratio_pct |
-| region_context | retail_ops/data/DATA_DICTIONARY.md | definition_evidence | keyword_matched | 74-76 | region_type |
-| competition | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | 101-103 | competition-context requirement in comparability contract |
-| sku_structure | retail_ops/outputs/demo2_cross_store_comparability_output.csv | product_mix_evidence | keyword_matched | 1-2 | top3_sku_transaction_amount, top3_sku_transaction_amount_share_pct, SKU source tables |
-| repeated_reporting_windows | retail_ops/outputs/repeated_window_panel_summary_output.csv | quantitative_evidence | keyword_matched | 1-2 | store_period_panel_metrics, repeated reporting windows |
+| Factor | Source | Evidence Type | Status | Source Locator | Evidence Fields | Selected Values |
+|---|---|---|---|---|---|---|
+| same_reporting_period | retail_ops/data/demo2_source_notes.md | context_evidence | keyword_matched | lines 6-8 | period_start, period_end, period_month | n/a |
+| store_type | retail_ops/outputs/demo2_cross_store_comparability_output.csv | context_evidence | keyword_matched | lines 1-2 | store_type | n/a |
+| order_volume | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | lines 1-2 | transaction_orders | n/a |
+| transaction_amount | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | lines 1-2 | transaction_amount | n/a |
+| activity_intensity | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | lines 1-2 | activity_orders, activity_order_share_pct, activity_cost, activity_cost_ratio_pct | n/a |
+| region_context | retail_ops/data/DATA_DICTIONARY.md | definition_evidence | keyword_matched | lines 74-76 | region_type | n/a |
+| competition | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | lines 101-103 | competition-context requirement in comparability contract | n/a |
+| sku_structure | retail_ops/outputs/demo2_cross_store_comparability_output.csv | product_mix_evidence | keyword_matched | lines 1-2 | top3_sku_transaction_amount, top3_sku_transaction_amount_share_pct, SKU source tables | n/a |
+| repeated_reporting_windows | retail_ops/outputs/repeated_window_panel_summary_output.csv | quantitative_evidence | keyword_matched | lines 1-2 | store_period_panel_metrics, repeated reporting windows | n/a |
 
 
 ## 5. Competing Hypotheses
@@ -123,12 +124,13 @@ Score contract:
 Current report inputs:
 
 - total_packets = 9
+- record_matched_packets = 0
 - keyword_matched_packets = 8
 - boundary_matched_packets = 1
 - fallback_packets = 0
 - missing_source_files = 0
-- direct_evidence_rate = keyword_matched_packets / total_packets = 0.89
-- supported_or_boundary_rate = (keyword_matched_packets + boundary_matched_packets) / total_packets = 1.00
+- direct_evidence_rate = (record_matched_packets + keyword_matched_packets) / total_packets = 0.89
+- supported_or_boundary_rate = (record_matched_packets + keyword_matched_packets + boundary_matched_packets) / total_packets = 1.00
 - no_missing_source_file_score = 1.00
 - no_fallback_score = 1.00
 

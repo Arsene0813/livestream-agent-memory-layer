@@ -43,23 +43,24 @@ Weighting boundary:
 ## 4. Local Evidence Grounding
 
 - Total evidence packets: 8
+- Record matched packets: 0
 - Keyword matched packets: 6
 - Boundary matched packets: 2
 - Fallback packets: 0
 - Missing source files: 0
 
-The `Source Lines` column is an audit pointer to the local source-file line range used for each evidence row. It is not a business metric. The `Evidence Fields` column lists the canonical fields or documented evidence concepts used for review; raw matched keywords are intentionally not shown.
+For CSV evidence, `Source Locator` shows the selected record scope and `Selected Values` shows values read from those records. For Markdown evidence, the locator remains a local line-range pointer.
 
-| Factor | Source | Evidence Type | Status | Source Lines | Evidence Fields |
-|---|---|---|---|---|---|
-| activity_orders | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 618-620 | ### `activity_orders` |
-| activity_cost | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 624-626 | ### `activity_cost` |
-| merchant_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 630-632 | ### `merchant_subsidy_amount` |
-| platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 636-638 | ### `platform_subsidy_amount` |
-| order_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 482-484 | ### `order_conversion_rate_pct` |
-| payment_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | 534-536 | ### `payment_conversion_rate_pct` |
-| sku_margin_structure | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | 137-139 | margin-aware structure |
-| competitor_context | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | 71-73 | competitor reaction |
+| Factor | Source | Evidence Type | Status | Source Locator | Evidence Fields | Selected Values |
+|---|---|---|---|---|---|---|
+| activity_orders | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 618-620 | ### `activity_orders` | n/a |
+| activity_cost | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 624-626 | ### `activity_cost` | n/a |
+| merchant_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 630-632 | ### `merchant_subsidy_amount` | n/a |
+| platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 636-638 | ### `platform_subsidy_amount` | n/a |
+| order_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 482-484 | ### `order_conversion_rate_pct` | n/a |
+| payment_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 534-536 | ### `payment_conversion_rate_pct` | n/a |
+| sku_margin_structure | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | lines 137-139 | margin-aware structure | n/a |
+| competitor_context | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | lines 71-73 | competitor reaction | n/a |
 
 
 ## 5. Competing Hypotheses
@@ -121,12 +122,13 @@ Score contract:
 Current report inputs:
 
 - total_packets = 8
+- record_matched_packets = 0
 - keyword_matched_packets = 6
 - boundary_matched_packets = 2
 - fallback_packets = 0
 - missing_source_files = 0
-- direct_evidence_rate = keyword_matched_packets / total_packets = 0.75
-- supported_or_boundary_rate = (keyword_matched_packets + boundary_matched_packets) / total_packets = 1.00
+- direct_evidence_rate = (record_matched_packets + keyword_matched_packets) / total_packets = 0.75
+- supported_or_boundary_rate = (record_matched_packets + keyword_matched_packets + boundary_matched_packets) / total_packets = 1.00
 - no_missing_source_file_score = 1.00
 - no_fallback_score = 1.00
 

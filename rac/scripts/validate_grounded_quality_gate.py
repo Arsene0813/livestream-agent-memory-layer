@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 import json
 import re
 import sys
@@ -11,6 +12,11 @@ sys.path.insert(0, str(ROOT))
 
 from rac.src.grounded_pipeline import run_grounded_pipeline, save_grounded_outputs
 from rac.src.local_evidence_resolver import SOURCE_FACTOR_KEYWORDS
+from rac.src.store_a_csv_grounding import (
+    FACTOR_FIELDS as STORE_A_FACTOR_FIELDS,
+    PERIOD_MONTHS as STORE_A_PERIOD_MONTHS,
+    SOURCE_PATH as STORE_A_SOURCE_PATH,
+)
 
 
 REQUIRED_REPORT_SECTIONS = [
@@ -46,6 +52,7 @@ FORBIDDEN_POSITIVE_CLAIMS = [
 ]
 
 ALLOWED_GROUNDING_STATUSES = {
+    "record_matched",
     "keyword_matched",
     "boundary_matched",
     "source_found_no_keyword_match"
@@ -99,6 +106,248 @@ def validate_forbidden_claims(report: str) -> list[str]:
     return issues
 
 
+def validate_store_a_record_shape(
+    row: dict[str, Any],
+    *,
+    index: int,
+) -> list[str]:
+    issues = []
+    factor_id = str(row.get("factor_id", ""))
+
+    if factor_id not in STORE_A_FACTOR_FIELDS:
+        return [
+            f"row {index} unexpected record "
+            f"factor: {factor_id}"
+        ]
+
+    if row.get("source_path") != STORE_A_SOURCE_PATH:
+        issues.append(
+            f"row {index} unexpected record source"
+        )
+
+    if (
+        row.get("grounding_role")
+        != "quantitative_evidence"
+    ):
+        issues.append(
+            f"row {index} unexpected record role"
+        )
+
+    if (
+        row.get("line_range") != "n/a"
+        or str(row.get("snippet", "")).strip()
+    ):
+        issues.append(
+            f"row {index} record evidence "
+            "claims text-line grounding"
+        )
+
+    expected_fields = list(
+        STORE_A_FACTOR_FIELDS[factor_id]
+    )
+    expected_keys = [
+        {
+            "store_id": "A",
+            "period_month": month,
+        }
+        for month in STORE_A_PERIOD_MONTHS
+    ]
+
+    if row.get("evidence_fields") != expected_fields:
+        issues.append(
+            f"row {index} field contract mismatch"
+        )
+
+    values = row.get("evidence_values", [])
+    scope = row.get("record_scope", {})
+
+    if [
+        item.get("row_key", {})
+        for item in values
+        if isinstance(item, dict)
+    ] != expected_keys:
+        issues.append(
+            f"row {index} selected keys mismatch"
+        )
+
+    if (
+        scope.get("key_fields")
+        != ["store_id", "period_month"]
+        or scope.get("row_count") != 2
+        or scope.get("row_keys") != expected_keys
+    ):
+        issues.append(
+            f"row {index} record scope mismatch"
+        )
+
+    return issues
+
+
+def validate_store_a_grounding(
+    case_id: str,
+    state: dict[str, Any],
+) -> list[str]:
+    issues = []
+    rows = state.get("grounded_evidence_rows", [])
+    record_rows = [
+        row
+        for row in rows
+        if row.get("grounding_status")
+        == "record_matched"
+    ]
+
+    if case_id != "rac_store_a_attribution_001":
+        if record_rows:
+            issues.append(
+                f"{case_id} unexpectedly used "
+                "record grounding"
+            )
+        return issues
+
+    by_factor = {
+        row.get("factor_id"): row
+        for row in record_rows
+    }
+
+    if (
+        len(record_rows) != 5
+        or set(by_factor) != set(STORE_A_FACTOR_FIELDS)
+    ):
+        issues.append(
+            "Store A record factor mismatch"
+        )
+        return issues
+
+    summary = state.get(
+        "grounded_evidence",
+        {},
+    ).get("summary", {})
+
+    if summary.get("record_matched_count") != 5:
+        issues.append(
+            "Store A summary record count mismatch"
+        )
+
+    source_path = ROOT / STORE_A_SOURCE_PATH
+
+    with source_path.open(
+        "r",
+        encoding="utf-8-sig",
+        newline="",
+    ) as handle:
+        reader = csv.DictReader(handle)
+        headers = reader.fieldnames or []
+        source_rows = list(reader)
+
+    required_fields = {
+        "store_id",
+        "period_month",
+        *{
+            field
+            for fields in STORE_A_FACTOR_FIELDS.values()
+            for field in fields
+        },
+    }
+
+    missing_fields = sorted(
+        required_fields - set(headers)
+    )
+
+    if missing_fields:
+        issues.append(
+            "Store A source missing fields: "
+            + ", ".join(missing_fields)
+        )
+        return issues
+
+    selected_source_rows = [
+        row
+        for row in source_rows
+        if (
+            row["store_id"] == "A"
+            and row["period_month"]
+            in STORE_A_PERIOD_MONTHS
+        )
+    ]
+    source_by_key = {}
+    duplicate_keys = set()
+
+    for source_row in selected_source_rows:
+        key = (
+            source_row["store_id"],
+            source_row["period_month"],
+        )
+
+        if key in source_by_key:
+            duplicate_keys.add(key)
+        else:
+            source_by_key[key] = source_row
+
+    expected_keys = {
+        ("A", month)
+        for month in STORE_A_PERIOD_MONTHS
+    }
+
+    if duplicate_keys or set(source_by_key) != expected_keys:
+        issues.append(
+            "Store A source row-key contract failed"
+        )
+        return issues
+
+    for factor_id, row in by_factor.items():
+        expected_fields = set(
+            STORE_A_FACTOR_FIELDS[factor_id]
+        )
+
+        for item in row["evidence_values"]:
+            key = (
+                str(item["row_key"]["store_id"]),
+                str(item["row_key"]["period_month"]),
+            )
+            values = item.get("values", {})
+
+            if set(values) != expected_fields:
+                issues.append(
+                    f"{factor_id} selected fields mismatch"
+                )
+                continue
+
+            for field in expected_fields:
+                if (
+                    str(values[field])
+                    != str(source_by_key[key][field])
+                ):
+                    issues.append(
+                        f"{factor_id} source-value "
+                        f"mismatch for {key!r}, {field}"
+                    )
+
+    for fragment in [
+        "Record matched packets: 5",
+        (
+            "records: store_id=A; "
+            "period_month=2026-03, 2026-04; rows=2"
+        ),
+        "search_exposure_users=4172",
+        "search_exposure_users=7736",
+        "transaction_orders=207",
+        "transaction_orders=337",
+        "activity_cost_ratio_pct=38.55",
+        "activity_cost_ratio_pct=40.69",
+        "record_matched_packets = 5",
+    ]:
+        if fragment not in state.get(
+            "final_report",
+            "",
+        ):
+            issues.append(
+                "Store A report missing: "
+                + fragment
+            )
+
+    return issues
+
+
 def validate_grounded_rows(rows: list[dict[str, Any]]) -> tuple[list[str], dict[str, int]]:
     issues: list[str] = []
     status_counts: dict[str, int] = {}
@@ -132,6 +381,15 @@ def validate_grounded_rows(rows: list[dict[str, Any]]) -> tuple[list[str], dict[
 
         if status not in ALLOWED_GROUNDING_STATUSES:
             issues.append(f"row {index} invalid grounding_status: {status}")
+
+        if status == "record_matched":
+            issues.extend(
+                validate_store_a_record_shape(
+                    row,
+                    index=index,
+                )
+            )
+            continue
 
         if not re.match(r"^\d+-\d+$", line_range):
             issues.append(f"row {index} invalid line_range: {line_range}")
@@ -276,6 +534,12 @@ def validate_state(case: dict[str, Any], state: dict[str, Any]) -> dict[str, Any
     issues.extend(row_issues)
 
     issues.extend(validate_cross_store_grounding(state))
+    issues.extend(
+        validate_store_a_grounding(
+            case_id,
+            state,
+        )
+    )
 
     factor_count = len(state.get("factors", []))
     factor_weight_count = len(state.get("factor_weights", []))
@@ -310,8 +574,28 @@ def validate_state(case: dict[str, Any], state: dict[str, Any]) -> dict[str, Any
             f"rows={len(rows)}"
         )
 
-    if (summary.get("keyword_matched_count", 0) + summary.get("boundary_matched_count", 0)) == 0:
-        issues.append("zero keyword-or-boundary matched packets")
+    supported_count = (
+        summary.get("record_matched_count", 0)
+        + summary.get("keyword_matched_count", 0)
+        + summary.get("boundary_matched_count", 0)
+    )
+
+    if supported_count == 0:
+        issues.append(
+            "zero record, keyword, or "
+            "boundary matched packets"
+        )
+
+    if (
+        summary.get("record_matched_count", 0)
+        != row_status_counts.get(
+            "record_matched",
+            0,
+        )
+    ):
+        issues.append(
+            "record summary/row count mismatch"
+        )
 
     required_report_contract_phrases = [
         'Deterministic local-file review',
@@ -365,8 +649,16 @@ def validate_state(case: dict[str, Any], state: dict[str, Any]) -> dict[str, Any
         if "weight_source" not in row:
             issues.append(f"factor weight row missing weight_source: {row.get('factor_id')}")
 
-    if "Evidence Fields" not in report:
-        issues.append("report does not expose Evidence Fields column")
+    for column in [
+        "Source Locator",
+        "Evidence Fields",
+        "Selected Values",
+    ]:
+        if column not in report:
+            issues.append(
+                "report does not expose "
+                f"{column} column"
+            )
 
     if "Matched Terms" in report:
         issues.append("report exposes raw matched terms instead of curated evidence fields")
@@ -389,6 +681,10 @@ def validate_state(case: dict[str, Any], state: dict[str, Any]) -> dict[str, Any
             "limitation_count": limitation_count,
             "grounded_row_count": len(rows),
             "total_packets": summary.get("total_packets", 0),
+            "record_matched_count": summary.get(
+                "record_matched_count",
+                0,
+            ),
             "keyword_matched_count": summary.get("keyword_matched_count", 0),
             "boundary_matched_count": summary.get("boundary_matched_count", 0),
             "fallback_count": summary.get("fallback_count", 0),
@@ -404,6 +700,10 @@ def write_markdown_summary(results: list[dict[str, Any]], output_path: Path) -> 
     failed_cases = total_cases - passed_cases
 
     total_packets = sum(result["metrics"]["total_packets"] for result in results)
+    total_record = sum(
+        result["metrics"]["record_matched_count"]
+        for result in results
+    )
     total_keyword = sum(result["metrics"]["keyword_matched_count"] for result in results)
     total_boundary = sum(result["metrics"]["boundary_matched_count"] for result in results)
     total_fallback = sum(result["metrics"]["fallback_count"] for result in results)
@@ -423,8 +723,9 @@ def write_markdown_summary(results: list[dict[str, Any]], output_path: Path) -> 
     lines.append(
         "A contract pass means the case satisfied the checks "
         "implemented by the current deterministic rule set: "
-        "report structure, source traceability, semantic anchors, "
-        "and selected claim boundaries. It does not establish "
+        "report structure, source traceability, structured CSV "
+        "value checks, semantic anchors, and selected claim "
+        "boundaries. It does not establish "
         "causal validity, decision quality, or business impact."
     )
     lines.append("")
@@ -438,6 +739,9 @@ def write_markdown_summary(results: list[dict[str, Any]], output_path: Path) -> 
         f"- Report-contract failed cases: {failed_cases}"
     )
     lines.append(f"- Total grounded packets: {total_packets}")
+    lines.append(
+        f"- Record matched packets: {total_record}"
+    )
     lines.append(f"- Keyword matched packets: {total_keyword}")
     lines.append(f"- Boundary matched packets: {total_boundary}")
     lines.append(f"- Fallback packets: {total_fallback}")
@@ -447,10 +751,14 @@ def write_markdown_summary(results: list[dict[str, Any]], output_path: Path) -> 
     lines.append("")
     lines.append(
         "| Case | Contract Pass | Factors | Hypotheses "
-        "| Critic Findings | Grounded Rows | Keyword Matched "
-        "| Boundary Matched | Fallback | Missing Sources |"
+        "| Critic Findings | Grounded Rows | Record Matched "
+        "| Keyword Matched | Boundary Matched | Fallback "
+        "| Missing Sources |"
     )
-    lines.append("|---|---|---:|---:|---:|---:|---:|---:|---:|---:|")
+    lines.append(
+        "|---|---|---:|---:|---:|---:|"
+        "---:|---:|---:|---:|---:|"
+    )
 
     for result in results:
         metrics = result["metrics"]
@@ -461,12 +769,23 @@ def write_markdown_summary(results: list[dict[str, Any]], output_path: Path) -> 
             f"| {metrics['hypothesis_count']} "
             f"| {metrics['critic_count']} "
             f"| {metrics['grounded_row_count']} "
+            f"| {metrics['record_matched_count']} "
             f"| {metrics['keyword_matched_count']} "
             f"| {metrics['boundary_matched_count']} "
             f"| {metrics['fallback_count']} "
             f"| {metrics['source_missing_count']} |"
         )
 
+    lines.append("")
+    lines.append("## Store A Record Grounding Requirement")
+    lines.append("")
+    lines.append(
+        "For rac_store_a_attribution_001, "
+        "the gate requires five Store A records "
+        "for 2026-03 and 2026-04, using canonical "
+        "fields whose selected values equal the "
+        "source CSV."
+    )
     lines.append("")
     lines.append("## Cross-Store Grounding Requirement")
     lines.append("")
@@ -527,8 +846,9 @@ def main() -> None:
     summary = {
         "validation_scope": (
             "Current deterministic report-contract checks: "
-            "report structure, source traceability, semantic "
-            "anchors, and selected claim boundaries."
+            "report structure, source traceability, structured "
+            "CSV value checks, semantic anchors, and selected "
+            "claim boundaries."
         ),
         "pass_interpretation": (
             "A passed case satisfies the current rule set; "
@@ -571,6 +891,10 @@ def main() -> None:
         fail(f"{len(failed)} grounded quality case(s) failed")
 
     total_packets = sum(result["metrics"]["total_packets"] for result in results)
+    total_record = sum(
+        result["metrics"]["record_matched_count"]
+        for result in results
+    )
     total_keyword = sum(result["metrics"]["keyword_matched_count"] for result in results)
     total_boundary = sum(result["metrics"]["boundary_matched_count"] for result in results)
     total_fallback = sum(result["metrics"]["fallback_count"] for result in results)
@@ -579,6 +903,9 @@ def main() -> None:
     print("[OK] RAC report-contract quality gate passed")
     print(f"[OK] Cases checked: {len(results)}")
     print(f"[OK] Total grounded packets: {total_packets}")
+    print(
+        f"[OK] Record matched packets: {total_record}"
+    )
     print(f"[OK] Keyword matched packets: {total_keyword}")
     print(f"[OK] Boundary matched packets: {total_boundary}")
     print(f"[OK] Fallback packets: {total_fallback}")

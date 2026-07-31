@@ -15,6 +15,11 @@ from rac.src.local_evidence_resolver import (
     resolve_state_evidence,
 )
 from rac.src.mock_pipeline import run_mock_pipeline
+from rac.src.store_a_csv_grounding import (
+    FACTOR_FIELDS as STORE_A_FACTOR_FIELDS,
+    PERIOD_MONTHS as STORE_A_PERIOD_MONTHS,
+    SOURCE_PATH as STORE_A_SOURCE_PATH,
+)
 
 
 def fail(message: str) -> None:
@@ -289,6 +294,71 @@ def validate_broad_terms_do_not_ground_boundary() -> None:
                     f"{resolved.get('grounding_status')}"
                 )
 
+def validate_store_a_packets(
+    case_id: str,
+    packets: list[dict],
+) -> None:
+    record_packets = [
+        packet
+        for packet in packets
+        if packet["grounding_status"]
+        == "record_matched"
+    ]
+
+    if case_id != "rac_store_a_attribution_001":
+        if record_packets:
+            fail(
+                f"{case_id} unexpectedly used "
+                "record grounding"
+            )
+        return
+
+    by_factor = {
+        packet["factor_id"]: packet
+        for packet in record_packets
+    }
+
+    if set(by_factor) != set(STORE_A_FACTOR_FIELDS):
+        fail(
+            "Store A record factor mismatch: "
+            f"{sorted(by_factor)}"
+        )
+
+    for factor_id, packet in by_factor.items():
+        if packet["source_path"] != STORE_A_SOURCE_PATH:
+            fail(
+                f"{factor_id} used unexpected source"
+            )
+
+        if packet["grounding_role"] != "quantitative_evidence":
+            fail(
+                f"{factor_id} used unexpected role"
+            )
+
+        if packet["evidence_fields"] != list(
+            STORE_A_FACTOR_FIELDS[factor_id]
+        ):
+            fail(
+                f"{factor_id} canonical fields mismatch"
+            )
+
+        months = tuple(
+            item["row_key"]["period_month"]
+            for item in packet["evidence_values"]
+        )
+
+        if months != STORE_A_PERIOD_MONTHS:
+            fail(
+                f"{factor_id} period selection mismatch"
+            )
+
+        if packet["snippets"]:
+            fail(
+                f"{factor_id} record evidence "
+                "must not use snippets"
+            )
+
+
 def main() -> None:
     cases = load_eval_cases()
 
@@ -299,6 +369,7 @@ def main() -> None:
     validate_broad_terms_do_not_ground_boundary()
 
     total_packets = 0
+    total_record_matches = 0
     total_keyword_matches = 0
     total_fallbacks = 0
 
@@ -310,6 +381,10 @@ def main() -> None:
         packets = resolved["resolved_packets"]
 
         validate_promotion_boundary_routing(
+            case["case_id"],
+            packets,
+        )
+        validate_store_a_packets(
             case["case_id"],
             packets,
         )
@@ -326,23 +401,44 @@ def main() -> None:
             fail(f"{case['case_id']} has missing source files: {missing}")
 
         for packet in packets:
+            if (
+                packet["grounding_status"]
+                == "record_matched"
+            ):
+                continue
+
             if not packet["snippets"]:
                 fail(
-                    f"{case['case_id']} packet {packet['evidence_id']} "
+                    f"{case['case_id']} packet "
+                    f"{packet['evidence_id']} "
                     "has no snippets"
                 )
 
             for snippet in packet["snippets"]:
                 if not snippet["text"].strip():
                     fail(
-                        f"{case['case_id']} packet {packet['evidence_id']} "
+                        f"{case['case_id']} packet "
+                        f"{packet['evidence_id']} "
                         "has empty snippet text"
                     )
 
-        if summary["keyword_matched_count"] == 0:
-            fail(f"{case['case_id']} has zero keyword-matched packets")
+        supported_count = (
+            summary.get("record_matched_count", 0)
+            + summary["keyword_matched_count"]
+            + summary.get("boundary_matched_count", 0)
+        )
+
+        if supported_count == 0:
+            fail(
+                f"{case['case_id']} has zero "
+                "supported packets"
+            )
 
         total_packets += summary["total_packets"]
+        total_record_matches += summary.get(
+            "record_matched_count",
+            0,
+        )
         total_keyword_matches += summary["keyword_matched_count"]
         total_fallbacks += summary["fallback_count"]
 
@@ -355,6 +451,10 @@ def main() -> None:
     print("[OK] RAC local evidence resolver validation passed")
     print(f"[OK] Eval cases checked: {len(cases)}")
     print(f"[OK] Total evidence packets: {total_packets}")
+    print(
+        f"[OK] Record matched packets: "
+        f"{total_record_matches}"
+    )
     print(f"[OK] Keyword matched packets: {total_keyword_matches}")
     print(f"[OK] Fallback packets: {total_fallbacks}")
 
