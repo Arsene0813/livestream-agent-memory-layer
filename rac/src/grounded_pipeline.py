@@ -6,7 +6,12 @@ from pathlib import Path
 from typing import Any
 
 from rac.src.local_evidence_resolver import resolve_state_evidence
-from rac.src.mock_pipeline import build_factor_weighting_explanation, run_mock_pipeline, slugify
+from rac.src.mock_pipeline import (
+    build_factor_weighting_explanation,
+    join_sentence_fragments,
+    run_mock_pipeline,
+    slugify,
+)
 from rac.src.state_validation import validate_cognition_state
 
 
@@ -182,6 +187,39 @@ def build_grounded_evidence_rows(
         )
 
     return rows
+
+
+DIRECT_EVIDENCE_STATUSES = {
+    "record_matched",
+    "keyword_matched",
+}
+
+
+def synchronize_factor_evidence_status(
+    state: dict[str, Any],
+    resolver_result: dict[str, Any],
+) -> None:
+    """Align factor status with the resolved evidence route."""
+    status_by_factor = {
+        str(packet["factor_id"]): str(
+            packet["grounding_status"]
+        )
+        for packet in resolver_result["resolved_packets"]
+    }
+
+    for factor_weight in state["factor_weights"]:
+        factor_id = str(factor_weight["factor_id"])
+        grounding_status = status_by_factor.get(
+            factor_id,
+            "",
+        )
+
+        factor_weight["evidence_status"] = (
+            "partially_supported"
+            if grounding_status
+            in DIRECT_EVIDENCE_STATUSES
+            else "missing"
+        )
 
 
 def format_record_scope(
@@ -401,7 +439,7 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append("")
     lines.append("### 3b. Factor Weights Used in This Report")
     lines.append("")
-    lines.append("| Factor | Weight | Bucket | Evidence Status | Why It Matters |")
+    lines.append("| Decision Factor ID | Weight | Bucket | Evidence Status | Why It Matters |")
     lines.append("|---|---:|---|---|---|")
 
     for item in state["factor_weights"]:
@@ -456,11 +494,18 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
         "evidence, the locator remains a local "
         "line-range pointer."
     )
+    lines.append(
+        "`Decision Factor ID` is an internal RAC "
+        "review identifier. The field column shows "
+        "canonical project fields where available "
+        "and labels unresolved requirements explicitly."
+    )
     lines.append("")
     lines.append(
-        "| Factor | Source | Evidence Type "
+        "| Decision Factor ID | Source | Evidence Type "
         "| Status | Source Locator "
-        "| Evidence Fields | Selected Values |"
+        "| Canonical Evidence Fields / Requirement "
+        "| Selected Values |"
     )
     lines.append(
         "|---|---|---|---|---|---|---|"
@@ -480,7 +525,58 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
         "region_context": "region_type",
         "competition": "competition-context requirement in comparability contract",
         "sku_structure": "top3_sku_transaction_amount, top3_sku_transaction_amount_share_pct, SKU source tables",
-        "repeated_reporting_windows": "store_period_panel_metrics, repeated reporting windows",
+        "repeated_reporting_windows": "repeated period_month records in store_period_panel_metrics",
+
+        # Store A diagnostic factors.
+        "search_exposure": (
+            "search_exposure_users, search_entry_users, "
+            "search_average_rank"
+        ),
+        "entry_conversion": (
+            "entry_conversion_rate_pct, entry_users, "
+            "exposure_users"
+        ),
+        "order_conversion": (
+            "order_conversion_rate_pct, order_users, "
+            "entry_users"
+        ),
+        "promotion_intensity": (
+            "activity_orders, activity_cost, "
+            "activity_original_transaction_amount"
+        ),
+        "transaction_orders": "transaction_orders",
+
+        # Promotion-review factors.
+        "activity_orders": "activity_orders",
+        "activity_cost": "activity_cost",
+        "merchant_subsidy": "merchant_subsidy_amount",
+        "platform_subsidy": "platform_subsidy_amount",
+        "payment_conversion": (
+            "payment_conversion_rate_pct, payment_users, "
+            "order_users"
+        ),
+        "sku_margin_structure": (
+            "required SKU margin context; "
+            "unavailable in current evidence"
+        ),
+        "competitor_context": (
+            "required competitor context; "
+            "unavailable in current evidence"
+        ),
+
+        # Technical-design requirements.
+        "typed_memory": "memory schema requirement",
+        "evidence_packets": (
+            "source_path, claim_supported, limitations"
+        ),
+        "hypotheses": "hypothesis records",
+        "belief_records": "belief update schema",
+        "confidence": "confidence field",
+        "limitations": "limitations field",
+        "retrieval_trace": "source metadata",
+        "active_state_filtering": (
+            "active flag, freshness policy"
+        ),
     }
 
     for row in rows:
@@ -559,7 +655,11 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
             + " | "
             + markdown_escape(hypothesis["status"])
             + " | "
-            + markdown_escape("; ".join(hypothesis["weaknesses"]))
+            + markdown_escape(
+                join_sentence_fragments(
+                    hypothesis["weaknesses"]
+                )
+            )
             + " |"
         )
 
@@ -760,6 +860,7 @@ def run_grounded_pipeline(question: str, *, root: Path) -> dict[str, Any]:
     state = run_mock_pipeline(question)
     grounded = resolve_state_evidence(state, root=root)
     state = normalize_grounded_state_wording(state)
+    synchronize_factor_evidence_status(state, grounded)
 
     state["grounded_evidence"] = grounded
     state["grounded_evidence_rows"] = build_grounded_evidence_rows(grounded)

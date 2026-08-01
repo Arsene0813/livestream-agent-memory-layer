@@ -29,15 +29,15 @@ This is a deterministic mock result. It confirms that the current fixed fixture 
 
 | Evidence | Source | Supports | Limitations |
 |---|---|---|---|
-| evidence_same_reporting_period | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: same_reporting_period. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_store_type | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: store_type. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_order_volume | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: order_volume. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_transaction_amount | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: transaction_amount. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_activity_intensity | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: activity_intensity. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_region_context | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: region_context. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_competition | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: competition. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_sku_structure | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: sku_structure. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_repeated_reporting_windows | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: repeated_reporting_windows. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
+| evidence_same_reporting_period | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: same_reporting_period. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_store_type | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: store_type. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_order_volume | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: order_volume. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_transaction_amount | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: transaction_amount. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_activity_intensity | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: activity_intensity. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_region_context | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: region_context. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_competition | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: competition. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_sku_structure | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: sku_structure. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_repeated_reporting_windows | retail_ops/data/demo2_source_notes.md | Provides context needed to evaluate factor: repeated_reporting_windows. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
 
 ## 5. Competing Hypotheses
 
@@ -46,12 +46,12 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 | Hypothesis | Confidence | Status | Weakness |
 |---|---:|---|---|
 | Stores B-F can be organized in a same-period diagnostic table. | 0.78 | strong | Same-period diagnostic organization does not establish robust comparability. |
-| Stores B-F should not be treated as directly comparable without pairwise gates. | 0.86 | strong | The mock pipeline does not compute quantitative pairwise thresholds. |
+| Stores B-F should not be treated as directly comparable without pairwise gates. | 0.86 | strong | Pairwise quantitative thresholds are outside the current review contract. |
 
 ## 6. Critic Findings
 
-- [high] The mock pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
-- [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.
+- [high] Observational evidence supports bounded association claims only. Recommendation: Keep attribution language conditional and record unresolved alternatives.
+- [medium] Current evidence scope is limited to committed local project files. Recommendation: Keep source paths and unresolved external requirements explicit.
 - [critical] Same-period diagnostic organization must not be described as a completed pairwise comparability gate. Recommendation: Separate same-period diagnostic review from pairwise comparability.
 
 ## 7. Final Judgment
@@ -77,7 +77,7 @@ How this value is assigned:
 
 ## 9. What Cannot Be Concluded
 
-- Pairwise comparability gate is future work.
+- Pairwise quantitative gates are not defined in the current contract.
 - Region type remains weak context.
 - Three monthly B-F reporting windows are available; they do not by themselves establish stable pairwise comparability.
 

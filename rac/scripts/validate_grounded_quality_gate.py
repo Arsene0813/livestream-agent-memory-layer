@@ -436,6 +436,71 @@ def validate_grounded_rows(rows: list[dict[str, Any]]) -> tuple[list[str], dict[
     return issues, status_counts
 
 
+def validate_factor_evidence_status(
+    state: dict[str, Any],
+) -> list[str]:
+    """Keep factor status aligned with its evidence route."""
+    issues: list[str] = []
+
+    direct_grounding_statuses = {
+        "record_matched",
+        "keyword_matched",
+    }
+
+    grounding_by_factor = {
+        str(row.get("factor_id", "")): str(
+            row.get("grounding_status", "")
+        )
+        for row in state.get(
+            "grounded_evidence_rows",
+            [],
+        )
+    }
+
+    for factor_weight in state.get(
+        "factor_weights",
+        [],
+    ):
+        factor_id = str(
+            factor_weight.get("factor_id", "")
+        )
+        actual_status = str(
+            factor_weight.get(
+                "evidence_status",
+                "",
+            )
+        )
+        grounding_status = grounding_by_factor.get(
+            factor_id,
+            "",
+        )
+
+        if not grounding_status:
+            issues.append(
+                "factor weight has no grounded row: "
+                f"{factor_id}"
+            )
+            continue
+
+        expected_status = (
+            "partially_supported"
+            if grounding_status
+            in direct_grounding_statuses
+            else "missing"
+        )
+
+        if actual_status != expected_status:
+            issues.append(
+                "factor evidence-status mismatch: "
+                f"{factor_id}; "
+                f"grounding_status={grounding_status}; "
+                f"expected={expected_status}; "
+                f"actual={actual_status}"
+            )
+
+    return issues
+
+
 def validate_cross_store_grounding(state: dict[str, Any]) -> list[str]:
     issues: list[str] = []
 
@@ -532,6 +597,10 @@ def validate_state(case: dict[str, Any], state: dict[str, Any]) -> dict[str, Any
 
     row_issues, row_status_counts = validate_grounded_rows(rows)
     issues.extend(row_issues)
+
+    issues.extend(
+        validate_factor_evidence_status(state)
+    )
 
     issues.extend(validate_cross_store_grounding(state))
     issues.extend(

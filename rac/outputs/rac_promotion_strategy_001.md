@@ -2,7 +2,7 @@
 
 ## 1. Direct Answer
 
-Promotion changes should be checked against cost, conversion, SKU structure, margin, and competitor context.
+The current evidence supports a bounded promotion-review checklist, not an automatic promotion change.
 
 This is a deterministic mock result. It confirms that the current fixed fixture can generate the expected artifacts end-to-end, but it does not claim live retrieval or autonomous world modeling.
 
@@ -28,14 +28,14 @@ This is a deterministic mock result. It confirms that the current fixed fixture 
 
 | Evidence | Source | Supports | Limitations |
 |---|---|---|---|
-| evidence_activity_orders | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: activity_orders. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_activity_cost | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: activity_cost. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_merchant_subsidy | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: merchant_subsidy. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: platform_subsidy. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_order_conversion | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: order_conversion. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_payment_conversion | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: payment_conversion. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_sku_margin_structure | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: sku_margin_structure. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_competitor_context | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: competitor_context. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
+| evidence_activity_orders | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: activity_orders. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_activity_cost | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: activity_cost. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_merchant_subsidy | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: merchant_subsidy. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: platform_subsidy. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_order_conversion | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: order_conversion. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_payment_conversion | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: payment_conversion. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_sku_margin_structure | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: sku_margin_structure. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_competitor_context | retail_ops/data/DATA_DICTIONARY.md | Provides context needed to evaluate factor: competitor_context. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
 
 ## 5. Competing Hypotheses
 
@@ -43,18 +43,18 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 
 | Hypothesis | Confidence | Status | Weakness |
 |---|---:|---|---|
-| Promotion decisions should be checked against cost, conversion, SKU structure, margin, and competitor context. | 0.84 | strong | Final action still requires real margin and competitor evidence. |
-| The current evidence can support a bounded promotion review checklist, but not an automatic promotion change. | 0.68 | plausible | The mock pipeline does not calculate real cost trend. |
+| A bounded promotion review should cover activity cost, merchant and platform subsidy, and order and payment conversion. | 0.84 | strong | The available evidence defines review dimensions but does not establish a promotion outcome. |
+| The current evidence can support a bounded promotion review checklist, but not an automatic promotion change. | 0.68 | plausible | Repeated-period cost evidence is required for trend interpretation; SKU margin and competitor context remain unresolved for final action. |
 
 ## 6. Critic Findings
 
-- [high] The mock pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
-- [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.
-- [high] Promotion recommendations require margin and competitor context. Recommendation: Avoid final action recommendations without these checks.
+- [high] Observational evidence supports bounded association claims only. Recommendation: Keep attribution language conditional and record unresolved alternatives.
+- [medium] Current evidence scope is limited to committed local project files. Recommendation: Keep source paths and unresolved external requirements explicit.
+- [high] SKU margin and competitor context remain unresolved for final promotion action. Recommendation: Keep the output at bounded review-checklist level.
 
 ## 7. Final Judgment
 
-Promotion changes should be checked against cost, conversion, SKU structure, margin, and competitor context.
+The current evidence supports a bounded promotion-review checklist, not an automatic promotion change.
 
 The conclusion is conservative because this mock pipeline uses structured placeholder evidence and does not perform live retrieval.
 
@@ -75,7 +75,7 @@ How this value is assigned:
 
 ## 9. What Cannot Be Concluded
 
-- The mock pipeline does not compute real margins.
+- Margin fields are absent from the current evidence.
 - Competitor data may be incomplete.
 - One reporting window is insufficient for robust action attribution.
 

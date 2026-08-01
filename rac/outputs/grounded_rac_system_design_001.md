@@ -29,7 +29,7 @@ Weighting boundary:
 
 ### 3b. Factor Weights Used in This Report
 
-| Factor | Weight | Bucket | Evidence Status | Why It Matters |
+| Decision Factor ID | Weight | Bucket | Evidence Status | Why It Matters |
 |---|---:|---|---|---|
 | typed_memory | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |
 | evidence_packets | 0.85 | high | partially_supported | Central to avoiding overconfident or misleading conclusions. |
@@ -50,17 +50,18 @@ Weighting boundary:
 - Missing source files: 0
 
 For CSV evidence, `Source Locator` shows the selected record scope and `Selected Values` shows values read from those records. For Markdown evidence, the locator remains a local line-range pointer.
+`Decision Factor ID` is an internal RAC review identifier. The field column shows canonical project fields where available and labels unresolved requirements explicitly.
 
-| Factor | Source | Evidence Type | Status | Source Locator | Evidence Fields | Selected Values |
+| Decision Factor ID | Source | Evidence Type | Status | Source Locator | Canonical Evidence Fields / Requirement | Selected Values |
 |---|---|---|---|---|---|---|
-| typed_memory | rac/README.md | default_evidence | keyword_matched | lines 1-2 | fact | n/a |
-| evidence_packets | rac/README.md | default_evidence | keyword_matched | lines 5-7 | evidence | n/a |
-| hypotheses | rac/README.md | default_evidence | keyword_matched | lines 41-43 | hypotheses, competing | n/a |
-| belief_records | rac/README.md | default_evidence | keyword_matched | lines 135-137 | belief | n/a |
-| confidence | rac/README.md | default_evidence | keyword_matched | lines 152-154 | confidence | n/a |
-| limitations | rac/README.md | default_evidence | keyword_matched | lines 7-9 | boundary | n/a |
-| retrieval_trace | rac/README.md | default_evidence | keyword_matched | lines 39-41 | source | n/a |
-| active_state_filtering | rac/README.md | default_evidence | keyword_matched | lines 7-9 | state | n/a |
+| typed_memory | rac/README.md | default_evidence | keyword_matched | lines 1-2 | memory schema requirement | n/a |
+| evidence_packets | rac/README.md | default_evidence | keyword_matched | lines 5-7 | source_path, claim_supported, limitations | n/a |
+| hypotheses | rac/README.md | default_evidence | keyword_matched | lines 41-43 | hypothesis records | n/a |
+| belief_records | rac/README.md | default_evidence | keyword_matched | lines 135-137 | belief update schema | n/a |
+| confidence | rac/README.md | default_evidence | keyword_matched | lines 152-154 | confidence field | n/a |
+| limitations | rac/README.md | default_evidence | keyword_matched | lines 7-9 | limitations field | n/a |
+| retrieval_trace | rac/README.md | default_evidence | keyword_matched | lines 39-41 | source metadata | n/a |
+| active_state_filtering | rac/README.md | default_evidence | keyword_matched | lines 7-9 | active flag, freshness policy | n/a |
 
 
 ## 5. Competing Hypotheses

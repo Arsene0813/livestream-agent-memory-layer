@@ -2,7 +2,7 @@
 
 ## 1. Direct Answer
 
-RAC should be implemented as a reasoning layer above the existing typed memory system before replacing any endpoint.
+RAC operates as a review layer above the existing typed memory system while leaving existing endpoints unchanged.
 
 This is a deterministic mock result. It confirms that the current fixed fixture can generate the expected artifacts end-to-end, but it does not claim live retrieval or autonomous world modeling.
 
@@ -28,14 +28,14 @@ This is a deterministic mock result. It confirms that the current fixed fixture 
 
 | Evidence | Source | Supports | Limitations |
 |---|---|---|---|
-| evidence_typed_memory | rac/README.md | Provides context needed to evaluate factor: typed_memory. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_evidence_packets | rac/README.md | Provides context needed to evaluate factor: evidence_packets. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_hypotheses | rac/README.md | Provides context needed to evaluate factor: hypotheses. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_belief_records | rac/README.md | Provides context needed to evaluate factor: belief_records. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_confidence | rac/README.md | Provides context needed to evaluate factor: confidence. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_limitations | rac/README.md | Provides context needed to evaluate factor: limitations. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_retrieval_trace | rac/README.md | Provides context needed to evaluate factor: retrieval_trace. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_active_state_filtering | rac/README.md | Provides context needed to evaluate factor: active_state_filtering. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
+| evidence_typed_memory | rac/README.md | Provides context needed to evaluate factor: typed_memory. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_evidence_packets | rac/README.md | Provides context needed to evaluate factor: evidence_packets. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_hypotheses | rac/README.md | Provides context needed to evaluate factor: hypotheses. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_belief_records | rac/README.md | Provides context needed to evaluate factor: belief_records. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_confidence | rac/README.md | Provides context needed to evaluate factor: confidence. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_limitations | rac/README.md | Provides context needed to evaluate factor: limitations. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_retrieval_trace | rac/README.md | Provides context needed to evaluate factor: retrieval_trace. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_active_state_filtering | rac/README.md | Provides context needed to evaluate factor: active_state_filtering. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
 
 ## 5. Competing Hypotheses
 
@@ -43,17 +43,17 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 
 | Hypothesis | Confidence | Status | Weakness |
 |---|---:|---|---|
-| RAC should be implemented as a reasoning layer above the existing typed memory layer. | 0.86 | strong | This mock pipeline does not call the existing API or vector database. |
-| The first implementation should remain deterministic before adding LLM calls. | 0.80 | strong | Deterministic logic is less flexible than model-based reasoning. |
+| RAC operates as a reasoning layer above the existing typed memory layer. | 0.86 | strong | The current RAC path resolves evidence from committed local project files. |
+| The current deterministic implementation keeps evidence routing and review states inspectable. | 0.80 | strong | Fixed rules trade flexibility for inspectability. |
 
 ## 6. Critic Findings
 
-- [high] The mock pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
-- [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.
+- [high] Observational evidence supports bounded association claims only. Recommendation: Keep attribution language conditional and record unresolved alternatives.
+- [medium] Current evidence scope is limited to committed local project files. Recommendation: Keep source paths and unresolved external requirements explicit.
 
 ## 7. Final Judgment
 
-RAC should be implemented as a reasoning layer above the existing typed memory system before replacing any endpoint.
+RAC operates as a review layer above the existing typed memory system while leaving existing endpoints unchanged.
 
 The conclusion is conservative because this mock pipeline uses structured placeholder evidence and does not perform live retrieval.
 
@@ -74,7 +74,7 @@ How this value is assigned:
 
 ## 9. What Cannot Be Concluded
 
-- The mock pipeline does not call Qdrant, FastAPI, Ollama, or external LLMs yet.
+- The current RAC path is limited to committed local evidence.
 
 ## 10. Review-State Update
 

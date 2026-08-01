@@ -29,7 +29,7 @@ Weighting boundary:
 
 ### 3b. Factor Weights Used in This Report
 
-| Factor | Weight | Bucket | Evidence Status | Why It Matters |
+| Decision Factor ID | Weight | Bucket | Evidence Status | Why It Matters |
 |---|---:|---|---|---|
 | search_exposure | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |
 | entry_conversion | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |
@@ -47,8 +47,9 @@ Weighting boundary:
 - Missing source files: 0
 
 For CSV evidence, `Source Locator` shows the selected record scope and `Selected Values` shows values read from those records. For Markdown evidence, the locator remains a local line-range pointer.
+`Decision Factor ID` is an internal RAC review identifier. The field column shows canonical project fields where available and labels unresolved requirements explicitly.
 
-| Factor | Source | Evidence Type | Status | Source Locator | Evidence Fields | Selected Values |
+| Decision Factor ID | Source | Evidence Type | Status | Source Locator | Canonical Evidence Fields / Requirement | Selected Values |
 |---|---|---|---|---|---|---|
 | search_exposure | retail_ops/data/store_a_monthly_metrics.csv | quantitative_evidence | record_matched | records: store_id=A; period_month=2026-03, 2026-04; rows=2 | search_exposure_users, search_average_rank, search_entry_users | store_id=A, period_month=2026-03: search_exposure_users=4172, search_average_rank=20, search_entry_users=445<br>store_id=A, period_month=2026-04: search_exposure_users=7736, search_average_rank=18, search_entry_users=839 |
 | entry_conversion | retail_ops/data/store_a_monthly_metrics.csv | quantitative_evidence | record_matched | records: store_id=A; period_month=2026-03, 2026-04; rows=2 | exposure_users, entry_users, entry_conversion_rate_pct | store_id=A, period_month=2026-03: exposure_users=4663, entry_users=522, entry_conversion_rate_pct=11.19<br>store_id=A, period_month=2026-04: exposure_users=8366, entry_users=906, entry_conversion_rate_pct=10.83 |
@@ -63,7 +64,7 @@ The `Scenario-Template Confidence` column records deterministic review labels as
 
 | Hypothesis | Scenario-Template Confidence | Status | Weakness |
 |---|---:|---|---|
-| Search exposure may have contributed to Store A's April performance, but it is not sufficient as a single explanation. | 0.52 | plausible | Does not isolate promotion effects.; Does not prove source-field improvement. |
+| Search exposure may have contributed to Store A's April performance, but it is not sufficient as a single explanation. | 0.52 | plausible | Does not isolate promotion effects; Does not prove source-field improvement. |
 | Store A's April performance should be reviewed as a multi-factor movement across search exposure, entry conversion, order conversion, promotion intensity, and transaction orders. | 0.74 | strong | Observational evidence cannot establish strict causality. |
 | The available evidence is insufficient for single-cause attribution. | 0.82 | strong | Conservative rather than complete causal explanation. |
 

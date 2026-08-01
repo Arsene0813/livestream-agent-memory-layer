@@ -25,11 +25,11 @@ This is a deterministic mock result. It confirms that the current fixed fixture 
 
 | Evidence | Source | Supports | Limitations |
 |---|---|---|---|
-| evidence_search_exposure | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: search_exposure. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_entry_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: entry_conversion. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_order_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: order_conversion. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_promotion_intensity | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: promotion_intensity. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
-| evidence_transaction_orders | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: transaction_orders. | Deterministic mock pipeline only.; No live retrieval is performed in this step. |
+| evidence_search_exposure | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: search_exposure. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_entry_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: entry_conversion. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_order_conversion | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: order_conversion. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_promotion_intensity | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: promotion_intensity. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
+| evidence_transaction_orders | retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md | Provides context needed to evaluate factor: transaction_orders. | Evidence is resolved from committed local project files; Coverage is limited to the sources listed in this packet. |
 
 ## 5. Competing Hypotheses
 
@@ -37,14 +37,14 @@ Hypothesis confidence values are deterministic scenario-template values assigned
 
 | Hypothesis | Confidence | Status | Weakness |
 |---|---:|---|---|
-| Search exposure may have contributed to Store A's April performance, but it is not sufficient as a single explanation. | 0.52 | plausible | Does not isolate promotion effects.; Does not prove source-field improvement. |
+| Search exposure may have contributed to Store A's April performance, but it is not sufficient as a single explanation. | 0.52 | plausible | Does not isolate promotion effects; Does not prove source-field improvement. |
 | Store A's April performance should be reviewed as a multi-factor movement across search exposure, entry conversion, order conversion, promotion intensity, and transaction orders. | 0.74 | strong | Observational evidence cannot establish strict causality. |
 | The available evidence is insufficient for single-cause attribution. | 0.82 | strong | Conservative rather than complete causal explanation. |
 
 ## 6. Critic Findings
 
-- [high] The mock pipeline must not claim causal proof from observational evidence. Recommendation: Use cautious language and state that attribution is not proven.
-- [medium] The mock pipeline uses structured placeholder evidence rather than live retrieval. Recommendation: State this limitation clearly.
+- [high] Observational evidence supports bounded association claims only. Recommendation: Keep attribution language conditional and record unresolved alternatives.
+- [medium] Current evidence scope is limited to committed local project files. Recommendation: Keep source paths and unresolved external requirements explicit.
 
 ## 7. Final Judgment
 
@@ -70,7 +70,7 @@ How this value is assigned:
 ## 9. What Cannot Be Concluded
 
 - No randomized experiment.
-- No live backend retrieval in this mock pipeline.
+- Evidence scope is limited to committed local project files.
 - No complete competitor-side evidence.
 
 ## 10. Review-State Update

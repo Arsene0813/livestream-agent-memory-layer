@@ -15,6 +15,22 @@ def slugify(text: str) -> str:
     return text.strip("_")[:80] or "question"
 
 
+def join_sentence_fragments(
+    items: list[str],
+) -> str:
+    """Join sentence fragments without producing '.;'."""
+    fragments = [
+        item.strip().rstrip(".")
+        for item in items
+        if item.strip()
+    ]
+
+    if not fragments:
+        return ""
+
+    return "; ".join(fragments) + "."
+
+
 def analyze_question(question: str) -> dict[str, Any]:
     q = question.lower()
 
@@ -319,7 +335,11 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
         return [
             {
                 "hypothesis_id": "H1",
-                "claim": "Promotion decisions should be checked against cost, conversion, SKU structure, margin, and competitor context.",
+                "claim": (
+                    "A bounded promotion review should cover activity cost, "
+                    "merchant and platform subsidy, and order and payment "
+                    "conversion."
+                ),
                 "confidence": 0.84,
                 "supporting_factors": [
                     "activity_orders",
@@ -328,10 +348,11 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
                     "platform_subsidy",
                     "order_conversion",
                     "payment_conversion",
-                    "sku_margin_structure",
-                    "competitor_context",
                 ],
-                "weaknesses": ["Final action still requires real margin and competitor evidence."],
+                "weaknesses": [
+                    "The available evidence defines review dimensions but "
+                    "does not establish a promotion outcome."
+                ],
                 "status": "strong"
             },
             {
@@ -349,11 +370,12 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
                     "platform_subsidy",
                     "order_conversion",
                     "payment_conversion",
-                    "sku_margin_structure",
-                    "competitor_context",
                 ],
                 "weaknesses": [
-                    "Cost-trend interpretation requires repeated-period cost evidence."
+                    "Repeated-period cost evidence is required for "
+                    "trend interpretation.",
+                    "SKU margin and competitor context remain "
+                    "unresolved for final action."
                 ],
                 "status": "plausible"
             }
@@ -406,9 +428,15 @@ def critique(question_type: str) -> list[dict[str, str]]:
 
     if question_type == "strategic_recommendation":
         findings.append({
-            "issue": "Promotion recommendations require margin and competitor context.",
+            "issue": (
+                "SKU margin and competitor context remain "
+                "unresolved for final promotion action."
+            ),
             "severity": "high",
-            "recommendation": "Avoid final action recommendations without these checks."
+            "recommendation": (
+                "Keep the output at bounded "
+                "review-checklist level."
+            )
         })
 
     return findings
@@ -476,7 +504,11 @@ def build_belief_update(question_type: str) -> dict[str, Any]:
     if question_type == "strategic_recommendation":
         return {
             "belief_id": "promotion_changes_require_multi_factor_check",
-            "claim": "Promotion changes should be checked against cost, conversion, SKU structure, margin, and competitor context.",
+            "claim": (
+                "The current evidence supports a bounded "
+                "promotion-review checklist, not an automatic "
+                "promotion change."
+            ),
             "confidence": 0.80,
             "status": "active",
             "validity_conditions": ["Retail operations decision-support questions."],
@@ -532,7 +564,15 @@ def write_final_report(state: dict[str, Any]) -> str:
     lines.append("|---|---|---|---|")
 
     for evidence in state["evidence_packets"]:
-        lines.append(f"| {evidence['evidence_id']} | {evidence['source_path']} | {evidence['claim_supported']} | {'; '.join(evidence['limitations'])} |")
+        limitation_text = join_sentence_fragments(
+            evidence["limitations"]
+        )
+        lines.append(
+            f"| {evidence['evidence_id']} | "
+            f"{evidence['source_path']} | "
+            f"{evidence['claim_supported']} | "
+            f"{limitation_text} |"
+        )
 
     lines.append("")
     lines.append("## 5. Competing Hypotheses")
@@ -548,7 +588,13 @@ def write_final_report(state: dict[str, Any]) -> str:
     lines.append("|---|---:|---|---|")
 
     for h in state["hypotheses"]:
-        lines.append(f"| {h['claim']} | {h['confidence']:.2f} | {h['status']} | {'; '.join(h['weaknesses'])} |")
+        weakness_text = join_sentence_fragments(
+            h["weaknesses"]
+        )
+        lines.append(
+            f"| {h['claim']} | {h['confidence']:.2f} | "
+            f"{h['status']} | {weakness_text} |"
+        )
 
     lines.append("")
     lines.append("## 6. Critic Findings")

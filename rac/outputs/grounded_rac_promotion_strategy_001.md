@@ -2,7 +2,7 @@
 
 ## 1. Direct Answer
 
-Promotion changes should be checked against cost, conversion, SKU structure, margin, and competitor context.
+The current evidence supports a bounded promotion-review checklist, not an automatic promotion change.
 
 Deterministic local-file review; routing scores summarize evidence coverage under the current rules.
 
@@ -29,7 +29,7 @@ Weighting boundary:
 
 ### 3b. Factor Weights Used in This Report
 
-| Factor | Weight | Bucket | Evidence Status | Why It Matters |
+| Decision Factor ID | Weight | Bucket | Evidence Status | Why It Matters |
 |---|---:|---|---|---|
 | activity_orders | 0.60 | default | partially_supported | Potentially relevant but requires stronger evidence. |
 | activity_cost | 0.60 | default | partially_supported | Potentially relevant but requires stronger evidence. |
@@ -37,8 +37,8 @@ Weighting boundary:
 | platform_subsidy | 0.60 | default | partially_supported | Potentially relevant but requires stronger evidence. |
 | order_conversion | 0.85 | high | partially_supported | Central to avoiding overconfident or misleading conclusions. |
 | payment_conversion | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |
-| sku_margin_structure | 0.85 | high | partially_supported | Central to avoiding overconfident or misleading conclusions. |
-| competitor_context | 0.60 | default | partially_supported | Potentially relevant but requires stronger evidence. |
+| sku_margin_structure | 0.85 | high | missing | Central to avoiding overconfident or misleading conclusions. |
+| competitor_context | 0.60 | default | missing | Potentially relevant but requires stronger evidence. |
 
 ## 4. Local Evidence Grounding
 
@@ -50,17 +50,18 @@ Weighting boundary:
 - Missing source files: 0
 
 For CSV evidence, `Source Locator` shows the selected record scope and `Selected Values` shows values read from those records. For Markdown evidence, the locator remains a local line-range pointer.
+`Decision Factor ID` is an internal RAC review identifier. The field column shows canonical project fields where available and labels unresolved requirements explicitly.
 
-| Factor | Source | Evidence Type | Status | Source Locator | Evidence Fields | Selected Values |
+| Decision Factor ID | Source | Evidence Type | Status | Source Locator | Canonical Evidence Fields / Requirement | Selected Values |
 |---|---|---|---|---|---|---|
-| activity_orders | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 618-620 | ### `activity_orders` | n/a |
-| activity_cost | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 624-626 | ### `activity_cost` | n/a |
-| merchant_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 630-632 | ### `merchant_subsidy_amount` | n/a |
-| platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 636-638 | ### `platform_subsidy_amount` | n/a |
-| order_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 482-484 | ### `order_conversion_rate_pct` | n/a |
-| payment_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 534-536 | ### `payment_conversion_rate_pct` | n/a |
-| sku_margin_structure | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | lines 137-139 | margin-aware structure | n/a |
-| competitor_context | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | lines 71-73 | competitor reaction | n/a |
+| activity_orders | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 618-620 | activity_orders | n/a |
+| activity_cost | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 624-626 | activity_cost | n/a |
+| merchant_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 630-632 | merchant_subsidy_amount | n/a |
+| platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 636-638 | platform_subsidy_amount | n/a |
+| order_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 482-484 | order_conversion_rate_pct, order_users, entry_users | n/a |
+| payment_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 534-536 | payment_conversion_rate_pct, payment_users, order_users | n/a |
+| sku_margin_structure | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | lines 137-139 | required SKU margin context; unavailable in current evidence | n/a |
+| competitor_context | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | lines 71-73 | required competitor context; unavailable in current evidence | n/a |
 
 
 ## 5. Competing Hypotheses
@@ -69,14 +70,14 @@ The `Scenario-Template Confidence` column records deterministic review labels as
 
 | Hypothesis | Scenario-Template Confidence | Status | Weakness |
 |---|---:|---|---|
-| Promotion decisions should be checked against cost, conversion, SKU structure, margin, and competitor context. | 0.84 | strong | Final action still requires real margin and competitor evidence. |
-| The current evidence can support a bounded promotion review checklist, but not an automatic promotion change. | 0.68 | plausible | Cost-trend interpretation requires repeated-period cost evidence. |
+| A bounded promotion review should cover activity cost, merchant and platform subsidy, and order and payment conversion. | 0.84 | strong | The available evidence defines review dimensions but does not establish a promotion outcome. |
+| The current evidence can support a bounded promotion review checklist, but not an automatic promotion change. | 0.68 | plausible | Repeated-period cost evidence is required for trend interpretation; SKU margin and competitor context remain unresolved for final action. |
 
 ## 6. Critic Findings
 
 - [high] Observational evidence supports bounded association claims only. Recommendation: Keep attribution language conditional and record unresolved alternatives.
 - [medium] Current evidence scope is limited to committed local project files. Recommendation: Keep source paths and unresolved external requirements explicit.
-- [high] Promotion recommendations require margin and competitor context. Recommendation: Avoid final action recommendations without these checks.
+- [high] SKU margin and competitor context remain unresolved for final promotion action. Recommendation: Keep the output at bounded review-checklist level.
 
 ## 7. Claim and Definition Check
 
@@ -86,7 +87,7 @@ The `Scenario-Template Confidence` column records deterministic review labels as
 
 ## 8. Final Judgment
 
-Promotion changes should be checked against cost, conversion, SKU structure, margin, and competitor context.
+The current evidence supports a bounded promotion-review checklist, not an automatic promotion change.
 
 The judgment is bounded by the cited local evidence and the unresolved requirements recorded above.
 

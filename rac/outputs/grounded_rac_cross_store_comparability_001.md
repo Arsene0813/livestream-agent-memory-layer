@@ -29,7 +29,7 @@ Weighting boundary:
 
 ### 3b. Factor Weights Used in This Report
 
-| Factor | Weight | Bucket | Evidence Status | Why It Matters |
+| Decision Factor ID | Weight | Bucket | Evidence Status | Why It Matters |
 |---|---:|---|---|---|
 | same_reporting_period | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |
 | store_type | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |
@@ -37,7 +37,7 @@ Weighting boundary:
 | transaction_amount | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |
 | activity_intensity | 0.85 | high | partially_supported | Central to avoiding overconfident or misleading conclusions. |
 | region_context | 0.60 | default | partially_supported | Potentially relevant but requires stronger evidence. |
-| competition | 0.60 | default | partially_supported | Potentially relevant but requires stronger evidence. |
+| competition | 0.60 | default | missing | Potentially relevant but requires stronger evidence. |
 | sku_structure | 0.60 | default | partially_supported | Potentially relevant but requires stronger evidence. |
 | repeated_reporting_windows | 0.60 | default | partially_supported | Potentially relevant but requires stronger evidence. |
 
@@ -51,8 +51,9 @@ Weighting boundary:
 - Missing source files: 0
 
 For CSV evidence, `Source Locator` shows the selected record scope and `Selected Values` shows values read from those records. For Markdown evidence, the locator remains a local line-range pointer.
+`Decision Factor ID` is an internal RAC review identifier. The field column shows canonical project fields where available and labels unresolved requirements explicitly.
 
-| Factor | Source | Evidence Type | Status | Source Locator | Evidence Fields | Selected Values |
+| Decision Factor ID | Source | Evidence Type | Status | Source Locator | Canonical Evidence Fields / Requirement | Selected Values |
 |---|---|---|---|---|---|---|
 | same_reporting_period | retail_ops/data/demo2_source_notes.md | context_evidence | keyword_matched | lines 6-8 | period_start, period_end, period_month | n/a |
 | store_type | retail_ops/outputs/demo2_cross_store_comparability_output.csv | context_evidence | keyword_matched | lines 1-2 | store_type | n/a |
@@ -62,7 +63,7 @@ For CSV evidence, `Source Locator` shows the selected record scope and `Selected
 | region_context | retail_ops/data/DATA_DICTIONARY.md | definition_evidence | keyword_matched | lines 74-76 | region_type | n/a |
 | competition | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | lines 101-103 | competition-context requirement in comparability contract | n/a |
 | sku_structure | retail_ops/outputs/demo2_cross_store_comparability_output.csv | product_mix_evidence | keyword_matched | lines 1-2 | top3_sku_transaction_amount, top3_sku_transaction_amount_share_pct, SKU source tables | n/a |
-| repeated_reporting_windows | retail_ops/outputs/repeated_window_panel_summary_output.csv | quantitative_evidence | keyword_matched | lines 1-2 | store_period_panel_metrics, repeated reporting windows | n/a |
+| repeated_reporting_windows | retail_ops/outputs/repeated_window_panel_summary_output.csv | quantitative_evidence | keyword_matched | lines 1-2 | repeated period_month records in store_period_panel_metrics | n/a |
 
 
 ## 5. Competing Hypotheses
