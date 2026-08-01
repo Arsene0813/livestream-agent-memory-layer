@@ -16,7 +16,7 @@ For standardized instant-retail products, store competition is organized around 
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
-This chain frames the business problem rather than a set of separately observed data stages. Monthly transaction records are used as the continuous sales outcome across reporting periods. Later-month sales may include repeat selection, but the current data cannot separate it from new-customer orders or other demand, and it does not directly measure customer retention or market-share movement. `Maintaining share` therefore remains a business objective, not a reported metric or demonstrated result.
+This chain is the business framing for the decision problem. Monthly transaction records provide the continuous sales outcome across reporting periods, while `maintaining share` is not treated as a separately measured result.
 
 Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on the observed store-period context, local competition, activity involvement, activity intensity, product mix, and reporting-window alignment.
 
@@ -91,8 +91,12 @@ Supporting evidence after the first pass:
 - [Repeated-window B-F coverage](retail_ops/outputs/store_period_panel_coverage_output.csv)
   and [descriptive summary](retail_ops/outputs/repeated_window_panel_summary_output.csv)
   show the implemented February-April panel.
-- [Experiment results](retail_ops/EXPERIMENT_RESULTS.md) records validation
-  questions, procedures, outcomes, and visible failure modes.
+- [Experiment results](retail_ops/EXPERIMENT_RESULTS.md) records the
+  reviewer-facing analytical results, validation procedures, and visible
+  failure modes.
+- [Promotion-review report](rac/outputs/grounded_rac_promotion_strategy_001.md)
+  separates available cost, subsidy, and conversion evidence from
+  unresolved decision requirements.
 - [Data dictionary](retail_ops/data/DATA_DICTIONARY.md) and
   [technical appendix](retail_ops/TECHNICAL_APPENDIX.md) provide the
   field contract and source-to-claim audit references.
@@ -161,20 +165,36 @@ Retail demo details are kept under `retail_ops/`.
 
 ## Evaluation Questions
 
-For retail field names and metric meanings, `retail_ops/data/DATA_DICTIONARY.md` is authoritative. Detailed procedures, case counts, outputs, and failure cases are recorded in `retail_ops/EXPERIMENT_RESULTS.md`, `retail_ops/outputs/`, and `eval/retail_decision_support_eval_results/`.
+For retail field names and metric meanings,
+`retail_ops/data/DATA_DICTIONARY.md` is authoritative. Detailed
+procedures, outputs, and failure cases are recorded in
+`retail_ops/EXPERIMENT_RESULTS.md`, `retail_ops/outputs/`, and
+`eval/retail_decision_support_eval_results/`.
 
 The evaluation layer asks four questions:
 
-1. Can committed diagnostic values be regenerated and traced to their source fields and formulas?
-2. Do entity, period, metric-definition, and comparison boundaries remain intact through fact generation and endpoint answers?
-3. Where do retrieval thresholds and wording variations route unsupported or mismatched queries incorrectly?
-4. Does RAC keep a final judgment connected to relevant factors, source paths, competing hypotheses, and unresolved limitations?
+1. Can committed diagnostic values be regenerated and traced to their
+   source fields and formulas?
+2. Do entity, period, metric-definition, and comparison boundaries remain
+   intact through fact generation and endpoint answers?
+3. Where do retrieval thresholds and wording variations route unsupported
+   or mismatched queries incorrectly?
+4. Does RAC keep a final judgment connected to relevant factors, source
+   paths, competing hypotheses, and unresolved limitations?
 
-The committed sample passes the current data-contract, value-lineage, scope, and endpoint checks. These are repository-defined checks over declared evidence contracts, not a general model-accuracy result.
+The current results are:
 
-The retrieval experiments retain failure cases rather than hiding them behind an aggregate score. Hard-negative, entity or period mismatch, and ambiguous variants can still cross the exploratory similarity threshold, showing why similarity is only one routing signal.
+| Check | Observed result | How to read it |
+|---|---|---|
+| Store A value lineage | The check covers 3 source rows, 3 SQL output rows, 9 top-SKU rows, 180 source, formula, movement, ranking, and trade-off comparisons, and 5 generated facts. | The lineage from source tables to SQL outputs and generated facts can be checked field by field, while the operating result remains multi-metric rather than a single-cause conclusion. |
+| Demo 2 guardrail sensitivity | Baseline notes reproduce for all 5 rows. Raising the current thresholds by 5 percentage points changes Stores C-F; lowering them by 5 percentage points changes no rows. | The thresholds are prototype diagnostic warnings rather than optimized peer-selection rules. |
+| Retrieval wording stress | Supported variants retain expected evidence in 34/34 cases. Hard-negative, entity/period-mismatch, and ambiguous variants cross the `0.5720` reference threshold in 23/33, 15/18, and 5/16 cases. | Semantic similarity helps route evidence but does not establish entity, period, or decision-scope support. |
+| Repeated-window B-F panel | Stores B-F each retain February-April 2026 coverage across 11 selected metrics. | The panel supports descriptive review and later rule preparation, not a completed pairwise decision or monthly guardrail-stability result. |
 
-The Demo 2 guardrail-sensitivity check shows one-sided sensitivity in the current five-row fixture: four of five rows change when the existing thresholds are raised by five percentage points, while the easier-to-trigger scenario changes no rows.
+These descriptive analyses, retrieval stress tests, and contract checks
+have different meanings and are not combined into one accuracy score.
+Difficult retrieval cases remain visible because they show why similarity
+is only one evidence-routing signal.
 
 ## Optional Local Run
 
