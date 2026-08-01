@@ -49,7 +49,7 @@ being seen
 -> being selected again / maintaining share
 ```
 
-This chain frames the business problem rather than a set of separately observed data stages. Monthly transaction records are used as the continuous sales outcome across reporting periods. Later-month sales may include repeat selection, but the current data cannot separate it from new-customer orders or other demand, and it does not directly measure customer retention or market-share movement. `Maintaining share` therefore remains a business objective, not a reported metric or demonstrated result.
+This chain is the business framing for the decision problem. Monthly transaction records provide the continuous sales outcome across reporting periods, while `maintaining share` is not treated as a separately measured result.
 
 Promotion, subsidy, pricing, SKU arrangement, ranking work, fulfillment support, and local competition provide operating context for different parts of this path. Their interpretation depends on the store, reporting period, activity conditions, product structure, and evidence available for the question.
 
@@ -102,17 +102,22 @@ Generated memory facts retain the entity, reporting period, evidence slot, sourc
 
 ## Evaluation Logic
 
-The evaluation is organized around reproducibility, boundary preservation, retrieval failure modes, and grounded review.
+The evaluation is organized around reproducibility, boundary
+preservation, retrieval failure modes, and grounded review.
 
-Contract and lineage checks verify selected source-to-output values, formulas, field names, metadata, and repository paths. Endpoint and answer fixtures check whether entity, period, metric-definition, and comparison limits survive later responses. Retrieval experiments report score distributions, wording variations, and difficult cases rather than treating all checks as one accuracy measure.
+The current results are:
 
-The results support three narrow conclusions:
+| Check | Observed result | How to read it |
+|---|---|---|
+| Store A value lineage | The check covers 3 source rows, 3 SQL output rows, 9 top-SKU rows, 180 source, formula, movement, ranking, and trade-off comparisons, and 5 generated facts. | The lineage from source tables to SQL outputs and generated facts can be checked field by field, while the operating result remains multi-metric rather than a single-cause conclusion. |
+| Demo 2 guardrail sensitivity | Baseline notes reproduce for all 5 rows. Raising the current thresholds by 5 percentage points changes Stores C-F; lowering them by 5 percentage points changes no rows. | The thresholds are prototype diagnostic warnings rather than optimized peer-selection rules. |
+| Retrieval wording stress | Supported variants retain expected evidence in 34/34 cases. Hard-negative, entity/period-mismatch, and ambiguous variants cross the `0.5720` reference threshold in 23/33, 15/18, and 5/16 cases. | Semantic similarity helps route evidence but does not establish entity, period, or decision-scope support. |
+| Repeated-window B-F panel | Stores B-F each retain February-April 2026 coverage across 11 selected metrics. | The panel supports descriptive review and later rule preparation, not a completed pairwise decision or monthly guardrail-stability result. |
 
-1. Selected diagnostic values can be reproduced from the committed sample data.
-2. Generated findings can be traced to documented fields and source paths.
-3. Retrieval and review behavior can be inspected under supported, unsupported, mismatched, and ambiguous questions.
-
-Hard-negative, entity-mismatch, period-mismatch, and ambiguous-query results remain part of the evidence because they show where semantic similarity is insufficient on its own.
+These are descriptive analyses, retrieval stress tests, and contract
+checks with different meanings. They are not combined into one accuracy
+score. Difficult retrieval cases remain visible because they show where
+semantic similarity is insufficient on its own.
 
 ## Implemented Retail Path
 
@@ -162,6 +167,7 @@ Reviewer entry points:
 | [RAC demo index](rac/DEMO_INDEX.md) | Reviewer-facing index of deterministic RAC cases. |
 | [Store A attribution-boundary report](rac/outputs/grounded_rac_store_a_attribution_001.md) | Shows deterministic CSV record grounding and multi-factor attribution limits. |
 | [Cross-store comparability-boundary report](rac/outputs/grounded_rac_cross_store_comparability_001.md) | Shows quantitative evidence routing and explicit unavailable requirements. |
+| [Promotion-review report](rac/outputs/grounded_rac_promotion_strategy_001.md) | Separates available cost, subsidy, and conversion evidence from unresolved decision requirements. |
 | [Grounded pipeline](rac/src/grounded_pipeline.py) | Deterministic review and report-generation implementation. |
 
 ## Deferred Comparability Contract
@@ -183,6 +189,12 @@ These are the main fields that are easy to misread in application review. Full d
 
 ## Evidence Boundary
 
-The repository evidence covers six selected stores and the documented reporting windows. It supports reproducible descriptive diagnostics, field-contract checks, lineage-aware memory facts, retrieval stress tests, and answer-boundary evaluation.
+The repository evidence covers six selected stores and the documented
+reporting windows. It supports reproducible descriptive diagnostics,
+field-contract checks, lineage-aware memory facts, retrieval stress
+tests, answer-boundary evaluation, and deterministic grounded review.
 
-Separate claims about repeat selection, customer retention, market-share movement, broader store ranking, strategy transfer, market-area classification, or causal attribution remain outside the committed evidence. The monthly transaction series is used only as a continuous sales outcome.
+Broader store ranking, strategy transfer, market-area classification,
+and causal attribution remain outside scope. The monthly transaction
+series is treated as a continuous sales outcome rather than a separate
+measure of the later-stage business objective.
