@@ -52,18 +52,18 @@ contract, and fixed evaluation cases.
 
 ## Current Implementation Status
 
-| Component | Current Status | Evidence or Next Validation |
+| Component | Status | Current role |
 |---|---|---|
-| Structured review contracts | Implemented | `rac/prompts/`, `rac/schemas/`, and `rac/eval/` define the current review inputs, state, and fixed cases. |
-| Deterministic review pipeline | Implemented | `rac/src/mock_pipeline.py` establishes the typed review-state and report contracts. |
-| Local evidence resolver | Implemented | `rac/src/local_evidence_resolver.py` routes factors to structured CSV records, local text snippets, or explicit boundary evidence. |
+| Structured review contracts | Implemented | `rac/prompts/`, `rac/schemas/`, and `rac/eval/` define the review inputs, shared state, and fixed cases. |
+| Deterministic review baseline | Implemented | `rac/src/mock_pipeline.py` establishes the typed review-state and report contracts. |
+| Local evidence resolver | Implemented | `rac/src/local_evidence_resolver.py` routes factors to structured CSV records, local text evidence, or explicit boundary evidence. |
 | Grounded RAC pipeline | Implemented | `rac/src/grounded_pipeline.py` generates source-aware JSON and Markdown reports. |
-| Report-contract quality gate | Implemented | `rac/scripts/validate_grounded_quality_gate.py` validates report structure, evidence references, limitations, and selected claim boundaries. |
-| LangGraph-style orchestration | Planned experiment | Evaluate when conditional re-retrieval, repeated critique, recoverable branches, or human-review checkpoints make the sequential path difficult to inspect. |
-| Model-assisted review | Planned experiment | Compare model-assisted factor expansion, competing hypotheses, critique, and report synthesis against the deterministic baseline. |
-| Embedding-based or hybrid retrieval | Planned experiment | Test wording variation, hard-negative behavior, entity and period preservation, threshold sensitivity, and source traceability. |
-| Pairwise comparability gate | Planned evidence contract | Requires defined thresholds, broader repeated-window evidence, and additional market and operating context. |
-| Live Meituan backend integration | Future data integration | Requires source-field mapping, period handling, schema-drift checks, access control, anonymization, and lineage capture. |
+| Report-contract quality gate | Implemented | `rac/scripts/validate_grounded_quality_gate.py` checks report structure, evidence references, factor evidence status, limitations, and selected claim boundaries. |
+| Pairwise comparability gate | Deferred evidence contract | Requires stronger repeated-window, operating-condition, and market-context evidence before a question-specific pairwise decision can be supported. |
+
+Files beginning with `grounded_rac_` are the reviewer-facing evidence
+reports. Files beginning with `rac_` are deterministic mock fixtures used
+to verify the shared review-state and report contracts.
 
 ## How To Run
 
@@ -125,8 +125,9 @@ For a quick review, read these files in order:
 1. [RAC demo index](DEMO_INDEX.md)
 2. [Store A attribution-boundary report](outputs/grounded_rac_store_a_attribution_001.md)
 3. [Cross-store comparability-boundary report](outputs/grounded_rac_cross_store_comparability_001.md)
-4. [Report-contract quality summary](outputs/grounded_quality_summary.md)
-5. [RAC implementation guide](README.md)
+4. [Promotion-review report](outputs/grounded_rac_promotion_strategy_001.md)
+5. [Report-contract quality summary](outputs/grounded_quality_summary.md)
+6. [RAC implementation guide](README.md)
 
 For code review, inspect:
 
@@ -189,20 +190,29 @@ For pairwise cross-store decisions, the next evidence contract requires
 defined thresholds, repeated reporting windows, and additional operating
 and market-context evidence. Pairwise comparability remains future work.
 
-## Next Experiments
+## Possible Follow-up Experiments
 
-The next experiments should test the stability of the implemented review
-logic:
+These are planned extensions rather than part of the current
+reviewer-facing implementation. Each one is tied to a concrete
+evaluation question.
 
-1. Run sensitivity checks over alternative evidence-coverage weights.
-2. Test factor routing against paraphrased versions of each evaluation
-   question.
-3. Remove selected evidence sources and verify that missing requirements
-   appear as boundary evidence.
-4. Add cross-store stress cases covering period mismatch, missing fields,
-   metadata drift, and incomplete repeated windows.
-5. Test whether small changes in factor templates alter the final
-   judgment or only the review trace.
+1. **Evidence robustness:** test paraphrases, hard negatives, entity and
+   period preservation, missing-source behavior, cross-store period
+   mismatches, and sensitivity to alternative evidence-coverage weights.
+2. **Model-assisted review:** compare model-assisted factor expansion,
+   competing hypotheses, critique, and report synthesis against the
+   deterministic baseline.
+3. **Embedding-based or hybrid retrieval:** evaluate whether retrieval
+   improves wording coverage without weakening source traceability,
+   entity scope, period scope, or hard-negative behavior.
+4. **LangGraph-style orchestration:** introduce conditional
+   re-retrieval, repeated critique, recoverable branches, or
+   human-review checkpoints only when those branches are needed and can
+   be tested against the sequential baseline.
+5. **Live Meituan backend integration:** treat live integration as a
+   separate data-access and lineage task requiring source-field mapping,
+   period handling, schema-drift checks, access control, anonymization,
+   and lineage capture.
 
 ## Score Explainability Note
 
@@ -217,4 +227,4 @@ The grounded score weights are fixed prototype heuristics:
 - `0.15` for source-file traceability;
 - `0.15` for fallback avoidance.
 
-These weights are not learned or optimized. A future version should run sensitivity checks over alternative weight settings.
+They are not learned, calibrated, or presented as optimized decision weights. Sensitivity testing remains a planned robustness check.
