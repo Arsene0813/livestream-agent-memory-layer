@@ -21,6 +21,22 @@ answerable.
 
 The retail data-contract validator is a static contract check over the selected required implemented fields listed in `REQUIRED_CANONICAL_FIELDS`, current source and output headers, forbidden aliases, generated-fact metadata, and required dictionary boundary phrases. It does not parse or semantically validate every field definition in `DATA_DICTIONARY.md`.
 
+## Key Results for Review
+
+The detailed experiment contracts remain below. These four results give
+the shortest view of what the current prototype has actually tested.
+
+| Test | Observed result | Interpretation |
+|---|---|---|
+| Store A month-over-month diagnostic | The current value-lineage check covers 3 source rows, 3 SQL output rows, 9 top-SKU rows, 180 source, formula, movement, ranking, and trade-off comparisons, and 5 generated facts. | The diagnostic is auditable at field level and keeps the business reading multi-metric rather than reducing the result to one cause. |
+| Demo 2 guardrail sensitivity | Baseline `comparison_limit_notes` reproduce for all 5 rows. Under the harder-to-trigger +5 percentage-point scenario, Stores C-F change; under the easier-to-trigger -5 percentage-point scenario, no row changes, and Store B remains unchanged. | The current thresholds are prototype diagnostic warnings rather than validated peer-selection rules. |
+| Retrieval wording stress | Supported variants retained expected evidence in 34/34 cases. Hard-negative, entity/period-mismatch, and ambiguous variants crossed the `0.5720` reference threshold in 23/33, 15/18, and 5/16 cases. | Semantic similarity is useful for evidence routing but does not determine whether the requested entity, period, or decision scope is supported. |
+| Repeated-window B-F panel | Stores B-F each contain February-April 2026 coverage, with 11 selected metrics retained across the three months. | The panel supports descriptive movement review and preparation for later question-specific rules; it is not a completed pairwise decision or monthly guardrail-stability test. |
+
+These results come from descriptive analyses, retrieval stress tests, and
+contract checks with different meanings. They should not be combined
+into one accuracy score.
+
 ## First-Pass Reviewer Matrix
 
 
@@ -218,7 +234,7 @@ Evidence required before a monthly guardrail-stability test:
 | Monthly recomputation of `comparison_limit_notes` under the implemented SQL contract | Stability must compare like-for-like monthly note sets rather than infer stability from unrelated store-level metrics. |
 | Broader repeated store-period records beyond the current B-F three-month panel | More stores and months are needed before treating a local sensitivity pattern as reusable. |
 | Activity calendar or campaign-condition evidence | Activity involvement should not be interpreted as full campaign status without operating context. |
-| Local competition, price-pressure, fulfillment, or stockout evidence | Without these factors, the current results do not support claims about promotion or pricing effects, customer retention, market-share movement, or strategy transfer. |
+| Local competition, price-pressure, fulfillment, or stockout evidence | Without these factors, the current results do not support promotion, pricing, or strategy-transfer conclusions. |
 
 ## Experiment 8: Future Gate Contract Check
 
