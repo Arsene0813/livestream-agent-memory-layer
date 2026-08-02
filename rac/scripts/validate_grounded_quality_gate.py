@@ -31,7 +31,7 @@ REQUIRED_REPORT_SECTIONS = [
     "## 6. Critic Findings",
     "## 7. Claim and Definition Check",
     "## 8. Final Judgment",
-    "## 9. Evidence-Coverage Score",
+    "## 9. Evidence-Routing Coverage",
     "## 10. What Cannot Be Concluded",
     "## 11. Review-State Update",
 ]
@@ -673,6 +673,9 @@ def validate_state(case: dict[str, Any], state: dict[str, Any]) -> dict[str, Any
         'Unsupported claims detected by current rules',
         'Definition conflicts detected by current rules',
         'The judgment is bounded by the cited local evidence',
+        'Packet composition:',
+        'Routing coverage score:',
+        'Score inputs (contract fields):',
         'Score contract:',
         'The score summarizes evidence-routing coverage under the current rules.',
         'Alternative weights are a formula sensitivity check; the report judgment is produced separately.',

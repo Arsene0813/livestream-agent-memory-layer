@@ -93,9 +93,19 @@ Stores B-F can be organized for same-period diagnostic review, but should not be
 
 The judgment is bounded by the cited local evidence and the unresolved requirements recorded above.
 
-## 9. Evidence-Coverage Score
+## 9. Evidence-Routing Coverage
 
-0.95
+Packet composition:
+
+- Total packets: 9
+- Record matched packets: 0
+- Keyword matched packets: 8
+- Boundary matched packets: 1
+- Fallback packets: 0
+- Missing source files: 0
+
+- Routing coverage score: 0.95
+- Read this value as route resolution under the current rules, not as evidence strength or decision quality.
 
 How this score is calculated:
 
@@ -122,7 +132,7 @@ Score contract:
 - The score summarizes evidence-routing coverage under the current rules.
 - Alternative weights are a formula sensitivity check; the report judgment is produced separately.
 
-Current report inputs:
+Score inputs (contract fields):
 
 - total_packets = 9
 - record_matched_packets = 0
@@ -130,6 +140,9 @@ Current report inputs:
 - boundary_matched_packets = 1
 - fallback_packets = 0
 - missing_source_files = 0
+
+Derived rates and checks:
+
 - direct_evidence_rate = (record_matched_packets + keyword_matched_packets) / total_packets = 0.89
 - supported_or_boundary_rate = (record_matched_packets + keyword_matched_packets + boundary_matched_packets) / total_packets = 1.00
 - no_missing_source_file_score = 1.00

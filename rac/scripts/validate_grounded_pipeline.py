@@ -25,7 +25,7 @@ REQUIRED_REPORT_SECTIONS = [
     "## 6. Critic Findings",
     "## 7. Claim and Definition Check",
     "## 8. Final Judgment",
-    "## 9. Evidence-Coverage Score",
+    "## 9. Evidence-Routing Coverage",
     "## 10. What Cannot Be Concluded",
     "## 11. Review-State Update",
 ]

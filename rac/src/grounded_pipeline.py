@@ -712,10 +712,43 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append("")
 
     coverage_score = calculate_evidence_coverage_score(state)
-
-    lines.append("## 9. Evidence-Coverage Score")
+    lines.append("## 9. Evidence-Routing Coverage")
     lines.append("")
-    lines.append(f"{coverage_score['score']:.2f}")
+    lines.append("Packet composition:")
+    lines.append("")
+    lines.append(
+        f"- Total packets: "
+        f"{coverage_score['total_packets']}"
+    )
+    lines.append(
+        f"- Record matched packets: "
+        f"{coverage_score['record_matched_packets']}"
+    )
+    lines.append(
+        f"- Keyword matched packets: "
+        f"{coverage_score['keyword_matched_packets']}"
+    )
+    lines.append(
+        f"- Boundary matched packets: "
+        f"{coverage_score['boundary_matched_packets']}"
+    )
+    lines.append(
+        f"- Fallback packets: "
+        f"{coverage_score['fallback_packets']}"
+    )
+    lines.append(
+        f"- Missing source files: "
+        f"{coverage_score['missing_source_files']}"
+    )
+    lines.append("")
+    lines.append(
+        f"- Routing coverage score: "
+        f"{coverage_score['score']:.2f}"
+    )
+    lines.append(
+        "- Read this value as route resolution under the current "
+        "rules, not as evidence strength or decision quality."
+    )
     lines.append("")
     lines.append("How this score is calculated:")
     lines.append("")
@@ -731,10 +764,26 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append("")
     lines.append("| Component | Weight | Why |")
     lines.append("|---|---:|---|")
-    lines.append("| `direct_evidence_rate` | 0.45 | Highest priority because actual local evidence should matter more than boundary-only evidence. |")
-    lines.append("| `supported_or_boundary_rate` | 0.25 | Boundary evidence is valuable because it explicitly records missing requirements instead of hiding them. |")
-    lines.append("| `no_missing_source_file_score` | 0.15 | Source files must exist, but this is a basic traceability check rather than evidence strength. |")
-    lines.append("| `no_fallback_score` | 0.15 | Fallback packets indicate unresolved routing and reduce the current coverage score. |")
+    lines.append(
+        "| `direct_evidence_rate` | 0.45 | "
+        "Highest priority because actual local evidence should "
+        "matter more than boundary-only evidence. |"
+    )
+    lines.append(
+        "| `supported_or_boundary_rate` | 0.25 | "
+        "Boundary evidence is valuable because it explicitly "
+        "records missing requirements instead of hiding them. |"
+    )
+    lines.append(
+        "| `no_missing_source_file_score` | 0.15 | "
+        "Source files must exist, but this is a basic "
+        "traceability check rather than evidence strength. |"
+    )
+    lines.append(
+        "| `no_fallback_score` | 0.15 | "
+        "Fallback packets indicate unresolved routing and reduce "
+        "the current coverage score. |"
+    )
     lines.append("")
     lines.append("Score contract:")
     lines.append("")
@@ -750,17 +799,35 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
         "the report judgment is produced separately."
     )
     lines.append("")
-    lines.append("Current report inputs:")
+    lines.append("Score inputs (contract fields):")
     lines.append("")
-    lines.append(f"- total_packets = {coverage_score['total_packets']}")
+    lines.append(
+        f"- total_packets = "
+        f"{coverage_score['total_packets']}"
+    )
     lines.append(
         f"- record_matched_packets = "
         f"{coverage_score['record_matched_packets']}"
     )
-    lines.append(f"- keyword_matched_packets = {coverage_score['keyword_matched_packets']}")
-    lines.append(f"- boundary_matched_packets = {coverage_score['boundary_matched_packets']}")
-    lines.append(f"- fallback_packets = {coverage_score['fallback_packets']}")
-    lines.append(f"- missing_source_files = {coverage_score['missing_source_files']}")
+    lines.append(
+        f"- keyword_matched_packets = "
+        f"{coverage_score['keyword_matched_packets']}"
+    )
+    lines.append(
+        f"- boundary_matched_packets = "
+        f"{coverage_score['boundary_matched_packets']}"
+    )
+    lines.append(
+        f"- fallback_packets = "
+        f"{coverage_score['fallback_packets']}"
+    )
+    lines.append(
+        f"- missing_source_files = "
+        f"{coverage_score['missing_source_files']}"
+    )
+    lines.append("")
+    lines.append("Derived rates and checks:")
+    lines.append("")
     lines.append(
         "- direct_evidence_rate = "
         "(record_matched_packets + "
@@ -774,8 +841,14 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
         "boundary_matched_packets) / total_packets = "
         f"{coverage_score['supported_or_boundary_rate']:.2f}"
     )
-    lines.append(f"- no_missing_source_file_score = {coverage_score['no_missing_source_file_score']:.2f}")
-    lines.append(f"- no_fallback_score = {coverage_score['no_fallback_score']:.2f}")
+    lines.append(
+        f"- no_missing_source_file_score = "
+        f"{coverage_score['no_missing_source_file_score']:.2f}"
+    )
+    lines.append(
+        f"- no_fallback_score = "
+        f"{coverage_score['no_fallback_score']:.2f}"
+    )
     lines.append("")
     lines.append("Reading the score:")
     lines.append("")
@@ -793,7 +866,6 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
         "or business impact."
     )
     lines.append("")
-
     lines.append("## 10. What Cannot Be Concluded")
     lines.append("")
 
