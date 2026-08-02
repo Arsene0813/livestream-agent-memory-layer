@@ -23,7 +23,7 @@
     {
       "factor_id": "order_volume",
       "name": "Order volume",
-      "description": "Order volume affects stability and reliability.",
+      "description": "Provides order-volume scale context for the comparison review.",
       "evidence_needed": [
         "transaction order count",
         "transaction orders"
@@ -40,7 +40,7 @@
     {
       "factor_id": "activity_intensity",
       "name": "Activity involvement and intensity",
-      "description": "Activity involvement and activity intensity can affect comparison context.",
+      "description": "Provides activity-involvement and cost-ratio context for the comparison review.",
       "evidence_needed": [
         "activity_orders",
         "activity_order_share_pct",
@@ -51,7 +51,7 @@
     {
       "factor_id": "region_context",
       "name": "Region context",
-      "description": "Region and market context affect demand.",
+      "description": "Provides weak regional background for the comparison review.",
       "evidence_needed": [
         "region type",
         "business district context"
@@ -60,7 +60,7 @@
     {
       "factor_id": "competition",
       "name": "Competition",
-      "description": "Competitor behavior can independently affect performance.",
+      "description": "Requires competitor price and order-trend context before stronger comparison claims.",
       "evidence_needed": [
         "competitor price",
         "competitor order trend"
@@ -69,7 +69,7 @@
     {
       "factor_id": "sku_structure",
       "name": "SKU structure",
-      "description": "SKU mix can change margins and conversion.",
+      "description": "Provides product-mix context; margin effects are not observed in the current evidence.",
       "evidence_needed": [
         "top SKUs",
         "SKU transaction amount"

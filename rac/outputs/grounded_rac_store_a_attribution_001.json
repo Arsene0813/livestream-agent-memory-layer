@@ -16,7 +16,7 @@
     {
       "factor_id": "entry_conversion",
       "name": "Entry conversion",
-      "description": "Shows whether exposure translated into store visits.",
+      "description": "Places entry metrics alongside exposure metrics for review.",
       "evidence_needed": [
         "entry users",
         "exposure users",
@@ -26,7 +26,7 @@
     {
       "factor_id": "order_conversion",
       "name": "Order conversion",
-      "description": "Shows whether store visits translated into order submissions.",
+      "description": "Places order-conversion metrics alongside entry metrics for review.",
       "evidence_needed": [
         "order users",
         "entry users",
@@ -36,7 +36,7 @@
     {
       "factor_id": "promotion_intensity",
       "name": "Promotion intensity",
-      "description": "Promotion activity may affect orders, transaction amount, and attribution.",
+      "description": "Provides activity-order and activity-cost context for reviewing transaction outcomes.",
       "evidence_needed": [
         "activity orders",
         "activity cost",

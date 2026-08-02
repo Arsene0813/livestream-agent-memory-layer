@@ -61,9 +61,9 @@ def analyze_question(question: str) -> dict[str, Any]:
 FACTOR_LIBRARY: dict[str, list[dict[str, Any]]] = {
     "causal_diagnostic": [
         {"factor_id": "search_exposure", "name": "Search exposure", "description": "Search visibility may contribute to traffic but cannot prove attribution alone.", "evidence_needed": ["search exposure users", "search entry users", "search average rank"]},
-        {"factor_id": "entry_conversion", "name": "Entry conversion", "description": "Shows whether exposure translated into store visits.", "evidence_needed": ["entry users", "exposure users", "entry conversion rate"]},
-        {"factor_id": "order_conversion", "name": "Order conversion", "description": "Shows whether store visits translated into order submissions.", "evidence_needed": ["order users", "entry users", "order conversion rate"]},
-        {"factor_id": "promotion_intensity", "name": "Promotion intensity", "description": "Promotion activity may affect orders, transaction amount, and attribution.", "evidence_needed": ["activity orders", "activity cost", "activity original transaction amount"]},
+        {"factor_id": "entry_conversion", "name": "Entry conversion", "description": "Places entry metrics alongside exposure metrics for review.", "evidence_needed": ["entry users", "exposure users", "entry conversion rate"]},
+        {"factor_id": "order_conversion", "name": "Order conversion", "description": "Places order-conversion metrics alongside entry metrics for review.", "evidence_needed": ["order users", "entry users", "order conversion rate"]},
+        {"factor_id": "promotion_intensity", "name": "Promotion intensity", "description": "Provides activity-order and activity-cost context for reviewing transaction outcomes.", "evidence_needed": ["activity orders", "activity cost", "activity original transaction amount"]},
         {
             "factor_id": "transaction_orders",
             "name": "Transaction orders",
@@ -79,23 +79,23 @@ FACTOR_LIBRARY: dict[str, list[dict[str, Any]]] = {
     "comparability_judgment": [
         {"factor_id": "same_reporting_period", "name": "Same reporting period", "description": "Stores must first share the same reporting window.", "evidence_needed": ["period start", "period end"]},
         {"factor_id": "store_type", "name": "Store type", "description": "Different store types may not be directly comparable.", "evidence_needed": ["store type"]},
-        {"factor_id": "order_volume", "name": "Order volume", "description": "Order volume affects stability and reliability.", "evidence_needed": ["transaction order count", "transaction orders"]},
+        {"factor_id": "order_volume", "name": "Order volume", "description": "Provides order-volume scale context for the comparison review.", "evidence_needed": ["transaction order count", "transaction orders"]},
         {"factor_id": "transaction_amount", "name": "Transaction amount", "description": "Gives scale context but is not sufficient alone.", "evidence_needed": ["transaction amount"]},
-        {"factor_id": "activity_intensity", "name": "Activity involvement and intensity", "description": "Activity involvement and activity intensity can affect comparison context.", "evidence_needed": ["activity_orders", "activity_order_share_pct", "activity_cost", "activity_cost_ratio_pct"]},
-        {"factor_id": "region_context", "name": "Region context", "description": "Region and market context affect demand.", "evidence_needed": ["region type", "business district context"]},
-        {"factor_id": "competition", "name": "Competition", "description": "Competitor behavior can independently affect performance.", "evidence_needed": ["competitor price", "competitor order trend"]},
-        {"factor_id": "sku_structure", "name": "SKU structure", "description": "SKU mix can change margins and conversion.", "evidence_needed": ["top SKUs", "SKU transaction amount"]},
+        {"factor_id": "activity_intensity", "name": "Activity involvement and intensity", "description": "Provides activity-involvement and cost-ratio context for the comparison review.", "evidence_needed": ["activity_orders", "activity_order_share_pct", "activity_cost", "activity_cost_ratio_pct"]},
+        {"factor_id": "region_context", "name": "Region context", "description": "Provides weak regional background for the comparison review.", "evidence_needed": ["region type", "business district context"]},
+        {"factor_id": "competition", "name": "Competition", "description": "Requires competitor price and order-trend context before stronger comparison claims.", "evidence_needed": ["competitor price", "competitor order trend"]},
+        {"factor_id": "sku_structure", "name": "SKU structure", "description": "Provides product-mix context; margin effects are not observed in the current evidence.", "evidence_needed": ["top SKUs", "SKU transaction amount"]},
         {"factor_id": "repeated_reporting_windows", "name": "Repeated reporting windows", "description": "Three monthly B-F reporting windows are available for descriptive review, but they do not establish stable pairwise comparability.", "evidence_needed": ["multi-period data"]}
     ],
     "strategic_recommendation": [
-        {"factor_id": "activity_orders", "name": "Activity orders", "description": "Shows how much order volume is tied to promotions.", "evidence_needed": ["activity order count"]},
-        {"factor_id": "activity_cost", "name": "Activity cost", "description": "Shows promotional cost burden.", "evidence_needed": ["activity cost"]},
-        {"factor_id": "merchant_subsidy", "name": "Merchant subsidy", "description": "Merchant-borne subsidy affects economics.", "evidence_needed": ["merchant subsidy amount"]},
-        {"factor_id": "platform_subsidy", "name": "Platform subsidy", "description": "Platform-borne subsidy changes cost interpretation.", "evidence_needed": ["platform subsidy amount"]},
-        {"factor_id": "order_conversion", "name": "Order conversion", "description": "Promotion should be checked against conversion.", "evidence_needed": ["order conversion rate"]},
-        {"factor_id": "payment_conversion", "name": "Payment conversion", "description": "Checks whether submitted orders become paid orders.", "evidence_needed": ["payment conversion rate"]},
+        {"factor_id": "activity_orders", "name": "Activity orders", "description": "Records the backend activity-order count used in the promotion review.", "evidence_needed": ["activity order count"]},
+        {"factor_id": "activity_cost", "name": "Activity cost", "description": "Records the backend activity-cost measure used in the promotion review.", "evidence_needed": ["activity cost"]},
+        {"factor_id": "merchant_subsidy", "name": "Merchant subsidy", "description": "Records the merchant subsidy amount where available.", "evidence_needed": ["merchant subsidy amount"]},
+        {"factor_id": "platform_subsidy", "name": "Platform subsidy", "description": "Records the platform subsidy amount where available.", "evidence_needed": ["platform subsidy amount"]},
+        {"factor_id": "order_conversion", "name": "Order conversion", "description": "Includes the backend order-conversion metric in the promotion review.", "evidence_needed": ["order conversion rate"]},
+        {"factor_id": "payment_conversion", "name": "Payment conversion", "description": "Includes the backend payment-conversion metric in the promotion review.", "evidence_needed": ["payment conversion rate"]},
         {"factor_id": "sku_margin_structure", "name": "SKU margin structure", "description": "Promotion decisions require margin context.", "evidence_needed": ["SKU margin", "SKU activity participation"]},
-        {"factor_id": "competitor_context", "name": "Competitor context", "description": "Competitor pricing can change promotion effectiveness.", "evidence_needed": ["competitor prices", "competitor order trend"]}
+        {"factor_id": "competitor_context", "name": "Competitor context", "description": "Requires competitor pricing and order-trend context before stronger promotion conclusions.", "evidence_needed": ["competitor prices", "competitor order trend"]}
     ],
     "technical_design": [
         {"factor_id": "typed_memory", "name": "Typed memory", "description": "Preserve existing typed facts.", "evidence_needed": ["memory schema"]},

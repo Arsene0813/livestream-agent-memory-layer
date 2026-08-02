@@ -6,7 +6,7 @@
     {
       "factor_id": "activity_orders",
       "name": "Activity orders",
-      "description": "Shows how much order volume is tied to promotions.",
+      "description": "Records the backend activity-order count used in the promotion review.",
       "evidence_needed": [
         "activity order count"
       ]
@@ -14,7 +14,7 @@
     {
       "factor_id": "activity_cost",
       "name": "Activity cost",
-      "description": "Shows promotional cost burden.",
+      "description": "Records the backend activity-cost measure used in the promotion review.",
       "evidence_needed": [
         "activity cost"
       ]
@@ -22,7 +22,7 @@
     {
       "factor_id": "merchant_subsidy",
       "name": "Merchant subsidy",
-      "description": "Merchant-borne subsidy affects economics.",
+      "description": "Records the merchant subsidy amount where available.",
       "evidence_needed": [
         "merchant subsidy amount"
       ]
@@ -30,7 +30,7 @@
     {
       "factor_id": "platform_subsidy",
       "name": "Platform subsidy",
-      "description": "Platform-borne subsidy changes cost interpretation.",
+      "description": "Records the platform subsidy amount where available.",
       "evidence_needed": [
         "platform subsidy amount"
       ]
@@ -38,7 +38,7 @@
     {
       "factor_id": "order_conversion",
       "name": "Order conversion",
-      "description": "Promotion should be checked against conversion.",
+      "description": "Includes the backend order-conversion metric in the promotion review.",
       "evidence_needed": [
         "order conversion rate"
       ]
@@ -46,7 +46,7 @@
     {
       "factor_id": "payment_conversion",
       "name": "Payment conversion",
-      "description": "Checks whether submitted orders become paid orders.",
+      "description": "Includes the backend payment-conversion metric in the promotion review.",
       "evidence_needed": [
         "payment conversion rate"
       ]
@@ -63,7 +63,7 @@
     {
       "factor_id": "competitor_context",
       "name": "Competitor context",
-      "description": "Competitor pricing can change promotion effectiveness.",
+      "description": "Requires competitor pricing and order-trend context before stronger promotion conclusions.",
       "evidence_needed": [
         "competitor prices",
         "competitor order trend"
