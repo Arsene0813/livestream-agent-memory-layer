@@ -23,6 +23,70 @@ TOP_SEARCH_TERMS_SOURCE_PATH = "retail_ops/data/demo2_top_search_terms.csv"
 TOP_SKUS_BY_AMOUNT_SOURCE_PATH = "retail_ops/data/demo2_top_skus_by_transaction_amount.csv"
 LINEAGE_PATH = "retail_ops/TECHNICAL_APPENDIX.md"
 
+VISIBILITY_ENTRY_LIMITATIONS = [
+    "March 2026 same-period diagnostic only.",
+    "Traffic-source user counts may overlap.",
+    (
+        "Visibility and entry metrics do not support "
+        "single-metric causal attribution."
+    ),
+]
+
+ACTIVITY_LEVER_LIMITATIONS = [
+    (
+        "Activity mechanism details and promotion cycle dates "
+        "are not included."
+    ),
+    (
+        "Activity fields record backend activity involvement and related "
+        "cost measures; they do not establish causal impact."
+    ),
+    (
+        "activity_cost_ratio_pct follows the platform-defined "
+        "cost-ratio formula and is not a traditional ROI measure."
+    ),
+]
+
+TRANSACTION_CONVERSION_LIMITATIONS = [
+    "March 2026 transaction and conversion outcomes only.",
+    (
+        "order_conversion_rate_pct follows the backend definition "
+        "and should not be recomputed from transaction-order counts."
+    ),
+    (
+        "These fields record monthly transaction outcomes; retention and "
+        "market-share movement are not separately identified."
+    ),
+]
+
+TOP3_SKU_LIMITATIONS = [
+    (
+        "Top-3 SKU evidence only; it is not a full SKU or "
+        "category-share view."
+    ),
+    (
+        "Manual category inference should not be treated as a "
+        "backend category classification."
+    ),
+    (
+        "English SKU names are helper translations, not backend "
+        "source values."
+    ),
+]
+
+ATTRIBUTION_GUARD_LIMITATIONS = [
+    "March 2026 same-period diagnostic only.",
+    (
+        "comparison_scope_flag is a row-level scope guardrail, "
+        "not a pairwise comparability decision."
+    ),
+    (
+        "The available metrics do not support single-metric "
+        "attribution or strategy-transfer conclusions."
+    ),
+]
+
+
 
 def read_csv(path: Path) -> list[dict[str, str]]:
     with path.open(newline="", encoding="utf-8") as f:
@@ -130,13 +194,6 @@ for row in comparability_rows:
         for item in top_skus_by_store.get(store_id, [])
     ]
 
-    common_limitations = [
-        "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
-        "same-period March 2026 comparison only",
-        "traffic-source users may overlap",
-        "not causal attribution",
-        "compare with region, store type, activity, and product-mix limits",
-    ]
 
     facts.append(
         make_fact(
@@ -188,7 +245,7 @@ for row in comparability_rows:
                 "search_term_order_times",
             ],
             confidence="high",
-            limitations=common_limitations,
+            limitations=VISIBILITY_ENTRY_LIMITATIONS,
             supporting_source_paths=[TOP_SEARCH_TERMS_SOURCE_PATH],
         )
     )
@@ -198,7 +255,7 @@ for row in comparability_rows:
             entity_id=entity_id,
             slot="activity_lever_profile",
             value=(
-                f"Store {store_id}'s March 2026 activity metrics describe activity involvement and subsidy cost structure. "
+                f"Store {store_id}'s March 2026 activity fields record activity involvement and related cost measures. "
                 f"These metrics should be treated as operating-tool evidence, not as proof that activity caused the store's result."
             ),
             observed_values={
@@ -226,13 +283,7 @@ for row in comparability_rows:
                 "activity_order_share_pct",
             ],
             confidence="high",
-            limitations=[
-                "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
-                "activity mechanism details are not included",
-                "promotion cycle dates are unknown",
-                "activity metrics describe tool usage, not causal proof",
-                "activity-cost ratio is a platform-defined activity cost divided by activity original transaction amount; operating interpretation should consider visibility, transaction outcomes, operating context, and local competition. It does not measure customer retention or market-share movement.",
-            ],
+            limitations=ACTIVITY_LEVER_LIMITATIONS,
         )
     )
 
@@ -277,12 +328,7 @@ for row in comparability_rows:
                 "entry_users",
             ],
             confidence="high",
-            limitations=[
-                "same-period diagnostic only; it does not include a pairwise comparability gate, competitor calendar, activity calendar, delivery conditions, rating or review signals, or stockout history.",
-                "same-period March 2026 comparison only",
-                "order_conversion_rate_pct follows the backend definition and must not be recomputed from transaction-order counts",
-                "transaction and conversion metrics do not prove causality or final operating quality by themselves",
-            ],
+            limitations=TRANSACTION_CONVERSION_LIMITATIONS,
         )
     )
 
@@ -313,13 +359,7 @@ for row in comparability_rows:
             confidence="medium",
             source_path=SOURCE_PATH,
             supporting_source_paths=[TOP_SKUS_BY_AMOUNT_SOURCE_PATH],
-            limitations=[
-                "top-3 SKU evidence only",
-                "not full SKU category-share analysis",
-                "manual category inference should not be overclaimed",
-                "English SKU names are helper translations, not backend source values",
-                "top SKU details are supported by retail_ops/data/demo2_top_skus_by_transaction_amount.csv",
-            ],
+            limitations=TOP3_SKU_LIMITATIONS,
         )
     )
 
@@ -364,7 +404,7 @@ for row in comparability_rows:
                 "comparison_limit_notes",
             ],
             confidence="high",
-            limitations=common_limitations,
+            limitations=ATTRIBUTION_GUARD_LIMITATIONS,
         )
     )
 
