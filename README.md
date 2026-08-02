@@ -81,9 +81,9 @@ follow five files in one narrative order:
 | Step | File | Review purpose |
 |---:|---|---|
 | 1 | [Project summary](PROJECT_SUMMARY_FOR_ADMISSIONS.md) | Understand the business origin, evidence coverage, implemented architecture, and decision boundary. |
-| 2 | [Design evolution: from livestream product memory to retail decision support](case_studies/from_livestream_to_retail_decision_support.md) | See how lifecycle-aware product memory developed into store-period evidence management. |
-| 3 | [Demo 1: Store A month-over-month diagnostic](retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md) | Inspect repeated-window Store A evidence and multi-metric interpretation. |
-| 4 | [Demo 2: same-period B-F diagnostic](retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md) | Inspect multi-store evidence organization and interpretation guardrails. |
+| 2 | [Demo 1: Store A month-over-month diagnostic](retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md) | Inspect repeated-window Store A evidence and multi-metric interpretation. |
+| 3 | [Demo 2: same-period B-F diagnostic](retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md) | Inspect multi-store evidence organization and interpretation guardrails. |
+| 4 | [Experiment results](retail_ops/EXPERIMENT_RESULTS.md) | Inspect validation questions, procedures, observed outcomes, sensitivity checks, and visible failure modes. |
 | 5 | [RAC grounded-review demo index](rac/DEMO_INDEX.md) | Inspect factor routing, structured-record grounding, boundary evidence, competing hypotheses, and report validation. |
 
 Supporting evidence after the first pass:
@@ -91,15 +91,15 @@ Supporting evidence after the first pass:
 - [Repeated-window B-F coverage](retail_ops/outputs/store_period_panel_coverage_output.csv)
   and [descriptive summary](retail_ops/outputs/repeated_window_panel_summary_output.csv)
   show the implemented February-April panel.
-- [Experiment results](retail_ops/EXPERIMENT_RESULTS.md) records the
-  reviewer-facing analytical results, validation procedures, and visible
-  failure modes.
 - [Promotion-review report](rac/outputs/grounded_rac_promotion_strategy_001.md)
   separates available cost, subsidy, and conversion evidence from
   unresolved decision requirements.
 - [Data dictionary](retail_ops/data/DATA_DICTIONARY.md) and
   [technical appendix](retail_ops/TECHNICAL_APPENDIX.md) provide the
   field contract and source-to-claim audit references.
+- [Design evolution: from livestream product memory to retail decision support](case_studies/from_livestream_to_retail_decision_support.md)
+  provides optional background on the repository's development from the
+  earlier livestream memory-layer prototype.
 - [Comparability Gate V0](retail_ops/COMPARABILITY_GATE_V0.md) documents
   the future question-specific pairwise comparability contract.
 

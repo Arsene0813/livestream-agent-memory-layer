@@ -20,9 +20,9 @@ the project in this five-step order:
 | Step | File | What to inspect |
 |---:|---|---|
 | 1 | [Project summary](PROJECT_SUMMARY_FOR_ADMISSIONS.md) | Business origin, evidence scope, architecture, implemented work, and decision boundary. |
-| 2 | [Design evolution](case_studies/from_livestream_to_retail_decision_support.md) | The progression from livestream product memory to lifecycle-aware retail evidence. |
-| 3 | [Demo 1: Store A month-over-month diagnostic](retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md) | Store A repeated-window evidence and multi-metric interpretation. |
-| 4 | [Demo 2: same-period B-F diagnostic](retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md) | Multi-store evidence structure and comparison guardrails. |
+| 2 | [Demo 1: Store A month-over-month diagnostic](retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md) | Store A repeated-window evidence and multi-metric interpretation. |
+| 3 | [Demo 2: same-period B-F diagnostic](retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md) | Multi-store evidence structure and interpretation guardrails. |
+| 4 | [Experiment results](retail_ops/EXPERIMENT_RESULTS.md) | Validation questions, procedures, observed outcomes, sensitivity checks, and visible failure modes. |
 | 5 | [RAC grounded-review demo index](rac/DEMO_INDEX.md) | Factor-aware evidence routing, record grounding, unresolved requirements, and report-contract validation. |
 
 After this first pass, use:
@@ -30,11 +30,12 @@ After this first pass, use:
 - [Repeated-window B-F coverage](retail_ops/outputs/store_period_panel_coverage_output.csv)
   and [summary](retail_ops/outputs/repeated_window_panel_summary_output.csv)
   for the February-April supporting panel;
-- [experiment results](retail_ops/EXPERIMENT_RESULTS.md) for procedures,
-  outcomes, retrieval stress cases, and failure modes;
 - the [data dictionary](retail_ops/data/DATA_DICTIONARY.md) and
   [technical appendix](retail_ops/TECHNICAL_APPENDIX.md) for field and
   source-to-claim review;
+- [Design evolution](case_studies/from_livestream_to_retail_decision_support.md)
+  as optional background on how the repository developed from the earlier
+  livestream memory-layer prototype;
 - [Comparability Gate V0](retail_ops/COMPARABILITY_GATE_V0.md) for the
   deferred question-specific pairwise evidence contract.
 
