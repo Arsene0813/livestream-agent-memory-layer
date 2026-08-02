@@ -2,55 +2,66 @@
 
 This file records the retail experiment map, validation results, and boundary checks for the current decision-support prototype.
 
+## What the Current Experiments Tested
+
+This is the shortest reading path through the current results. The detailed
+procedures, output paths, checks, and visible failure cases remain in the
+sections below.
+
+| Question | Evidence | Check | Observed result | Limit |
+|---|---|---|---|---|
+| Can one store be reviewed across repeated months without reducing the result to one cause? | Store A February-April 2026 backend metrics and nine top-SKU rows. | Month-over-month SQL diagnostic and field-level value-lineage validation. | The current check covers three source rows, three SQL output rows, nine top-SKU rows, 180 source, formula, month-over-month, rank-change, and tradeoff comparisons, and five generated facts. | One store and three months support descriptive diagnosis, not causal estimation. |
+| Can Stores B-F be organized under one reporting window before stronger comparison is attempted? | Five March 2026 store-period rows with top-search and top-SKU evidence. | Same-period SQL diagnostic and a ±5 percentage-point guardrail sensitivity check. | Baseline notes reproduce for all five rows. Stores C-F change under the +5 scenario, no row changes under the -5 scenario, and Store B remains unchanged. | The thresholds are prototype diagnostic warnings, not validated peer-selection rules. |
+| Does retrieval remain reliable when wording or requested scope changes? | Twenty-nine retrieval cases and 131 deterministic query variants over the local evidence corpus. | Top-k inspection, reference-threshold analysis, and wording-variation stress tests. | Supported variants retain expected evidence in 34/34 cases. Hard-negative, entity/period-mismatch, and ambiguous variants cross the `0.5720` reference threshold in 23/33, 15/18, and 5/16 cases. | Semantic similarity can route related evidence without establishing that the requested entity, period, or decision scope is supported. |
+| Is there enough repeated-window evidence to inspect movement for Stores B-F? | February-April 2026 records for five stores and 11 selected metrics. | Coverage SQL and a side-by-side repeated-window summary. | Every store has all three observed months, with the selected monthly values and February-to-April endpoint fields reproduced in the committed outputs. | The panel does not contain repeated top-SKU evidence or monthly recomputation of the current guardrail notes. |
+| Can RAC expose evidence routing while keeping its coverage score separate from decision quality? | Four fixed RAC evaluation cases over structured records, boundary notes, and repository files. | Factor expansion, evidence routing, critique, claim checks, review-state updates, and report-contract validation. | The grounded cases contain 30 packets: five record matched, 22 keyword matched, three boundary matched, and zero fallback packets. | Routing coverage describes route resolution under the current rules; it is not evidence strength, causal validity, or business impact. |
+
+## What the Results Support
+
+The prototype preserves documented field meanings while moving selected
+Meituan backend data through SQL diagnostics, structured evidence, retrieval,
+and grounded review.
+
+The main result is traceability. Selected source values can be followed into
+derived outputs, generated facts, retrieval packets, and answer boundaries.
+
+The experiments support descriptions of the observed store-period evidence
+and documented calculations. They do not turn short-window backend data into
+causal estimates, pairwise store decisions, retention measures, market-share
+movement, or explanations of unavailable business context.
+
 ## Evidence Types
 
-The current work uses three evidence types. They answer different questions
-and should not be read as one combined accuracy benchmark.
+The project uses three evidence types. They answer different questions and
+should not be combined into one accuracy benchmark.
 
 | Evidence type | Question answered | Typical result |
 |---|---|---|
 | Contract and integrity checks | Does the implementation preserve documented names, formulas, paths, metadata, and answer boundaries? | Pass/fail results over declared fixtures and contracts. |
 | Descriptive diagnostic analyses | What is visible in the selected store-period evidence under the stated reporting windows? | Observed levels, changes, coverage, and threshold sensitivity. |
-| Retrieval behavior stress tests | How does semantic retrieval behave for supported, unsupported, mismatched, hard-negative, and ambiguous queries? | Score distributions, top-k retention, threshold sweeps, and failure modes. |
+| Retrieval behavior stress tests | How does semantic retrieval behave for supported, unsupported, mismatched, hard-negative, and ambiguous queries? | Score distributions, top-k retention, threshold sweeps, and visible failure modes. |
 
 Answer-contract and endpoint-contract checks determine whether an answer
-preserves the required entity, period, source, metric-definition, and scope
-boundaries. Retrieval scores answer a narrower question: how semantic
-similarity behaves while routing evidence. A high score does not make a query
-answerable.
+preserves the required entity, period, source, metric definition, and scope.
+Retrieval scores answer the narrower question of how evidence is routed. A
+high similarity score does not make a query answerable.
 
-The retail data-contract validator is a static contract check over the selected required implemented fields listed in `REQUIRED_CANONICAL_FIELDS`, current source and output headers, forbidden aliases, generated-fact metadata, and required dictionary boundary phrases. It does not parse or semantically validate every field definition in `DATA_DICTIONARY.md`.
+The retail data-contract validator is a static check over the selected
+implemented fields listed in `REQUIRED_CANONICAL_FIELDS`, declared source and
+output headers, registered aliases, generated-fact metadata, and required
+dictionary boundary phrases. It does not semantically validate every
+definition in `DATA_DICTIONARY.md`.
 
-## Key Results for Review
+## Supporting Validation Map
 
-The detailed experiment contracts remain below. These four results give
-the shortest view of what the current prototype has actually tested.
-
-| Test | Observed result | Interpretation |
+| Check | What it verifies | Current role |
 |---|---|---|
-| Store A month-over-month diagnostic | The current value-lineage check covers 3 source rows, 3 SQL output rows, 9 top-SKU rows, 180 source, formula, movement, ranking, and trade-off comparisons, and 5 generated facts. | The diagnostic is auditable at field level and keeps the business reading multi-metric rather than reducing the result to one cause. |
-| Demo 2 guardrail sensitivity | Baseline `comparison_limit_notes` reproduce for all 5 rows. Under the harder-to-trigger +5 percentage-point scenario, Stores C-F change; under the easier-to-trigger -5 percentage-point scenario, no row changes, and Store B remains unchanged. | The current thresholds are prototype diagnostic warnings rather than validated peer-selection rules. |
-| Retrieval wording stress | Supported variants retained expected evidence in 34/34 cases. Hard-negative, entity/period-mismatch, and ambiguous variants crossed the `0.5720` reference threshold in 23/33, 15/18, and 5/16 cases. | Semantic similarity is useful for evidence routing but does not determine whether the requested entity, period, or decision scope is supported. |
-| Repeated-window B-F panel | Stores B-F each contain February-April 2026 coverage, with 11 selected metrics retained across the three months. | The panel supports descriptive movement review and preparation for later question-specific rules; it is not a completed pairwise decision or monthly guardrail-stability test. |
-
-These results come from descriptive analyses, retrieval stress tests, and
-contract checks with different meanings. They should not be combined
-into one accuracy score.
-
-## First-Pass Reviewer Matrix
-
-
-| Experiment                          | Question                                                                                                   | Input                                                                    | Output                                                                                | What it prevents                                                                       |
-| ----------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| Field-contract validation           | Do the selected required implemented fields, declared headers, aliases, generated-fact metadata, and required boundary phrases remain aligned with the current contract?                                         | `DATA_DICTIONARY.md`, source CSV files, SQL outputs, generated facts     | Pass/fail checks over the declared static contract scope                           | Declared alias drift, missing required fields, and unsupported generated-fact metadata             |
-| Value-lineage validation | Do source values, derived outputs, and generated memory facts agree at field level? | Demo 1 and Demo 2 source CSV files, diagnostic outputs, top-search and top-SKU evidence, generated facts | Pass/fail comparisons for passthrough values, formulas, period metadata, and nested evidence | Silent value drift between source evidence, diagnostic outputs, and retrieval facts |
-| Demo 1 month-over-month diagnostic  | Can one store be described across repeated months without reducing the result to one metric?               | Store A February-April 2026 manually transcribed merchant-backend metrics                      | Multi-metric diagnostic output and memory facts                                       | Single-metric attribution, causal overclaim, month-as-good-or-bad labeling             |
-| Demo 2 same-period diagnostic       | Can selected B-F store-period rows be staged under one March 2026 reporting window and one field contract? | Stores B-F March 2026 metric records, top search terms, top-SKU evidence | Row-level diagnostic output with `comparison_scope_flag` and `comparison_limit_notes` | Store ranking, premature pairwise comparability, strategy-transfer claims              |
-| Answer-boundary checks              | Do later answers preserve entity, period, metric-definition, source, and comparison limits?                | Generated retail memory facts and boundary test cases                    | Scenario-level pass/fail behavior                                                     | Unsupported recommendations, period mismatch, entity mismatch, ROI/profit overclaim    |
-| Retrieval wording-variation stress test | Does wording variation still retrieve the intended evidence path?                                          | Local file-backed retail evidence corpus and query variants              | Score-distribution and wording-variation stress-test outputs                                    | Fluent answers hiding weak or mismatched evidence                                      |
-| Repeated-window B-F panel           | Is there enough repeated store-period coverage to prepare future question-specific comparison rules?       | Stores B-F February-April 2026 panel records                             | Coverage output and descriptive repeated-window summary                               | Premature gate claims, store ranking, causal interpretation from short-window evidence |
-| Future comparability-gate contract  | What should the next pairwise decision layer decide, and what should it refuse?                            | Current evidence boundaries and planned gate design                      | Question-specific future gate contract                                                | Treating current Demo 2 as a completed pairwise gate                                   |
-
+| Selected implemented-field contract check | Required implemented fields, declared headers, aliases, fact metadata, and documented boundary phrases remain aligned. | Protects the declared static contract scope; it is not a complete semantic parser of the dictionary. |
+| Value-lineage validation | Source values, derived outputs, period metadata, formulas, and nested evidence agree at field level. | Makes Demo 1 and Demo 2 auditable from source rows to generated facts. |
+| Answer and endpoint boundary checks | Responses preserve entity, period, source, metric-definition, and comparison limits. | Prevents retrieval matches from becoming unsupported operating conclusions. |
+| Retrieval wording stress | Supported evidence remains retrievable while mismatch, ambiguity, and hard-negative behavior remains visible. | Separates semantic proximity from answerability. |
+| RAC grounded-review checks | Evidence packets, source paths, limitations, report sections, and coverage inputs remain inspectable. | Keeps route resolution separate from evidence strength and decision quality. |
+| Future comparability-gate contract | The planned pairwise decision layer remains documented as future scope. | Keeps the current same-period diagnostic separate from a future pairwise decision contract. |
 
 ## How to Read the Experiments
 
