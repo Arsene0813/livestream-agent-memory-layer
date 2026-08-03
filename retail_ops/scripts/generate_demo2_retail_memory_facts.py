@@ -24,65 +24,65 @@ TOP_SKUS_BY_AMOUNT_SOURCE_PATH = "retail_ops/data/demo2_top_skus_by_transaction_
 LINEAGE_PATH = "retail_ops/TECHNICAL_APPENDIX.md"
 
 VISIBILITY_ENTRY_LIMITATIONS = [
-    "March 2026 same-period diagnostic only.",
+    "March 2026 same-period diagnostic record.",
     "Traffic-source user counts may overlap.",
     (
-        "Visibility and entry metrics do not support "
-        "single-metric causal attribution."
+        "Visibility and entry metrics are reviewed together across "
+        "exposure, ranking, entry, and search-entry context."
     ),
 ]
 
 ACTIVITY_LEVER_LIMITATIONS = [
     (
-        "Activity mechanism details and promotion cycle dates "
-        "are not included."
+        "Activity mechanism details and promotion cycle dates can extend "
+        "the current activity context."
     ),
     (
         "Activity fields record backend activity involvement and related "
-        "cost measures; they do not establish causal impact."
+        "cost measures within the store-period operating profile."
     ),
     (
-        "activity_cost_ratio_pct follows the platform-defined "
-        "cost-ratio formula and is not a traditional ROI measure."
+        "activity_cost_ratio_pct follows the platform-defined cost-ratio "
+        "formula recorded in DATA_DICTIONARY.md."
     ),
 ]
 
 TRANSACTION_CONVERSION_LIMITATIONS = [
-    "March 2026 transaction and conversion outcomes only.",
+    "March 2026 transaction and conversion outcomes.",
     (
         "order_conversion_rate_pct follows the backend definition "
-        "and should not be recomputed from transaction-order counts."
+        "recorded in DATA_DICTIONARY.md."
     ),
     (
-        "These fields record monthly transaction outcomes; retention and "
-        "market-share movement are not separately identified."
+        "Transaction amount, transaction orders, payment, and conversion "
+        "fields form the monthly transaction profile."
     ),
 ]
 
 TOP3_SKU_LIMITATIONS = [
     (
-        "Top-3 SKU evidence only; it is not a full SKU or "
-        "category-share view."
+        "Top-3 SKU transaction-amount evidence provides listed "
+        "product-mix context."
     ),
     (
-        "Manual category inference should not be treated as a "
-        "backend category classification."
+        "sku_category_note records the manual category note attached "
+        "to the listed SKU evidence."
     ),
     (
-        "English SKU names are helper translations, not backend "
-        "source values."
+        "English SKU names provide helper translations alongside "
+        "the original SKU names."
     ),
 ]
 
 ATTRIBUTION_GUARD_LIMITATIONS = [
-    "March 2026 same-period diagnostic only.",
+    "March 2026 same-period diagnostic record.",
     (
-        "comparison_scope_flag is a row-level scope guardrail, "
-        "not a pairwise comparability decision."
+        "comparison_scope_flag records row-level readiness for "
+        "the same-period diagnostic."
     ),
     (
-        "The available metrics do not support single-metric "
-        "attribution or strategy-transfer conclusions."
+        "The combined metrics preserve visibility, entry, transaction, "
+        "conversion, activity, and listed-SKU context."
     ),
 ]
 
@@ -337,8 +337,8 @@ for row in comparability_rows:
             entity_id=entity_id,
             slot="top3_sku_product_mix_note",
             value=(
-                f"Store {store_id}'s March 2026 top-3 SKU transaction-amount evidence is retained as lightweight product-mix evidence. "
-                f"It should not be treated as full SKU category-share analysis."
+                f"Store {store_id}'s March 2026 top-3 SKU transaction-amount evidence "
+                f"provides listed product-mix context from the current source records."
             ),
             observed_values={
                 "top3_sku_transaction_amount": as_optional_float(row["top3_sku_transaction_amount"]),
@@ -368,8 +368,10 @@ for row in comparability_rows:
             entity_id=entity_id,
             slot="single_metric_attribution_guard",
             value=(
-                f"Store {store_id}'s March 2026 metrics should not be interpreted from a single metric alone. "
-                f"The comparison scope is {row['comparison_scope_flag']}, with limit notes: {row['comparison_limit_notes']}."
+                f"Store {store_id}'s March 2026 operating profile combines visibility, "
+                f"entry, transaction, conversion, activity, and listed-SKU evidence. "
+                f"The comparison scope is {row['comparison_scope_flag']}, with diagnostic "
+                f"notes: {row['comparison_limit_notes']}."
             ),
             observed_values={
                 "transaction_amount": as_float(row["transaction_amount"]),

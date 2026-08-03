@@ -71,9 +71,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "March 2026 same-period diagnostic only.",
+      "March 2026 same-period diagnostic record.",
       "Traffic-source user counts may overlap.",
-      "Visibility and entry metrics do not support single-metric causal attribution."
+      "Visibility and entry metrics are reviewed together across exposure, ranking, entry, and search-entry context."
     ],
     "is_active": true,
     "period_granularity": "month",
@@ -115,9 +115,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "Activity mechanism details and promotion cycle dates are not included.",
-      "Activity fields record backend activity involvement and related cost measures; they do not establish causal impact.",
-      "activity_cost_ratio_pct follows the platform-defined cost-ratio formula and is not a traditional ROI measure."
+      "Activity mechanism details and promotion cycle dates can extend the current activity context.",
+      "Activity fields record backend activity involvement and related cost measures within the store-period operating profile.",
+      "activity_cost_ratio_pct follows the platform-defined cost-ratio formula recorded in DATA_DICTIONARY.md."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -162,9 +162,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "March 2026 transaction and conversion outcomes only.",
-      "order_conversion_rate_pct follows the backend definition and should not be recomputed from transaction-order counts.",
-      "These fields record monthly transaction outcomes; retention and market-share movement are not separately identified."
+      "March 2026 transaction and conversion outcomes.",
+      "order_conversion_rate_pct follows the backend definition recorded in DATA_DICTIONARY.md.",
+      "Transaction amount, transaction orders, payment, and conversion fields form the monthly transaction profile."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -177,7 +177,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store B's March 2026 top-3 SKU transaction-amount evidence is retained as lightweight product-mix evidence. It should not be treated as full SKU category-share analysis.",
+    "value": "Store B's March 2026 top-3 SKU transaction-amount evidence provides listed product-mix context from the current source records.",
     "observed_values": {
       "top3_sku_transaction_amount": 1300.9,
       "transaction_amount": 11665.5,
@@ -214,9 +214,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "Top-3 SKU evidence only; it is not a full SKU or category-share view.",
-      "Manual category inference should not be treated as a backend category classification.",
-      "English SKU names are helper translations, not backend source values."
+      "Top-3 SKU transaction-amount evidence provides listed product-mix context.",
+      "sku_category_note records the manual category note attached to the listed SKU evidence.",
+      "English SKU names provide helper translations alongside the original SKU names."
     ],
     "is_active": true,
     "period_granularity": "month",
@@ -232,7 +232,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store B's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits.",
+    "value": "Store B's March 2026 operating profile combines visibility, entry, transaction, conversion, activity, and listed-SKU evidence. The comparison scope is same_period_diagnostic_ready, with diagnostic notes: high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits.",
     "observed_values": {
       "transaction_amount": 11665.5,
       "transaction_orders": 299,
@@ -266,9 +266,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "March 2026 same-period diagnostic only.",
-      "comparison_scope_flag is a row-level scope guardrail, not a pairwise comparability decision.",
-      "The available metrics do not support single-metric attribution or strategy-transfer conclusions."
+      "March 2026 same-period diagnostic record.",
+      "comparison_scope_flag records row-level readiness for the same-period diagnostic.",
+      "The combined metrics preserve visibility, entry, transaction, conversion, activity, and listed-SKU context."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -345,9 +345,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "March 2026 same-period diagnostic only.",
+      "March 2026 same-period diagnostic record.",
       "Traffic-source user counts may overlap.",
-      "Visibility and entry metrics do not support single-metric causal attribution."
+      "Visibility and entry metrics are reviewed together across exposure, ranking, entry, and search-entry context."
     ],
     "is_active": true,
     "period_granularity": "month",
@@ -389,9 +389,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "Activity mechanism details and promotion cycle dates are not included.",
-      "Activity fields record backend activity involvement and related cost measures; they do not establish causal impact.",
-      "activity_cost_ratio_pct follows the platform-defined cost-ratio formula and is not a traditional ROI measure."
+      "Activity mechanism details and promotion cycle dates can extend the current activity context.",
+      "Activity fields record backend activity involvement and related cost measures within the store-period operating profile.",
+      "activity_cost_ratio_pct follows the platform-defined cost-ratio formula recorded in DATA_DICTIONARY.md."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -436,9 +436,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "March 2026 transaction and conversion outcomes only.",
-      "order_conversion_rate_pct follows the backend definition and should not be recomputed from transaction-order counts.",
-      "These fields record monthly transaction outcomes; retention and market-share movement are not separately identified."
+      "March 2026 transaction and conversion outcomes.",
+      "order_conversion_rate_pct follows the backend definition recorded in DATA_DICTIONARY.md.",
+      "Transaction amount, transaction orders, payment, and conversion fields form the monthly transaction profile."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -451,7 +451,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store C's March 2026 top-3 SKU transaction-amount evidence is retained as lightweight product-mix evidence. It should not be treated as full SKU category-share analysis.",
+    "value": "Store C's March 2026 top-3 SKU transaction-amount evidence provides listed product-mix context from the current source records.",
     "observed_values": {
       "top3_sku_transaction_amount": 2004.84,
       "transaction_amount": 7064.09,
@@ -488,9 +488,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "Top-3 SKU evidence only; it is not a full SKU or category-share view.",
-      "Manual category inference should not be treated as a backend category classification.",
-      "English SKU names are helper translations, not backend source values."
+      "Top-3 SKU transaction-amount evidence provides listed product-mix context.",
+      "sku_category_note records the manual category note attached to the listed SKU evidence.",
+      "English SKU names provide helper translations alongside the original SKU names."
     ],
     "is_active": true,
     "period_granularity": "month",
@@ -506,7 +506,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store C's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_product_mix_limits.",
+    "value": "Store C's March 2026 operating profile combines visibility, entry, transaction, conversion, activity, and listed-SKU evidence. The comparison scope is same_period_diagnostic_ready, with diagnostic notes: moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_product_mix_limits.",
     "observed_values": {
       "transaction_amount": 7064.09,
       "transaction_orders": 175,
@@ -540,9 +540,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "March 2026 same-period diagnostic only.",
-      "comparison_scope_flag is a row-level scope guardrail, not a pairwise comparability decision.",
-      "The available metrics do not support single-metric attribution or strategy-transfer conclusions."
+      "March 2026 same-period diagnostic record.",
+      "comparison_scope_flag records row-level readiness for the same-period diagnostic.",
+      "The combined metrics preserve visibility, entry, transaction, conversion, activity, and listed-SKU context."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -619,9 +619,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "March 2026 same-period diagnostic only.",
+      "March 2026 same-period diagnostic record.",
       "Traffic-source user counts may overlap.",
-      "Visibility and entry metrics do not support single-metric causal attribution."
+      "Visibility and entry metrics are reviewed together across exposure, ranking, entry, and search-entry context."
     ],
     "is_active": true,
     "period_granularity": "month",
@@ -663,9 +663,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "Activity mechanism details and promotion cycle dates are not included.",
-      "Activity fields record backend activity involvement and related cost measures; they do not establish causal impact.",
-      "activity_cost_ratio_pct follows the platform-defined cost-ratio formula and is not a traditional ROI measure."
+      "Activity mechanism details and promotion cycle dates can extend the current activity context.",
+      "Activity fields record backend activity involvement and related cost measures within the store-period operating profile.",
+      "activity_cost_ratio_pct follows the platform-defined cost-ratio formula recorded in DATA_DICTIONARY.md."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -710,9 +710,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "March 2026 transaction and conversion outcomes only.",
-      "order_conversion_rate_pct follows the backend definition and should not be recomputed from transaction-order counts.",
-      "These fields record monthly transaction outcomes; retention and market-share movement are not separately identified."
+      "March 2026 transaction and conversion outcomes.",
+      "order_conversion_rate_pct follows the backend definition recorded in DATA_DICTIONARY.md.",
+      "Transaction amount, transaction orders, payment, and conversion fields form the monthly transaction profile."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -725,7 +725,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store D's March 2026 top-3 SKU transaction-amount evidence is retained as lightweight product-mix evidence. It should not be treated as full SKU category-share analysis.",
+    "value": "Store D's March 2026 top-3 SKU transaction-amount evidence provides listed product-mix context from the current source records.",
     "observed_values": {
       "top3_sku_transaction_amount": 3055.78,
       "transaction_amount": 18078.7,
@@ -762,9 +762,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "Top-3 SKU evidence only; it is not a full SKU or category-share view.",
-      "Manual category inference should not be treated as a backend category classification.",
-      "English SKU names are helper translations, not backend source values."
+      "Top-3 SKU transaction-amount evidence provides listed product-mix context.",
+      "sku_category_note records the manual category note attached to the listed SKU evidence.",
+      "English SKU names provide helper translations alongside the original SKU names."
     ],
     "is_active": true,
     "period_granularity": "month",
@@ -780,7 +780,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store D's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits.",
+    "value": "Store D's March 2026 operating profile combines visibility, entry, transaction, conversion, activity, and listed-SKU evidence. The comparison scope is same_period_diagnostic_ready, with diagnostic notes: high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits.",
     "observed_values": {
       "transaction_amount": 18078.7,
       "transaction_orders": 404,
@@ -814,9 +814,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "March 2026 same-period diagnostic only.",
-      "comparison_scope_flag is a row-level scope guardrail, not a pairwise comparability decision.",
-      "The available metrics do not support single-metric attribution or strategy-transfer conclusions."
+      "March 2026 same-period diagnostic record.",
+      "comparison_scope_flag records row-level readiness for the same-period diagnostic.",
+      "The combined metrics preserve visibility, entry, transaction, conversion, activity, and listed-SKU context."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -893,9 +893,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "March 2026 same-period diagnostic only.",
+      "March 2026 same-period diagnostic record.",
       "Traffic-source user counts may overlap.",
-      "Visibility and entry metrics do not support single-metric causal attribution."
+      "Visibility and entry metrics are reviewed together across exposure, ranking, entry, and search-entry context."
     ],
     "is_active": true,
     "period_granularity": "month",
@@ -937,9 +937,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "Activity mechanism details and promotion cycle dates are not included.",
-      "Activity fields record backend activity involvement and related cost measures; they do not establish causal impact.",
-      "activity_cost_ratio_pct follows the platform-defined cost-ratio formula and is not a traditional ROI measure."
+      "Activity mechanism details and promotion cycle dates can extend the current activity context.",
+      "Activity fields record backend activity involvement and related cost measures within the store-period operating profile.",
+      "activity_cost_ratio_pct follows the platform-defined cost-ratio formula recorded in DATA_DICTIONARY.md."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -984,9 +984,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "March 2026 transaction and conversion outcomes only.",
-      "order_conversion_rate_pct follows the backend definition and should not be recomputed from transaction-order counts.",
-      "These fields record monthly transaction outcomes; retention and market-share movement are not separately identified."
+      "March 2026 transaction and conversion outcomes.",
+      "order_conversion_rate_pct follows the backend definition recorded in DATA_DICTIONARY.md.",
+      "Transaction amount, transaction orders, payment, and conversion fields form the monthly transaction profile."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -999,7 +999,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store E's March 2026 top-3 SKU transaction-amount evidence is retained as lightweight product-mix evidence. It should not be treated as full SKU category-share analysis.",
+    "value": "Store E's March 2026 top-3 SKU transaction-amount evidence provides listed product-mix context from the current source records.",
     "observed_values": {
       "top3_sku_transaction_amount": 726.25,
       "transaction_amount": 5784.87,
@@ -1036,9 +1036,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "Top-3 SKU evidence only; it is not a full SKU or category-share view.",
-      "Manual category inference should not be treated as a backend category classification.",
-      "English SKU names are helper translations, not backend source values."
+      "Top-3 SKU transaction-amount evidence provides listed product-mix context.",
+      "sku_category_note records the manual category note attached to the listed SKU evidence.",
+      "English SKU names provide helper translations alongside the original SKU names."
     ],
     "is_active": true,
     "period_granularity": "month",
@@ -1054,7 +1054,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store E's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: moderate_activity_involvement; compare_with_region_store_type_activity_product_mix_limits.",
+    "value": "Store E's March 2026 operating profile combines visibility, entry, transaction, conversion, activity, and listed-SKU evidence. The comparison scope is same_period_diagnostic_ready, with diagnostic notes: moderate_activity_involvement; compare_with_region_store_type_activity_product_mix_limits.",
     "observed_values": {
       "transaction_amount": 5784.87,
       "transaction_orders": 158,
@@ -1088,9 +1088,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "March 2026 same-period diagnostic only.",
-      "comparison_scope_flag is a row-level scope guardrail, not a pairwise comparability decision.",
-      "The available metrics do not support single-metric attribution or strategy-transfer conclusions."
+      "March 2026 same-period diagnostic record.",
+      "comparison_scope_flag records row-level readiness for the same-period diagnostic.",
+      "The combined metrics preserve visibility, entry, transaction, conversion, activity, and listed-SKU context."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1167,9 +1167,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "March 2026 same-period diagnostic only.",
+      "March 2026 same-period diagnostic record.",
       "Traffic-source user counts may overlap.",
-      "Visibility and entry metrics do not support single-metric causal attribution."
+      "Visibility and entry metrics are reviewed together across exposure, ranking, entry, and search-entry context."
     ],
     "is_active": true,
     "period_granularity": "month",
@@ -1211,9 +1211,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "Activity mechanism details and promotion cycle dates are not included.",
-      "Activity fields record backend activity involvement and related cost measures; they do not establish causal impact.",
-      "activity_cost_ratio_pct follows the platform-defined cost-ratio formula and is not a traditional ROI measure."
+      "Activity mechanism details and promotion cycle dates can extend the current activity context.",
+      "Activity fields record backend activity involvement and related cost measures within the store-period operating profile.",
+      "activity_cost_ratio_pct follows the platform-defined cost-ratio formula recorded in DATA_DICTIONARY.md."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1258,9 +1258,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "March 2026 transaction and conversion outcomes only.",
-      "order_conversion_rate_pct follows the backend definition and should not be recomputed from transaction-order counts.",
-      "These fields record monthly transaction outcomes; retention and market-share movement are not separately identified."
+      "March 2026 transaction and conversion outcomes.",
+      "order_conversion_rate_pct follows the backend definition recorded in DATA_DICTIONARY.md.",
+      "Transaction amount, transaction orders, payment, and conversion fields form the monthly transaction profile."
     ],
     "is_active": true,
     "period_granularity": "month"
@@ -1273,7 +1273,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store F's March 2026 top-3 SKU transaction-amount evidence is retained as lightweight product-mix evidence. It should not be treated as full SKU category-share analysis.",
+    "value": "Store F's March 2026 top-3 SKU transaction-amount evidence provides listed product-mix context from the current source records.",
     "observed_values": {
       "top3_sku_transaction_amount": 1798.4,
       "transaction_amount": 9301.8,
@@ -1310,9 +1310,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "Top-3 SKU evidence only; it is not a full SKU or category-share view.",
-      "Manual category inference should not be treated as a backend category classification.",
-      "English SKU names are helper translations, not backend source values."
+      "Top-3 SKU transaction-amount evidence provides listed product-mix context.",
+      "sku_category_note records the manual category note attached to the listed SKU evidence.",
+      "English SKU names provide helper translations alongside the original SKU names."
     ],
     "is_active": true,
     "period_granularity": "month",
@@ -1328,7 +1328,7 @@
     "period_label": "2026-03",
     "period_start": "2026-03-01",
     "period_end": "2026-03-31",
-    "value": "Store F's March 2026 metrics should not be interpreted from a single metric alone. The comparison scope is same_period_diagnostic_ready, with limit notes: high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits.",
+    "value": "Store F's March 2026 operating profile combines visibility, entry, transaction, conversion, activity, and listed-SKU evidence. The comparison scope is same_period_diagnostic_ready, with diagnostic notes: high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits.",
     "observed_values": {
       "transaction_amount": 9301.8,
       "transaction_orders": 266,
@@ -1362,9 +1362,9 @@
     "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "March 2026 same-period diagnostic only.",
-      "comparison_scope_flag is a row-level scope guardrail, not a pairwise comparability decision.",
-      "The available metrics do not support single-metric attribution or strategy-transfer conclusions."
+      "March 2026 same-period diagnostic record.",
+      "comparison_scope_flag records row-level readiness for the same-period diagnostic.",
+      "The combined metrics preserve visibility, entry, transaction, conversion, activity, and listed-SKU context."
     ],
     "is_active": true,
     "period_granularity": "month"
