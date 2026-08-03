@@ -2,25 +2,25 @@
 
 ## Demo Result
 
-Demo 2 organizes selected Stores B-F under the March 2026 reporting window and the canonical field contract. The output combines row-level diagnostic evidence with `comparison_scope_flag` and `comparison_limit_notes`, so each record keeps its period, source, and interpretation limits.
+Demo 2 organizes selected Stores B-F under the March 2026 reporting window and the canonical field contract. The output combines row-level diagnostic evidence with `comparison_scope_flag` and `comparison_limit_notes`, while retaining each record's period, source, and diagnostic context.
 
 ## Naming Note
 
-This file keeps the historical `cross_store_comparability` path wording for reference stability. Demo 2 itself remains a same-period B-F diagnostic rather than a completed pairwise comparability gate.
+This file keeps the historical `cross_store_comparability` path wording for reference stability. Demo 2 provides a same-period B-F diagnostic under the shared field contract.
 
 <!-- stable-demo2-scope-boundary -->
 
 ## Diagnostic Contract
 
-Demo 2 asks whether five anonymized store records can be structured under one March 2026 reporting window and one field contract without changing the original Meituan metric meanings.
+Demo 2 structures five anonymized store records under one March 2026 reporting window and one field contract while preserving the original Meituan metric meanings.
 
-`comparison_scope_flag` records row-level readiness for this diagnostic. `comparison_limit_notes` records the interpretation limits attached to each row.
+`comparison_scope_flag` records row-level readiness for this diagnostic. `comparison_limit_notes` records the diagnostic notes attached to each row.
 
 ## Business Problem
 
-Meituan's merchant backend provides detailed store-level metrics, but the backend is mainly designed for reviewing one store at a time.
+Meituan's merchant backend provides detailed store-level metrics.
 
-With many stores, the harder problem is deciding which stores can be compared, under what conditions they can be compared, and which signals are strong enough to support cautious operating judgment.
+With many stores, the analytical task becomes organizing store-period records under consistent reporting windows, field definitions, and operating context.
 
 In this project, instant-retail competition is understood through this operating chain:
 
@@ -28,11 +28,9 @@ In this project, instant-retail competition is understood through this operating
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
-Monthly transaction records are used as the continuous sales outcome across reporting periods. Later-month sales may include repeat selection, but the current data does not separate it from other order sources or directly measure customer retention or market-share movement.
+Promotion, subsidy, price, SKU mix, ranking position, and fulfillment conditions are operating levers inside this chain and are interpreted through the observed store-period context.
 
-Promotion, subsidy, price, SKU mix, ranking position, and fulfillment conditions are operating levers inside this chain. They should be interpreted through the observed store-period context and documented comparison limits, not as isolated goals.
-
-## Scope
+## Evidence Coverage
 
 | Item | Value |
 |---|---|
@@ -45,13 +43,11 @@ Promotion, subsidy, price, SKU mix, ranking position, and fulfillment conditions
 | SQL output | `retail_ops/outputs/demo2_cross_store_comparability_output.csv` |
 | Memory facts | `retail_ops/outputs/generated_demo2_retail_memory_facts.json` |
 
-Some source traffic-channel fields are retained in the structured source file but not carried into the current Demo 2 diagnostic output. Demo 2 focuses on selected same-period diagnostic signals rather than exhaustive traffic-source decomposition.
+The structured source file retains the available traffic-channel fields. The Demo 2 output uses the selected same-period fields documented in the diagnostic contract.
 
-The top-SKU source tables are intentionally partial: one view is ranked by sales volume and the other by transaction amount. The available backend evidence for this demo did not provide both `sales_volume` and `sku_transaction_amount` for every ranking view, and missing values are not back-calculated because SKU prices can vary by store, store lifecycle context such as a new-store customer-acquisition period or mature-store steady-state period, activity condition, and local competitive pressure.
+The two top-SKU source tables preserve different backend ranking views: one by sales volume and one by transaction amount. Each table retains the values available in its source.
 
-`region_type` is kept as weak regional context only. In the current sample, it should not be read as a mature market-area classification or as a hard comparability condition.
-
-A future market-area field would require broader store coverage and external or data-supported evidence such as local consumption level, competitive density, price pressure, and SKU demand structure.
+`region_type` retains the coarse regional context available in the source data and is reviewed together with the other store-period fields.
 
 ## Demo 2 Evidence Path
 
@@ -59,8 +55,8 @@ A future market-area field would require broader store coverage and external or 
 |---|---|---|
 | Source store-period metrics | `retail_ops/data/demo2_store_period_metrics.csv` | Stores selected Meituan backend metrics under canonical field names. |
 | Source search and SKU tables | `retail_ops/data/demo2_top_search_terms.csv`, `retail_ops/data/demo2_top_skus_by_transaction_amount.csv`, `retail_ops/data/demo2_top_skus_by_sales_volume.csv` | Keeps search-term and selected SKU evidence separate from store-period totals. |
-| Memory facts | `retail_ops/outputs/generated_demo2_retail_memory_facts.json` | Converts diagnostic evidence into source-bounded facts with observed values and limitations. |
-| Boundary checks | Demo 2 validation and evaluation scripts | Checks that answers stay within the implemented evidence instead of treating the output as a pairwise comparability gate. |
+| Memory facts | `retail_ops/outputs/generated_demo2_retail_memory_facts.json` | Converts diagnostic evidence into source-linked facts with observed values and diagnostic context. |
+| Validation checks | Demo 2 validation and evaluation scripts | Checks entity, period, canonical field, formula, source, and response consistency. |
 
 ## What the SQL Checks
 
@@ -77,7 +73,7 @@ The SQL prepares a same-period diagnostic output with:
 
 ### `comparison_scope_flag`
 
-This field records whether the row is inside the narrow current Demo 2 diagnostic scope.
+This field records whether the row satisfies the current Demo 2 diagnostic conditions.
 
 In the current Demo 2 output, all B-F stores use the same March 2026 reporting window and are marked:
 
@@ -85,61 +81,37 @@ In the current Demo 2 output, all B-F stores use the same March 2026 reporting w
 
 For this fixture, the flag checks the exact March window plus non-missing `transaction_amount`, `transaction_orders`, `exposure_users`, `entry_users`, `search_exposure_users`, `search_entry_users`, `activity_orders`, and `top3_sku_transaction_amount`.
 
-This means the core transaction, funnel, activity-involvement, and lightweight product-mix fields are ready for the current row-level same-period diagnostic. It does not certify every output column, and it does not mean the stores are fully comparable in every business sense.
+The core transaction, funnel, activity-involvement, and lightweight product-mix fields are available for the current row-level same-period diagnostic.
 
 ### `comparison_limit_notes`
 
-This field records the main reasons why direct cross-store interpretation should be constrained.
+This field records the diagnostic notes generated from the current thresholds.
 
 Examples include:
 
-- high or moderate activity involvement;
-
+- activity involvement;
 - top-3 SKU transaction-amount concentration;
-- the need to compare with region, store type, activity, product-mix limits.
+- review of region, store type, activity, and product-mix context.
 
-These notes are interpretation guardrails.
-
-The threshold-based guardrail labels in this demo are prototype diagnostic warnings. They help expose which records need interpretation limits; they are not optimized business cutoffs, peer-selection rules, or pairwise comparability decisions.
-
-A guardrail-sensitivity check is included for this reason. Baseline reproduction passes for all five rows. Four rows (C, D, E, and F) change `comparison_limit_notes` when the implemented thresholds are raised by 5 percentage points; Store B remains unchanged, and lowering the thresholds by 5 percentage points changes no rows. This local sensitivity supports treating the current thresholds as diagnostic warnings rather than peer-comparison rules or strategy-transfer rules.
+A threshold-sensitivity check records how these notes respond to nearby settings. Baseline reproduction passes for all five rows. Raising the implemented thresholds by 5 percentage points changes `comparison_limit_notes` for Stores C, D, E, and F, while Store B remains unchanged. Lowering the thresholds by 5 percentage points changes no rows.
 
 ## What This Demo Supports
 
-This demo supports same-period diagnostic reading.
+Demo 2 provides a same-period diagnostic view of Stores B-F across visibility, entry, transaction, conversion, activity, and listed-SKU evidence.
 
+## Current Use
 
-## Current Interpretation Boundary
-
-Demo 2 supports same-period diagnostic reading, but it should not be used for three stronger decisions:
-
-1. ranking stores as best or worst;
-2. transferring subsidy, pricing, SKU, ranking, or fulfillment actions from one store to another;
-3. generalizing the B-F March 2026 sample into a full 48-store decision system.
-
-Profit analysis, separate customer-retention or market-share measurement, complete SKU category-share analysis, automated backend ingestion, causal attribution, and pairwise comparability gating require additional evidence beyond the current Demo 2 scope.
+Each store profile remains linked to its March 2026 reporting period, canonical fields, diagnostic notes, and source records. The shared structure supports consistent review across the five selected stores.
 
 ## Why This Matters for the Memory Layer
 
-The memory layer should not answer cross-store questions by retrieving isolated metrics.
-
-It should preserve each store's period, evidence, comparison scope, and interpretation limits.
-
-For this reason, Demo 2 converts SQL diagnostics into generated retail memory facts using the existing retail slots:
-
-- `visibility_entry_profile`
-- `activity_lever_profile`
-- `transaction_conversion_profile`
-- `top3_sku_product_mix_note`
-- `single_metric_attribution_guard`
-
-The memory facts are currently file-backed for Demo 2. This is enough to test the data contract, SQL diagnostic output, fact generation, and limitation-preserving answer behavior, but it is not yet a full 48-store decision-support system.
+The memory layer preserves each store's period, evidence slots, diagnostic context, and source references. The file-backed Demo 2 facts connect the data contract, SQL diagnostic output, fact generation, retrieval, and response checks in one traceable path.
 
 ## What the Current Demo 2 Output Shows
 
 ### Selected Diagnostic Signals
 
-The table below shows selected numeric signals from the current Demo 2 SQL output. It is ordered by anonymized store ID, not by performance rank. The generated CSV output remains the numeric source of truth for this table.
+The table below shows selected numeric signals from the current Demo 2 SQL output. Rows follow anonymized store ID order. The generated CSV output remains the numeric source of truth for this table.
 
 | Store | transaction_orders | transaction_amount | search_exposure_users | search_average_rank | search_entry_users | search_entry_rate_pct | search_entry_share_pct | entry_conversion_rate_pct | order_conversion_rate_pct | activity_order_share_pct | activity_cost_ratio_pct | top3_sku_transaction_amount_share_pct |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -149,20 +121,18 @@ The table below shows selected numeric signals from the current Demo 2 SQL outpu
 | E | 158 | 5784.87 | 2784 | 13 | 355 | 12.75 | 87.01 | 12.19 | 39.46 | 68.99 | 29.38 | 12.55 |
 | F | 266 | 9301.8 | 2699 | 13 | 481 | 17.82 | 88.91 | 15.27 | 49.72 | 81.58 | 12.16 | 19.33 |
 
-Search-entry structure should be read as a group: `search_exposure_users`, `search_average_rank`, `search_entry_users`, `search_entry_rate_pct`, and `search_entry_share_pct` describe different parts of visibility and entry.
+The search-entry structure combines `search_exposure_users`, `search_average_rank`, `search_entry_users`, `search_entry_rate_pct`, and `search_entry_share_pct` across visibility and entry.
 
-`search_entry_share_pct` describes source mix among entry users. `search_entry_rate_pct`, `entry_conversion_rate_pct`, and `order_conversion_rate_pct` keep the interpretation tied to exposure, entry, and order conversion instead of treating one share metric as search performance by itself.
+`search_entry_share_pct` describes source mix among entry users. `search_entry_rate_pct`, `entry_conversion_rate_pct`, and `order_conversion_rate_pct` are interpreted together across exposure, entry, and order conversion.
 
-These values are diagnostic signals used to explain comparison limits. They are not a store ranking, a profit table, or a pairwise comparability decision.
+These values provide the numeric operating profile used by the Demo 2 diagnostic.
 
-The current output should be read as row-level diagnostic evidence, not as a pairwise store-comparability decision.
+The saved output retains `comparison_limit_notes` for traceability. The selected table presents numeric operating signals across visibility, entry, order conversion, activity context, and product-mix context.
 
-The saved output keeps `comparison_limit_notes` for traceability, but this demo does not use those notes to classify or rank stores. The selected table above is limited to numeric operating signals and keeps interpretation tied to visibility, entry, order conversion, activity context, and product-mix context.
+## Derived-Metric Design
 
-## Derived-Metric Scope Note
+Demo 2 uses a same-period B-F diagnostic design.
 
-Demo 2 intentionally keeps the same-period B-F diagnostic output narrower than Demo 1.
+Demo 1 uses month-over-month derived indicators for one store. Demo 2 uses a shared same-period field set for Stores B-F, emphasizing field-contract consistency and selected diagnostic evidence.
 
-Demo 1 is a month-over-month diagnostic for one store, so it includes more month-level derived indicators. Demo 2 is a same-period B-F diagnostic, so it focuses on field-contract consistency, selected diagnostic evidence, and comparison-boundary behavior.
-
-For that reason, Demo 2 does not expand every derived field defined in `retail_ops/data/DATA_DICTIONARY.md`.
+The implemented Demo 2 field set is documented in the SQL output and `retail_ops/data/DATA_DICTIONARY.md`.
