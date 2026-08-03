@@ -7,7 +7,7 @@
     "period_label": "2026-02_to_2026-04",
     "period_start": "2026-02-01",
     "period_end": "2026-04-30",
-    "value": "Store A's visibility and entry structure can be described from `exposure_users`, `store_average_rank`, `entry_users`, `search_exposure_users`, `search_average_rank`, and `search_entry_users` across February, March, and April 2026. These metrics are used to understand whether the store was being seen and entered, not to assign a fixed store label.\nIn this business context, the operating path is being seen → being entered → being ordered → being selected again / maintaining share.\nThe monthly transaction records are used as a continuous sales outcome across reporting periods. Later-month sales may include repeat selection, but the current data does not separate it from other order sources or directly measure customer retention or market-share movement.",
+    "value": "Store A's visibility and entry structure is described by `exposure_users`, `store_average_rank`, `entry_users`, `search_exposure_users`, `search_average_rank`, and `search_entry_users` across February, March, and April 2026.\nIn this business context, the operating path is being seen -> being entered -> being ordered -> being selected again / maintaining share.\nThe monthly records connect visibility and entry signals with transaction outcomes across the three reporting periods.",
     "observed_values": {
       "2026-02": {
         "exposure_users": 6118,
@@ -47,10 +47,9 @@
     "source_path": "retail_ops/outputs/store_a_demo1_sql_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "single-store demo",
+      "Store A single-store diagnostic",
       "traffic-source users may overlap",
-      "visibility and entry metrics do not prove causal growth",
-      "Store A February-April 2026 evidence only"
+      "Store A February-April 2026 evidence"
     ],
     "is_active": true,
     "period_granularity": "month_range"
@@ -63,7 +62,7 @@
     "period_label": "2026-02_to_2026-04",
     "period_start": "2026-02-01",
     "period_end": "2026-04-30",
-    "value": "Store A's activity metrics describe how promotional tools were used during the demo period. Activity orders, activity cost, merchant subsidy, platform subsidy, and activity cost ratio should be interpreted as operating levers inside the store's competitive environment, not as a standalone causal explanation or a simple ROI judgment.",
+    "value": "Store A's activity metrics describe how promotional tools were used during the demo period. Activity orders, activity cost, merchant subsidy, platform subsidy, and activity cost ratio form the activity-lever profile within the store's operating context.",
     "observed_values": {
       "2026-02": {
         "activity_orders": 270,
@@ -100,10 +99,10 @@
     "source_path": "retail_ops/outputs/store_a_demo1_sql_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "single-store demo",
-      "promotion cycle dates are unknown",
-      "activity metrics describe tool usage, not causal proof",
-      "activity-cost interpretation should consider visibility, transaction outcomes, operating context, and local competition; it does not measure customer retention or market-share movement"
+      "Store A single-store diagnostic",
+      "promotion-cycle dates can extend the activity context",
+      "activity metrics record promotional-tool usage",
+      "activity-cost interpretation combines visibility, transaction outcomes, operating context, and local competition"
     ],
     "is_active": true,
     "period_granularity": "month_range"
@@ -149,9 +148,9 @@
     "source_path": "retail_ops/outputs/store_a_demo1_sql_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "single-store demo",
-      "not causal attribution",
-      "does not prove whether the same pattern would transfer to another store"
+      "Store A single-store diagnostic",
+      "multi-metric month-over-month interpretation",
+      "Store A February-April 2026 evidence"
     ],
     "is_active": true,
     "period_granularity": "month_range"
@@ -164,7 +163,7 @@
     "period_label": "2026-02_to_2026-04",
     "period_start": "2026-02-01",
     "period_end": "2026-04-30",
-    "value": "Store A's April 2026 changes should be read across transaction amount, transaction orders, exposure users, entry users, search entry users, order conversion rate, and average order value together. The available fields support a multi-metric description of the period change, not a single-factor attribution.",
+    "value": "Store A's April 2026 operating profile combines transaction amount, transaction orders, exposure users, entry users, search-entry users, order conversion rate, and average order value. Together, these fields provide a multi-metric description of the period change.",
     "observed_values": {
       "2026-04": {
         "transaction_amount_mom_pct": 40.73,
@@ -174,7 +173,7 @@
         "average_order_value_mom_pct": -13.57
       }
     },
-    "calculation": "Decision guard based on multiple movement signals rather than a single threshold or one-factor explanation.",
+    "calculation": "Combined operating-profile description based on movement signals across visibility, entry, transaction, conversion, activity, and listed-SKU evidence.",
     "source_fields": [
       "transaction_amount",
       "transaction_orders",
@@ -197,9 +196,9 @@
     "source_path": "retail_ops/outputs/store_a_demo1_sql_output.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "single-store demo",
-      "not causal attribution",
-      "Store A February-April 2026 evidence only"
+      "Store A single-store diagnostic",
+      "combined operating-profile interpretation",
+      "Store A February-April 2026 evidence"
     ],
     "is_active": true,
     "period_granularity": "month_range"
@@ -212,11 +211,11 @@
     "period_label": "2026-02_to_2026-04",
     "period_start": "2026-02-01",
     "period_end": "2026-04-30",
-    "value": "All listed top-3 SKU records in the available Store A evidence are care-solution items. These records provide limited product-mix context for the observed top-SKU set; they do not represent the store's full SKU or category sales structure.",
+    "value": "All listed top-3 SKU records in the available Store A evidence are care-solution items. These records provide product-mix context for the listed top-SKU set.",
     "observed_values": {
       "evidence_scope": "top 3 SKU transaction and sales evidence only"
     },
-    "calculation": "Qualitative product-mix note based on top-3 SKU records. This is not full SKU category-share analysis.",
+    "calculation": "Qualitative product-mix note based on the listed top-3 SKU records.",
     "source_fields": [
       "sku_name",
       "sku_transaction_amount",
@@ -227,9 +226,9 @@
     "source_path": "retail_ops/data/store_a_top_skus.csv",
     "lineage_path": "retail_ops/TECHNICAL_APPENDIX.md",
     "limitations": [
-      "top-3 SKU evidence only",
-      "not full SKU category-share analysis",
-      "manual category inference should not be overclaimed"
+      "listed top-3 SKU evidence",
+      "product-mix context from available ranking records",
+      "sku_category_note records the manual category note attached to the listed SKU evidence"
     ],
     "is_active": true,
     "period_granularity": "month_range"
