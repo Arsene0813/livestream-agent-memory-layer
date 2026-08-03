@@ -2,13 +2,13 @@
 
 Repository: `livestream-agent-memory-layer`
 
-A local evidence-bounded decision-support prototype that connects selected Meituan backend metrics, reproducible SQL diagnostics, source-bounded memory facts, retrieval and boundary tests, and deterministic grounded review.
+A local decision-support prototype that connects selected Meituan backend metrics, reproducible SQL diagnostics, source-linked memory facts, retrieval tests, and deterministic grounded review.
 
 ## Core Research Question
 
 This project grew from a real Meituan instant-retail operating problem.
 
-The Meituan merchant backend provides detailed single-store metrics, but it is mainly designed for reviewing one store at a time. As store count increased, the harder problem became cross-store decision support: which store-period records can be compared, under what operating conditions, and what kind of operating judgment the available evidence can support.
+The Meituan merchant backend provides detailed single-store metrics. As store count increased, the analytical task became organizing store-period records across reporting windows, activity conditions, product structures, store types, and local operating contexts for consistent review.
 
 For standardized instant-retail products, store competition is organized around one operating chain:
 
@@ -16,12 +16,10 @@ For standardized instant-retail products, store competition is organized around 
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
-This chain is the business framing for the decision problem. Monthly transaction records provide the continuous sales outcome across reporting periods, while `maintaining share` is not treated as a separately measured result.
-
 Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on the observed store-period context, local competition, activity involvement, activity intensity, product mix, and reporting-window alignment.
 
 
-The project organizes multi-store operating evidence so that each decision can be traced to defined fields, reporting periods, and documented limits as the business expands.
+The project organizes multi-store operating evidence so that each decision can be traced to defined fields, reporting periods, and source records as the business expands.
 
 ## Evidence Workflow
 
@@ -31,46 +29,46 @@ The repository follows one evidence path:
 selected merchant-backend metrics
 -> canonical field dictionary
 -> SQL diagnostic outputs
--> source-bounded retail memory facts
--> boundary and retrieval checks
+-> source-linked retail memory facts
+-> retrieval and contract checks
 -> RAC grounded review
 ```
 
 Store-level source tables are manually transcribed from the merchant backend and anonymized. Metric meanings and canonical field names are fixed before transformation.
 
-SQL organizes the selected store-period records. Generated facts retain the entity, reporting period, source fields, observed values, source paths, evidence-trace confidence, and limitations. Later checks test whether retrieval and answers remain inside that evidence.
+SQL organizes the selected store-period records. Generated facts retain the entity, reporting period, source fields, observed values, source paths, calculation metadata, and evidence context. Later checks verify entity, period, field, and source consistency.
 
 `retail_ops/data/DATA_DICTIONARY.md` is the naming authority for retail fields and metric definitions.
 
-## Current Implemented Scope
+## Current Implemented Work
 
 The current retail decision-support path has three implemented evidence layers: Demo 1 for Store A month-over-month diagnosis, Demo 2 for selected Stores B-F under one March 2026 reporting window, and the repeated-window B-F panel across 2026-02, 2026-03, and 2026-04.
 
 The operating problem came from a 48-store business. The evidence committed to this repository covers six anonymized stores: Store A and selected Stores B-F under the reporting windows listed below. The 48-store figure describes the operating context; the committed analytical evidence covers the selected six stores.
 
-Demo 2 keeps the `cross_store_comparability` file-path term for reference stability and provides same-period B-F diagnostic evidence with interpretation guardrails. Question-specific pairwise comparability is specified separately in `retail_ops/COMPARABILITY_GATE_V0.md`.
+Demo 2 keeps the `cross_store_comparability` file-path term for reference stability and provides the March 2026 B-F diagnostic under the shared field contract. `retail_ops/COMPARABILITY_GATE_V0.md` records the next question-specific comparison experiment.
 
-| Area | Current implementation | Current boundary |
+| Area | Current implementation | Current role |
 | --- | --- | --- |
-| Livestream memory layer | Typed product facts, overwrite control, soft deactivation, active-state retrieval, fallback/refusal, scenario evaluation. | Local prototype for lifecycle-aware memory behavior. |
-| Data dictionary | Preserves selected Meituan merchant-backend metric meanings and canonical field names. | Manual normalization of selected backend evidence; field meanings follow `retail_ops/data/DATA_DICTIONARY.md`. |
-| Retail Demo 1 | Store A month-over-month diagnostic across February, March, and April 2026. | Multi-metric interpretation rather than single-cause monthly explanation. |
-| Retail Demo 2 | Same-period B-F diagnostic for March 2026. | Same-period diagnostic evidence with explicit interpretation limits before pairwise comparability rules. |
-| Repeated-window panel | B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04. | Descriptive repeated-window evidence before future pairwise comparability rules. |
-| Memory facts | Converts diagnostic outputs into source-bounded facts with observed values, source fields, source paths, evidence-trace confidence labels, and limitations. | File-backed evidence records derived from manually structured source tables. |
-| Answer-boundary checks | Tests whether answers stay within entity, period, metric-definition, source, and interpretation boundaries. | Scenario-based checks tied to the current evidence path; not broad LLM robustness tests. |
-| Factor-aware grounded review layer (RAC) | Provides deterministic factor expansion, evidence routing, critique, rule-based checks for unsupported claims and definition conflicts, review-state updates, and grounded report generation over local project evidence. | File-grounded review with explicit source paths, competing hypotheses, and limitations. |
+| Livestream memory layer | Typed product facts, overwrite control, soft deactivation, active-state retrieval, fallback/refusal, scenario evaluation. | Establishes the lifecycle-aware memory foundation retained in the repository. |
+| Data dictionary | Preserves selected Meituan merchant-backend metric meanings and canonical field names. | Provides the field authority used by source tables, SQL outputs, generated facts, and review results. |
+| Retail Demo 1 | Store A month-over-month diagnostic across February, March, and April 2026. | Connects visibility, entry, conversion, transaction, activity, and listed-SKU evidence across three reporting periods. |
+| Retail Demo 2 | Same-period B-F diagnostic for March 2026. | Organizes five stores under one reporting window and shared field contract. |
+| Repeated-window panel | B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04. | Makes three-month coverage and movement visible for the selected fields. |
+| Memory facts | Converts diagnostic outputs into source-linked facts with observed values, source fields, source paths, calculation metadata, and evidence context. | Provides retrieval-facing records derived from the structured source tables. |
+| Retrieval and response checks | Tests entity, period, canonical field, source, and response consistency. | Provides visible scenario-based checks over the current evidence path. |
+| Factor-aware grounded review layer (RAC) | Provides deterministic factor expansion, evidence routing, critique, rule-based checks, review-state updates, and grounded report generation over local project evidence. | Connects decision factors, competing explanations, source records, and report statements. |
 
 ## Key Design Principles
 
 This prototype emphasizes:
 
 - preserving Meituan backend metric semantics and reporting-window grain;
-- structuring store-period observations before pairwise comparison;
+- structuring store-period observations for consistent multi-store review;
 - converting diagnostics into retrieval-facing evidence records with source fields and observed values;
-- carrying source paths, evidence-trace confidence labels, and limitations into memory facts;
-- checking whether generated answers remain tied to entity, period, metric definitions, and documented evidence boundaries;
-- returning boundary-preserving answers when the evidence does not support an operating conclusion.
+- carrying source paths, calculation metadata, confidence labels, and evidence context into memory facts;
+- checking entity, period, metric-definition, and source consistency in generated answers;
+- connecting decision-review statements to the supporting records and definitions.
 
 ## Admissions Review Path
 
@@ -80,11 +78,11 @@ follow five files in one narrative order:
 
 | Step | File | Review purpose |
 |---:|---|---|
-| 1 | [Project summary](PROJECT_SUMMARY_FOR_ADMISSIONS.md) | Understand the business origin, evidence coverage, implemented architecture, and decision boundary. |
+| 1 | [Project summary](PROJECT_SUMMARY_FOR_ADMISSIONS.md) | Understand the business origin, evidence coverage, implemented architecture, and programme relevance. |
 | 2 | [Demo 1: Store A month-over-month diagnostic](retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md) | Inspect repeated-window Store A evidence and multi-metric interpretation. |
-| 3 | [Demo 2: same-period B-F diagnostic](retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md) | Inspect multi-store evidence organization and interpretation guardrails. |
+| 3 | [Demo 2: same-period B-F diagnostic](retail_ops/demo/demo_2_cross_store_comparability_diagnostic.md) | Inspect the shared multi-store evidence structure and March 2026 diagnostic results. |
 | 4 | [Experiment results](retail_ops/EXPERIMENT_RESULTS.md) | Inspect validation questions, procedures, observed outcomes, sensitivity checks, and visible failure modes. |
-| 5 | [RAC grounded-review demo index](rac/DEMO_INDEX.md) | Inspect factor routing, structured-record grounding, boundary evidence, competing hypotheses, and report validation. |
+| 5 | [RAC grounded-review demo index](rac/DEMO_INDEX.md) | Inspect factor routing, structured-record grounding, competing explanations, and report validation. |
 
 Supporting evidence after the first pass:
 
@@ -92,16 +90,16 @@ Supporting evidence after the first pass:
   and [descriptive summary](retail_ops/outputs/repeated_window_panel_summary_output.csv)
   show the implemented February-April panel.
 - [Promotion-review report](rac/outputs/grounded_rac_promotion_strategy_001.md)
-  separates available cost, subsidy, and conversion evidence from
-  unresolved decision requirements.
+  shows the RAC review path across cost, subsidy, conversion, and
+  supporting operating evidence.
 - [Data dictionary](retail_ops/data/DATA_DICTIONARY.md) and
   [technical appendix](retail_ops/TECHNICAL_APPENDIX.md) provide the
   field contract and source-to-claim audit references.
 - [Design evolution: from livestream product memory to retail decision support](case_studies/from_livestream_to_retail_decision_support.md)
   provides optional background on the repository's development from the
   earlier livestream memory-layer prototype.
-- [Comparability Gate V0](retail_ops/COMPARABILITY_GATE_V0.md) documents
-  the future question-specific pairwise comparability contract.
+- [Comparability Gate V0](retail_ops/COMPARABILITY_GATE_V0.md) records
+  the question-specific comparison contract.
 
 ## Architecture
 
@@ -110,8 +108,8 @@ The repository has three connected layers.
 | Layer | Responsibility | Main files |
 |---|---|---|
 | Lifecycle-aware memory layer | Stores typed product facts, controls updates and active state, retrieves current evidence, and falls back when knowledge is unsupported. | `api/`, `scripts/`, `eval/` |
-| Retail evidence layer | Preserves merchant-backend metric definitions, structures store-period evidence with SQL, generates source-bounded memory facts, and validates lineage and interpretation limits. | `retail_ops/` |
-| Factor-aware grounded review layer (RAC) | Expands decision factors, routes local evidence, records competing hypotheses, applies critique and rule-based checks for unsupported claims and definition conflicts, and reports evidence coverage and limitations. | `rac/` |
+| Retail evidence layer | Preserves merchant-backend metric definitions, structures store-period evidence with SQL, generates source-linked memory facts, and validates field and value lineage. | `retail_ops/` |
+| Factor-aware grounded review layer (RAC) | Expands decision factors, routes local evidence, records competing explanations, applies claim and definition checks, and reports evidence coverage and review status. | `rac/` |
 
 The reviewer-oriented evidence flow is:
 
@@ -119,16 +117,16 @@ The reviewer-oriented evidence flow is:
 selected merchant-backend metrics
 -> canonical field contract
 -> SQL diagnostic outputs
--> source-bounded memory facts
--> boundary evaluation and RAC grounded review
--> grounded report, qualified answer, or refusal
+-> source-linked memory facts
+-> retrieval and RAC grounded review
+-> traceable report and evidence-linked response
 ```
 
 The retail evidence layer establishes what the available data supports.
 RAC makes the multi-factor review path inspectable over that structured
 evidence.
 
-## Implemented API and Retrieval Scope
+## Implemented API and Retrieval
 
 The local FastAPI prototype includes general chat, memory, and retrieval endpoints. The key implemented paths are:
 
@@ -141,15 +139,15 @@ The local FastAPI prototype includes general chat, memory, and retrieval endpoin
 
 The retail endpoints are local prototype endpoints over file-backed generated retail memory facts. Demo 2 endpoint checks are used to inspect evidence behavior before any live Meituan integration.
 
-Retrieval-score inspection is kept as a separate offline analysis and is not the runtime selection logic of the Demo 2 endpoint.
+Retrieval-score inspection is a separate offline analysis. The Demo 2 endpoint uses deterministic file-backed selection.
 
-### Retrieval Mode Boundary
+### Retrieval Modes
 
 | Endpoint | Current evidence mode | How to read it |
 | --- | --- | --- |
 | `/chat_livestream_kb` | Qdrant-backed lifecycle-aware memory retrieval. | Original memory-layer prototype for typed product facts, freshness, overwrite behavior, and fallback/refusal. |
-| `/chat_retail_ops_kb` | Retail memory retrieval over implemented Store A facts. | Retail extension path for source-bounded Store A diagnostic facts. |
-| `/chat_retail_ops_demo2_kb` | File-backed generated Demo 2 retail memory facts. | Boundary test for B-F same-period diagnostic facts; not retrieval-score evaluation and not a pairwise comparability gate. |
+| `/chat_retail_ops_kb` | Retail memory retrieval over implemented Store A facts. | Retail extension path for source-linked Store A diagnostic facts. |
+| `/chat_retail_ops_demo2_kb` | File-backed generated Demo 2 retail memory facts. | Returns B-F same-period diagnostic facts by entity and evidence slot. |
 
 ## Retail Evidence Files
 
@@ -175,24 +173,24 @@ The evaluation layer asks four questions:
 
 1. Can committed diagnostic values be regenerated and traced to their
    source fields and formulas?
-2. Do entity, period, metric-definition, and comparison boundaries remain
-   intact through fact generation and endpoint answers?
-3. Where do retrieval thresholds and wording variations route unsupported
-   or mismatched queries incorrectly?
-4. Does RAC keep a final judgment connected to relevant factors, source
-   paths, competing hypotheses, and unresolved limitations?
+2. Do entity, period, canonical field, formula, and source references remain
+   consistent through fact generation and endpoint answers?
+3. How do retrieval thresholds and wording variations affect evidence
+   routing?
+4. Does RAC keep a final review connected to relevant factors, source
+   paths, competing explanations, and additional evidence requirements?
 
 The current results are:
 
 | Check | Observed result | How to read it |
 |---|---|---|
-| Store A value lineage | The check covers 3 source rows, 3 SQL output rows, 9 top-SKU rows, 180 source, formula, movement, ranking, and trade-off comparisons, and 5 generated facts. | The lineage from source tables to SQL outputs and generated facts can be checked field by field, while the operating result remains multi-metric rather than a single-cause conclusion. |
-| Demo 2 guardrail sensitivity | Baseline notes reproduce for all 5 rows. Raising the current thresholds by 5 percentage points changes Stores C-F; lowering them by 5 percentage points changes no rows. | The thresholds are prototype diagnostic warnings rather than optimized peer-selection rules. |
-| Retrieval wording stress | Supported variants retain expected evidence in 34/34 cases. Hard-negative, entity/period-mismatch, and ambiguous variants cross the `0.5720` reference threshold in 23/33, 15/18, and 5/16 cases. | Semantic similarity helps route evidence but does not establish entity, period, or decision-scope support. |
-| Repeated-window B-F panel | Stores B-F each retain February-April 2026 coverage across 11 selected metrics. | The panel supports descriptive review and later rule preparation, not a completed pairwise decision or monthly guardrail-stability result. |
+| Store A value lineage | The check covers 3 source rows, 3 SQL output rows, 9 top-SKU rows, 180 source, formula, movement, ranking, and trade-off comparisons, and 5 generated facts. | The source-to-SQL-to-fact path can be inspected field by field across the multi-metric store-period diagnostic. |
+| Demo 2 threshold sensitivity | Baseline notes reproduce for all 5 rows. Raising the current thresholds by 5 percentage points changes Stores C-F; lowering them by 5 percentage points changes no rows. | The sample shows how the current diagnostic notes respond to nearby threshold settings. |
+| Retrieval wording stress | Supported variants retain expected evidence in 34/34 cases. Hard-negative, entity/period-mismatch, and ambiguous variants cross the `0.5720` reference threshold in 23/33, 15/18, and 5/16 cases. | Entity and period checks complement semantic evidence routing. |
+| Repeated-window B-F panel | Stores B-F each retain February-April 2026 coverage across 11 selected metrics. | The panel supports descriptive review and supplies repeated-window records for the documented comparison experiment. |
 
 These descriptive analyses, retrieval stress tests, and contract checks
-have different meanings and are not combined into one accuracy score.
+are reported separately with their own procedures and outputs.
 Difficult retrieval cases remain visible because they show why similarity
 is only one evidence-routing signal.
 
@@ -235,41 +233,41 @@ These retrieval checks inspect score distribution and wording-variation behavior
 
 ## Repository Takeaway
 
-This repository presents a reproducible path from selected merchant-backend observations to evidence-bounded decision support.
+This repository presents a reproducible path from selected merchant-backend observations to traceable decision support.
 
 | Component | What it establishes |
 | --- | --- |
 | Metric dictionary | Preserves the selected Meituan backend definitions and canonical field names used by later transformations. |
 | Demo 1 | Reconstructs Store A's February-April 2026 movement as a multi-metric store-period diagnostic. |
-| Demo 2 | Structures selected B-F March 2026 records under one reporting window and records row-level interpretation limits. |
+| Demo 2 | Structures selected B-F March 2026 records under one reporting window and records row-level diagnostic notes. |
 | Repeated-window panel | Makes B-F coverage and descriptive movement across February-April 2026 inspectable. |
-| Evaluation and RAC | Tests value lineage, boundary preservation, retrieval failure modes, multi-factor evidence routing, and unresolved limitations. |
+| Evaluation and RAC | Tests value lineage, retrieval behavior, multi-factor evidence routing, and report traceability. |
 
-The documented pairwise comparability gate remains a separate experiment. Its purpose is to test whether two store-period records are suitable for one defined operating question before a cross-store interpretation is made.
+The documented comparison experiment uses the repeated-window panel and question-specific evidence requirements.
 
-## Editing and Scope Guardrails
+## Consistency Rules
 
 Retail field names and metric meanings must follow `retail_ops/data/DATA_DICTIONARY.md`.
 
 Retail experiment wording and validation claims should stay aligned with `retail_ops/EXPERIMENT_RESULTS.md`.
 
-Future pairwise comparability-gate wording must follow `retail_ops/COMPARABILITY_GATE_V0.md`.
+Question-specific comparison work follows `retail_ops/COMPARABILITY_GATE_V0.md`.
 
 ## Factor-Aware Grounded Review (RAC)
 
 The `rac/` module operates over the structured retail evidence and records
-factor selection, evidence routing, competing hypotheses, rule-based checks,
-review-state updates, and unresolved limitations before a report is accepted.
+factor selection, evidence routing, competing explanations, claim checks,
+review-state updates, and evidence requirements for the report.
 
 Its implemented workflow covers:
 
 - question analysis and factor expansion;
 - interpretable factor weighting;
 - source-aware local evidence routing;
-- explicit boundary evidence for unavailable requirements;
-- competing hypotheses;
-- critique and rule-based checks for unsupported claims and definition conflicts;
-- review-state updates that record evidence coverage and limitations;
+- factor-level evidence requirements;
+- competing explanations;
+- claim-to-source and definition checks;
+- review-state updates that record evidence coverage and open requirements;
 - grounded report generation;
 - a deterministic report-contract quality gate.
 
@@ -277,5 +275,5 @@ Start with `rac/DEMO_INDEX.md` for the reviewer-facing cases, generated
 reports, execution commands, and quality-gate results.
 
 The current implementation is deterministic and file-grounded. It
-complements the field dictionary, SQL diagnostics, generated facts, and
-answer-boundary evaluations rather than replacing them.
+connects the field dictionary, SQL diagnostics, generated facts, retrieval
+checks, and grounded reports in one inspectable evidence path.
