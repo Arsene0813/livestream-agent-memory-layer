@@ -16,17 +16,11 @@ In this project, Meituan instant-retail stores are understood through a chain of
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
-Monthly transaction records are used as the continuous sales outcome across reporting periods. Later-month sales may include repeat selection, but the current data does not separate it from other order sources or directly measure customer retention or market-share movement.
-
 A store may use activity subsidy, pricing, ranking optimization, SKU mix, and fulfillment control as operating levers inside this chain.
 
-
-
-## Evidence Scope
+## Evidence Coverage
 
 This demo examines Store A's February-April 2026 movement across visibility, entry, transaction, conversion, activity, and listed top-SKU signals under one canonical field contract.
-
-The interpretation stays at the observed store-period level. Questions that require cross-store evidence, causal identification, full category coverage, or financial settlement evidence use a different evidence grain.
 
 ## Source Files
 
@@ -66,11 +60,11 @@ Important consistency rules:
    activity_cost_ratio_pct = activity_cost / activity_original_transaction_amount * 100
    ```
 
-  This is a cost ratio. It should not be treated as traditional ROI.
+   The ratio follows the backend formula recorded in `DATA_DICTIONARY.md`.
 
-3. Traffic-source users may overlap. Source-level users should not be summed into total exposure users or total entry users.
+3. Traffic-source users may overlap. Total exposure users and total entry users therefore use the backend total fields, while source-level user fields remain separate.
 
-4. Top-SKU evidence is only lightweight product-mix evidence. It is not full category-level sales-share analysis.
+4. Top-SKU evidence provides product-mix context for the listed monthly ranking records.
 
 ## Store A Monthly Snapshot
 
@@ -95,7 +89,7 @@ Interpretation:
 - March had weaker exposure, weaker average rank, fewer entry users, and fewer search-entry users.
 - April recovered in exposure, rank, entry users, and search-entry users.
 - These metrics describe whether the store was being seen and entered.
-- By themselves, they are not enough to explain the full transaction recovery.
+- Together with transaction, conversion, activity, and SKU evidence, these metrics form the Store A operating profile.
 
 ## Activity-Lever Profile
 
@@ -128,8 +122,6 @@ April recovered in transaction scale compared with March.
 
 Interpretation:
 
-April's recovery should not be read as a simple quality improvement.
-
 The store had more exposure, more entry users, more transaction orders, and higher transaction amount, but order conversion rate and average order value declined.
 
 This supports a cautious operating-signal reading: the store recovered scale, but the recovery coexisted with weaker conversion rate and lower average order value.
@@ -138,11 +130,11 @@ This supports a cautious operating-signal reading: the store recovered scale, bu
 
 All nine listed monthly top-3 SKU records are tagged `care_solution` in the source table.
 
-These records provide product-mix context for the observed top-SKU set; they do not represent the store's full SKU or category sales structure.
+These records provide product-mix context for the listed monthly top-SKU set.
 
-## Single-Metric Attribution Guard
+## Combined Operating Profile
 
-The main lesson of this demo is that Store A's monthly changes should not be explained by one metric alone.
+Store A's monthly movement is reviewed through the combined visibility, entry, transaction, conversion, activity, and listed-SKU evidence.
 
 April 2026 showed:
 
@@ -153,11 +145,10 @@ April 2026 showed:
 - search-entry users up;
 - order conversion rate down;
 - average order value down;
-
 - activity-order share still high;
-- top-SKU evidence still limited.
+- listed top-SKU records retained as product-mix context.
 
-This is why the project uses a memory layer with traceable facts and limitations. The memory facts preserve observed signals, source fields, and caveats so later answers do not collapse the month-over-month movement into a one-factor explanation.
+The memory layer preserves observed signals, source fields, and calculation context so later review can reconstruct the combined month-over-month operating profile.
 
 ## Current Retail Memory Slots
 
@@ -168,8 +159,8 @@ The current generated retail memory facts use these slots:
 | `visibility_entry_profile`    | Describes exposure, ranking, entry, and search-entry structure.                     |
 | `activity_lever_profile`     | Describes activity orders, activity cost, subsidy, and activity-cost ratio as operating-lever evidence. |
 | `transaction_conversion_profile` | Describes transaction scale, order conversion, payment, and average order value.            |
-| `single_metric_attribution_guard` | Prevents one-factor explanations of growth or decline.                         |
-| `top3_sku_product_mix_note`    | Limits top-SKU evidence to lightweight product-mix support.                       |
+| `single_metric_attribution_guard` | Combines the implemented evidence slots into one Store A operating profile.                  |
+| `top3_sku_product_mix_note`    | Records product-mix context from the listed monthly top-SKU evidence.             |
 
 ## What This Demo Supports
 
@@ -177,37 +168,20 @@ This demo supports:
 
 - consistent field naming;
 - SQL-derived diagnostic metrics;
-- cautious month-over-month interpretation for Store A;
+- multi-metric month-over-month diagnostic for Store A;
 - traceable retail memory facts;
-- answer-boundary checks for entity scope, period scope, metric definitions, and causal attribution.
+- entity, period, canonical-field, formula, and source consistency checks.
 
-## Next Evidence Needed
+## Next Evidence
 
-Stronger operating interpretation would require additional evidence such as:
+The current store-period record can be extended with:
 
-- repeated windows across more stores;
-- broader SKU classification or category mapping;
-- promotion-cycle and campaign-mechanism evidence;
-- competition and price-pressure context;
-- fulfillment, stockout, delivery-condition, rating, and review signals;
-- clearer financial evidence before profit, margin, or settlement interpretation.
+- repeated reporting windows across more stores;
+- broader SKU classification and category mapping;
+- promotion-cycle and campaign context;
+- competition and price context;
+- fulfillment, stockout, delivery-condition, rating, and review signals.
 
 ## Future Work
 
-Demo 1 establishes the single-store diagnostic contract and traceable memory-fact structure. Demo 2 applies the same field contract to separate Stores B-F records for same-period diagnostic review. Repeated-window evidence can support later testing of a question-specific pairwise comparability gate.
-
-Future expansion should check whether candidate records are comparable by:
-
-- aligned reporting period;
-- transaction order volume;
-- transaction amount;
-- store type;
-- weak region context;
-- visibility and ranking profile;
-- entry and order-conversion profile;
-- activity involvement and activity intensity;
-- top-SKU evidence;
-- data completeness;
-- repeated reporting-window stability.
-
-Stronger cross-store interpretation should come after this evidence check. Store-stage diagnosis asks whether the same metric should be interpreted differently for a new-store customer-acquisition period and a mature-store steady-state period. It would require stronger evidence on store opening age, promotion cycles, competition, fulfillment conditions, rating/review signals, and stockout history; the current demo does not infer a store stage from one metric or threshold.
+Demo 1 establishes the single-store diagnostic contract and traceable memory-fact structure. Demo 2 applies the same field contract to Stores B-F, while the repeated-window panel supplies the records used by the question-specific comparison experiment in `retail_ops/COMPARABILITY_GATE_V0.md`.
