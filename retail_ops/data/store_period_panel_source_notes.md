@@ -4,7 +4,7 @@ This file documents the repeated-window panel extension for the retail-operation
 
 The current panel contains Store B, Store C, Store D, Store E, and Store F for February, March, and April 2026. The March rows are copied from `demo2_store_period_metrics.csv` and validated field-by-field against that source table.
 
-## Scope
+## Evidence Coverage
 
 | Item | Current value |
 |---|---|
@@ -13,11 +13,9 @@ The current panel contains Store B, Store C, Store D, Store E, and Store F for F
 | March source | Copied from `demo2_store_period_metrics.csv` and checked by source-to-panel parity validation |
 | Current purpose | Repeated-window coverage and descriptive summary for selected store-period fields |
 
-## Panel Field Scope
+## Panel Fields
 
-The panel uses selected dictionary-defined store-period fields that support the current repeated-window diagnostic.
-
-Coverage uses selected dictionary-defined store-period fields for repeated-window diagnostic coverage.
+The panel uses selected dictionary-defined store-period fields for repeated-window coverage and descriptive review.
 
 The operating chain is:
 
@@ -25,16 +23,12 @@ The operating chain is:
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ~~~
 
-This chain is the business framing, not a set of separately measured stages. The monthly panel records continuous sales outcomes across reporting periods; it does not separately identify repeat selection, customer retention, or market-share movement.
-
 Refund backend fields retained in the current panel are:
 
 - `refund_amount`
 - `full_refund_orders`
 - `refund_orders_all_or_partial`
 
-## Current Interpretation Boundary
+## Current Use
 
-This panel supports repeated-window coverage inspection and descriptive summary for Stores B-F across February-April 2026.
-
-Stronger pairwise comparison should use the future comparability-gate contract after the relevant store-period evidence is available.
+This panel provides repeated-window coverage and descriptive summaries for Stores B-F across February-April 2026. The records also supply the store-period evidence used by the question-specific comparison experiment in `retail_ops/COMPARABILITY_GATE_V0.md`.

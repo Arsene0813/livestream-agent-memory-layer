@@ -10,7 +10,7 @@ All included stores use the same reporting window:
 - `period_end`: `2026-03-31`
 - `period_month`: `2026-03`
 
-The source data is not an automated backend export. It is a structured research copy of selected backend fields for a limited decision-support prototype.
+The source data is a manually structured research copy of selected backend fields for the decision-support prototype.
 
 ## Included Store Records
 
@@ -35,30 +35,24 @@ Demo 2 uses four structured source tables:
 
 ## Data Integrity Notes
 
-Demo 2 keeps backend-reported values as source values. SQL-derived fields are used only for diagnostics.
+Demo 2 retains backend-reported values as source values. SQL-derived fields provide the diagnostic layer.
 
-Traffic-source entry metrics are treated as backend-reported channel metrics. They are not assumed to be mutually exclusive, and they should not be summed into total `entry_users`.
+Traffic-source entry metrics retain their backend channel values. Total entry users use the backend `entry_users` field, while channel fields remain separate.
 
-`region_type` is weak context only. It is not a hard market-area classification, peer-store grouping rule, or mature regional segmentation.
+`region_type` retains the coarse region label available in the source data and is reviewed together with the other store-period fields.
 
-`business_district_rank` is supplementary backend evidence. It is not a global market ranking and is not a hard comparability condition.
+`business_district_rank` retains the supplementary ranking value reported by the backend and provides local store-period context.
 
 `activity_cost_ratio_pct` follows the project dictionary definition: `activity_cost / activity_original_transaction_amount * 100`.
 
-It should not be described as ROI, profit margin, or operating return.
+The two top-SKU tables preserve different backend ranking views: one by sales volume and one by transaction amount. Each table retains the values available in its source, and missing values remain empty.
 
-Top-SKU evidence is used as lightweight product-mix evidence. It is not treated as complete product-category sales share.
+The tables provide the listed SKU-concentration evidence used by Demo 2.
 
-The two top-SKU tables reflect two different backend ranking views. The available backend evidence for this demo did not provide both `sales_volume` and `sku_transaction_amount` for every ranking view. Because SKU prices can differ by store, store lifecycle context such as a new-store customer-acquisition period or mature-store steady-state period, activity condition, and local competitive pressure, this project does not back-calculate missing sales volume or transaction amount from the other column.
+## Repository Evidence
 
-These tables support selected SKU-concentration notes, not complete category-share, price, margin, or catalogue-level product-mix analysis.
+The repository provides anonymized structured records, metric definitions, SQL diagnostics, generated memory facts, lineage notes, and validation and evaluation outputs.
 
-## Screenshot Policy
+## Region Context
 
-The repository does not include exhaustive Meituan backend screenshots because the backend contains sensitive store-level operating information.
-
-The project instead provides anonymized structured records, metric definitions, SQL diagnostics, generated memory facts, lineage notes, and validation/evaluation outputs.
-
-## Region Context Note
-
-In the current Demo 2 data, `region_type` values such as `Qingdao` and `Yantai` should be read as coarse available region labels, not as market-area classifications. The field name is retained for data-contract stability. It must not be used alone as a hard peer-store grouping rule or as a pairwise comparability decision.
+In the current Demo 2 data, `region_type` retains the available region labels `Qingdao` and `Yantai` under the canonical field contract.
