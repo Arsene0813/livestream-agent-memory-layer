@@ -46,7 +46,7 @@ The current retail decision-support path has three implemented evidence layers: 
 
 The operating problem came from a 48-store business. The evidence committed to this repository covers six anonymized stores: Store A and selected Stores B-F under the reporting windows listed below. The 48-store figure describes the operating context; the committed analytical evidence covers the selected six stores.
 
-Demo 2 keeps the `cross_store_comparability` file-path term for reference stability and provides the March 2026 B-F diagnostic under the shared field contract. `retail_ops/COMPARABILITY_GATE_V0.md` records the next question-specific comparison experiment.
+Demo 2 keeps the `cross_store_comparability` file-path term for reference stability and provides the March 2026 B-F diagnostic under the shared field contract. `retail_ops/COMPARABILITY_GATE_V0.md` specifies the evidence requirements for a future question-specific pairwise comparability gate.
 
 | Area | Current implementation | Current role |
 | --- | --- | --- |
@@ -98,8 +98,8 @@ Supporting evidence after the first pass:
 - [Design evolution: from livestream product memory to retail decision support](case_studies/from_livestream_to_retail_decision_support.md)
   provides optional background on the repository's development from the
   earlier livestream memory-layer prototype.
-- [Comparability Gate V0](retail_ops/COMPARABILITY_GATE_V0.md) records
-  the question-specific comparison contract.
+- [Comparability Gate V0](retail_ops/COMPARABILITY_GATE_V0.md) specifies
+  the evidence requirements for a future question-specific pairwise gate.
 
 ## Architecture
 
@@ -187,7 +187,7 @@ The current results are:
 | Store A value lineage | The check covers 3 source rows, 3 SQL output rows, 9 top-SKU rows, 180 source, formula, movement, ranking, and trade-off comparisons, and 5 generated facts. | The source-to-SQL-to-fact path can be inspected field by field across the multi-metric store-period diagnostic. |
 | Demo 2 threshold sensitivity | Baseline notes reproduce for all 5 rows. Raising the current thresholds by 5 percentage points changes Stores C-F; lowering them by 5 percentage points changes no rows. | The sample shows how the current diagnostic notes respond to nearby threshold settings. |
 | Retrieval wording stress | Supported variants retain expected evidence in 34/34 cases. Hard-negative, entity/period-mismatch, and ambiguous variants cross the `0.5720` reference threshold in 23/33, 15/18, and 5/16 cases. | Entity and period checks complement semantic evidence routing. |
-| Repeated-window B-F panel | Stores B-F each retain February-April 2026 coverage across 11 selected metrics. | The panel supports descriptive review and supplies repeated-window records for the documented comparison experiment. |
+| Repeated-window B-F panel | Stores B-F each retain February-April 2026 coverage across 11 selected metrics. | The panel supports descriptive review and provides repeated-window records for future gate design. |
 
 These descriptive analyses, retrieval stress tests, and contract checks
 are reported separately with their own procedures and outputs.
@@ -243,7 +243,7 @@ This repository presents a reproducible path from selected merchant-backend obse
 | Repeated-window panel | Makes B-F coverage and descriptive movement across February-April 2026 inspectable. |
 | Evaluation and RAC | Tests value lineage, retrieval behavior, multi-factor evidence routing, and report traceability. |
 
-The documented comparison experiment uses the repeated-window panel and question-specific evidence requirements.
+The repeated-window panel supports implemented descriptive analysis; `retail_ops/COMPARABILITY_GATE_V0.md` specifies the requirements for future pairwise comparison work.
 
 ## Consistency Rules
 
@@ -251,7 +251,7 @@ Retail field names and metric meanings must follow `retail_ops/data/DATA_DICTION
 
 Retail experiment wording and validation claims should stay aligned with `retail_ops/EXPERIMENT_RESULTS.md`.
 
-Question-specific comparison work follows `retail_ops/COMPARABILITY_GATE_V0.md`.
+Future question-specific comparison work follows `retail_ops/COMPARABILITY_GATE_V0.md`.
 
 ## Factor-Aware Grounded Review (RAC)
 

@@ -37,7 +37,7 @@ After this first pass, use:
   as optional background on how the repository developed from the earlier
   livestream memory-layer prototype;
 - [Comparability Gate V0](retail_ops/COMPARABILITY_GATE_V0.md) for the
-  question-specific comparison experiment.
+  evidence requirements of a future question-specific pairwise gate.
 
 ## Business Decision Problem
 
@@ -110,7 +110,7 @@ The current results are:
 | Store A value lineage | The check covers 3 source rows, 3 SQL output rows, 9 top-SKU rows, 180 source, formula, movement, ranking, and trade-off comparisons, and 5 generated facts. | The source-to-SQL-to-fact path can be inspected field by field across the multi-metric store-period diagnostic. |
 | Demo 2 threshold sensitivity | Baseline notes reproduce for all 5 rows. Raising the current thresholds by 5 percentage points changes Stores C-F; lowering them by 5 percentage points changes no rows. | The sample shows how the current diagnostic notes respond to nearby threshold settings. |
 | Retrieval wording stress | Supported variants retain expected evidence in 34/34 cases. Hard-negative, entity/period-mismatch, and ambiguous variants cross the `0.5720` reference threshold in 23/33, 15/18, and 5/16 cases. | Entity and period checks complement semantic evidence routing. |
-| Repeated-window B-F panel | Stores B-F each retain February-April 2026 coverage across 11 selected metrics. | The panel supports descriptive review and supplies repeated-window records for the documented comparison experiment. |
+| Repeated-window B-F panel | Stores B-F each retain February-April 2026 coverage across 11 selected metrics. | The panel supports descriptive review and provides repeated-window records for future gate design. |
 
 These descriptive analyses, retrieval stress tests, and contract
 checks are reported separately with their own procedures and outputs.
@@ -168,9 +168,9 @@ Reviewer entry points:
 | [Promotion-review report](rac/outputs/grounded_rac_promotion_strategy_001.md) | Shows review across activity, cost, subsidy, conversion, and supporting operating evidence. |
 | [Grounded pipeline](rac/src/grounded_pipeline.py) | Deterministic review and report-generation implementation. |
 
-## Comparison Experiment
+## Future Comparability-Gate Specification
 
-`retail_ops/COMPARABILITY_GATE_V0.md` records the question-specific comparison experiment built from the repeated-window panel, aligned store-period records, and documented decision variables.
+`retail_ops/COMPARABILITY_GATE_V0.md` specifies the evidence requirements for future question-specific pairwise comparison. The current results use the repeated-window panel for descriptive analysis.
 
 ## Field Consistency
 
