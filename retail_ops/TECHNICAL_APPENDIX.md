@@ -531,6 +531,23 @@ table and generated-fact evidence locations.
 No CSV header, generated-fact field, memory slot, API response key, or metric
 formula is changed by this review.
 
+### Guardrail Sensitivity Output Field Review
+
+The following table records the existing fields in
+`retail_ops/outputs/demo2_guardrail_sensitivity_summary.csv`
+before any naming or semantic change.
+
+| 现有字段 | 字典定义（中文） | 使用位置 | 是否改名 |
+|---|---|---|---|
+| `scenario` | 护栏敏感性检查使用的阈值情景标识。 | Sensitivity summary CSV and `retail_ops/scripts/analyze_demo2_guardrail_sensitivity.py`. | 否，保留现有名称。 |
+| `sensitivity_limit_notes` | 在对应阈值情景下重新计算的 Demo 2 诊断限制备注。 | Sensitivity summary CSV and sensitivity result generation. | 否，保留现有名称。 |
+| `current_comparison_scope_flag` | 从当前 Demo 2 SQL 输出复制的 `comparison_scope_flag`，用于基线对照。 | Sensitivity summary CSV. | 否，保留现有名称。 |
+| `current_comparison_limit_notes` | 从当前 Demo 2 SQL 输出复制的 `comparison_limit_notes`，用于基线对照。 | Sensitivity summary CSV. | 否，保留现有名称。 |
+
+These columns remain experiment-output helper fields. This review does
+not change a source CSV header, SQL output field, generated memory slot,
+or API response key.
+
 ### Repeated-Window Analytical Field Review
 
 This review records the month-prefixed output aliases against their canonical

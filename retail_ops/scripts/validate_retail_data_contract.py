@@ -66,6 +66,16 @@ REQUIRED_DEMO2_OUTPUT_FIELDS = [
     "comparison_limit_notes",
 ]
 
+REQUIRED_DEMO2_SENSITIVITY_OUTPUT_FIELDS = {
+    "scenario",
+    "store_id",
+    "activity_order_share_pct",
+    "top3_sku_transaction_amount_share_pct",
+    "sensitivity_limit_notes",
+    "current_comparison_scope_flag",
+    "current_comparison_limit_notes",
+}
+
 REQUIRED_BOUNDARY_PHRASES = [
     "order_conversion_rate_pct",
     "order_users / entry_users",
@@ -152,6 +162,7 @@ REQUIRED_FILES = [
     "retail_ops/outputs/store_a_demo1_sql_output.csv",
     "retail_ops/outputs/store_a_demo1_interpretation_summary.csv",
     "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
+    "retail_ops/outputs/demo2_guardrail_sensitivity_summary.csv",
     "retail_ops/outputs/generated_retail_memory_facts.json",
     "retail_ops/outputs/generated_demo2_retail_memory_facts.json",
 ]
@@ -674,6 +685,9 @@ def main() -> int:
         "retail_ops/outputs/demo2_cross_store_comparability_output.csv"
     )
 
+    demo2_sensitivity_headers = read_csv_headers(
+        "retail_ops/outputs/demo2_guardrail_sensitivity_summary.csv"
+    )
     try:
         documented_fields = extract_dictionary_fields(
             dictionary
@@ -691,6 +705,7 @@ def main() -> int:
         | demo1_summary_headers
         | demo2_source_headers
         | demo2_output_headers
+        | demo2_sensitivity_headers
     )
 
     validator_paths = {
@@ -746,6 +761,26 @@ def main() -> int:
         if field not in demo2_sql:
             failures.append(f"Demo 2 SQL missing required field `{field}`")
 
+    if (
+        demo2_sensitivity_headers
+        != REQUIRED_DEMO2_SENSITIVITY_OUTPUT_FIELDS
+    ):
+        failures.append(
+            "Demo 2 guardrail sensitivity summary headers must be "
+            "exactly "
+            f"{sorted(REQUIRED_DEMO2_SENSITIVITY_OUTPUT_FIELDS)}"
+        )
+
+    for field in sorted(
+        REQUIRED_DEMO2_SENSITIVITY_OUTPUT_FIELDS
+    ):
+        if field not in documented_fields:
+            failures.append(
+                "Demo 2 guardrail sensitivity field "
+                f"`{field}` is not explicitly registered in "
+                "DATA_DICTIONARY.md"
+            )
+
     critical_lineage_fields = [
         "entry_users",
         "search_entry_users",
@@ -783,6 +818,7 @@ def main() -> int:
         "Checked selected required implemented fields against explicit dictionary registrations and current source/output files.",
         "Checked Demo 1 source/output headers and canonical interpretation-summary slots.",
         "Checked Demo 2 source/output headers.",
+        "Checked Demo 2 guardrail-sensitivity output headers and dictionary registrations.",
         "Checked Demo 2 diagnostic-scope and limitation fields.",
         "Checked generated Demo 1 and Demo 2 memory fact kind/type discriminators, structure, evidence-trace fields, period metadata, and slot-bounded confidence.",
         "Checked generated source_fields against explicit dictionary field registrations and declared source/supporting CSV headers.",

@@ -27,6 +27,7 @@ Demo 2:
 - `retail_ops/data/demo2_top_skus_by_transaction_amount.csv`
 - `retail_ops/sql/02_demo2_cross_store_comparability.sql`
 - `retail_ops/outputs/demo2_cross_store_comparability_output.csv`
+- `retail_ops/outputs/demo2_guardrail_sensitivity_summary.csv`
 - `retail_ops/outputs/generated_demo2_retail_memory_facts.json`
 
 Chinese Meituan backend labels are mapped to these implemented English field names.
@@ -266,6 +267,46 @@ Diagnostic threshold registry:
 Correct use: This field is used by the memory layer as an interpretation-boundary note. It preserves comparison limits when answering cross-store questions.
 
 Not supported: This field does not rank stores, assign store stages, prove causality, or decide whether a promotion, subsidy, price change, SKU change, or ranking action should be taken.
+
+### Guardrail Sensitivity Output Helper Fields / 护栏敏感性输出辅助字段
+
+These fields are generated in
+`retail_ops/outputs/demo2_guardrail_sensitivity_summary.csv`.
+They are experiment-output helper fields rather than Meituan backend metrics.
+
+#### `scenario`
+
+中文定义：护栏敏感性检查使用的阈值情景标识，用于区分 SQL
+基线、阈值降低 5 个百分点和阈值提高 5 个百分点。
+
+Current use: separates the three implemented threshold settings in the
+guardrail sensitivity check.
+
+#### `sensitivity_limit_notes`
+
+中文定义：在对应 `scenario` 阈值设置下重新计算的 Demo 2
+诊断限制备注。
+
+Current use: records whether the diagnostic note set changes when the
+implemented thresholds move by 5 percentage points.
+
+#### `current_comparison_scope_flag`
+
+中文定义：从当前 Demo 2 SQL 输出复制的
+`comparison_scope_flag`，用于与敏感性情景结果进行基线对照。
+
+Current use: preserves the current diagnostic-scope flag beside each
+sensitivity row. Its meaning remains identical to
+`comparison_scope_flag`.
+
+#### `current_comparison_limit_notes`
+
+中文定义：从当前 Demo 2 SQL 输出复制的
+`comparison_limit_notes`，用于与敏感性情景结果进行基线对照。
+
+Current use: preserves the current diagnostic-limit notes beside each
+sensitivity row. Its meaning remains identical to
+`comparison_limit_notes`.
 
 ## Generated Retail Memory Fact Semantics / 生成零售记忆事实语义
 
