@@ -20,7 +20,7 @@ This appendix is the technical audit layer for the retail decision-support proto
 |---|---|---|---|
 | Demo 1: Store A month-over-month diagnostic | Implemented | Structures one store's February-April 2026 backend metrics into SQL diagnostic output and memory facts. | A narrow single-store evidence path. |
 | Demo 2: Stores B-F same-period diagnostic | Implemented | Structures selected March 2026 store-period records under one field contract. | A same-period diagnostic layer before stronger cross-store comparability rules. |
-| Post-Demo2 repeated-window panel | Implemented | Adds February-April 2026 repeated-window coverage for Stores B-F. | Evidence for checking whether same-store signals persist across reporting windows. |
+| Post-Demo2 repeated-window panel | Implemented | Adds February-April 2026 repeated-window coverage for Stores B-F. | Makes same-store movement across reporting windows inspectable. |
 | Pairwise comparability gate | Documented future work | Plans a question-specific decision contract for judging whether selected store-period records can be compared. | Future decision-support design built from broader evidence coverage. |
 
 ### Current Evidence Path

@@ -46,14 +46,6 @@ Important consistency rules:
    order_conversion_rate_pct = order_users / entry_users * 100
    ```
 
-   Backend refund fields are retained as separate source fields:
-
-   ```text
-   refund_amount
-   full_refund_orders
-   refund_orders_all_or_partial
-   ```
-
 2. `activity_cost_ratio_pct` follows the backend-style formula:
 
    ```text

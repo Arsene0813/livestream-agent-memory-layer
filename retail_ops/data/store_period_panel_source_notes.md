@@ -23,12 +23,6 @@ The operating chain is:
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ~~~
 
-Refund backend fields retained in the current panel are:
-
-- `refund_amount`
-- `full_refund_orders`
-- `refund_orders_all_or_partial`
-
 ## Current Use
 
-This panel provides repeated-window coverage and descriptive summaries for Stores B-F across February-April 2026. The records also supply the store-period evidence used by the question-specific comparison experiment in `retail_ops/COMPARABILITY_GATE_V0.md`.
+This panel provides repeated-window coverage and descriptive summaries for Stores B-F across February-April 2026. The records also provide the store-period evidence required for future question-specific gate design in `retail_ops/COMPARABILITY_GATE_V0.md`.
