@@ -231,20 +231,6 @@ python3 eval/analyze_retail_query_robustness.py
 
 These retrieval checks inspect score distribution and wording-variation behavior over the current file-backed retail evidence corpus.
 
-## Repository Takeaway
-
-This repository presents a reproducible path from selected merchant-backend observations to traceable decision support.
-
-| Component | What it establishes |
-| --- | --- |
-| Metric dictionary | Preserves the selected Meituan backend definitions and canonical field names used by later transformations. |
-| Demo 1 | Reconstructs Store A's February-April 2026 movement as a multi-metric store-period diagnostic. |
-| Demo 2 | Structures selected B-F March 2026 records under one reporting window and records row-level diagnostic notes. |
-| Repeated-window panel | Makes B-F coverage and descriptive movement across February-April 2026 inspectable. |
-| Evaluation and RAC | Tests value lineage, retrieval behavior, multi-factor evidence routing, and report traceability. |
-
-The repeated-window panel supports implemented descriptive analysis; `retail_ops/COMPARABILITY_GATE_V0.md` specifies the requirements for future pairwise comparison work.
-
 ## Consistency Rules
 
 Retail field names and metric meanings must follow `retail_ops/data/DATA_DICTIONARY.md`.
