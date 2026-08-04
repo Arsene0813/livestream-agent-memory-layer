@@ -93,7 +93,7 @@ The future gate should not collapse activity evidence into a single yes/no label
 |---|---|---|---|
 | Reporting-window alignment | `period_start`, `period_end`, `period_month` | Demo 2 uses one March 2026 window only. | Repeated windows across more stores. |
 | Order volume | `transaction_orders` | One-period volume may be unstable. | Repeated order-volume bands. |
-| Transaction scale | `transaction_amount`, `average_order_value`; `estimated_income_proxy` as weak supplementary backend context only | `estimated_income_proxy` lacks a full calculation breakdown in the current demo data and should not be used as a primary gate factor. | Clearer gross-revenue, cost, and settlement evidence if available. |
+| Transaction scale | `transaction_amount`, `average_order_value` | One-period transaction scale may not provide a stable comparison band. | Repeated transaction-amount and order-value bands across aligned windows. |
 | Activity status | Not directly implemented as a current source field. | Full campaign status should not be inferred from activity orders alone. | Campaign-calendar or explicit backend activity-status evidence. |
 | Activity involvement | `activity_orders`, `activity_order_share_pct` | Shows activity participation in the order structure, not causal lift. | Repeated windows and campaign mechanism evidence. |
 | Activity intensity | `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, `platform_subsidy_amount` | Current thresholds are diagnostic guardrails, not transfer rules. | Repeated activity windows and stronger evidence on activity mechanism. |
@@ -128,7 +128,7 @@ Implementation should wait until Demo 2 extends beyond one selected month, or un
 |---|---|---|---|
 | Reporting-window alignment | `period_start`, `period_end`, `period_month` | Repeated windows beyond one selected month | Backend exports across more store-period records |
 | Order volume | `transaction_orders` | Volume bands and repeated-window stability | Store-period metrics |
-| Transaction scale | `transaction_amount`, `average_order_value`; `estimated_income_proxy` as supplementary display context only | Transaction-amount and order-value bands; clearer settlement, cost, and income evidence where available | Store-period metrics and backend financial views |
+| Transaction scale | `transaction_amount`, `average_order_value` | Transaction-amount and order-value bands across aligned windows | Store-period metrics |
 | Activity status | Not directly implemented | Campaign calendar or explicit backend activity-status evidence | Backend activity records or manually documented campaign calendar |
 | Activity involvement | `activity_orders`, `activity_order_share_pct` | Repeated activity windows and campaign mechanism evidence | Activity-order metrics over more periods |
 | Activity intensity | `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, `platform_subsidy_amount` | Subsidy-intensity stability and context for why the activity was used | Activity-cost and subsidy records |

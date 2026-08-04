@@ -6,6 +6,6 @@ Checked Demo 2 diagnostic-scope and limitation fields.
 Checked generated Demo 1 and Demo 2 memory fact kind/type discriminators, structure, evidence-trace fields, period metadata, and slot-bounded confidence.
 Checked generated source_fields against explicit dictionary field registrations and declared source/supporting CSV headers.
 Checked critical metric-boundary phrases in DATA_DICTIONARY.md.
-Checked estimated_income_proxy remains supplementary context rather than a primary comparability-gate factor.
+Checked required comparability-gate contract phrases.
 Checked registered non-canonical aliases while preserving DATA_DICTIONARY.md as the naming authority.
 Saved result path: retail_ops/outputs/retail_data_contract_validation_result.txt

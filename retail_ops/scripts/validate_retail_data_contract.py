@@ -80,9 +80,6 @@ REQUIRED_BOUNDARY_PHRASES = [
 ]
 
 REQUIRED_COMPARABILITY_GATE_PHRASES = [
-    "`estimated_income_proxy` as weak supplementary backend context only",
-    "`estimated_income_proxy` lacks a full calculation breakdown in the current demo data and should not be used as a primary gate factor.",
-    "`estimated_income_proxy` as supplementary display context only",
     "Check whether transaction order volume and transaction amount are within a reasonable comparison band.",
 ]
 
@@ -740,7 +737,7 @@ def main() -> int:
         if phrase not in comparability_gate:
             failures.append(
                 "COMPARABILITY_GATE_V0.md missing required "
-                f"estimated-income boundary phrase: {phrase}"
+                f"comparability-gate phrase: {phrase}"
             )
 
     for field in REQUIRED_DEMO2_OUTPUT_FIELDS:
@@ -790,7 +787,7 @@ def main() -> int:
         "Checked generated Demo 1 and Demo 2 memory fact kind/type discriminators, structure, evidence-trace fields, period metadata, and slot-bounded confidence.",
         "Checked generated source_fields against explicit dictionary field registrations and declared source/supporting CSV headers.",
         "Checked critical metric-boundary phrases in DATA_DICTIONARY.md.",
-        "Checked estimated_income_proxy remains supplementary context rather than a primary comparability-gate factor.",
+        "Checked required comparability-gate contract phrases.",
         "Checked registered non-canonical aliases while preserving DATA_DICTIONARY.md as the naming authority.",
         f"Saved result path: {RESULT_PATH.relative_to(ROOT)}",
     ]
