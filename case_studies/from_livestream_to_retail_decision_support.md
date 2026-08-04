@@ -19,7 +19,7 @@ The shared technical problem is knowledge lifecycle management: deciding what in
 
 The memory-layer idea is useful in retail operations because store-level findings need to be retained with their evidence boundaries. A generated memory fact should preserve the store, period, source fields, observed values, confidence label, and limitations.
 
-For example, if one store has higher search exposure and another store has lower orders, the system should not immediately conclude that search exposure caused the difference. It should first check whether the records are aligned by reporting window and whether the current evidence covers transaction volume, transaction amount, store type, weak region context, SKU structure, observed activity-related metrics, repeated-window stability, competition context, and fulfillment or stockout context.
+For example, if one store has higher search exposure and another store has lower orders, the system should not immediately conclude that search exposure caused the difference. It should first check whether the records are aligned by reporting window and whether the current evidence covers transaction volume, transaction amount, store type, weak region context, SKU structure, observed activity-related metrics, repeated-window coverage, competition context, and fulfillment or stockout context.
 
 The current project therefore treats cross-store discussion as boundary-aware diagnostic support. It does not treat same-period records as automatically comparable for pricing, promotion, SKU, ranking, fulfillment, or strategy-transfer decisions.
 

@@ -109,7 +109,7 @@ RAC distinguishes three evidence-routing outcomes.
 
 For the cross-store comparability case, the implemented February-April
 2026 B-F panel provides direct repeated-window evidence for descriptive
-review. Competition context and the unfinished pairwise gate remain
+review. Competition context and the requirements for a future pairwise gate remain
 boundary evidence in `retail_ops/COMPARABILITY_GATE_V0.md`. This keeps
 the available multi-period evidence separate from the stronger evidence
 still required for stable pairwise comparability.
