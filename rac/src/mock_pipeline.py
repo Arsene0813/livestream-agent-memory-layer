@@ -94,7 +94,7 @@ FACTOR_LIBRARY: dict[str, list[dict[str, Any]]] = {
         {"factor_id": "platform_subsidy", "name": "Platform subsidy", "description": "Records the platform subsidy amount where available.", "evidence_needed": ["platform subsidy amount"]},
         {"factor_id": "order_conversion", "name": "Order conversion", "description": "Includes the backend order-conversion metric in the promotion review.", "evidence_needed": ["order conversion rate"]},
         {"factor_id": "payment_conversion", "name": "Payment conversion", "description": "Includes the backend payment-conversion metric in the promotion review.", "evidence_needed": ["payment conversion rate"]},
-        {"factor_id": "sku_margin_structure", "name": "SKU margin structure", "description": "Promotion decisions require margin context.", "evidence_needed": ["SKU margin", "SKU activity participation"]},
+        {"factor_id": "sku_margin_structure", "name": "Required SKU margin context", "description": "Promotion review requires SKU-level margin context.", "evidence_needed": ["SKU margin", "SKU activity participation"]},
         {"factor_id": "competitor_context", "name": "Competitor context", "description": "Requires competitor pricing and order-trend context before stronger promotion conclusions.", "evidence_needed": ["competitor prices", "competitor order trend"]}
     ],
     "technical_design": [

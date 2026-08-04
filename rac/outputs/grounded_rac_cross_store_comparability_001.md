@@ -60,7 +60,7 @@ For CSV evidence, `Source Locator` shows the selected record scope and `Selected
 | order_volume | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | lines 1-2 | transaction_orders | n/a |
 | transaction_amount | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | lines 1-2 | transaction_amount | n/a |
 | activity_intensity | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | lines 1-2 | activity_orders, activity_order_share_pct, activity_cost, activity_cost_ratio_pct | n/a |
-| region_context | retail_ops/data/DATA_DICTIONARY.md | definition_evidence | keyword_matched | lines 74-76 | region_type | n/a |
+| region_context | retail_ops/data/DATA_DICTIONARY.md | definition_evidence | keyword_matched | lines 75-77 | region_type | n/a |
 | competition | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | lines 101-103 | competition-context requirement in comparability contract | n/a |
 | sku_structure | retail_ops/outputs/demo2_cross_store_comparability_output.csv | product_mix_evidence | keyword_matched | lines 1-2 | top3_sku_transaction_amount, top3_sku_transaction_amount_share_pct, SKU source tables | n/a |
 | repeated_reporting_windows | retail_ops/outputs/repeated_window_panel_summary_output.csv | quantitative_evidence | keyword_matched | lines 1-2 | repeated period_month records in store_period_panel_metrics | n/a |

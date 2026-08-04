@@ -54,12 +54,12 @@ For CSV evidence, `Source Locator` shows the selected record scope and `Selected
 
 | Decision Factor ID | Source | Evidence Type | Status | Source Locator | Canonical Evidence Fields / Requirement | Selected Values |
 |---|---|---|---|---|---|---|
-| activity_orders | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 618-620 | activity_orders | n/a |
-| activity_cost | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 624-626 | activity_cost | n/a |
-| merchant_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 630-632 | merchant_subsidy_amount | n/a |
-| platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 636-638 | platform_subsidy_amount | n/a |
-| order_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 482-484 | order_conversion_rate_pct, order_users, entry_users | n/a |
-| payment_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 534-536 | payment_conversion_rate_pct, payment_users, order_users | n/a |
+| activity_orders | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 659-661 | activity_orders | n/a |
+| activity_cost | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 665-667 | activity_cost | n/a |
+| merchant_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 671-673 | merchant_subsidy_amount | n/a |
+| platform_subsidy | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 677-679 | platform_subsidy_amount | n/a |
+| order_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 523-525 | order_conversion_rate_pct, order_users, entry_users | n/a |
+| payment_conversion | retail_ops/data/DATA_DICTIONARY.md | default_evidence | keyword_matched | lines 575-577 | payment_conversion_rate_pct, payment_users, order_users | n/a |
 | sku_margin_structure | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | lines 137-139 | required SKU margin context; unavailable in current evidence | n/a |
 | competitor_context | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | lines 71-73 | required competitor context; unavailable in current evidence | n/a |
 

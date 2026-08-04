@@ -92,7 +92,7 @@ Expected quality-gate result:
 |---|---|---|---|
 | `rac_store_a_attribution_001` | Can Store A's March-to-April increases in transaction amount and transaction orders be attributed to search exposure alone? | Grounds search exposure, entry conversion, order conversion, promotion intensity, and transaction orders to the March-April Store A CSV records while rejecting single-cause attribution. | [Store A attribution report](outputs/grounded_rac_store_a_attribution_001.md) |
 | `rac_cross_store_comparability_001` | Are Stores B-F directly comparable in March 2026? | Routes available quantitative evidence to Demo 2 sources and unavailable pairwise requirements to explicit boundary evidence. | [Cross-store boundary report](outputs/grounded_rac_cross_store_comparability_001.md) |
-| `rac_promotion_strategy_001` | What should be checked before changing promotions for a store? | Routes available transaction, cost, and conversion evidence while retaining margin and competitor context as unresolved requirements. | [Promotion-strategy report](outputs/grounded_rac_promotion_strategy_001.md) |
+| `rac_promotion_strategy_001` | What should be checked before changing promotions for a store? | Routes available transaction, cost, and conversion evidence while retaining required SKU-level margin and competitor context as unresolved requirements. | [Promotion-strategy report](outputs/grounded_rac_promotion_strategy_001.md) |
 | `rac_system_design_001` | How should RAC connect to the existing memory layer? | Shows how typed memory records feed a factor-aware grounded review path. | [System-design report](outputs/grounded_rac_system_design_001.md) |
 
 ## Cross-Store Grounding Hardening

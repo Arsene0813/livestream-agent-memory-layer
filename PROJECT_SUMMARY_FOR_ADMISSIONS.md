@@ -8,9 +8,9 @@ Repository: `livestream-agent-memory-layer`
 
 ## Project Summary
 
-This staged local prototype grew from a real operating problem in a 48-store Meituan instant-retail business. The Meituan merchant backend contains detailed single-store metrics. As the store count increased, the analytical task became organizing store-period records across reporting windows, activity conditions, product structures, store types, and local operating contexts for consistent review.
+This local prototype addresses a real operating problem in a 48-store Meituan instant-retail business. The merchant backend provides detailed single-store metrics, while multi-store review requires consistent organization of store-period records across reporting windows, activity conditions, product structures, store types, and local operating contexts.
 
-The repository turns selected backend observations into a traceable decision-support prototype. Metric definitions are fixed in the data dictionary, diagnostic calculations are reproduced in SQL, derived findings retain their source lineage, and later retrieval and review steps remain connected to the supporting evidence.
+The repository turns selected backend observations into a traceable decision-support prototype. Metric definitions are fixed in the data dictionary, diagnostic calculations are reproduced in SQL, derived findings retain their source lineage, and retrieval and review steps remain connected to the supporting evidence.
 
 ## Reviewer Reading Path
 
@@ -92,7 +92,7 @@ Generated memory facts retain the entity, reporting period, evidence slot, sourc
 | --- | --- |
 | Metric dictionary | Preserves canonical project field names and the Chinese definitions of the Meituan backend metrics. |
 | SQL diagnostics | Reproduces selected diagnostic values and keeps transformations inspectable. |
-| Generated memory facts | Retains structured findings together with source fields, source paths, observed values, calculation metadata, confidence labels, and evidence context. |
+| Generated memory facts | Retains structured findings together with source fields, source paths, observed values, calculation metadata, evidence-trace confidence labels, and evidence context. |
 | Contract and lineage checks | Detects selected naming, formula, header, metadata, path, and source-to-output inconsistencies. |
 | Retrieval stress tests | Examines evidence routing under wording variations, entity-period changes, and comparison requests. |
 | Retrieval and response checks | Checks entity, period, canonical field, formula, source, and response consistency. |
@@ -174,4 +174,4 @@ Reviewer entry points:
 
 ## Field Consistency
 
-All retail field names, Chinese definitions, formulas, grains, and reporting conventions follow `retail_ops/data/DATA_DICTIONARY.md`.
+`retail_ops/data/DATA_DICTIONARY.md` governs the retail field names, Chinese definitions, formulas, grains, and reporting conventions used by the current retail evidence path.

@@ -594,7 +594,7 @@ These keys describe memory-layer structure and traceability. They are not canoni
 | `source_fields` | List of dictionary-bounded retail fields used to construct or support the fact. | Generated facts and retail data-contract validation. | Keep the existing key; no rename. |
 | `source_path` | Primary repository-relative file path backing the generated fact. | Generated facts, endpoint responses, and fact-contract evaluation. | Keep the existing key; no rename. |
 | `supporting_source_paths` | Optional list of additional repository-relative evidence paths. It excludes the primary `source_path` and is omitted when no additional file is used. | Generated facts, lineage validation, and fact-contract evaluation. | Keep the key; remove primary-path repetition from Demo 2 facts. |
-| `type` | Common generated retail-fact object category. The current allowed value is `retail_metric_profile`; diagnostic roles belong in `slot`. | Generated Demo 1 and Demo 2 retail-memory facts and shared contract validation. | Keep the key; normalize the two legacy Demo 1 values to `retail_metric_profile`. |
+| `type` | Common generated retail-fact object category. The current allowed value is `retail_metric_profile`; diagnostic roles belong in `slot`. | Generated Demo 1 and Demo 2 retail-memory facts and shared contract validation. | Keep the key and current value; all Demo 1 and Demo 2 facts use `retail_metric_profile`. |
 | `value` | Non-empty reviewer-facing fact statement; it is not a raw metric field. | Generated facts, endpoint responses, and data-contract validation. | Keep the existing key; no rename. |
 
 The canonical retail fields referenced by `source_fields` and `observed_values` remain governed by `retail_ops/data/DATA_DICTIONARY.md`.
@@ -733,40 +733,31 @@ Possible future fields such as `activity_status`, `market_area_type`, `market_ar
 ### Current Decision
 
 Current decision: no current source CSV field, SQL output field, generated memory slot, or evaluation field is renamed.
+### Generated-Fact Discriminator Contract
 
-### Generated-Fact Discriminator Value Review
+All current Demo 1 and Demo 2 retail memory facts use
+`kind = retail_memory_fact` and `type = retail_metric_profile`.
+Diagnostic roles remain represented by the five canonical `slot` values.
 
-This review records the value-level change before modifying generated facts.
-It does not rename a metadata key, source field, SQL output field, business
-metric, or memory slot.
-
-| Existing field or value | Dictionary definition | Current use location | Rename decision |
+| Existing field or value | Dictionary / namespace definition | Current use location | Rename decision |
 |---|---|---|---|
-| `kind = retail_memory_fact` | Top-level payload family for generated retail memory facts. | All Demo 1 and Demo 2 generated retail facts. | Keep the key and value; no rename. |
-| `type = retail_metric_profile` | Common generated retail-fact object category; diagnostic role is not encoded here. | All Demo 2 facts and three pre-existing Demo 1 facts. | Keep as the only current retail-fact `type` value. |
-| `type = retail_decision_guard` | Legacy Demo 1 value whose role is already represented by `slot = single_metric_attribution_guard`. | One Demo 1 generated fact. | Normalize the value to `retail_metric_profile`; keep the existing `slot`. |
-| `type = retail_product_mix_note` | Legacy Demo 1 value whose role is already represented by `slot = top3_sku_product_mix_note`. | One Demo 1 generated fact. | Normalize the value to `retail_metric_profile`; keep the existing `slot`. |
-| `slot` and its five canonical values | Diagnostic-role discriminator for the current retail evidence path. | Fact selection, API entity-and-slot filtering, retrieval checks, and fact-coverage evaluation. | Keep the key and all existing values; no rename. |
+| `kind = retail_memory_fact` | Top-level payload family for generated retail memory facts. | All current Demo 1 and Demo 2 generated retail facts. | Keep the key and value; no rename. |
+| `type = retail_metric_profile` | Common generated retail-fact object category; the diagnostic role remains represented by `slot`. | All current Demo 1 and Demo 2 generated retail facts. | Keep the key and value; no rename. |
+| `slot` and its five canonical values | Diagnostic-role discriminator for the current retail evidence path. | Fact selection, API entity-and-slot filtering, retrieval checks, and fact-coverage evaluation. | Keep the key and current values; no rename. |
 
-The change affects two legacy metadata values only. It does not change fact
-statements, observed values, source fields, source paths, confidence labels,
-limitations, routing slots, or business interpretation.
+### Supporting Source Path Contract
 
-### Supporting Source Path Contract Review
+`source_path` records the primary repository-relative evidence file for a
+generated fact. `supporting_source_paths` is included only when the fact uses
+additional evidence files beyond that primary source.
 
-This review records the path-metadata change before modifying generated facts.
-It does not rename a key, source file, source field, metric, memory slot, or
-business definition.
-
-| Existing field or representation | Dictionary definition | Current use location | Rename decision |
+| Existing field or representation | Dictionary / namespace definition | Current use location | Rename decision |
 |---|---|---|---|
-| `source_path` | Primary repository-relative evidence path for the generated fact. | All Demo 1 and Demo 2 generated facts, shared contract validation, and value-lineage validation. | Keep the key and all current values; no rename. |
-| Missing `supporting_source_paths` | No evidence file beyond the primary `source_path`. | All Demo 1 facts and the 15 single-source Demo 2 facts. | Keep this as the canonical single-source representation. |
-| `supporting_source_paths = [source_path]` | Repeats the primary path and does not identify additional evidence. | Fifteen pre-normalization Demo 2 facts. | Remove the key from those facts; do not replace it with an empty list. |
-| `supporting_source_paths = [source_path, top-search path]` | Mixes the primary source with additional search-term evidence. | Five pre-normalization Demo 2 visibility facts. | Keep the key but retain only the top-search path. |
-| `supporting_source_paths = [source_path, top-SKU path]` | Mixes the primary source with additional limited SKU evidence. | Five pre-normalization Demo 2 product-mix facts. | Keep the key but retain only the top-SKU path. |
-| `supporting_source_paths` | Optional list of repository-relative files used in addition to `source_path`. | Generator output, Demo 2 fact validation, value lineage, and shared data-contract validation. | Keep the key; no rename. |
+| `source_path` | Primary repository-relative evidence path for the generated fact. | Demo 1 and Demo 2 generated facts, contract validation, endpoint responses, and value-lineage validation. | Keep the key and current values; no rename. |
+| Missing `supporting_source_paths` | The fact uses no evidence file beyond its primary `source_path`. | Current single-source generated facts. | Keep this as the single-source representation. |
+| `supporting_source_paths` | Optional list of repository-relative files used in addition to `source_path`. | Generated facts that use additional top-search-term or top-SKU evidence, plus their lineage and contract checks. | Keep the key and current values; no rename. |
 
-The normalized representation separates primary evidence from additional
-evidence. It does not change source files, source fields, observed values,
-calculations, confidence labels, fact statements, limitations, or API routing.
+The current representation separates primary evidence from additional
+supporting evidence while preserving source fields, observed values,
+calculations, confidence labels, fact statements, limitations, and routing
+slots.

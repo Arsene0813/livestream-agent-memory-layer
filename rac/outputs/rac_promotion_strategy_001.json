@@ -53,8 +53,8 @@
     },
     {
       "factor_id": "sku_margin_structure",
-      "name": "SKU margin structure",
-      "description": "Promotion decisions require margin context.",
+      "name": "Required SKU margin context",
+      "description": "Promotion review requires SKU-level margin context.",
       "evidence_needed": [
         "SKU margin",
         "SKU activity participation"

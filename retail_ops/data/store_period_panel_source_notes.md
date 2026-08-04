@@ -26,3 +26,9 @@ being seen -> being entered -> being ordered -> being selected again / maintaini
 ## Current Use
 
 This panel provides repeated-window coverage and descriptive summaries for Stores B-F across February-April 2026. The records also provide the store-period evidence required for future question-specific gate design in `retail_ops/COMPARABILITY_GATE_V0.md`.
+
+## Repeated-Window Coverage
+
+Coverage uses selected dictionary-defined store-period fields for repeated-window diagnostic coverage.
+
+The current panel retains the backend fields `refund_amount`, `full_refund_orders`, and `refund_orders_all_or_partial`.

@@ -30,34 +30,78 @@ ENTITIES = (
     "store_F",
 )
 
-SLOT_TERMS = {
-    "visibility_entry_profile": (
-        "search_entry_share_pct",
-        "top_search_terms",
-        "traffic-source users may overlap",
-        "not causal attribution",
-    ),
-    "activity_lever_profile": (
-        "activity_order_share_pct",
-        "activity_cost_ratio_pct",
-        "activity metrics describe tool usage",
-    ),
-    "transaction_conversion_profile": (
-        "transaction_amount",
-        "order_conversion_rate_pct",
-        "payment_conversion_rate_pct",
-        "average_order_value",
-    ),
-    "top3_sku_product_mix_note": (
-        "top3_sku_transaction_amount_share_pct",
-        "top_skus_by_transaction_amount",
-        "not full SKU category-share analysis",
-    ),
-    "single_metric_attribution_guard": (
-        "comparison_scope_flag",
-        "comparison_limit_notes",
-        "not causal attribution",
-    ),
+SLOT_REQUIREMENTS = {
+    "visibility_entry_profile": {
+        "required_terms": (
+            "search_entry_share_pct",
+            "top_search_terms",
+        ),
+        "semantic_groups": (
+            (
+                "traffic-source user counts may overlap",
+                "traffic-source users may overlap",
+            ),
+            (
+                "read alongside transaction, conversion, activity, "
+                "and sku evidence",
+            ),
+        ),
+    },
+    "activity_lever_profile": {
+        "required_terms": (
+            "activity_order_share_pct",
+            "activity_cost_ratio_pct",
+        ),
+        "semantic_groups": (
+            (
+                "operating-tool evidence",
+                "backend activity involvement",
+            ),
+        ),
+    },
+    "transaction_conversion_profile": {
+        "required_terms": (
+            "transaction_amount",
+            "order_conversion_rate_pct",
+            "payment_conversion_rate_pct",
+            "average_order_value",
+        ),
+        "semantic_groups": (),
+    },
+    "top3_sku_product_mix_note": {
+        "required_terms": (
+            "top3_sku_transaction_amount_share_pct",
+            "top_skus_by_transaction_amount",
+        ),
+        "semantic_groups": (
+            (
+                "listed product-mix context",
+                "listed product mix context",
+            ),
+        ),
+    },
+    "single_metric_attribution_guard": {
+        "required_terms": (
+            "comparison_scope_flag",
+            "comparison_limit_notes",
+        ),
+        "semantic_groups": (
+            (
+                "same-period diagnostic",
+                "same_period_diagnostic_ready",
+            ),
+            (
+                (
+                    "combines visibility, entry, transaction, "
+                    "conversion, activity, and listed-sku evidence"
+                ),
+                (
+                    "preserve visibility, entry, transaction, "
+                    "conversion, activity, and listed-sku context"
+                ),
+            ),
+        ),
+    },
 }
 
 EXPECTED_PERIOD = {
@@ -235,19 +279,31 @@ def validate_fact(
         fact,
         ensure_ascii=False,
         sort_keys=True,
-    )
+    ).casefold()
+
+    requirements = SLOT_REQUIREMENTS[slot]
 
     missing_terms = [
         term
-        for term in SLOT_TERMS[slot]
-        if term not in serialized
+        for term in requirements["required_terms"]
+        if term.casefold() not in serialized
     ]
 
     if missing_terms:
         errors.append(
-            "missing boundary terms: "
+            "missing required content terms: "
             + ", ".join(missing_terms)
         )
+
+    for alternatives in requirements["semantic_groups"]:
+        if not any(
+            alternative.casefold() in serialized
+            for alternative in alternatives
+        ):
+            errors.append(
+                "missing semantic content group: "
+                + " | ".join(alternatives)
+            )
 
     return errors
 
@@ -292,7 +348,7 @@ def main() -> int:
     expected_keys = {
         (entity_id, slot)
         for entity_id in ENTITIES
-        for slot in SLOT_TERMS
+        for slot in SLOT_REQUIREMENTS
     }
 
     indexed: dict[
@@ -330,7 +386,7 @@ def main() -> int:
     passed = 0
 
     for entity_id in ENTITIES:
-        for slot in SLOT_TERMS:
+        for slot in SLOT_REQUIREMENTS:
             case_name = f"{entity_id}/{slot}"
             matches = indexed.get((entity_id, slot), [])
 
@@ -378,7 +434,7 @@ def main() -> int:
         ),
         (
             f"Expected coverage: {len(ENTITIES)} stores x "
-            f"{len(SLOT_TERMS)} slots = {expected_count}"
+            f"{len(SLOT_REQUIREMENTS)} slots = {expected_count}"
         ),
         f"Status: {status}",
         f"Passed contracts: {passed}",

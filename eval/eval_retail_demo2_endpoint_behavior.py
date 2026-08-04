@@ -144,12 +144,13 @@ async def run_checks() -> int:
             name,
             result,
             [
-                "transaction scale",
+                "transaction amount",
+                "order volume",
                 "order-submission conversion",
                 "payment conversion",
-                "estimated income proxy",
                 "average order value",
-                "not be used alone",
+                "current monthly evidence",
+                "read alongside",
             ],
         )
 

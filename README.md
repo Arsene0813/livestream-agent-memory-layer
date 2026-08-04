@@ -6,7 +6,7 @@ A local decision-support prototype that connects selected Meituan backend metric
 
 ## Core Research Question
 
-This project grew from a real Meituan instant-retail operating problem.
+This project addresses a real Meituan instant-retail operating problem.
 
 The Meituan merchant backend provides detailed single-store metrics. As store count increased, the analytical task became organizing store-period records across reporting windows, activity conditions, product structures, store types, and local operating contexts for consistent review.
 
@@ -19,7 +19,7 @@ being seen -> being entered -> being ordered -> being selected again / maintaini
 Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on the observed store-period context, local competition, activity involvement, activity intensity, product mix, and reporting-window alignment.
 
 
-The project organizes multi-store operating evidence so that each decision can be traced to defined fields, reporting periods, and source records as the business expands.
+The project organizes multi-store operating evidence so that each supported interpretation can be traced to defined fields, reporting periods, and source records as the business expands.
 
 ## Evidence Workflow
 
@@ -66,7 +66,7 @@ This prototype emphasizes:
 - preserving Meituan backend metric semantics and reporting-window grain;
 - structuring store-period observations for consistent multi-store review;
 - converting diagnostics into retrieval-facing evidence records with source fields and observed values;
-- carrying source paths, calculation metadata, confidence labels, and evidence context into memory facts;
+- carrying source paths, calculation metadata, evidence-trace confidence labels, and evidence context into memory facts;
 - checking entity, period, metric-definition, and source consistency in generated answers;
 - connecting decision-review statements to the supporting records and definitions.
 

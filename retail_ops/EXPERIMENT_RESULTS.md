@@ -61,7 +61,7 @@ definition in `DATA_DICTIONARY.md`.
 | Answer and endpoint boundary checks | Responses preserve entity, period, source, metric-definition, and comparison limits. | Prevents retrieval matches from becoming unsupported operating conclusions. |
 | Retrieval wording stress | Supported evidence remains retrievable while mismatch, ambiguity, and hard-negative behavior remains visible. | Separates semantic proximity from answerability. |
 | RAC grounded-review checks | Evidence packets, source paths, limitations, report sections, and coverage inputs remain inspectable. | Keeps route resolution separate from evidence strength and decision quality. |
-| Future comparability-gate contract | The planned pairwise decision layer remains documented as future scope. | Keeps the current same-period diagnostic separate from a future pairwise decision contract. |
+| Future comparability-gate scope validation | Checks the documented pairwise decision contract against the implemented repository scope. | Keeps specification validation separate from the current data experiments. |
 
 ## How to Read the Experiments
 
@@ -247,16 +247,16 @@ Evidence required before a monthly guardrail-stability test:
 | Activity calendar or campaign-condition evidence | Activity involvement should not be interpreted as full campaign status without operating context. |
 | Local competition, price-pressure, fulfillment, or stockout evidence | Without these factors, the current results do not support promotion, pricing, or strategy-transfer conclusions. |
 
-## Experiment 8: Future Gate Contract Check
+## Contract Validation: Future Gate Scope
 
 | Item | Content |
 |---|---|
-| Question | Can the project document a future pairwise comparability gate without accidentally exposing it as a finished current feature? |
+| Question | Does the documented future pairwise comparability gate remain separated from the implemented Demo 2 scope? |
 | Input | `retail_ops/COMPARABILITY_GATE_V0.md`. |
 | Transformation | `eval/eval_future_comparability_gate_contract.py` checks that the planned input triple, output enum, and blocking-factor list are documented. |
 | Output | `eval/retail_decision_support_eval_results/eval_future_comparability_gate_contract_result.txt`. |
-| Expected behavior | The future gate may define planned factors such as transaction order volume, transaction amount, activity involvement, activity intensity, store type, region and market context, SKU structure, and repeated reporting windows. It should not appear as a current implemented gate in Demo 2 outputs. |
-| Current result | The planned contract is documented, and the repository-defined future-gate contract check passes. |
+| Expected behavior | The future gate may define planned factors such as transaction order volume, transaction amount, activity involvement, activity intensity, store type, region and market context, SKU structure, and repeated reporting windows. Current Demo 2 outputs remain within row-level same-period diagnostic scope. |
+| Current result | The planned contract is documented, and the repository-defined future-gate scope validation passes. |
 | Checked by | `python3 eval/eval_future_comparability_gate_contract.py` |
 | Failure mode | Treating Demo 2 row-level diagnostic readiness as a pairwise comparability decision. |
 
