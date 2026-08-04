@@ -2,7 +2,7 @@
 
 ## 1. Direct Answer
 
-Store A's April performance should not be attributed to search exposure alone.
+Store A's March-to-April increases in transaction amount and transaction orders should not be attributed to search exposure alone.
 
 Deterministic local-file review; routing scores summarize evidence coverage under the current rules.
 
@@ -64,8 +64,8 @@ The `Scenario-Template Confidence` column records deterministic review labels as
 
 | Hypothesis | Scenario-Template Confidence | Status | Weakness |
 |---|---:|---|---|
-| Search exposure may have contributed to Store A's April performance, but it is not sufficient as a single explanation. | 0.52 | plausible | Does not isolate promotion effects; Does not prove source-field improvement. |
-| Store A's April performance should be reviewed as a multi-factor movement across search exposure, entry conversion, order conversion, promotion intensity, and transaction orders. | 0.74 | strong | Observational evidence cannot establish strict causality. |
+| Search exposure is relevant to Store A's March-to-April increases in transaction amount and transaction orders, but it is not sufficient as a single explanation. | 0.52 | plausible | Does not isolate promotion effects; Does not prove source-field improvement. |
+| Store A's March-to-April increases in transaction amount and transaction orders should be reviewed alongside search exposure, entry conversion, order conversion, promotion intensity, and transaction orders. | 0.74 | strong | Observational evidence cannot establish strict causality. |
 | The available evidence is insufficient for single-cause attribution. | 0.82 | strong | Conservative rather than complete causal explanation. |
 
 ## 6. Critic Findings
@@ -81,7 +81,7 @@ The `Scenario-Template Confidence` column records deterministic review labels as
 
 ## 8. Final Judgment
 
-Store A's April performance should not be attributed to search exposure alone.
+Store A's March-to-April increases in transaction amount and transaction orders should not be attributed to search exposure alone.
 
 The judgment is bounded by the cited local evidence and the unresolved requirements recorded above.
 
@@ -154,7 +154,7 @@ Reading the score:
 
 ## 11. Review-State Update
 
-- review_state_id: store_a_april_growth_not_search_only
+- review_state_id: store_a_march_april_increase_not_search_only
 - status: active
 - validity_conditions:
   - Store A Demo 1 context.

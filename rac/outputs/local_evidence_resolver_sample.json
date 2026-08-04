@@ -1,20 +1,21 @@
 {
   "case_id": "rac_store_a_attribution_001",
-  "question": "Can Store A's April growth be attributed to search exposure?",
+  "question": "Can Store A's March-to-April increases in transaction amount and transaction orders be attributed to search exposure alone?",
   "question_type": "causal_diagnostic",
   "resolver_result": {
     "summary": {
-      "question": "Can Store A's April growth be attributed to search exposure?",
+      "question": "Can Store A's March-to-April increases in transaction amount and transaction orders be attributed to search exposure alone?",
       "question_type": "causal_diagnostic",
       "total_packets": 5,
       "status_counts": {
-        "keyword_matched": 5
+        "record_matched": 5
       },
       "role_counts": {
-        "default_evidence": 5
+        "quantitative_evidence": 5
       },
       "source_missing_count": 0,
-      "keyword_matched_count": 5,
+      "record_matched_count": 5,
+      "keyword_matched_count": 0,
       "boundary_matched_count": 0,
       "fallback_count": 0
     },
@@ -22,275 +23,329 @@
       {
         "factor_id": "search_exposure",
         "evidence_id": "evidence_search_exposure",
-        "source_type": "markdown",
-        "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+        "source_type": "csv",
+        "source_path": "retail_ops/data/store_a_monthly_metrics.csv",
         "source_exists": true,
-        "grounding_role": "default_evidence",
-        "keywords_used": [
-          "search",
-          "search exposure",
-          "search entry",
-          "search average rank",
-          "搜索",
-          "曝光",
-          "搜索曝光",
-          "搜索入店",
-          "平均排名"
+        "grounding_role": "quantitative_evidence",
+        "grounding_status": "record_matched",
+        "snippets": [],
+        "record_scope": {
+          "key_fields": [
+            "store_id",
+            "period_month"
+          ],
+          "row_count": 2,
+          "row_keys": [
+            {
+              "store_id": "A",
+              "period_month": "2026-03"
+            },
+            {
+              "store_id": "A",
+              "period_month": "2026-04"
+            }
+          ]
+        },
+        "evidence_fields": [
+          "search_exposure_users",
+          "search_average_rank",
+          "search_entry_users"
         ],
-        "grounding_status": "keyword_matched",
-        "snippets": [
+        "evidence_values": [
           {
-            "line_start": 82,
-            "line_end": 84,
-            "matched_terms": [
-              "search"
-            ],
-            "text": "Store A's visibility and entry structure can be described from exposure, ranking, entry, and search-entry metrics."
+            "row_key": {
+              "store_id": "A",
+              "period_month": "2026-03"
+            },
+            "values": {
+              "search_exposure_users": "4172",
+              "search_average_rank": "20",
+              "search_entry_users": "445"
+            }
           },
           {
-            "line_start": 84,
-            "line_end": 86,
-            "matched_terms": [
-              "search",
-              "search entry"
-            ],
-            "text": "| Month  | Exposure Users | Store Average Rank | Entry Users | Search Entry Users | Search Entry Share |\n| ------- | -------------: | -----------------: | ----------: | -----------------: | -----------------: |"
-          },
-          {
-            "line_start": 92,
-            "line_end": 94,
-            "matched_terms": [
-              "search"
-            ],
-            "text": "- March had weaker exposure, weaker average rank, fewer entry users, and fewer search-entry users.\n- April recovered in exposure, rank, entry users, and search-entry users."
+            "row_key": {
+              "store_id": "A",
+              "period_month": "2026-04"
+            },
+            "values": {
+              "search_exposure_users": "7736",
+              "search_average_rank": "18",
+              "search_entry_users": "839"
+            }
           }
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: search_exposure.",
         "original_limitations": [
-          "Deterministic mock pipeline only.",
-          "No live retrieval is performed in this step."
+          "Evidence is resolved from committed local project files.",
+          "Coverage is limited to the sources listed in this packet."
         ],
         "resolver_limitations": [
-          "Local text matching only.",
-          "No semantic embedding retrieval is used in this step.",
-          "No causality is inferred from matched snippets."
+          "Deterministic Store A CSV record selection only.",
+          "Selected values do not establish causality, profitability, ROI, retention, or market-share change."
         ]
       },
       {
         "factor_id": "entry_conversion",
         "evidence_id": "evidence_entry_conversion",
-        "source_type": "markdown",
-        "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+        "source_type": "csv",
+        "source_path": "retail_ops/data/store_a_monthly_metrics.csv",
         "source_exists": true,
-        "grounding_role": "default_evidence",
-        "keywords_used": [
-          "entry",
-          "entry conversion",
-          "entry users",
-          "入店",
-          "入店转化",
-          "入店人数",
-          "入店次数"
+        "grounding_role": "quantitative_evidence",
+        "grounding_status": "record_matched",
+        "snippets": [],
+        "record_scope": {
+          "key_fields": [
+            "store_id",
+            "period_month"
+          ],
+          "row_count": 2,
+          "row_keys": [
+            {
+              "store_id": "A",
+              "period_month": "2026-03"
+            },
+            {
+              "store_id": "A",
+              "period_month": "2026-04"
+            }
+          ]
+        },
+        "evidence_fields": [
+          "exposure_users",
+          "entry_users",
+          "entry_conversion_rate_pct"
         ],
-        "grounding_status": "keyword_matched",
-        "snippets": [
+        "evidence_values": [
           {
-            "line_start": 49,
-            "line_end": 51,
-            "matched_terms": [
-              "entry"
-            ],
-            "text": "```text\n   order_conversion_rate_pct = order_users / entry_users * 100\n   ```"
+            "row_key": {
+              "store_id": "A",
+              "period_month": "2026-03"
+            },
+            "values": {
+              "exposure_users": "4663",
+              "entry_users": "522",
+              "entry_conversion_rate_pct": "11.19"
+            }
           },
           {
-            "line_start": 68,
-            "line_end": 70,
-            "matched_terms": [
-              "entry",
-              "entry users"
-            ],
-            "text": "3. Traffic-source users may overlap. Source-level users should not be summed into total exposure users or total entry users."
-          },
-          {
-            "line_start": 74,
-            "line_end": 76,
-            "matched_terms": [
-              "entry",
-              "entry users"
-            ],
-            "text": "| Month   | Transaction Amount | Transaction Orders | Entry Users | Order Conversion Rate | Average Order Value |\n| ------- | -----------------: | -----------------: | ----------: | --------------------: | ------------------: |"
+            "row_key": {
+              "store_id": "A",
+              "period_month": "2026-04"
+            },
+            "values": {
+              "exposure_users": "8366",
+              "entry_users": "906",
+              "entry_conversion_rate_pct": "10.83"
+            }
           }
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: entry_conversion.",
         "original_limitations": [
-          "Deterministic mock pipeline only.",
-          "No live retrieval is performed in this step."
+          "Evidence is resolved from committed local project files.",
+          "Coverage is limited to the sources listed in this packet."
         ],
         "resolver_limitations": [
-          "Local text matching only.",
-          "No semantic embedding retrieval is used in this step.",
-          "No causality is inferred from matched snippets."
+          "Deterministic Store A CSV record selection only.",
+          "Selected values do not establish causality, profitability, ROI, retention, or market-share change."
         ]
       },
       {
         "factor_id": "order_conversion",
         "evidence_id": "evidence_order_conversion",
-        "source_type": "markdown",
-        "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+        "source_type": "csv",
+        "source_path": "retail_ops/data/store_a_monthly_metrics.csv",
         "source_exists": true,
-        "grounding_role": "default_evidence",
-        "keywords_used": [
-          "order conversion",
-          "order users",
-          "order times",
-          "下单",
-          "下单转化",
-          "下单人数",
-          "下单次数"
+        "grounding_role": "quantitative_evidence",
+        "grounding_status": "record_matched",
+        "snippets": [],
+        "record_scope": {
+          "key_fields": [
+            "store_id",
+            "period_month"
+          ],
+          "row_count": 2,
+          "row_keys": [
+            {
+              "store_id": "A",
+              "period_month": "2026-03"
+            },
+            {
+              "store_id": "A",
+              "period_month": "2026-04"
+            }
+          ]
+        },
+        "evidence_fields": [
+          "entry_users",
+          "order_users",
+          "order_conversion_rate_pct"
         ],
-        "grounding_status": "keyword_matched",
-        "snippets": [
+        "evidence_values": [
           {
-            "line_start": 74,
-            "line_end": 76,
-            "matched_terms": [
-              "order conversion"
-            ],
-            "text": "| Month   | Transaction Amount | Transaction Orders | Entry Users | Order Conversion Rate | Average Order Value |\n| ------- | -----------------: | -----------------: | ----------: | --------------------: | ------------------: |"
+            "row_key": {
+              "store_id": "A",
+              "period_month": "2026-03"
+            },
+            "values": {
+              "entry_users": "522",
+              "order_users": "221",
+              "order_conversion_rate_pct": "42.34"
+            }
           },
           {
-            "line_start": 123,
-            "line_end": 125,
-            "matched_terms": [
-              "order conversion"
-            ],
-            "text": "| Search Entry Users  |   445 |   839 | Up    |\n| Order Conversion Rate | 42.34% | 37.42% | Down   |\n| Average Order Value  |  31.18 |  26.95 | Down   |"
-          },
-          {
-            "line_start": 130,
-            "line_end": 132,
-            "matched_terms": [
-              "order conversion"
-            ],
-            "text": "The store had more exposure, more entry users, more transaction orders, and higher transaction amount, but order conversion rate and average order value declined."
+            "row_key": {
+              "store_id": "A",
+              "period_month": "2026-04"
+            },
+            "values": {
+              "entry_users": "906",
+              "order_users": "339",
+              "order_conversion_rate_pct": "37.42"
+            }
           }
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: order_conversion.",
         "original_limitations": [
-          "Deterministic mock pipeline only.",
-          "No live retrieval is performed in this step."
+          "Evidence is resolved from committed local project files.",
+          "Coverage is limited to the sources listed in this packet."
         ],
         "resolver_limitations": [
-          "Local text matching only.",
-          "No semantic embedding retrieval is used in this step.",
-          "No causality is inferred from matched snippets."
+          "Deterministic Store A CSV record selection only.",
+          "Selected values do not establish causality, profitability, ROI, retention, or market-share change."
         ]
       },
       {
         "factor_id": "promotion_intensity",
         "evidence_id": "evidence_promotion_intensity",
-        "source_type": "markdown",
-        "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+        "source_type": "csv",
+        "source_path": "retail_ops/data/store_a_monthly_metrics.csv",
         "source_exists": true,
-        "grounding_role": "default_evidence",
-        "keywords_used": [
-          "promotion",
-          "activity",
-          "activity orders",
-          "activity cost",
-          "merchant subsidy",
-          "platform subsidy",
-          "活动",
-          "活动订单",
-          "活动成本",
-          "商家补贴",
-          "平台补贴"
+        "grounding_role": "quantitative_evidence",
+        "grounding_status": "record_matched",
+        "snippets": [],
+        "record_scope": {
+          "key_fields": [
+            "store_id",
+            "period_month"
+          ],
+          "row_count": 2,
+          "row_keys": [
+            {
+              "store_id": "A",
+              "period_month": "2026-03"
+            },
+            {
+              "store_id": "A",
+              "period_month": "2026-04"
+            }
+          ]
+        },
+        "evidence_fields": [
+          "activity_original_transaction_amount",
+          "activity_orders",
+          "activity_cost",
+          "merchant_subsidy_amount",
+          "platform_subsidy_amount",
+          "activity_cost_ratio_pct"
         ],
-        "grounding_status": "keyword_matched",
-        "snippets": [
+        "evidence_values": [
           {
-            "line_start": 18,
-            "line_end": 20,
-            "matched_terms": [
-              "activity"
-            ],
-            "text": "A store may use activity subsidy, pricing, ranking optimization, SKU mix, and fulfillment control as operating levers inside this chain."
+            "row_key": {
+              "store_id": "A",
+              "period_month": "2026-03"
+            },
+            "values": {
+              "activity_original_transaction_amount": "10035.00",
+              "activity_orders": "201",
+              "activity_cost": "3868.16",
+              "merchant_subsidy_amount": "3727.16",
+              "platform_subsidy_amount": "141.00",
+              "activity_cost_ratio_pct": "38.55"
+            }
           },
           {
-            "line_start": 60,
-            "line_end": 62,
-            "matched_terms": [
-              "activity"
-            ],
-            "text": "2. `activity_cost_ratio_pct` follows the backend-style formula:"
-          },
-          {
-            "line_start": 63,
-            "line_end": 65,
-            "matched_terms": [
-              "activity"
-            ],
-            "text": "```text\n   activity_cost_ratio_pct = activity_cost / activity_original_transaction_amount * 100\n   ```"
+            "row_key": {
+              "store_id": "A",
+              "period_month": "2026-04"
+            },
+            "values": {
+              "activity_original_transaction_amount": "15006.90",
+              "activity_orders": "329",
+              "activity_cost": "6105.86",
+              "merchant_subsidy_amount": "5947.36",
+              "platform_subsidy_amount": "158.50",
+              "activity_cost_ratio_pct": "40.69"
+            }
           }
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: promotion_intensity.",
         "original_limitations": [
-          "Deterministic mock pipeline only.",
-          "No live retrieval is performed in this step."
+          "Evidence is resolved from committed local project files.",
+          "Coverage is limited to the sources listed in this packet."
         ],
         "resolver_limitations": [
-          "Local text matching only.",
-          "No semantic embedding retrieval is used in this step.",
-          "No causality is inferred from matched snippets."
+          "Deterministic Store A CSV record selection only.",
+          "Selected values do not establish causality, profitability, ROI, retention, or market-share change."
         ]
       },
       {
         "factor_id": "transaction_orders",
         "evidence_id": "evidence_transaction_orders",
-        "source_type": "markdown",
-        "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+        "source_type": "csv",
+        "source_path": "retail_ops/data/store_a_monthly_metrics.csv",
         "source_exists": true,
-        "grounding_role": "default_evidence",
-        "keywords_used": [
-          "transaction_orders",
-          "transaction orders"
+        "grounding_role": "quantitative_evidence",
+        "grounding_status": "record_matched",
+        "snippets": [],
+        "record_scope": {
+          "key_fields": [
+            "store_id",
+            "period_month"
+          ],
+          "row_count": 2,
+          "row_keys": [
+            {
+              "store_id": "A",
+              "period_month": "2026-03"
+            },
+            {
+              "store_id": "A",
+              "period_month": "2026-04"
+            }
+          ]
+        },
+        "evidence_fields": [
+          "transaction_orders"
         ],
-        "grounding_status": "keyword_matched",
-        "snippets": [
+        "evidence_values": [
           {
-            "line_start": 74,
-            "line_end": 76,
-            "matched_terms": [
-              "transaction orders"
-            ],
-            "text": "| Month   | Transaction Amount | Transaction Orders | Entry Users | Order Conversion Rate | Average Order Value |\n| ------- | -----------------: | -----------------: | ----------: | --------------------: | ------------------: |"
+            "row_key": {
+              "store_id": "A",
+              "period_month": "2026-03"
+            },
+            "values": {
+              "transaction_orders": "207"
+            }
           },
           {
-            "line_start": 101,
-            "line_end": 103,
-            "matched_terms": [
-              "transaction orders"
-            ],
-            "text": "| Month  | Activity Orders | Transaction Orders | Activity Order Share | Activity Cost Ratio |\n| ------- | --------------: | -----------------: | -------------------: | ------------------: |"
-          },
-          {
-            "line_start": 109,
-            "line_end": 111,
-            "matched_terms": [
-              "transaction orders"
-            ],
-            "text": "- Activity orders accounted for a high share of transaction orders in all three months.\n- Activity-order structure shows high activity involvement during the observed period."
+            "row_key": {
+              "store_id": "A",
+              "period_month": "2026-04"
+            },
+            "values": {
+              "transaction_orders": "337"
+            }
           }
         ],
         "original_claim_supported": "Provides context needed to evaluate factor: transaction_orders.",
         "original_limitations": [
-          "Deterministic mock pipeline only.",
-          "No live retrieval is performed in this step."
+          "Evidence is resolved from committed local project files.",
+          "Coverage is limited to the sources listed in this packet."
         ],
         "resolver_limitations": [
-          "Local text matching only.",
-          "No semantic embedding retrieval is used in this step.",
-          "No causality is inferred from matched snippets."
+          "Deterministic Store A CSV record selection only.",
+          "Selected values do not establish causality, profitability, ROI, retention, or market-share change."
         ]
       }
     ]

@@ -79,7 +79,7 @@ Store A's visibility and entry structure can be described from exposure, ranking
 Interpretation:
 
 - March had weaker exposure, weaker average rank, fewer entry users, and fewer search-entry users.
-- April recovered in exposure, rank, entry users, and search-entry users.
+- From March to April, exposure users, entry users, and search-entry users increased, while average rank improved.
 - These metrics describe whether the store was being seen and entered.
 - Together with transaction, conversion, activity, and SKU evidence, these metrics form the Store A operating profile.
 
@@ -101,7 +101,7 @@ Interpretation:
 
 ## Transaction and Conversion Profile
 
-April recovered in transaction scale compared with March.
+Transaction amount and transaction orders increased from March to April.
 
 | Metric        | 2026-03 | 2026-04 | Direction |
 | --------------------- | ------: | ------: | --------- |
@@ -116,7 +116,7 @@ Interpretation:
 
 The store had more exposure, more entry users, more transaction orders, and higher transaction amount, but order conversion rate and average order value declined.
 
-This supports a cautious operating-signal reading: the store recovered scale, but the recovery coexisted with weaker conversion rate and lower average order value.
+The March-to-April increases in transaction amount and transaction orders coexisted with a lower order conversion rate and average order value.
 
 ## Top-SKU Evidence
 

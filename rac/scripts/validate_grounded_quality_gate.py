@@ -37,8 +37,8 @@ REQUIRED_REPORT_SECTIONS = [
 ]
 
 FORBIDDEN_POSITIVE_CLAIMS = [
-    "Search exposure caused April growth",
-    "Search exposure alone explains April growth",
+    "Search exposure caused the March-to-April increases in transaction amount and transaction orders",
+    "Search exposure alone explains the March-to-April increases in transaction amount and transaction orders",
     "The system proves causality",
     "The system has live Meituan backend access",
     "Stores B-F are fully comparable",

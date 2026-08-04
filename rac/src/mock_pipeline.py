@@ -258,7 +258,7 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
         return [
             {
                 "hypothesis_id": "H1",
-                "claim": "Search exposure may have contributed to Store A's April performance, but it is not sufficient as a single explanation.",
+                "claim": "Search exposure is relevant to Store A's March-to-April increases in transaction amount and transaction orders, but it is not sufficient as a single explanation.",
                 "confidence": 0.52,
                 "supporting_factors": ["search_exposure", "entry_conversion"],
                 "weaknesses": ["Does not isolate promotion effects.", "Does not prove source-field improvement."],
@@ -267,8 +267,9 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
             {
                 "hypothesis_id": "H2",
                 "claim": (
-                    "Store A's April performance should be reviewed "
-                    "as a multi-factor movement across search exposure, "
+                    "Store A's March-to-April increases in transaction "
+                    "amount and transaction orders should be reviewed alongside "
+                    "search exposure, "
                     "entry conversion, order conversion, promotion "
                     "intensity, and transaction orders."
                 ),
@@ -475,8 +476,8 @@ def fact_check(question_type: str, claims: list[str]) -> dict[str, Any]:
 def build_belief_update(question_type: str) -> dict[str, Any]:
     if question_type == "causal_diagnostic":
         return {
-            "belief_id": "store_a_april_growth_not_search_only",
-            "claim": "Store A's April performance should not be attributed to search exposure alone.",
+            "belief_id": "store_a_march_april_increase_not_search_only",
+            "claim": "Store A's March-to-April increases in transaction amount and transaction orders should not be attributed to search exposure alone.",
             "confidence": 0.82,
             "status": "active",
             "validity_conditions": ["Store A Demo 1 context.", "Available month-over-month evidence only."],

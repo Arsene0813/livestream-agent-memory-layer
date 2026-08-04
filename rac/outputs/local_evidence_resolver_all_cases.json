@@ -1,21 +1,22 @@
 [
   {
     "case_id": "rac_store_a_attribution_001",
-    "question": "Can Store A's April growth be attributed to search exposure?",
+    "question": "Can Store A's March-to-April increases in transaction amount and transaction orders be attributed to search exposure alone?",
     "question_type": "causal_diagnostic",
     "resolver_result": {
       "summary": {
-        "question": "Can Store A's April growth be attributed to search exposure?",
+        "question": "Can Store A's March-to-April increases in transaction amount and transaction orders be attributed to search exposure alone?",
         "question_type": "causal_diagnostic",
         "total_packets": 5,
         "status_counts": {
-          "keyword_matched": 5
+          "record_matched": 5
         },
         "role_counts": {
-          "default_evidence": 5
+          "quantitative_evidence": 5
         },
         "source_missing_count": 0,
-        "keyword_matched_count": 5,
+        "record_matched_count": 5,
+        "keyword_matched_count": 0,
         "boundary_matched_count": 0,
         "fallback_count": 0
       },
@@ -23,275 +24,329 @@
         {
           "factor_id": "search_exposure",
           "evidence_id": "evidence_search_exposure",
-          "source_type": "markdown",
-          "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+          "source_type": "csv",
+          "source_path": "retail_ops/data/store_a_monthly_metrics.csv",
           "source_exists": true,
-          "grounding_role": "default_evidence",
-          "keywords_used": [
-            "search",
-            "search exposure",
-            "search entry",
-            "search average rank",
-            "搜索",
-            "曝光",
-            "搜索曝光",
-            "搜索入店",
-            "平均排名"
+          "grounding_role": "quantitative_evidence",
+          "grounding_status": "record_matched",
+          "snippets": [],
+          "record_scope": {
+            "key_fields": [
+              "store_id",
+              "period_month"
+            ],
+            "row_count": 2,
+            "row_keys": [
+              {
+                "store_id": "A",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "A",
+                "period_month": "2026-04"
+              }
+            ]
+          },
+          "evidence_fields": [
+            "search_exposure_users",
+            "search_average_rank",
+            "search_entry_users"
           ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
+          "evidence_values": [
             {
-              "line_start": 82,
-              "line_end": 84,
-              "matched_terms": [
-                "search"
-              ],
-              "text": "Store A's visibility and entry structure can be described from exposure, ranking, entry, and search-entry metrics."
+              "row_key": {
+                "store_id": "A",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "search_exposure_users": "4172",
+                "search_average_rank": "20",
+                "search_entry_users": "445"
+              }
             },
             {
-              "line_start": 84,
-              "line_end": 86,
-              "matched_terms": [
-                "search",
-                "search entry"
-              ],
-              "text": "| Month  | Exposure Users | Store Average Rank | Entry Users | Search Entry Users | Search Entry Share |\n| ------- | -------------: | -----------------: | ----------: | -----------------: | -----------------: |"
-            },
-            {
-              "line_start": 92,
-              "line_end": 94,
-              "matched_terms": [
-                "search"
-              ],
-              "text": "- March had weaker exposure, weaker average rank, fewer entry users, and fewer search-entry users.\n- April recovered in exposure, rank, entry users, and search-entry users."
+              "row_key": {
+                "store_id": "A",
+                "period_month": "2026-04"
+              },
+              "values": {
+                "search_exposure_users": "7736",
+                "search_average_rank": "18",
+                "search_entry_users": "839"
+              }
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: search_exposure.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
+            "Deterministic Store A CSV record selection only.",
+            "Selected values do not establish causality, profitability, ROI, retention, or market-share change."
           ]
         },
         {
           "factor_id": "entry_conversion",
           "evidence_id": "evidence_entry_conversion",
-          "source_type": "markdown",
-          "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+          "source_type": "csv",
+          "source_path": "retail_ops/data/store_a_monthly_metrics.csv",
           "source_exists": true,
-          "grounding_role": "default_evidence",
-          "keywords_used": [
-            "entry",
-            "entry conversion",
-            "entry users",
-            "入店",
-            "入店转化",
-            "入店人数",
-            "入店次数"
+          "grounding_role": "quantitative_evidence",
+          "grounding_status": "record_matched",
+          "snippets": [],
+          "record_scope": {
+            "key_fields": [
+              "store_id",
+              "period_month"
+            ],
+            "row_count": 2,
+            "row_keys": [
+              {
+                "store_id": "A",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "A",
+                "period_month": "2026-04"
+              }
+            ]
+          },
+          "evidence_fields": [
+            "exposure_users",
+            "entry_users",
+            "entry_conversion_rate_pct"
           ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
+          "evidence_values": [
             {
-              "line_start": 49,
-              "line_end": 51,
-              "matched_terms": [
-                "entry"
-              ],
-              "text": "```text\n   order_conversion_rate_pct = order_users / entry_users * 100\n   ```"
+              "row_key": {
+                "store_id": "A",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "exposure_users": "4663",
+                "entry_users": "522",
+                "entry_conversion_rate_pct": "11.19"
+              }
             },
             {
-              "line_start": 68,
-              "line_end": 70,
-              "matched_terms": [
-                "entry",
-                "entry users"
-              ],
-              "text": "3. Traffic-source users may overlap. Source-level users should not be summed into total exposure users or total entry users."
-            },
-            {
-              "line_start": 74,
-              "line_end": 76,
-              "matched_terms": [
-                "entry",
-                "entry users"
-              ],
-              "text": "| Month   | Transaction Amount | Transaction Orders | Entry Users | Order Conversion Rate | Average Order Value |\n| ------- | -----------------: | -----------------: | ----------: | --------------------: | ------------------: |"
+              "row_key": {
+                "store_id": "A",
+                "period_month": "2026-04"
+              },
+              "values": {
+                "exposure_users": "8366",
+                "entry_users": "906",
+                "entry_conversion_rate_pct": "10.83"
+              }
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: entry_conversion.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
+            "Deterministic Store A CSV record selection only.",
+            "Selected values do not establish causality, profitability, ROI, retention, or market-share change."
           ]
         },
         {
           "factor_id": "order_conversion",
           "evidence_id": "evidence_order_conversion",
-          "source_type": "markdown",
-          "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+          "source_type": "csv",
+          "source_path": "retail_ops/data/store_a_monthly_metrics.csv",
           "source_exists": true,
-          "grounding_role": "default_evidence",
-          "keywords_used": [
-            "order conversion",
-            "order users",
-            "order times",
-            "下单",
-            "下单转化",
-            "下单人数",
-            "下单次数"
+          "grounding_role": "quantitative_evidence",
+          "grounding_status": "record_matched",
+          "snippets": [],
+          "record_scope": {
+            "key_fields": [
+              "store_id",
+              "period_month"
+            ],
+            "row_count": 2,
+            "row_keys": [
+              {
+                "store_id": "A",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "A",
+                "period_month": "2026-04"
+              }
+            ]
+          },
+          "evidence_fields": [
+            "entry_users",
+            "order_users",
+            "order_conversion_rate_pct"
           ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
+          "evidence_values": [
             {
-              "line_start": 74,
-              "line_end": 76,
-              "matched_terms": [
-                "order conversion"
-              ],
-              "text": "| Month   | Transaction Amount | Transaction Orders | Entry Users | Order Conversion Rate | Average Order Value |\n| ------- | -----------------: | -----------------: | ----------: | --------------------: | ------------------: |"
+              "row_key": {
+                "store_id": "A",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "entry_users": "522",
+                "order_users": "221",
+                "order_conversion_rate_pct": "42.34"
+              }
             },
             {
-              "line_start": 123,
-              "line_end": 125,
-              "matched_terms": [
-                "order conversion"
-              ],
-              "text": "| Search Entry Users  |   445 |   839 | Up    |\n| Order Conversion Rate | 42.34% | 37.42% | Down   |\n| Average Order Value  |  31.18 |  26.95 | Down   |"
-            },
-            {
-              "line_start": 130,
-              "line_end": 132,
-              "matched_terms": [
-                "order conversion"
-              ],
-              "text": "The store had more exposure, more entry users, more transaction orders, and higher transaction amount, but order conversion rate and average order value declined."
+              "row_key": {
+                "store_id": "A",
+                "period_month": "2026-04"
+              },
+              "values": {
+                "entry_users": "906",
+                "order_users": "339",
+                "order_conversion_rate_pct": "37.42"
+              }
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: order_conversion.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
+            "Deterministic Store A CSV record selection only.",
+            "Selected values do not establish causality, profitability, ROI, retention, or market-share change."
           ]
         },
         {
           "factor_id": "promotion_intensity",
           "evidence_id": "evidence_promotion_intensity",
-          "source_type": "markdown",
-          "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+          "source_type": "csv",
+          "source_path": "retail_ops/data/store_a_monthly_metrics.csv",
           "source_exists": true,
-          "grounding_role": "default_evidence",
-          "keywords_used": [
-            "promotion",
-            "activity",
-            "activity orders",
-            "activity cost",
-            "merchant subsidy",
-            "platform subsidy",
-            "活动",
-            "活动订单",
-            "活动成本",
-            "商家补贴",
-            "平台补贴"
+          "grounding_role": "quantitative_evidence",
+          "grounding_status": "record_matched",
+          "snippets": [],
+          "record_scope": {
+            "key_fields": [
+              "store_id",
+              "period_month"
+            ],
+            "row_count": 2,
+            "row_keys": [
+              {
+                "store_id": "A",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "A",
+                "period_month": "2026-04"
+              }
+            ]
+          },
+          "evidence_fields": [
+            "activity_original_transaction_amount",
+            "activity_orders",
+            "activity_cost",
+            "merchant_subsidy_amount",
+            "platform_subsidy_amount",
+            "activity_cost_ratio_pct"
           ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
+          "evidence_values": [
             {
-              "line_start": 18,
-              "line_end": 20,
-              "matched_terms": [
-                "activity"
-              ],
-              "text": "A store may use activity subsidy, pricing, ranking optimization, SKU mix, and fulfillment control as operating levers inside this chain."
+              "row_key": {
+                "store_id": "A",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "activity_original_transaction_amount": "10035.00",
+                "activity_orders": "201",
+                "activity_cost": "3868.16",
+                "merchant_subsidy_amount": "3727.16",
+                "platform_subsidy_amount": "141.00",
+                "activity_cost_ratio_pct": "38.55"
+              }
             },
             {
-              "line_start": 60,
-              "line_end": 62,
-              "matched_terms": [
-                "activity"
-              ],
-              "text": "2. `activity_cost_ratio_pct` follows the backend-style formula:"
-            },
-            {
-              "line_start": 63,
-              "line_end": 65,
-              "matched_terms": [
-                "activity"
-              ],
-              "text": "```text\n   activity_cost_ratio_pct = activity_cost / activity_original_transaction_amount * 100\n   ```"
+              "row_key": {
+                "store_id": "A",
+                "period_month": "2026-04"
+              },
+              "values": {
+                "activity_original_transaction_amount": "15006.90",
+                "activity_orders": "329",
+                "activity_cost": "6105.86",
+                "merchant_subsidy_amount": "5947.36",
+                "platform_subsidy_amount": "158.50",
+                "activity_cost_ratio_pct": "40.69"
+              }
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: promotion_intensity.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
+            "Deterministic Store A CSV record selection only.",
+            "Selected values do not establish causality, profitability, ROI, retention, or market-share change."
           ]
         },
         {
           "factor_id": "transaction_orders",
           "evidence_id": "evidence_transaction_orders",
-          "source_type": "markdown",
-          "source_path": "retail_ops/demo/demo_1_store_a_month_over_month_diagnostic.md",
+          "source_type": "csv",
+          "source_path": "retail_ops/data/store_a_monthly_metrics.csv",
           "source_exists": true,
-          "grounding_role": "default_evidence",
-          "keywords_used": [
-            "transaction_orders",
-            "transaction orders"
+          "grounding_role": "quantitative_evidence",
+          "grounding_status": "record_matched",
+          "snippets": [],
+          "record_scope": {
+            "key_fields": [
+              "store_id",
+              "period_month"
+            ],
+            "row_count": 2,
+            "row_keys": [
+              {
+                "store_id": "A",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "A",
+                "period_month": "2026-04"
+              }
+            ]
+          },
+          "evidence_fields": [
+            "transaction_orders"
           ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
+          "evidence_values": [
             {
-              "line_start": 74,
-              "line_end": 76,
-              "matched_terms": [
-                "transaction orders"
-              ],
-              "text": "| Month   | Transaction Amount | Transaction Orders | Entry Users | Order Conversion Rate | Average Order Value |\n| ------- | -----------------: | -----------------: | ----------: | --------------------: | ------------------: |"
+              "row_key": {
+                "store_id": "A",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "transaction_orders": "207"
+              }
             },
             {
-              "line_start": 101,
-              "line_end": 103,
-              "matched_terms": [
-                "transaction orders"
-              ],
-              "text": "| Month  | Activity Orders | Transaction Orders | Activity Order Share | Activity Cost Ratio |\n| ------- | --------------: | -----------------: | -------------------: | ------------------: |"
-            },
-            {
-              "line_start": 109,
-              "line_end": 111,
-              "matched_terms": [
-                "transaction orders"
-              ],
-              "text": "- Activity orders accounted for a high share of transaction orders in all three months.\n- Activity-order structure shows high activity involvement during the observed period."
+              "row_key": {
+                "store_id": "A",
+                "period_month": "2026-04"
+              },
+              "values": {
+                "transaction_orders": "337"
+              }
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: transaction_orders.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
+            "Deterministic Store A CSV record selection only.",
+            "Selected values do not establish causality, profitability, ROI, retention, or market-share change."
           ]
         }
       ]
@@ -307,18 +362,19 @@
         "question_type": "comparability_judgment",
         "total_packets": 9,
         "status_counts": {
-          "keyword_matched": 7,
-          "boundary_matched": 2
+          "keyword_matched": 8,
+          "boundary_matched": 1
         },
         "role_counts": {
           "context_evidence": 1,
-          "quantitative_evidence": 5,
+          "quantitative_evidence": 6,
           "definition_evidence": 1,
-          "boundary_evidence": 2
+          "boundary_evidence": 1
         },
         "source_missing_count": 0,
-        "keyword_matched_count": 7,
-        "boundary_matched_count": 2,
+        "record_matched_count": 0,
+        "keyword_matched_count": 8,
+        "boundary_matched_count": 1,
         "fallback_count": 0
       },
       "resolved_packets": [
@@ -373,8 +429,8 @@
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: same_reporting_period.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -429,8 +485,8 @@
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: store_type.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -485,8 +541,8 @@
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: order_volume.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -523,8 +579,8 @@
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: transaction_amount.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -582,8 +638,8 @@
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: activity_intensity.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -599,51 +655,23 @@
           "source_exists": true,
           "grounding_role": "definition_evidence",
           "keywords_used": [
-            "region",
-            "region_type",
-            "region type",
-            "market",
-            "business district",
-            "商圈",
-            "区域",
-            "地区"
+            "### `region_type`"
           ],
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 69,
-              "line_end": 71,
+              "line_start": 74,
+              "line_end": 76,
               "matched_terms": [
-                "region",
-                "market",
-                "区域"
-              ],
-              "text": "## Region / Market Context Field Status / 区域与经营环境字段状态"
-            },
-            {
-              "line_start": 71,
-              "line_end": 73,
-              "matched_terms": [
-                "region",
-                "region_type"
+                "### `region_type`"
               ],
               "text": "### `region_type`"
-            },
-            {
-              "line_start": 73,
-              "line_end": 75,
-              "matched_terms": [
-                "region",
-                "region_type",
-                "market"
-              ],
-              "text": "Current status: `region_type` is the implemented metadata field for weak region or market-context evidence in the current retail data contract. This section is the central project definition for `region_type`; other documents should refer back to this definition instead of redefining the field."
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: region_context.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -673,48 +701,31 @@
           "source_exists": true,
           "grounding_role": "boundary_evidence",
           "keywords_used": [
-            "competition",
-            "competitor",
-            "competitor context",
-            "price war",
-            "current limitation",
-            "future evidence",
-            "not currently structured",
-            "竞争",
-            "竞对",
-            "价格战"
+            "Competition context | Not currently structured"
           ],
           "grounding_status": "boundary_matched",
           "snippets": [
             {
-              "line_start": 46,
-              "line_end": 48,
+              "line_start": 101,
+              "line_end": 103,
               "matched_terms": [
-                "competition"
+                "Competition context | Not currently structured"
               ],
-              "text": "- transaction-scale bands;\n- competition context;\n- repeated-window stability;"
+              "text": "| Region and market context | `region_type` | Current demo sample is too small for reliable regional classification. | More store data, local consumption-level evidence, delivery-radius context, and competition-context evidence. |\n| Competition context | Not currently structured. | Local competitor density and price pressure are not included. | Competitor and local market evidence. |\n| SKU structure | Top-SKU transaction-amount and sales-volume evidence. | Top-SKU evidence is not full category-share analysis. | Broader SKU classification or category mapping. |"
             },
             {
-              "line_start": 75,
-              "line_end": 77,
+              "line_start": 136,
+              "line_end": 138,
               "matched_terms": [
-                "competition"
+                "Competition context | Not currently structured"
               ],
-              "text": "|---|---|---|---|\n| Search-entry structure comparison | `search_exposure_users`, `search_average_rank`, `search_entry_users`, `search_entry_rate_pct`, `search_entry_share_pct`, `entry_conversion_rate_pct`, `order_conversion_rate_pct` | repeated windows, competition context, stronger market context | cautious same-period diagnostic comparison |\n| Promotion or subsidy comparison | `activity_orders`, `activity_order_share_pct`, `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, `platform_subsidy_amount` | campaign calendar, campaign mechanism, competitor reaction, repeated activity windows | activity involvement and activity intensity only |"
-            },
-            {
-              "line_start": 78,
-              "line_end": 80,
-              "matched_terms": [
-                "competitor"
-              ],
-              "text": "| SKU-mix comparison | top-SKU transaction-amount evidence, top-SKU sales-volume evidence, `top3_sku_transaction_amount_share_pct` | full product-category classification, broader catalog structure, category-level share | lightweight product-mix constraint |\n| Market-context comparison | `region_type` | local consumption level, delivery-radius context, competitor density, broader store coverage | weak context only |\n| Strategy-transfer readiness | current diagnostic fields and `comparison_limit_notes` | repeated windows, pairwise decision output, activity mechanism, competition, market context, fulfillment and stockout evidence | boundary-preserving answer until pairwise evidence is available |"
+              "text": "| Region and market context | `region_type` as weak context only | Data-supported market-area classification, local consumption evidence, delivery-radius context, and competition context | More store data plus external or manually reviewed market evidence |\n| Competition context | Not currently structured | Competitor density, price pressure, ranking pressure, and local market reaction | Manual collection, platform observation, or future structured competitor table |\n| SKU structure | Top-SKU transaction-amount and sales-volume evidence | Broader SKU classification, category share, and margin-aware structure where available | SKU export and future category mapping |"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: competition.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -765,8 +776,8 @@
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: sku_structure.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -798,9 +809,9 @@
           "factor_id": "repeated_reporting_windows",
           "evidence_id": "evidence_repeated_reporting_windows",
           "source_type": "markdown",
-          "source_path": "retail_ops/COMPARABILITY_GATE_V0.md",
+          "source_path": "retail_ops/outputs/repeated_window_panel_summary_output.csv",
           "source_exists": true,
-          "grounding_role": "boundary_evidence",
+          "grounding_role": "quantitative_evidence",
           "keywords_used": [
             "repeated",
             "repeated reporting windows",
@@ -813,42 +824,68 @@
             "重复周期",
             "未来"
           ],
-          "grounding_status": "boundary_matched",
+          "grounding_status": "keyword_matched",
           "snippets": [
             {
               "line_start": 1,
               "line_end": 2,
               "matched_terms": [
-                "future work"
+                "repeated"
               ],
-              "text": "# Future Work: Pairwise Comparability Gate"
+              "text": "store_id,region_type,store_type,observed_month_count,feb_transaction_amount,mar_transaction_amount,apr_transaction_amount,transaction_amount_feb_to_apr_delta,transaction_amount_feb_to_apr_pct,feb_transaction_orders,mar_transaction_orders,apr_transaction_orders,transaction_orders_feb_to_apr_delta,transaction_orders_feb_to_apr_pct,feb_exposure_users,mar_exposure_users,apr_exposure_users,exposure_users_feb_to_apr_delta,exposure_users_feb_to_apr_pct,feb_entry_users,mar_entry_users,apr_entry_users,entry_users_feb_to_apr_delta,entry_users_feb_to_apr_pct,feb_entry_conversion_rate_pct,mar_entry_conversion_rate_pct,apr_entry_conversion_rate_pct,entry_conversion_rate_pct_feb_to_apr_delta,feb_order_conversion_rate_pct,mar_order_conversion_rate_pct,apr_order_conversion_rate_pct,order_conversion_rate_pct_feb_to_apr_delta,feb_payment_conversion_rate_pct,mar_payment_conversion_rate_pct,apr_payment_conversion_rate_pct,payment_conversion_rate_pct_feb_to_apr_delta,feb_search_exposure_users,mar_search_exposure_users,apr_search_exposure_users,search_exposure_users_feb_to_apr_delta,search_exposure_users_feb_to_apr_pct,feb_search_entry_users,mar_search_entry_users,apr_search_entry_users,search_entry_users_feb_to_apr_delta,search_entry_users_feb_to_apr_pct,feb_activity_orders,mar_activity_orders,apr_activity_orders,activity_orders_feb_to_apr_delta,feb_activity_cost_ratio_pct,mar_activity_cost_ratio_pct,apr_activity_cost_ratio_pct,activity_cost_ratio_pct_feb_to_apr_delta,repeated_window_summary_flag,summary_boundary_note\nB,Qingdao,self-operated,3,10468.0,11665.5,11496.8,1028.8,9.83,259.0,299.0,293.0,34.0,13.13,5338.0,5094.0,6009.0,671.0,12.57,793.0,770.0,886.0,93.0,11.73,14.86,15.12,14.74,-0.12,34.55,36.88,33.3,-1.25,97.81,98.59,98.98,1.17,3811.0,4390.0,5274.0,1463.0,38.39,666.0,683.0,765.0,99.0,14.86,218.0,265.0,247.0,29.0,21.98,24.12,24.11,2.13,summary_ready_for_descriptive_review,\"Descriptive repeated-window summary only; not a store ranking, pairwise comparability gate, operating recommendation, endpoint behavior, generated memory fact, or causal analysis.\""
             },
             {
-              "line_start": 8,
-              "line_end": 10,
+              "line_start": 2,
+              "line_end": 4,
               "matched_terms": [
                 "repeated"
               ],
-              "text": "2. Demo 2: Stores B-F same-period diagnostic structure.\n3. Repeated-window panel: Stores B-F coverage and descriptive summary across 2026-02, 2026-03, and 2026-04."
+              "text": "B,Qingdao,self-operated,3,10468.0,11665.5,11496.8,1028.8,9.83,259.0,299.0,293.0,34.0,13.13,5338.0,5094.0,6009.0,671.0,12.57,793.0,770.0,886.0,93.0,11.73,14.86,15.12,14.74,-0.12,34.55,36.88,33.3,-1.25,97.81,98.59,98.98,1.17,3811.0,4390.0,5274.0,1463.0,38.39,666.0,683.0,765.0,99.0,14.86,218.0,265.0,247.0,29.0,21.98,24.12,24.11,2.13,summary_ready_for_descriptive_review,\"Descriptive repeated-window summary only; not a store ranking, pairwise comparability gate, operating recommendation, endpoint behavior, generated memory fact, or causal analysis.\"\nC,Qingdao,self-operated,3,9503.7,7064.09,6756.8,-2746.9,-28.9,253.0,175.0,178.0,-75.0,-29.64,3987.0,2982.0,3418.0,-569.0,-14.27,836.0,516.0,502.0,-334.0,-39.95,20.97,17.3,14.69,-6.28,32.18,32.75,34.66,2.48,98.51,98.22,99.43,0.92,2850.0,2416.0,2705.0,-145.0,-5.09,636.0,355.0,364.0,-272.0,-42.77,190.0,124.0,123.0,-67.0,14.49,9.45,11.97,-2.52,summary_ready_for_descriptive_review,\"Descriptive repeated-window summary only; not a store ranking, pairwise comparability gate, operating recommendation, endpoint behavior, generated memory fact, or causal analysis.\"\nD,Yantai,self-operated,3,20332.2,18078.7,14087.2,-6245.0,-30.71,466.0,404.0,308.0,-158.0,-33.91,6614.0,6068.0,5935.0,-679.0,-10.27,1070.0,842.0,807.0,-263.0,-24.58,16.18,13.88,13.6,-2.58,41.78,46.56,37.79,-3.99,98.43,98.21,99.34,0.91,2827.0,2663.0,2304.0,-523.0,-18.5,951.0,738.0,691.0,-260.0,-27.34,403.0,337.0,254.0,-149.0,17.22,14.92,16.55,-0.67,summary_ready_for_descriptive_review,\"Descriptive repeated-window summary only; not a store ranking, pairwise comparability gate, operating recommendation, endpoint behavior, generated memory fact, or causal analysis.\""
             },
             {
-              "line_start": 10,
-              "line_end": 12,
+              "line_start": 4,
+              "line_end": 6,
               "matched_terms": [
                 "repeated"
               ],
-              "text": "The repeated-window panel is an evidence-preparation layer for coverage and stability inspection before a future pairwise comparability gate. It is not a completed pairwise comparability gate."
+              "text": "D,Yantai,self-operated,3,20332.2,18078.7,14087.2,-6245.0,-30.71,466.0,404.0,308.0,-158.0,-33.91,6614.0,6068.0,5935.0,-679.0,-10.27,1070.0,842.0,807.0,-263.0,-24.58,16.18,13.88,13.6,-2.58,41.78,46.56,37.79,-3.99,98.43,98.21,99.34,0.91,2827.0,2663.0,2304.0,-523.0,-18.5,951.0,738.0,691.0,-260.0,-27.34,403.0,337.0,254.0,-149.0,17.22,14.92,16.55,-0.67,summary_ready_for_descriptive_review,\"Descriptive repeated-window summary only; not a store ranking, pairwise comparability gate, operating recommendation, endpoint behavior, generated memory fact, or causal analysis.\"\nE,Yantai,partner,3,6794.9,5784.87,11264.72,4469.82,65.78,148.0,158.0,377.0,229.0,154.73,3015.0,3347.0,5649.0,2634.0,87.36,436.0,408.0,954.0,518.0,118.81,14.46,12.19,16.89,2.43,33.94,39.46,37.74,3.8,98.65,98.76,99.44,0.79,2484.0,2784.0,4799.0,2315.0,93.2,389.0,355.0,892.0,503.0,129.31,117.0,109.0,301.0,184.0,23.71,29.38,32.29,8.58,summary_ready_for_descriptive_review,\"Descriptive repeated-window summary only; not a store ranking, pairwise comparability gate, operating recommendation, endpoint behavior, generated memory fact, or causal analysis.\"\nF,Yantai,partner,3,12549.1,9301.8,14090.7,1541.6,12.28,307.0,266.0,424.0,117.0,38.11,3651.0,3543.0,5063.0,1412.0,38.67,628.0,541.0,897.0,269.0,42.83,17.2,15.27,17.72,0.52,49.68,49.72,48.38,-1.3,99.68,99.26,99.77,0.09,2502.0,2699.0,3877.0,1375.0,54.96,571.0,481.0,831.0,260.0,45.53,255.0,217.0,338.0,83.0,16.37,12.16,16.0,-0.37,summary_ready_for_descriptive_review,\"Descriptive repeated-window summary only; not a store ranking, pairwise comparability gate, operating recommendation, endpoint behavior, generated memory fact, or causal analysis.\""
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: repeated_reporting_windows.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
             "No semantic embedding retrieval is used in this step.",
             "No causality is inferred from matched snippets."
+          ],
+          "candidate_sources_checked": [
+            {
+              "source_path": "retail_ops/outputs/repeated_window_panel_summary_output.csv",
+              "grounding_role": "quantitative_evidence",
+              "grounding_status": "keyword_matched",
+              "source_exists": true
+            },
+            {
+              "source_path": "retail_ops/outputs/store_period_panel_coverage_output.csv",
+              "grounding_role": "coverage_evidence",
+              "grounding_status": "keyword_matched",
+              "source_exists": true
+            },
+            {
+              "source_path": "retail_ops/COMPARABILITY_GATE_V0.md",
+              "grounding_role": "boundary_evidence",
+              "grounding_status": "boundary_matched",
+              "source_exists": true
+            },
+            {
+              "source_path": "retail_ops/data/store_period_panel_metrics.csv",
+              "grounding_role": "source_table_evidence",
+              "grounding_status": "source_found_no_keyword_match",
+              "source_exists": true
+            }
           ]
         }
       ]
@@ -872,6 +909,7 @@
           "boundary_evidence": 2
         },
         "source_missing_count": 0,
+        "record_matched_count": 0,
         "keyword_matched_count": 6,
         "boundary_matched_count": 2,
         "fallback_count": 0
@@ -885,45 +923,23 @@
           "source_exists": true,
           "grounding_role": "default_evidence",
           "keywords_used": [
-            "activity_orders",
-            "activity orders",
-            "activity order",
-            "活动订单",
-            "活动订单数"
+            "### `activity_orders`"
           ],
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 135,
-              "line_end": 137,
+              "line_start": 618,
+              "line_end": 620,
               "matched_terms": [
-                "activity_orders"
+                "### `activity_orders`"
               ],
-              "text": "- explicit activity status, only if campaign-calendar or backend status evidence exists;\n- activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`;\n- activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`."
-            },
-            {
-              "line_start": 206,
-              "line_end": 208,
-              "matched_terms": [
-                "activity_orders",
-                "activity orders",
-                "activity order"
-              ],
-              "text": "| `search_entry_share_pct` | `search_entry_users / entry_users * 100` | Directional structure metric computed as search-source entry users divided by total entry users in the same reporting window. | Source-level traffic users may overlap, so the ratio should not be read as user-level attribution or exclusive channel contribution. |\n| `activity_order_share_pct` | `activity_orders / transaction_orders * 100` | Measures the share of transaction orders associated with activity orders in the current reporting window. | Indicates activity involvement, not full activity status, campaign mechanism, causal demand lift, or promotion-transfer readiness. |"
-            },
-            {
-              "line_start": 230,
-              "line_end": 232,
-              "matched_terms": [
-                "activity_orders"
-              ],
-              "text": "- non-missing `search_entry_users`;\n- non-missing `activity_orders`;\n- non-missing `top3_sku_transaction_amount`."
+              "text": "### `activity_orders` / 活动订单数"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: activity_orders.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -939,42 +955,23 @@
           "source_exists": true,
           "grounding_role": "default_evidence",
           "keywords_used": [
-            "activity_cost",
-            "activity cost",
-            "活动成本"
+            "### `activity_cost`"
           ],
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 136,
-              "line_end": 138,
+              "line_start": 624,
+              "line_end": 626,
               "matched_terms": [
-                "activity_cost"
-              ],
-              "text": "- activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`;\n- activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`."
-            },
-            {
-              "line_start": 309,
-              "line_end": 311,
-              "matched_terms": [
-                "activity cost"
-              ],
-              "text": "| `visibility_entry_profile`    | Exposure, ranking, entry, and search-entry structure.                       | Understanding whether the store was being seen and entered during the reporting window.             | Claiming visibility alone caused transaction growth.            |\n| `activity_lever_profile`     | Activity orders, activity cost, subsidy, and activity-cost ratio.                 | Understanding how promotional tools were used in the store's operating context.                 | Treating activity as a standalone cause or traditional ROI result.     |\n| `transaction_conversion_profile` | Transaction scale, order conversion, payment, and average order value.               | Reading transaction recovery or decline together with funnel quality.                      | Calling a period good or bad from one transaction metric alone.       |"
-            },
-            {
-              "line_start": 614,
-              "line_end": 616,
-              "matched_terms": [
-                "activity_cost",
-                "活动成本"
+                "### `activity_cost`"
               ],
               "text": "### `activity_cost` / 活动成本"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: activity_cost.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -990,41 +987,23 @@
           "source_exists": true,
           "grounding_role": "default_evidence",
           "keywords_used": [
-            "merchant_subsidy",
-            "merchant subsidy",
-            "商家补贴"
+            "### `merchant_subsidy_amount`"
           ],
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 136,
-              "line_end": 138,
+              "line_start": 630,
+              "line_end": 632,
               "matched_terms": [
-                "merchant_subsidy"
+                "### `merchant_subsidy_amount`"
               ],
-              "text": "- activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`;\n- activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`."
-            },
-            {
-              "line_start": 592,
-              "line_end": 594,
-              "matched_terms": [
-                "商家补贴"
-              ],
-              "text": "中文定义：平台展示的预计收入或预计订单收入类指标。预计订单收入通常指营业额扣除商家支出（包括商家补贴、平台服务费等）后的净收入，仅做数据展示，不做结算使用。"
-            },
-            {
-              "line_start": 616,
-              "line_end": 618,
-              "matched_terms": [
-                "商家补贴"
-              ],
-              "text": "中文公式：活动成本 = 商家补贴金额 + 平台补贴金额"
+              "text": "### `merchant_subsidy_amount` / 商家补贴金额"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: merchant_subsidy.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -1040,41 +1019,23 @@
           "source_exists": true,
           "grounding_role": "default_evidence",
           "keywords_used": [
-            "platform_subsidy",
-            "platform subsidy",
-            "平台补贴"
+            "### `platform_subsidy_amount`"
           ],
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 136,
-              "line_end": 138,
+              "line_start": 636,
+              "line_end": 638,
               "matched_terms": [
-                "platform_subsidy"
+                "### `platform_subsidy_amount`"
               ],
-              "text": "- activity involvement, currently proxied by `activity_orders` and `activity_order_share_pct`;\n- activity intensity, currently proxied by `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, and `platform_subsidy_amount`."
-            },
-            {
-              "line_start": 616,
-              "line_end": 618,
-              "matched_terms": [
-                "平台补贴"
-              ],
-              "text": "中文公式：活动成本 = 商家补贴金额 + 平台补贴金额"
-            },
-            {
-              "line_start": 618,
-              "line_end": 620,
-              "matched_terms": [
-                "platform_subsidy"
-              ],
-              "text": "English formula: `activity_cost = merchant_subsidy_amount + platform_subsidy_amount`"
+              "text": "### `platform_subsidy_amount` / 平台补贴金额"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: platform_subsidy.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -1090,45 +1051,23 @@
           "source_exists": true,
           "grounding_role": "default_evidence",
           "keywords_used": [
-            "order conversion",
-            "order users",
-            "order times",
-            "下单",
-            "下单转化",
-            "下单人数",
-            "下单次数"
+            "### `order_conversion_rate_pct`"
           ],
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 77,
-              "line_end": 79,
+              "line_start": 482,
+              "line_end": 484,
               "matched_terms": [
-                "order conversion"
+                "### `order_conversion_rate_pct`"
               ],
-              "text": "In the current project, `region_type` can only be used as weak context alongside period alignment, store type, order volume, visibility and ranking signals, entry and order conversion, activity profile, SKU evidence, data completeness, and future external market evidence. The current Demo 2 sample is too small to support a reliable regional classification."
-            },
-            {
-              "line_start": 310,
-              "line_end": 312,
-              "matched_terms": [
-                "order conversion"
-              ],
-              "text": "| `activity_lever_profile`     | Activity orders, activity cost, subsidy, and activity-cost ratio.                 | Understanding how promotional tools were used in the store's operating context.                 | Treating activity as a standalone cause or traditional ROI result.     |\n| `transaction_conversion_profile` | Transaction scale, order conversion, payment, and average order value.               | Reading transaction recovery or decline together with funnel quality.                      | Calling a period good or bad from one transaction metric alone.       |\n| `single_metric_attribution_guard` | Guardrail against explaining performance from one metric alone.                  | Preventing unsupported attribution from exposure, ranking, activity, conversion, or SKU evidence alone. | Rejecting those metrics as irrelevant.                   |"
-            },
-            {
-              "line_start": 470,
-              "line_end": 472,
-              "matched_terms": [
-                "下单"
-              ],
-              "text": "## 3. Order-Submission Funnel Metrics / 下单漏斗指标"
+              "text": "### `order_conversion_rate_pct` / 下单转化率"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: order_conversion.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -1144,46 +1083,23 @@
           "source_exists": true,
           "grounding_role": "default_evidence",
           "keywords_used": [
-            "payment_conversion",
-            "payment conversion",
-            "payment users",
-            "payment amount",
-            "支付转化",
-            "支付人数",
-            "支付金额"
+            "### `payment_conversion_rate_pct`"
           ],
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 510,
-              "line_end": 512,
+              "line_start": 534,
+              "line_end": 536,
               "matched_terms": [
-                "支付人数"
-              ],
-              "text": "### `payment_users` / 支付人数"
-            },
-            {
-              "line_start": 518,
-              "line_end": 520,
-              "matched_terms": [
-                "支付金额"
-              ],
-              "text": "### `payment_amount` / 支付金额"
-            },
-            {
-              "line_start": 524,
-              "line_end": 526,
-              "matched_terms": [
-                "payment_conversion",
-                "支付转化"
+                "### `payment_conversion_rate_pct`"
               ],
               "text": "### `payment_conversion_rate_pct` / 支付转化率"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: payment_conversion.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -1195,48 +1111,27 @@
           "factor_id": "sku_margin_structure",
           "evidence_id": "evidence_sku_margin_structure",
           "source_type": "markdown",
-          "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+          "source_path": "retail_ops/COMPARABILITY_GATE_V0.md",
           "source_exists": true,
           "grounding_role": "boundary_evidence",
           "keywords_used": [
-            "margin",
-            "sku margin",
-            "sku",
-            "毛利",
-            "利润",
-            "商品"
+            "margin-aware structure"
           ],
           "grounding_status": "boundary_matched",
           "snippets": [
             {
-              "line_start": 13,
-              "line_end": 15,
+              "line_start": 137,
+              "line_end": 139,
               "matched_terms": [
-                "sku"
+                "margin-aware structure"
               ],
-              "text": "- `retail_ops/data/store_a_monthly_metrics.csv`\n- `retail_ops/data/store_a_top_skus.csv`\n- `retail_ops/sql/01_store_a_month_over_month_diagnostic.sql`"
-            },
-            {
-              "line_start": 22,
-              "line_end": 24,
-              "matched_terms": [
-                "sku"
-              ],
-              "text": "- `retail_ops/data/demo2_top_search_terms.csv`\n- `retail_ops/data/demo2_top_skus_by_sales_volume.csv`\n- `retail_ops/data/demo2_top_skus_by_transaction_amount.csv`"
-            },
-            {
-              "line_start": 67,
-              "line_end": 69,
-              "matched_terms": [
-                "sku"
-              ],
-              "text": "They are required because cross-store diagnostic interpretation depends on aligned reporting windows. Same-period alignment is necessary for the current Demo 2 diagnostic, but it is not sufficient to prove that two stores are comparable for pricing, activity, SKU, ranking, fulfillment, or strategy-transfer decisions."
+              "text": "| Competition context | Not currently structured | Competitor density, price pressure, ranking pressure, and local market reaction | Manual collection, platform observation, or future structured competitor table |\n| SKU structure | Top-SKU transaction-amount and sales-volume evidence | Broader SKU classification, category share, and margin-aware structure where available | SKU export and future category mapping |\n| Fulfillment or stockout context | Not currently structured | Delivery-condition, stockout, fulfillment-capacity, or delivery-radius evidence | Future fulfillment or inventory records |"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: sku_margin_structure.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -1248,48 +1143,46 @@
           "factor_id": "competitor_context",
           "evidence_id": "evidence_competitor_context",
           "source_type": "markdown",
-          "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+          "source_path": "retail_ops/COMPARABILITY_GATE_V0.md",
           "source_exists": true,
           "grounding_role": "boundary_evidence",
           "keywords_used": [
-            "competitor",
-            "competition",
-            "price",
-            "竞对",
-            "竞争",
-            "价格"
+            "competitor reaction",
+            "competitor density",
+            "price pressure"
           ],
           "grounding_status": "boundary_matched",
           "snippets": [
             {
-              "line_start": 75,
-              "line_end": 77,
+              "line_start": 71,
+              "line_end": 73,
               "matched_terms": [
-                "competition"
+                "competitor reaction"
               ],
-              "text": "In Demo 2, `region_type` may contain coarse available labels such as city-level region labels. These values are retained for data-contract stability and source traceability, but they are not market-area types, consumption-level groups, maturity labels, or peer-store groups; in short, `region_type` is not a hard market-area classification. Stores with similar visible region labels may still differ in purchasing power, delivery radius, local competition, rent structure, promotion pressure, customer behavior, stockout risk, and fulfillment constraints."
+              "text": "| Search-entry structure comparison | `search_exposure_users`, `search_average_rank`, `search_entry_users`, `search_entry_rate_pct`, `search_entry_share_pct`, `entry_conversion_rate_pct`, `order_conversion_rate_pct` | repeated windows, competition context, stronger market context | cautious same-period diagnostic comparison |\n| Promotion or subsidy comparison | `activity_orders`, `activity_order_share_pct`, `activity_cost`, `activity_cost_ratio_pct`, `merchant_subsidy_amount`, `platform_subsidy_amount` | campaign calendar, campaign mechanism, competitor reaction, repeated activity windows | activity involvement and activity intensity only |\n| SKU-mix comparison | top-SKU transaction-amount evidence, top-SKU sales-volume evidence, `top3_sku_transaction_amount_share_pct` | full product-category classification, broader catalog structure, category-level share | lightweight product-mix constraint |"
             },
             {
-              "line_start": 100,
-              "line_end": 102,
+              "line_start": 73,
+              "line_end": 75,
               "matched_terms": [
-                "competition"
+                "competitor density"
               ],
-              "text": "Boundary: `store_type` is not a performance label, market-area classification, peer-store group, or sufficient comparability condition by itself. It should be interpreted together with reporting-window alignment, transaction order volume, transaction amount, activity involvement, activity intensity, region or market context, SKU evidence, data completeness, repeated reporting windows, and future competition or fulfillment evidence."
+              "text": "| SKU-mix comparison | top-SKU transaction-amount evidence, top-SKU sales-volume evidence, `top3_sku_transaction_amount_share_pct` | full product-category classification, broader catalog structure, category-level share | lightweight product-mix constraint |\n| Market-context comparison | `region_type` | local consumption level, delivery-radius context, competitor density, broader store coverage | weak context only |\n| Strategy-transfer readiness | current diagnostic fields and `comparison_limit_notes` | repeated windows, pairwise decision output, activity mechanism, competition, market context, fulfillment and stockout evidence | boundary-preserving answer until pairwise evidence is available |"
             },
             {
-              "line_start": 130,
-              "line_end": 132,
+              "line_start": 101,
+              "line_end": 103,
               "matched_terms": [
-                "competition"
+                "competitor density",
+                "price pressure"
               ],
-              "text": "A future pairwise comparability gate should use broader multi-store evidence to decide whether two store-period records can be compared for a specific operating question. Reliable store comparability should be judged from transaction order volume, transaction amount, store type, region and market context, competition environment, SKU structure, fulfillment or stockout evidence where available, repeated reporting windows, and activity evidence."
+              "text": "| Region and market context | `region_type` | Current demo sample is too small for reliable regional classification. | More store data, local consumption-level evidence, delivery-radius context, and competition-context evidence. |\n| Competition context | Not currently structured. | Local competitor density and price pressure are not included. | Competitor and local market evidence. |\n| SKU structure | Top-SKU transaction-amount and sales-volume evidence. | Top-SKU evidence is not full category-share analysis. | Broader SKU classification or category mapping. |"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: competitor_context.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -1316,6 +1209,7 @@
           "default_evidence": 8
         },
         "source_missing_count": 0,
+        "record_matched_count": 0,
         "keyword_matched_count": 8,
         "boundary_matched_count": 0,
         "fallback_count": 0
@@ -1355,8 +1249,8 @@
               "text": "RAC is the factor-aware grounded review layer of the current\ndecision-support prototype."
             },
             {
-              "line_start": 22,
-              "line_end": 24,
+              "line_start": 37,
+              "line_end": 39,
               "matched_terms": [
                 "fact"
               ],
@@ -1365,8 +1259,8 @@
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: typed_memory.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -1400,27 +1294,27 @@
               "text": "It takes a decision question and structured local evidence, makes the\nreview path explicit, and records where the available evidence supports"
             },
             {
-              "line_start": 24,
-              "line_end": 26,
+              "line_start": 25,
+              "line_end": 27,
+              "matched_terms": [
+                "evidence"
+              ],
+              "text": "Validate the generated reports and their evidence boundaries:"
+            },
+            {
+              "line_start": 39,
+              "line_end": 41,
               "matched_terms": [
                 "evidence",
                 "source"
               ],
               "text": "-> factor weighting\n-> source-aware local evidence routing\n-> boundary evidence for unavailable requirements"
-            },
-            {
-              "line_start": 34,
-              "line_end": 36,
-              "matched_terms": [
-                "evidence"
-              ],
-              "text": "The pipeline separates factor selection, evidence retrieval, hypothesis\nformation, critique, and report generation. A final answer therefore"
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: evidence_packets.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -1445,8 +1339,8 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 26,
-              "line_end": 28,
+              "line_start": 41,
+              "line_end": 43,
               "matched_terms": [
                 "hypotheses",
                 "competing"
@@ -1454,16 +1348,16 @@
               "text": "-> boundary evidence for unavailable requirements\n-> competing hypotheses\n-> critique"
             },
             {
-              "line_start": 34,
-              "line_end": 36,
+              "line_start": 49,
+              "line_end": 51,
               "matched_terms": [
                 "hypothesis"
               ],
               "text": "The pipeline separates factor selection, evidence retrieval, hypothesis\nformation, critique, and report generation. A final answer therefore"
             },
             {
-              "line_start": 48,
-              "line_end": 50,
+              "line_start": 63,
+              "line_end": 65,
               "matched_terms": [
                 "competing"
               ],
@@ -1472,8 +1366,8 @@
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: hypotheses.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -1499,34 +1393,34 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 119,
-              "line_end": 121,
+              "line_start": 135,
+              "line_end": 137,
               "matched_terms": [
                 "belief"
               ],
               "text": "evidence_packets\nbelief_records\nretrieval_trace"
             },
             {
-              "line_start": 136,
-              "line_end": 138,
+              "line_start": 152,
+              "line_end": 154,
               "matched_terms": [
                 "confidence"
               ],
               "text": "hypotheses\nconfidence\nlimitations"
             },
             {
-              "line_start": 172,
-              "line_end": 174,
+              "line_start": 190,
+              "line_end": 192,
               "matched_terms": [
                 "confidence"
               ],
-              "text": "The score summarizes local evidence-routing coverage. It is not a\nBayesian posterior, calibrated probability, causal-confidence estimate,\nor predicted business-success rate."
+              "text": "does not measure evidence strength, conclusion correctness, business impact,\ndecision quality, or model confidence. It is not used to select or rank the\nfinal judgment."
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: belief_records.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -1550,24 +1444,24 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 136,
-              "line_end": 138,
+              "line_start": 152,
+              "line_end": 154,
               "matched_terms": [
                 "confidence"
               ],
               "text": "hypotheses\nconfidence\nlimitations"
             },
             {
-              "line_start": 172,
-              "line_end": 174,
+              "line_start": 190,
+              "line_end": 192,
               "matched_terms": [
                 "confidence"
               ],
-              "text": "The score summarizes local evidence-routing coverage. It is not a\nBayesian posterior, calibrated probability, causal-confidence estimate,\nor predicted business-success rate."
+              "text": "does not measure evidence strength, conclusion correctness, business impact,\ndecision quality, or model confidence. It is not used to select or rank the\nfinal judgment."
             },
             {
-              "line_start": 175,
-              "line_end": 177,
+              "line_start": 193,
+              "line_end": 195,
               "matched_terms": [
                 "confidence"
               ],
@@ -1576,8 +1470,8 @@
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: confidence.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -1611,16 +1505,16 @@
               "text": "review path explicit, and records where the available evidence supports\na statement, where only a boundary can be established, and where a\nstronger conclusion should remain unresolved."
             },
             {
-              "line_start": 25,
-              "line_end": 27,
+              "line_start": 40,
+              "line_end": 42,
               "matched_terms": [
                 "boundary"
               ],
               "text": "-> source-aware local evidence routing\n-> boundary evidence for unavailable requirements\n-> competing hypotheses"
             },
             {
-              "line_start": 36,
-              "line_end": 38,
+              "line_start": 51,
+              "line_end": 53,
               "matched_terms": [
                 "limitation",
                 "limitations"
@@ -1630,8 +1524,8 @@
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: limitations.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -1658,24 +1552,24 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 24,
-              "line_end": 26,
+              "line_start": 39,
+              "line_end": 41,
               "matched_terms": [
                 "source"
               ],
               "text": "-> factor weighting\n-> source-aware local evidence routing\n-> boundary evidence for unavailable requirements"
             },
             {
-              "line_start": 34,
-              "line_end": 36,
+              "line_start": 49,
+              "line_end": 51,
               "matched_terms": [
                 "retrieval"
               ],
               "text": "The pipeline separates factor selection, evidence retrieval, hypothesis\nformation, critique, and report generation. A final answer therefore"
             },
             {
-              "line_start": 46,
-              "line_end": 48,
+              "line_start": 61,
+              "line_end": 63,
               "matched_terms": [
                 "source"
               ],
@@ -1684,8 +1578,8 @@
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: retrieval_trace.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",
@@ -1721,16 +1615,16 @@
               "text": "review path explicit, and records where the available evidence supports\na statement, where only a boundary can be established, and where a\nstronger conclusion should remain unresolved."
             },
             {
-              "line_start": 29,
-              "line_end": 31,
+              "line_start": 44,
+              "line_end": 46,
               "matched_terms": [
                 "state"
               ],
               "text": "-> rule-based claim and definition check\n-> review-state update\n-> grounded final report"
             },
             {
-              "line_start": 61,
-              "line_end": 63,
+              "line_start": 76,
+              "line_end": 78,
               "matched_terms": [
                 "state"
               ],
@@ -1739,8 +1633,8 @@
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: active_state_filtering.",
           "original_limitations": [
-            "Deterministic mock pipeline only.",
-            "No live retrieval is performed in this step."
+            "Evidence is resolved from committed local project files.",
+            "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
             "Local text matching only.",

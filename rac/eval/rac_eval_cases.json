@@ -1,7 +1,7 @@
 [
   {
     "case_id": "rac_store_a_attribution_001",
-    "question": "Can Store A's April growth be attributed to search exposure?",
+    "question": "Can Store A's March-to-April increases in transaction amount and transaction orders be attributed to search exposure alone?",
     "question_type": "causal_diagnostic",
     "must_include_factors": [
       "search_exposure",
@@ -11,8 +11,8 @@
       "transaction_orders"
     ],
     "must_not_claim": [
-      "Search exposure caused April growth",
-      "Search exposure alone explains April growth",
+      "Search exposure caused the March-to-April increases in transaction amount and transaction orders",
+      "Search exposure alone explains the March-to-April increases in transaction amount and transaction orders",
       "The system proves causality",
       "The system has live Meituan backend access"
     ],
