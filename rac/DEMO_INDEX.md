@@ -5,7 +5,7 @@ implementation. RAC is an important factor-aware grounded review layer
 over the structured retail evidence.
 
 It makes factor selection, source routing, unavailable evidence,
-competing explanations, critique, rule-based claim and definition checks, and evidence coverage
+competing explanations, critique, rule-based claim and definition checks, and evidence-routing coverage
 inspectable before a report is accepted.
 
 The implemented workflow is:
@@ -42,7 +42,7 @@ The implemented review process:
 6. Generate competing hypotheses.
 7. Critique weak claims.
 8. Check unsupported claims and definition conflicts.
-9. Produce a grounded report with an evidence-coverage score,
+9. Produce a grounded report with a routing coverage score,
    scenario-template confidence labels, and explicit limitations.
 10. Validate the report through a report-contract quality gate.
 
@@ -151,7 +151,7 @@ Each grounded report includes:
 - critic findings;
 - claim and definition-check status;
 - a bounded final judgment;
-- an evidence-coverage score and its calculation inputs;
+- a routing coverage score and its calculation inputs;
 - explicit limitations;
 - a review-state update.
 
@@ -198,7 +198,7 @@ evaluation question.
 
 1. **Evidence robustness:** test paraphrases, hard negatives, entity and
    period preservation, missing-source behavior, cross-store period
-   mismatches, and sensitivity to alternative evidence-coverage weights.
+   mismatches, and sensitivity to alternative routing coverage weights.
 2. **Model-assisted review:** compare model-assisted factor expansion,
    competing hypotheses, critique, and report synthesis against the
    deterministic baseline.
@@ -216,13 +216,13 @@ evaluation question.
 
 ## Score Explainability Note
 
-Grounded reports use Evidence-Coverage Score. This is calculated from evidence-routing coverage, boundary coverage, missing-source status, and fallback status.
+Grounded reports use Routing coverage score. It summarizes record- or keyword-matched local routes, explicit boundary routes, missing-source status, and fallback status.
 
-Mock reports use Scenario-Template Confidence. This is a deterministic template value, not a calculated evidence-coverage score.
+Mock reports use Scenario-Template Confidence. This is a deterministic template value, not a calculated routing coverage score.
 
 The grounded score weights are fixed prototype heuristics:
 
-- `0.45` for direct local evidence;
+- `0.45` for record- or keyword-matched local routes;
 - `0.25` for supported-or-boundary coverage;
 - `0.15` for source-file traceability;
 - `0.15` for fallback avoidance.

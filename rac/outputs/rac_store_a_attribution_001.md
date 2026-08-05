@@ -65,7 +65,7 @@ How this value is assigned:
 - It is not a calibrated probability or Bayesian posterior.
 - It is not a causal confidence score or business-success probability.
 - It is kept only to show how the deterministic mock scaffold carries a review-state value.
-- Grounded reports use a formula-based `Evidence-Coverage Score` instead.
+- Grounded reports use a formula-based `routing coverage score` instead.
 
 ## 9. What Cannot Be Concluded
 

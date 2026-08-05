@@ -624,7 +624,7 @@ def write_final_report(state: dict[str, Any]) -> str:
     lines.append("- It is not a calibrated probability or Bayesian posterior.")
     lines.append("- It is not a causal confidence score or business-success probability.")
     lines.append("- It is kept only to show how the deterministic mock scaffold carries a review-state value.")
-    lines.append("- Grounded reports use a formula-based `Evidence-Coverage Score` instead.")
+    lines.append("- Grounded reports use a formula-based `routing coverage score` instead.")
     lines.append("")
     lines.append("## 9. What Cannot Be Concluded")
     lines.append("")

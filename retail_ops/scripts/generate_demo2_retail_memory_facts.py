@@ -293,7 +293,7 @@ for row in comparability_rows:
             slot="transaction_conversion_profile",
             value=(
                 f"Store {store_id}'s March 2026 transaction and conversion profile records transaction amount, order volume, "
-                f"order-submission conversion, payment conversion, and average order value as transaction outcomes in the current monthly evidence. "
+                f"order conversion rate, payment conversion, and average order value as transaction outcomes in the current monthly evidence. "
                 f"It should be read alongside visibility, entry, activity, and SKU evidence."
             ),
             observed_values={

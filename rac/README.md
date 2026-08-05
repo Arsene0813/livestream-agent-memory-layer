@@ -85,7 +85,7 @@ The implemented RAC scaffold includes:
 - boundary evidence for unavailable requirements;
 - competing-hypothesis templates;
 - critique and rule-based claim and definition-check stages;
-- evidence-coverage scoring;
+- routing coverage scoring;
 - explicit limitation updates;
 - grounded Markdown and JSON reports;
 - a deterministic report-contract quality gate.
@@ -166,9 +166,9 @@ The grounded reports expose the bucket, factor membership, assigned
 weight, and interpretation limit so the weighting rule can be reviewed
 directly.
 
-## Evidence-Coverage Score
+## Routing Coverage Score
 
-Grounded RAC reports use a formula-based Evidence-Coverage Score:
+Grounded RAC reports use a formula-based routing coverage score:
 
 ```text
 evidence_coverage_score
@@ -180,7 +180,7 @@ evidence_coverage_score
 
 | Component | Weight | Rationale |
 |---|---:|---|
-| `direct_evidence_rate` | 0.45 | Direct local evidence receives the highest weight. |
+| `direct_evidence_rate` | 0.45 | Record- or keyword-matched local routes receive the highest weight. |
 | `supported_or_boundary_rate` | 0.25 | Explicit boundary evidence is preferable to an unsupported inference. |
 | `no_missing_source_file_score` | 0.15 | Existing source paths are required for traceability. |
 | `no_fallback_score` | 0.15 | Unresolved fallback packets reduce evidence coverage. |
@@ -193,7 +193,7 @@ final judgment.
 
 Mock reports separately carry Scenario-Template Confidence. That value
 is assigned by deterministic question-type templates and is not merged
-with the grounded Evidence-Coverage Score.
+with the grounded routing coverage score.
 
 ## Competing Hypotheses, Critique, and Fact Checks
 
@@ -327,7 +327,7 @@ The live path should preserve the canonical field names and Chinese definitions 
 
 ### Next RAC Experiment
 
-The next experiment is a controlled sensitivity analysis over alternative factor-weight and Evidence-Coverage Score settings.
+The next experiment is a controlled sensitivity analysis over alternative factor-weight and routing coverage score settings.
 
 It should keep the same reviewer cases and evidence packets, vary one heuristic setting at a time, record changes in factor priority and final review state, and identify which outputs remain stable. The current deterministic settings should remain the reference condition.
 
@@ -339,5 +339,5 @@ All roadmap implementations should continue to preserve:
 - separation of direct, boundary, and fallback evidence;
 - explicit competing hypotheses;
 - critique before final reporting;
-- visible evidence-coverage and limitation updates;
+- visible routing coverage and limitation updates;
 - withholding of conclusions that exceed the available evidence.

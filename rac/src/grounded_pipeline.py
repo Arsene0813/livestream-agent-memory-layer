@@ -766,7 +766,7 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append("|---|---:|---|")
     lines.append(
         "| `direct_evidence_rate` | 0.45 | "
-        "Highest priority because actual local evidence should "
+        "Highest priority because record- or keyword-matched local routes should "
         "matter more than boundary-only evidence. |"
     )
     lines.append(
