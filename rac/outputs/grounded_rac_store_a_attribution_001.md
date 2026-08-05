@@ -113,7 +113,7 @@ Weight rationale:
 
 | Component | Weight | Why |
 |---|---:|---|
-| `direct_evidence_rate` | 0.45 | Highest priority because actual local evidence should matter more than boundary-only evidence. |
+| `direct_evidence_rate` | 0.45 | Highest priority because record- or keyword-matched local routes should matter more than boundary-only evidence. |
 | `supported_or_boundary_rate` | 0.25 | Boundary evidence is valuable because it explicitly records missing requirements instead of hiding them. |
 | `no_missing_source_file_score` | 0.15 | Source files must exist, but this is a basic traceability check rather than evidence strength. |
 | `no_fallback_score` | 0.15 | Fallback packets indicate unresolved routing and reduce the current coverage score. |
