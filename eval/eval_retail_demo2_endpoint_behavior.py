@@ -146,7 +146,7 @@ async def run_checks() -> int:
             [
                 "transaction amount",
                 "order volume",
-                "order-submission conversion",
+                "order conversion rate",
                 "payment conversion",
                 "average order value",
                 "current monthly evidence",
