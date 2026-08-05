@@ -47,7 +47,7 @@ The structured source file retains the available traffic-channel fields. The Dem
 
 The two top-SKU source tables preserve different backend ranking views: one by sales volume and one by transaction amount. Each table retains the values available in its source.
 
-`region_type` retains the coarse regional context available in the source data and is reviewed together with the other store-period fields.
+`region_type` retains the coarse regional context available in the source data. It is used as weak contextual metadata only and is not treated as a market-area classification, maturity label, or peer-store group.
 
 ## Demo 2 Evidence Path
 
@@ -123,7 +123,7 @@ The table below shows selected numeric signals from the current Demo 2 SQL outpu
 
 The search-entry structure combines `search_exposure_users`, `search_average_rank`, `search_entry_users`, `search_entry_rate_pct`, and `search_entry_share_pct` across visibility and entry.
 
-`search_entry_share_pct` describes source mix among entry users. `search_entry_rate_pct`, `entry_conversion_rate_pct`, and `order_conversion_rate_pct` are interpreted together across exposure, entry, and order conversion.
+`search_entry_share_pct` is a directional ratio of `search_entry_users` to `entry_users` in the same reporting window. Traffic-source users may overlap, so it is not interpreted as exclusive source mix or user-level attribution. `search_entry_rate_pct`, `entry_conversion_rate_pct`, and `order_conversion_rate_pct` are interpreted together across exposure, entry, and order conversion.
 
 These values provide the numeric operating profile used by the Demo 2 diagnostic.
 

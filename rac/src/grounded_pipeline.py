@@ -189,7 +189,7 @@ def build_grounded_evidence_rows(
     return rows
 
 
-DIRECT_EVIDENCE_STATUSES = {
+RECORD_OR_KEYWORD_ROUTE_STATUSES = {
     "record_matched",
     "keyword_matched",
 }
@@ -217,7 +217,7 @@ def synchronize_factor_evidence_status(
         factor_weight["evidence_status"] = (
             "partially_supported"
             if grounding_status
-            in DIRECT_EVIDENCE_STATUSES
+            in RECORD_OR_KEYWORD_ROUTE_STATUSES
             else "missing"
         )
 
@@ -291,7 +291,7 @@ def format_evidence_values(
     return "<br>".join(rendered)
 
 
-def calculate_evidence_coverage_score(
+def calculate_routing_coverage_score(
     state: dict[str, Any],
 ) -> dict[str, Any]:
     grounded = state.get("grounded_evidence", {})
@@ -321,14 +321,14 @@ def calculate_evidence_coverage_score(
     )
 
     if total_packets == 0:
-        direct_evidence_rate = 0.0
-        supported_or_boundary_rate = 0.0
+        record_or_keyword_route_rate = 0.0
+        resolved_or_boundary_route_rate = 0.0
     else:
-        direct_evidence_rate = (
+        record_or_keyword_route_rate = (
             record_matched_packets
             + keyword_matched_packets
         ) / total_packets
-        supported_or_boundary_rate = (
+        resolved_or_boundary_route_rate = (
             record_matched_packets
             + keyword_matched_packets
             + boundary_matched_packets
@@ -342,8 +342,8 @@ def calculate_evidence_coverage_score(
     )
 
     score = (
-        0.45 * direct_evidence_rate
-        + 0.25 * supported_or_boundary_rate
+        0.45 * record_or_keyword_route_rate
+        + 0.25 * resolved_or_boundary_route_rate
         + 0.15 * no_missing_source_file_score
         + 0.15 * no_fallback_score
     )
@@ -362,9 +362,9 @@ def calculate_evidence_coverage_score(
         ),
         "fallback_packets": fallback_packets,
         "missing_source_files": missing_source_files,
-        "direct_evidence_rate": direct_evidence_rate,
-        "supported_or_boundary_rate": (
-            supported_or_boundary_rate
+        "record_or_keyword_route_rate": record_or_keyword_route_rate,
+        "resolved_or_boundary_route_rate": (
+            resolved_or_boundary_route_rate
         ),
         "no_missing_source_file_score": (
             no_missing_source_file_score
@@ -390,7 +390,7 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append("")
     lines.append(
         "Deterministic local-file review; routing scores summarize "
-        "evidence coverage under the current rules."
+        "route resolution under the current rules."
     )
     lines.append("")
 
@@ -458,6 +458,13 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
             + " |"
         )
 
+    lines.append("")
+    lines.append(
+        "`partially_supported` indicates that a registered local "
+        "evidence route was resolved for the factor. It does not "
+        "necessarily mean that observed numeric evidence supports "
+        "the decision."
+    )
     lines.append("")
     lines.append("## 4. Local Evidence Grounding")
     lines.append("")
@@ -711,7 +718,7 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     )
     lines.append("")
 
-    coverage_score = calculate_evidence_coverage_score(state)
+    coverage_score = calculate_routing_coverage_score(state)
     lines.append("## 9. Evidence-Routing Coverage")
     lines.append("")
     lines.append("Packet composition:")
@@ -753,9 +760,9 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append("How this score is calculated:")
     lines.append("")
     lines.append("```text")
-    lines.append("evidence_coverage_score =")
-    lines.append("  0.45 * direct_evidence_rate")
-    lines.append("+ 0.25 * supported_or_boundary_rate")
+    lines.append("routing_coverage_score =")
+    lines.append("  0.45 * record_or_keyword_route_rate")
+    lines.append("+ 0.25 * resolved_or_boundary_route_rate")
     lines.append("+ 0.15 * no_missing_source_file_score")
     lines.append("+ 0.15 * no_fallback_score")
     lines.append("```")
@@ -765,12 +772,12 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append("| Component | Weight | Why |")
     lines.append("|---|---:|---|")
     lines.append(
-        "| `direct_evidence_rate` | 0.45 | "
+        "| `record_or_keyword_route_rate` | 0.45 | "
         "Highest priority because record- or keyword-matched local routes should "
         "matter more than boundary-only evidence. |"
     )
     lines.append(
-        "| `supported_or_boundary_rate` | 0.25 | "
+        "| `resolved_or_boundary_route_rate` | 0.25 | "
         "Boundary evidence is valuable because it explicitly "
         "records missing requirements instead of hiding them. |"
     )
@@ -782,7 +789,7 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append(
         "| `no_fallback_score` | 0.15 | "
         "Fallback packets indicate unresolved routing and reduce "
-        "the current coverage score. |"
+        "the current routing score. |"
     )
     lines.append("")
     lines.append("Score contract:")
@@ -791,7 +798,7 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
         "- Component weights are fixed prototype heuristics."
     )
     lines.append(
-        "- The score summarizes evidence-routing coverage "
+        "- The score summarizes route resolution "
         "under the current rules."
     )
     lines.append(
@@ -829,17 +836,17 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
     lines.append("Derived rates and checks:")
     lines.append("")
     lines.append(
-        "- direct_evidence_rate = "
+        "- record_or_keyword_route_rate = "
         "(record_matched_packets + "
         "keyword_matched_packets) / total_packets = "
-        f"{coverage_score['direct_evidence_rate']:.2f}"
+        f"{coverage_score['record_or_keyword_route_rate']:.2f}"
     )
     lines.append(
-        "- supported_or_boundary_rate = "
+        "- resolved_or_boundary_route_rate = "
         "(record_matched_packets + "
         "keyword_matched_packets + "
         "boundary_matched_packets) / total_packets = "
-        f"{coverage_score['supported_or_boundary_rate']:.2f}"
+        f"{coverage_score['resolved_or_boundary_route_rate']:.2f}"
     )
     lines.append(
         f"- no_missing_source_file_score = "

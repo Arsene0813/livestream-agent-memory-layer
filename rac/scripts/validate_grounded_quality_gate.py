@@ -442,7 +442,7 @@ def validate_factor_evidence_status(
     """Keep factor status aligned with its evidence route."""
     issues: list[str] = []
 
-    direct_grounding_statuses = {
+    record_or_keyword_grounding_statuses = {
         "record_matched",
         "keyword_matched",
     }
@@ -485,7 +485,7 @@ def validate_factor_evidence_status(
         expected_status = (
             "partially_supported"
             if grounding_status
-            in direct_grounding_statuses
+            in record_or_keyword_grounding_statuses
             else "missing"
         )
 
@@ -675,9 +675,13 @@ def validate_state(case: dict[str, Any], state: dict[str, Any]) -> dict[str, Any
         'The judgment is bounded by the cited local evidence',
         'Packet composition:',
         'Routing coverage score:',
+        'routing_coverage_score =',
+        'record_or_keyword_route_rate',
+        'resolved_or_boundary_route_rate',
+        '`partially_supported` indicates that a registered local evidence route was resolved',
         'Score inputs (contract fields):',
         'Score contract:',
-        'The score summarizes evidence-routing coverage under the current rules.',
+        'The score summarizes route resolution under the current rules.',
         'Alternative weights are a formula sensitivity check; the report judgment is produced separately.',
         'Reading the score:',
         'Read the score as coverage rather than evidence strength, causal validity, decision quality, or business impact.',

@@ -97,22 +97,25 @@ requirements for the present evidence contract.
 
 Reviewer-facing terminology is deliberately narrow: the claim and definition check applies deterministic rules to selected unsupported claims and definition conflicts, while the report-contract quality gate validates report structure and selected evidence boundaries. Neither mechanism establishes that an operating conclusion is correct.
 
-## Evidence Types
+## Evidence Routes
 
-RAC distinguishes three evidence-routing outcomes.
+RAC distinguishes four evidence-routing outcomes.
 
-| Evidence type | Meaning | Review treatment |
+| Route | Meaning | Review treatment |
 |---|---|---|
-| Direct evidence | A local source contains factor-relevant evidence for the current question. | The report may use the evidence within its documented scope. |
-| Boundary evidence | A local source explicitly records that a required field, gate, or condition is not implemented or not available. | The report records the missing requirement instead of inventing supporting evidence. |
-| Fallback evidence | No sufficiently specific direct or boundary source was resolved. | Evidence coverage is reduced and the limitation remains visible. |
+| Record evidence | Structured local records are selected with row keys, canonical fields, and values. | The report may use those observations within the documented entity, period, and field scope. |
+| Definition or context route | A local document supplies a relevant definition, rule, or contextual description. | The route establishes definitions or review context, but is not treated as observed numeric support. |
+| Boundary evidence | A local source records that a required field, gate, or condition is unavailable or not implemented. | The report records the missing requirement instead of inventing support. |
+| Fallback route | No sufficiently specific record, definition, context, or boundary route was resolved. | Routing coverage is reduced and the unresolved requirement remains visible. |
 
-For the cross-store comparability case, the implemented February-April
-2026 B-F panel provides direct repeated-window evidence for descriptive
-review. Competition context and the requirements for a future pairwise gate remain
-boundary evidence in `retail_ops/COMPARABILITY_GATE_V0.md`. This keeps
-the available multi-period evidence separate from the stronger evidence
-still required for stable pairwise comparability.
+For the cross-store comparability case, the February-April 2026 B-F
+panel provides repeated-window record evidence for descriptive review.
+Competition context and the requirements for a future pairwise gate remain
+boundary evidence in `retail_ops/COMPARABILITY_GATE_V0.md`.
+
+In factor-weight rows, `partially_supported` means that a registered
+local evidence route was resolved. It does not necessarily mean that
+observed numeric evidence supports the decision.
 
 ## Factor Weight Generation
 
@@ -171,19 +174,19 @@ directly.
 Grounded RAC reports use a formula-based routing coverage score:
 
 ```text
-evidence_coverage_score
-= 0.45 * direct_evidence_rate
-+ 0.25 * supported_or_boundary_rate
+routing_coverage_score
+= 0.45 * record_or_keyword_route_rate
++ 0.25 * resolved_or_boundary_route_rate
 + 0.15 * no_missing_source_file_score
 + 0.15 * no_fallback_score
 ```
 
 | Component | Weight | Rationale |
 |---|---:|---|
-| `direct_evidence_rate` | 0.45 | Record- or keyword-matched local routes receive the highest weight. |
-| `supported_or_boundary_rate` | 0.25 | Explicit boundary evidence is preferable to an unsupported inference. |
+| `record_or_keyword_route_rate` | 0.45 | Record- or keyword-matched local routes receive the highest weight. |
+| `resolved_or_boundary_route_rate` | 0.25 | Explicit boundary evidence is preferable to an unsupported inference. |
 | `no_missing_source_file_score` | 0.15 | Existing source paths are required for traceability. |
-| `no_fallback_score` | 0.15 | Unresolved fallback packets reduce evidence coverage. |
+| `no_fallback_score` | 0.15 | Unresolved fallback packets reduce routing coverage. |
 
 The score summarizes whether the current deterministic resolver found local
 evidence or recorded an explicit boundary for requested evidence routes. It
@@ -291,53 +294,21 @@ automated pairwise comparability decisions, and autonomous operating
 actions require additional evidence or implementation beyond the
 current review contract.
 
-## Implementation Roadmap
+## Extension Boundary
 
-The deterministic RAC path remains the reference baseline for later integrations. Future implementations should preserve the typed review state, evidence-source references, explicit limitations, critique stage, and report contract already used by the current pipeline.
+The implemented reference condition is the deterministic, file-grounded
+pipeline documented above. An additional retrieval, model-assisted,
+orchestration, weighting, or backend-integration experiment belongs in
+this repository only when it has a defined comparison question and can
+be evaluated against the same reviewer cases without changing the
+canonical retail field contract.
 
-### Embedding-Based or Hybrid Retrieval
-
-The current retrieval experiments expose behavior under wording variation, hard-negative cases, entity and reporting-period mismatch, and ambiguous questions. A later experiment can compare the existing file-backed routing baseline with embedding-based or hybrid retrieval over the same evaluation cases.
-
-The comparison should record expected-evidence recall, false routing, entity and period preservation, unsupported-question behavior, threshold sensitivity, and source traceability. Vector retrieval would remain an evidence-routing mechanism rather than a source of operating conclusions.
-
-### Model-Assisted Review
-
-Model calls can be evaluated for factor expansion, competing-hypothesis generation, critique drafting, unresolved-evidence identification, and grounded report synthesis.
-
-Canonical field definitions, SQL-derived values, source paths, entity and period constraints, and deterministic positive-claim boundaries should remain externally controlled. Model-assisted outputs should be compared with the deterministic baseline for source use, unsupported claims, stability, preservation of limitations, and reviewer effort.
-
-### LangGraph-Style Orchestration
-
-The current review path can remain sequential while its state transitions are limited and directly inspectable. LangGraph-style orchestration becomes relevant when the workflow requires conditional re-retrieval, evidence-insufficiency branches, repeated critique, question-specific paths, recoverable failures, or human-review checkpoints.
-
-A later graph implementation should preserve the existing typed review state and report contract. Its value should be evaluated through clearer state transitions and recoverable failure handling rather than framework adoption alone.
-
-### Adaptive Factor Weighting
-
-The current factor weights are explicit prototype heuristics. Later experiments can compare the fixed buckets with alternative rule-based settings or learned weighting methods.
-
-Any adaptive approach should retain the factor set, the source of each weight, sensitivity results, and the distinction between review priority and business effect. Adaptive weights should not be interpreted as causal effects, business thresholds, or calibrated probabilities without separate evidence.
-
-### Live Merchant-Backend Integration
-
-Live merchant-backend access is a later data-integration path. It should be introduced after source-field mapping, reporting-period handling, schema drift, access control, anonymization, and lineage capture can be checked against the existing data dictionary and contract tests.
-
-The live path should preserve the canonical field names and Chinese definitions governed by `retail_ops/data/DATA_DICTIONARY.md`.
-
-### Next RAC Experiment
-
-The next experiment is a controlled sensitivity analysis over alternative factor-weight and routing coverage score settings.
-
-It should keep the same reviewer cases and evidence packets, vary one heuristic setting at a time, record changes in factor priority and final review state, and identify which outputs remain stable. The current deterministic settings should remain the reference condition.
-
-All roadmap implementations should continue to preserve:
+Such an experiment must preserve:
 
 - typed review state;
-- factor-first evidence routing;
 - source references for evidence claims;
-- separation of direct, boundary, and fallback evidence;
-- explicit competing hypotheses;
-- critique before final reporting;
-- visible routing coverage and limitation updates;
+- entity and reporting-period constraints;
+- explicit unresolved requirements and limitations;
+- competing hypotheses and critique;
+- routing coverage as route resolution rather than evidence strength;
 - withholding of conclusions that exceed the available evidence.

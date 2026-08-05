@@ -190,30 +190,14 @@ For pairwise cross-store decisions, the next evidence contract requires
 defined thresholds, repeated reporting windows, and additional operating
 and market-context evidence. Pairwise comparability remains future work.
 
-## Possible Follow-up Experiments
+## Current Extension Boundary
 
-These are planned extensions rather than part of the current
-reviewer-facing implementation. Each one is tied to a concrete
-evaluation question.
-
-1. **Evidence robustness:** test paraphrases, hard negatives, entity and
-   period preservation, missing-source behavior, cross-store period
-   mismatches, and sensitivity to alternative routing coverage weights.
-2. **Model-assisted review:** compare model-assisted factor expansion,
-   competing hypotheses, critique, and report synthesis against the
-   deterministic baseline.
-3. **Embedding-based or hybrid retrieval:** evaluate whether retrieval
-   improves wording coverage without weakening source traceability,
-   entity scope, period scope, or hard-negative behavior.
-4. **LangGraph-style orchestration:** introduce conditional
-   re-retrieval, repeated critique, recoverable branches, or
-   human-review checkpoints only when those branches are needed and can
-   be tested against the sequential baseline.
-5. **Live Meituan backend integration:** treat live integration as a
-   separate data-access and lineage task requiring source-field mapping,
-   period handling, schema-drift checks, access control, anonymization,
-   and lineage capture.
-
+The reviewer-facing scope is the deterministic, file-grounded review
+path and the fixed evaluation cases documented above. Additional model,
+retrieval, orchestration, or live-backend work should be treated as a
+separate experiment only when it answers a defined evaluation question
+without weakening source traceability, entity and period constraints,
+or judgment boundaries.
 ## Score Explainability Note
 
 Grounded reports use Routing coverage score. It summarizes record- or keyword-matched local routes, explicit boundary routes, missing-source status, and fallback status.

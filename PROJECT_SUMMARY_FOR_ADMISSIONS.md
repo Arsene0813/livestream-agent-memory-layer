@@ -109,13 +109,13 @@ The current results are:
 |---|---|---|
 | Store A value lineage | The check covers 3 source rows, 3 SQL output rows, 9 top-SKU rows, 180 source, formula, movement, ranking, and trade-off comparisons, and 5 generated facts. | The source-to-SQL-to-fact path can be inspected field by field across the multi-metric store-period diagnostic. |
 | Demo 2 threshold sensitivity | Baseline notes reproduce for all 5 rows. Raising the current thresholds by 5 percentage points changes Stores C-F; lowering them by 5 percentage points changes no rows. | The sample shows how the current diagnostic notes respond to nearby threshold settings. |
-| Retrieval wording stress | Positive-supported variants retain expected top-5 evidence in 30/34 cases; all 34/34 remain above the `0.5805` reference threshold. Hard-negative, entity/period-mismatch, and ambiguous variants cross it in 23/33, 13/18, and 3/16 variants. | Entity and period checks complement semantic evidence routing. |
-| Repeated-window B-F panel | Stores B-F each retain February-April 2026 coverage across 11 selected metrics. | The panel supports descriptive review and provides repeated-window records for future gate design. |
+| Retrieval wording stress | Positive-supported variants retain expected top-5 evidence in 30/34 variants. Hard-negative and entity-period mismatch cases remain visible as failure modes. | Entity and period checks are used alongside semantic evidence routing; detailed score distributions and the exploratory reference threshold remain in `retail_ops/EXPERIMENT_RESULTS.md`. |
+| Repeated-window B-F panel | Stores B-F each retain February-April 2026 coverage across 11 selected metrics. | The panel supports descriptive review while preserving the March observation between the February and April endpoints. |
 
-These descriptive analyses, retrieval stress tests, and contract
-checks are reported separately with their own procedures and outputs.
-The query-level results show how semantic routing responds to wording,
-entity, and period changes.
+These analyses are reported separately with their procedures and
+outputs. The retrieval results are used to inspect routing behavior under
+wording, entity, and period changes rather than to claim calibrated retrieval
+performance.
 
 ## Implemented Retail Path
 
@@ -141,9 +141,8 @@ A query-robustness inspection maps how wording variations and entity-period chan
 
 ### Repeated-Window B-F Panel
 
-The repeated-window panel adds selected Stores B-F across 2026-02, 2026-03, and 2026-04, making repeated store-period coverage visible for later question-specific comparability checks.
-
-The panel verifies three-month coverage and places February, March, and April values side by side for selected fields. The existing February-to-April delta fields remain endpoint summaries; March is retained so the middle month is not hidden. The panel prepares the evidence base for future comparison rules. Testing monthly guardrail stability will require repeated top-SKU evidence and monthly recomputation of `comparison_limit_notes`.
+The repeated-window panel adds selected Stores B-F across 2026-02, 2026-03, and 2026-04, making repeated store-period coverage visible across the same selected fields.
+The panel places February, March, and April values side by side and preserves March between the February-to-April endpoint summaries. It supports descriptive movement review only; question-specific comparison would require the additional evidence defined separately in `retail_ops/COMPARABILITY_GATE_V0.md`.
 
 Main outputs:
 

@@ -4,7 +4,7 @@
 
 Store A's March-to-April increases in transaction amount and transaction orders should not be attributed to search exposure alone.
 
-Deterministic local-file review; routing scores summarize evidence coverage under the current rules.
+Deterministic local-file review; routing scores summarize route resolution under the current rules.
 
 ## 2. Question Type
 
@@ -36,6 +36,8 @@ Weighting boundary:
 | order_conversion | 0.85 | high | partially_supported | Central to avoiding overconfident or misleading conclusions. |
 | promotion_intensity | 0.85 | high | partially_supported | Central to avoiding overconfident or misleading conclusions. |
 | transaction_orders | 0.72 | medium | partially_supported | Important context but not sufficient on its own. |
+
+`partially_supported` indicates that a registered local evidence route was resolved for the factor. It does not necessarily mean that observed numeric evidence supports the decision.
 
 ## 4. Local Evidence Grounding
 
@@ -102,9 +104,9 @@ Packet composition:
 How this score is calculated:
 
 ```text
-evidence_coverage_score =
-  0.45 * direct_evidence_rate
-+ 0.25 * supported_or_boundary_rate
+routing_coverage_score =
+  0.45 * record_or_keyword_route_rate
++ 0.25 * resolved_or_boundary_route_rate
 + 0.15 * no_missing_source_file_score
 + 0.15 * no_fallback_score
 ```
@@ -113,15 +115,15 @@ Weight rationale:
 
 | Component | Weight | Why |
 |---|---:|---|
-| `direct_evidence_rate` | 0.45 | Highest priority because record- or keyword-matched local routes should matter more than boundary-only evidence. |
-| `supported_or_boundary_rate` | 0.25 | Boundary evidence is valuable because it explicitly records missing requirements instead of hiding them. |
+| `record_or_keyword_route_rate` | 0.45 | Highest priority because record- or keyword-matched local routes should matter more than boundary-only evidence. |
+| `resolved_or_boundary_route_rate` | 0.25 | Boundary evidence is valuable because it explicitly records missing requirements instead of hiding them. |
 | `no_missing_source_file_score` | 0.15 | Source files must exist, but this is a basic traceability check rather than evidence strength. |
-| `no_fallback_score` | 0.15 | Fallback packets indicate unresolved routing and reduce the current coverage score. |
+| `no_fallback_score` | 0.15 | Fallback packets indicate unresolved routing and reduce the current routing score. |
 
 Score contract:
 
 - Component weights are fixed prototype heuristics.
-- The score summarizes evidence-routing coverage under the current rules.
+- The score summarizes route resolution under the current rules.
 - Alternative weights are a formula sensitivity check; the report judgment is produced separately.
 
 Score inputs (contract fields):
@@ -135,8 +137,8 @@ Score inputs (contract fields):
 
 Derived rates and checks:
 
-- direct_evidence_rate = (record_matched_packets + keyword_matched_packets) / total_packets = 1.00
-- supported_or_boundary_rate = (record_matched_packets + keyword_matched_packets + boundary_matched_packets) / total_packets = 1.00
+- record_or_keyword_route_rate = (record_matched_packets + keyword_matched_packets) / total_packets = 1.00
+- resolved_or_boundary_route_rate = (record_matched_packets + keyword_matched_packets + boundary_matched_packets) / total_packets = 1.00
 - no_missing_source_file_score = 1.00
 - no_fallback_score = 1.00
 

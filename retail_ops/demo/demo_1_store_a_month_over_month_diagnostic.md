@@ -164,16 +164,13 @@ This demo supports:
 - traceable retail memory facts;
 - entity, period, canonical-field, formula, and source consistency checks.
 
-## Next Evidence
+## Current Evidence Limits
 
-The current store-period record can be extended with:
+The current records support a descriptive Store A diagnostic across
+February-April 2026. They do not isolate campaign effects, competitor
+behavior, fulfillment constraints, stockouts, ratings, reviews, or the
+causal contribution of any one operating lever.
 
-- repeated reporting windows across more stores;
-- broader SKU classification and category mapping;
-- promotion-cycle and campaign context;
-- competition and price context;
-- fulfillment, stockout, delivery-condition, rating, and review signals.
-
-## Future Work
-
-Demo 1 establishes the single-store diagnostic contract and traceable memory-fact structure. Demo 2 applies the same field contract to Stores B-F, while the repeated-window panel supplies the records used by the question-specific comparison experiment in `retail_ops/COMPARABILITY_GATE_V0.md`.
+Demo 2 and the repeated-window panel extend the same field contract to
+Stores B-F. Question-specific pairwise comparison remains governed
+separately by `retail_ops/COMPARABILITY_GATE_V0.md`.

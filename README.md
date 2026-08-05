@@ -186,8 +186,8 @@ The current results are:
 |---|---|---|
 | Store A value lineage | The check covers 3 source rows, 3 SQL output rows, 9 top-SKU rows, 180 source, formula, movement, ranking, and trade-off comparisons, and 5 generated facts. | The source-to-SQL-to-fact path can be inspected field by field across the multi-metric store-period diagnostic. |
 | Demo 2 threshold sensitivity | Baseline notes reproduce for all 5 rows. Raising the current thresholds by 5 percentage points changes Stores C-F; lowering them by 5 percentage points changes no rows. | The sample shows how the current diagnostic notes respond to nearby threshold settings. |
-| Retrieval wording stress | Positive-supported variants retain expected top-5 evidence in 30/34 cases; all 34/34 remain above the `0.5805` reference threshold. Hard-negative, entity/period-mismatch, and ambiguous variants cross it in 23/33, 13/18, and 3/16 variants. | Entity and period checks complement semantic evidence routing. |
-| Repeated-window B-F panel | Stores B-F each retain February-April 2026 coverage across 11 selected metrics. | The panel supports descriptive review and provides repeated-window records for future gate design. |
+| Retrieval wording stress | Positive-supported variants retain expected top-5 evidence in 30/34 variants. Hard-negative and entity-period mismatch cases remain visible as failure modes. | Entity and period checks complement semantic evidence routing; detailed scores and exploratory threshold behavior remain in `retail_ops/EXPERIMENT_RESULTS.md`. |
+| Repeated-window B-F panel | Stores B-F each retain February-April 2026 coverage across 11 selected metrics. | The panel supports descriptive review while preserving the March observation between the February and April endpoints. |
 
 These descriptive analyses, retrieval stress tests, and contract checks
 are reported separately with their own procedures and outputs.
