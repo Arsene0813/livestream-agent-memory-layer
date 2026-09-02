@@ -2103,7 +2103,7 @@ def infer_retail_slots(message: str) -> list[str]:
         slots.append("activity_lever_profile")
 
 
-    if any(x in q for x in ["conversion", "aov", "average order", "growth", "recovery", "april", "转化", "客单价", "增长", "恢复", "四月", "4月"]):
+    if any(x in q for x in ["conversion", "aov", "average order", "growth", "recovery", "转化", "客单价", "增长", "恢复"]):
         slots.extend([
             "transaction_conversion_profile",
             "single_metric_attribution_guard",
