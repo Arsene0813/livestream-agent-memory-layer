@@ -1,10 +1,12 @@
 FROM python:3.12-slim
 
 WORKDIR /app
-COPY requirements.txt /app/requirements.txt
+COPY api/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
-COPY main.py /app/main.py
+COPY api/main.py /app/main.py
+RUN mkdir -p /app/retail_ops/outputs
+COPY retail_ops/outputs/generated_demo2_retail_memory_facts.json /app/retail_ops/outputs/generated_demo2_retail_memory_facts.json
 
 ENV PYTHONUNBUFFERED=1
 EXPOSE 8000

@@ -18,7 +18,9 @@ services:
     restart: unless-stopped
 
   api:
-    build: ./api
+    build:
+      context: .
+      dockerfile: api/Dockerfile
     container_name: oc_api
     environment:
       - OLLAMA_BASE_URL=http://oc_ollama:11434
