@@ -46,8 +46,8 @@ Weighting boundary:
 ## 4. Local Evidence Grounding
 
 - Total evidence packets: 9
-- Record matched packets: 0
-- Keyword matched packets: 8
+- Record matched packets: 8
+- Keyword matched packets: 0
 - Boundary matched packets: 1
 - Fallback packets: 0
 - Missing source files: 0
@@ -57,15 +57,15 @@ For CSV evidence, `Source Locator` shows the selected record scope and `Selected
 
 | Decision Factor ID | Source | Evidence Type | Status | Source Locator | Canonical Evidence Fields / Requirement | Selected Values |
 |---|---|---|---|---|---|---|
-| same_reporting_period | retail_ops/data/demo2_source_notes.md | context_evidence | keyword_matched | lines 6-8 | period_start, period_end, period_month | n/a |
-| store_type | retail_ops/outputs/demo2_cross_store_comparability_output.csv | context_evidence | keyword_matched | lines 1-2 | store_type | n/a |
-| order_volume | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | lines 1-2 | transaction_orders | n/a |
-| transaction_amount | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | lines 1-2 | transaction_amount | n/a |
-| activity_intensity | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | keyword_matched | lines 1-2 | activity_orders, activity_order_share_pct, activity_cost, activity_cost_ratio_pct | n/a |
-| region_context | retail_ops/data/DATA_DICTIONARY.md | definition_evidence | keyword_matched | lines 75-77 | region_type | n/a |
+| same_reporting_period | retail_ops/outputs/demo2_cross_store_comparability_output.csv | context_evidence | record_matched | records: store_id=B, C, D, E, F; period_month=2026-03; rows=5 | period_start, period_end, period_month | store_id=B, period_month=2026-03: period_start=2026-03-01, period_end=2026-03-31, period_month=2026-03<br>store_id=C, period_month=2026-03: period_start=2026-03-01, period_end=2026-03-31, period_month=2026-03<br>store_id=D, period_month=2026-03: period_start=2026-03-01, period_end=2026-03-31, period_month=2026-03<br>store_id=E, period_month=2026-03: period_start=2026-03-01, period_end=2026-03-31, period_month=2026-03<br>store_id=F, period_month=2026-03: period_start=2026-03-01, period_end=2026-03-31, period_month=2026-03 |
+| store_type | retail_ops/outputs/demo2_cross_store_comparability_output.csv | context_evidence | record_matched | records: store_id=B, C, D, E, F; period_month=2026-03; rows=5 | store_type | store_id=B, period_month=2026-03: store_type=self-operated<br>store_id=C, period_month=2026-03: store_type=self-operated<br>store_id=D, period_month=2026-03: store_type=self-operated<br>store_id=E, period_month=2026-03: store_type=partner<br>store_id=F, period_month=2026-03: store_type=partner |
+| order_volume | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | record_matched | records: store_id=B, C, D, E, F; period_month=2026-03; rows=5 | transaction_orders | store_id=B, period_month=2026-03: transaction_orders=299<br>store_id=C, period_month=2026-03: transaction_orders=175<br>store_id=D, period_month=2026-03: transaction_orders=404<br>store_id=E, period_month=2026-03: transaction_orders=158<br>store_id=F, period_month=2026-03: transaction_orders=266 |
+| transaction_amount | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | record_matched | records: store_id=B, C, D, E, F; period_month=2026-03; rows=5 | transaction_amount | store_id=B, period_month=2026-03: transaction_amount=11665.5<br>store_id=C, period_month=2026-03: transaction_amount=7064.09<br>store_id=D, period_month=2026-03: transaction_amount=18078.7<br>store_id=E, period_month=2026-03: transaction_amount=5784.87<br>store_id=F, period_month=2026-03: transaction_amount=9301.8 |
+| activity_intensity | retail_ops/outputs/demo2_cross_store_comparability_output.csv | quantitative_evidence | record_matched | records: store_id=B, C, D, E, F; period_month=2026-03; rows=5 | activity_orders, activity_order_share_pct, activity_cost, activity_cost_ratio_pct | store_id=B, period_month=2026-03: activity_orders=265, activity_order_share_pct=88.63, activity_cost=3361.3, activity_cost_ratio_pct=24.12<br>store_id=C, period_month=2026-03: activity_orders=124, activity_order_share_pct=70.86, activity_cost=490.21, activity_cost_ratio_pct=9.45<br>store_id=D, period_month=2026-03: activity_orders=337, activity_order_share_pct=83.42, activity_cost=2776.4, activity_cost_ratio_pct=14.92<br>store_id=E, period_month=2026-03: activity_orders=109, activity_order_share_pct=68.99, activity_cost=1576.26, activity_cost_ratio_pct=29.38<br>store_id=F, period_month=2026-03: activity_orders=217, activity_order_share_pct=81.58, activity_cost=1008.3, activity_cost_ratio_pct=12.16 |
+| region_context | retail_ops/outputs/demo2_cross_store_comparability_output.csv | context_evidence | record_matched | records: store_id=B, C, D, E, F; period_month=2026-03; rows=5 | region_type | store_id=B, period_month=2026-03: region_type=Qingdao<br>store_id=C, period_month=2026-03: region_type=Qingdao<br>store_id=D, period_month=2026-03: region_type=Yantai<br>store_id=E, period_month=2026-03: region_type=Yantai<br>store_id=F, period_month=2026-03: region_type=Yantai |
 | competition | retail_ops/COMPARABILITY_GATE_V0.md | boundary_evidence | boundary_matched | lines 101-103 | competition-context requirement in comparability contract | n/a |
-| sku_structure | retail_ops/outputs/demo2_cross_store_comparability_output.csv | product_mix_evidence | keyword_matched | lines 1-2 | top3_sku_transaction_amount, top3_sku_transaction_amount_share_pct, SKU source tables | n/a |
-| repeated_reporting_windows | retail_ops/outputs/repeated_window_panel_summary_output.csv | quantitative_evidence | keyword_matched | lines 1-2 | repeated period_month records in store_period_panel_metrics | n/a |
+| sku_structure | retail_ops/outputs/demo2_cross_store_comparability_output.csv | product_mix_evidence | record_matched | records: store_id=B, C, D, E, F; period_month=2026-03; rows=5 | top3_sku_transaction_amount, top3_sku_transaction_amount_share_pct | store_id=B, period_month=2026-03: top3_sku_transaction_amount=1300.9, top3_sku_transaction_amount_share_pct=11.15<br>store_id=C, period_month=2026-03: top3_sku_transaction_amount=2004.84, top3_sku_transaction_amount_share_pct=28.38<br>store_id=D, period_month=2026-03: top3_sku_transaction_amount=3055.78, top3_sku_transaction_amount_share_pct=16.9<br>store_id=E, period_month=2026-03: top3_sku_transaction_amount=726.25, top3_sku_transaction_amount_share_pct=12.55<br>store_id=F, period_month=2026-03: top3_sku_transaction_amount=1798.4, top3_sku_transaction_amount_share_pct=19.33 |
+| repeated_reporting_windows | retail_ops/outputs/repeated_window_panel_summary_output.csv | quantitative_evidence | record_matched | records: store_id=B, C, D, E, F; rows=5 | observed_month_count, feb_transaction_amount, mar_transaction_amount, apr_transaction_amount, feb_transaction_orders, mar_transaction_orders, apr_transaction_orders | store_id=B: observed_month_count=3, feb_transaction_amount=10468.0, mar_transaction_amount=11665.5, apr_transaction_amount=11496.8, feb_transaction_orders=259.0, mar_transaction_orders=299.0, apr_transaction_orders=293.0<br>store_id=C: observed_month_count=3, feb_transaction_amount=9503.7, mar_transaction_amount=7064.09, apr_transaction_amount=6756.8, feb_transaction_orders=253.0, mar_transaction_orders=175.0, apr_transaction_orders=178.0<br>store_id=D: observed_month_count=3, feb_transaction_amount=20332.2, mar_transaction_amount=18078.7, apr_transaction_amount=14087.2, feb_transaction_orders=466.0, mar_transaction_orders=404.0, apr_transaction_orders=308.0<br>store_id=E: observed_month_count=3, feb_transaction_amount=6794.9, mar_transaction_amount=5784.87, apr_transaction_amount=11264.72, feb_transaction_orders=148.0, mar_transaction_orders=158.0, apr_transaction_orders=377.0<br>store_id=F: observed_month_count=3, feb_transaction_amount=12549.1, mar_transaction_amount=9301.8, apr_transaction_amount=14090.7, feb_transaction_orders=307.0, mar_transaction_orders=266.0, apr_transaction_orders=424.0 |
 
 
 ## 5. Competing Hypotheses
@@ -79,7 +79,6 @@ The `Scenario-Template Confidence` column records deterministic review labels as
 
 ## 6. Critic Findings
 
-- [high] Observational evidence supports bounded association claims only. Recommendation: Keep attribution language conditional and record unresolved alternatives.
 - [medium] Current evidence scope is limited to committed local project files. Recommendation: Keep source paths and unresolved external requirements explicit.
 - [critical] Same-period diagnostic organization must not be described as a completed pairwise comparability gate. Recommendation: Separate same-period diagnostic review from pairwise comparability.
 
@@ -100,8 +99,8 @@ The judgment is bounded by the cited local evidence and the unresolved requireme
 Packet composition:
 
 - Total packets: 9
-- Record matched packets: 0
-- Keyword matched packets: 8
+- Record matched packets: 8
+- Keyword matched packets: 0
 - Boundary matched packets: 1
 - Fallback packets: 0
 - Missing source files: 0
@@ -137,8 +136,8 @@ Score contract:
 Score inputs (contract fields):
 
 - total_packets = 9
-- record_matched_packets = 0
-- keyword_matched_packets = 8
+- record_matched_packets = 8
+- keyword_matched_packets = 0
 - boundary_matched_packets = 1
 - fallback_packets = 0
 - missing_source_files = 0

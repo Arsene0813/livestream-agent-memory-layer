@@ -12,8 +12,8 @@ A contract pass means the case satisfied the checks implemented by the current d
 - Report-contract passed cases: 4
 - Report-contract failed cases: 0
 - Total grounded packets: 30
-- Record matched packets: 5
-- Keyword matched packets: 22
+- Record matched packets: 13
+- Keyword matched packets: 14
 - Boundary matched packets: 3
 - Fallback packets: 0
 - Missing source files: 0
@@ -23,9 +23,9 @@ A contract pass means the case satisfied the checks implemented by the current d
 | Case | Contract Pass | Factors | Hypotheses | Critic Findings | Grounded Rows | Record Matched | Keyword Matched | Boundary Matched | Fallback | Missing Sources |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | rac_store_a_attribution_001 | True | 5 | 3 | 2 | 5 | 5 | 0 | 0 | 0 | 0 |
-| rac_cross_store_comparability_001 | True | 9 | 2 | 3 | 9 | 0 | 8 | 1 | 0 | 0 |
-| rac_promotion_strategy_001 | True | 8 | 2 | 3 | 8 | 0 | 6 | 2 | 0 | 0 |
-| rac_system_design_001 | True | 8 | 2 | 2 | 8 | 0 | 8 | 0 | 0 | 0 |
+| rac_cross_store_comparability_001 | True | 9 | 2 | 2 | 9 | 8 | 0 | 1 | 0 | 0 |
+| rac_promotion_strategy_001 | True | 8 | 2 | 2 | 8 | 0 | 6 | 2 | 0 | 0 |
+| rac_system_design_001 | True | 8 | 2 | 1 | 8 | 0 | 8 | 0 | 0 | 0 |
 
 ## Store A Record Grounding Requirement
 
@@ -33,14 +33,18 @@ For rac_store_a_attribution_001, the gate requires five Store A records for 2026
 
 ## Cross-Store Grounding Requirement
 
-For rac_cross_store_comparability_001, the report-contract quality gate requires:
+For rac_cross_store_comparability_001, the gate checks these record routes and their selected CSV values:
 
-- fallback_count <= 1
-- order_volume -> retail_ops/outputs/demo2_cross_store_comparability_output.csv
-- transaction_amount -> retail_ops/outputs/demo2_cross_store_comparability_output.csv
-- sku_structure -> retail_ops/outputs/demo2_cross_store_comparability_output.csv
-- competition -> retail_ops/COMPARABILITY_GATE_V0.md as boundary_evidence
-- repeated_reporting_windows -> retail_ops/outputs/repeated_window_panel_summary_output.csv as quantitative_evidence
+- fallback_count = 0
+- `same_reporting_period` -> `retail_ops/outputs/demo2_cross_store_comparability_output.csv` as `context_evidence`; fields: `period_start, period_end, period_month`
+- `store_type` -> `retail_ops/outputs/demo2_cross_store_comparability_output.csv` as `context_evidence`; fields: `store_type`
+- `order_volume` -> `retail_ops/outputs/demo2_cross_store_comparability_output.csv` as `quantitative_evidence`; fields: `transaction_orders`
+- `transaction_amount` -> `retail_ops/outputs/demo2_cross_store_comparability_output.csv` as `quantitative_evidence`; fields: `transaction_amount`
+- `activity_intensity` -> `retail_ops/outputs/demo2_cross_store_comparability_output.csv` as `quantitative_evidence`; fields: `activity_orders, activity_order_share_pct, activity_cost, activity_cost_ratio_pct`
+- `region_context` -> `retail_ops/outputs/demo2_cross_store_comparability_output.csv` as `context_evidence`; fields: `region_type`
+- `sku_structure` -> `retail_ops/outputs/demo2_cross_store_comparability_output.csv` as `product_mix_evidence`; fields: `top3_sku_transaction_amount, top3_sku_transaction_amount_share_pct`
+- `repeated_reporting_windows` -> `retail_ops/outputs/repeated_window_panel_summary_output.csv` as `quantitative_evidence`; fields: `observed_month_count, feb_transaction_amount, mar_transaction_amount, apr_transaction_amount, feb_transaction_orders, mar_transaction_orders, apr_transaction_orders`
+- `competition` -> `retail_ops/COMPARABILITY_GATE_V0.md` as `boundary_evidence`
 
 ## Report-Contract Issues
 

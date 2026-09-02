@@ -80,7 +80,7 @@ The implemented RAC scaffold includes:
 - explicit heuristic factor weights;
 - local file-based evidence routing;
 - source-path existence checks;
-- factor-specific keyword matching;
+- structured CSV record selection and source-specific text-anchor matching;
 - local evidence snippets and line ranges;
 - boundary evidence for unavailable requirements;
 - competing-hypothesis templates;
@@ -240,8 +240,8 @@ The report-contract quality gate checks that every generated report contains:
 - critic findings;
 - rule-based claim and definition-check output;
 - local source paths;
-- source line ranges;
-- local evidence snippets;
+- structured record keys, canonical fields, and selected values for CSV evidence;
+- source line ranges and local snippets for text evidence;
 - explicit limitations;
 - evidence-routing status;
 - no missing source files;

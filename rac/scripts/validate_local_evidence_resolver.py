@@ -8,6 +8,11 @@ from tempfile import TemporaryDirectory
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
+from rac.src.demo2_csv_grounding import (
+    FACTOR_RECORD_SPECS as DEMO2_FACTOR_RECORD_SPECS,
+    PERIOD_MONTH as DEMO2_PERIOD_MONTH,
+    STORE_IDS as DEMO2_STORE_IDS,
+)
 from rac.src.local_evidence_resolver import (
     SOURCE_FACTOR_KEYWORDS,
     STRATEGIC_SOURCE_OVERRIDES,
@@ -294,7 +299,7 @@ def validate_broad_terms_do_not_ground_boundary() -> None:
                     f"{resolved.get('grounding_status')}"
                 )
 
-def validate_store_a_packets(
+def validate_record_packets(
     case_id: str,
     packets: list[dict],
 ) -> None:
@@ -304,6 +309,104 @@ def validate_store_a_packets(
         if packet["grounding_status"]
         == "record_matched"
     ]
+
+    if case_id == "rac_cross_store_comparability_001":
+        if not record_packets:
+            fail(
+                "Demo 2 record grounding is missing"
+            )
+
+        if len(record_packets) != len(
+            DEMO2_FACTOR_RECORD_SPECS
+        ):
+            fail(
+                "Demo 2 record packet count mismatch"
+            )
+
+        by_factor = {
+            packet["factor_id"]: packet
+            for packet in record_packets
+        }
+
+        if set(by_factor) != set(
+            DEMO2_FACTOR_RECORD_SPECS
+        ):
+            fail(
+                "Demo 2 record factor mismatch"
+            )
+
+        for factor_id, packet in (
+            by_factor.items()
+        ):
+            spec = DEMO2_FACTOR_RECORD_SPECS[
+                factor_id
+            ]
+
+            if (
+                packet["source_path"]
+                != spec.source_path
+            ):
+                fail(
+                    f"{factor_id} used "
+                    "unexpected source"
+                )
+
+            if (
+                packet["grounding_role"]
+                != spec.grounding_role
+            ):
+                fail(
+                    f"{factor_id} used "
+                    "unexpected role"
+                )
+
+            if (
+                packet["evidence_fields"]
+                != list(spec.fields)
+            ):
+                fail(
+                    f"{factor_id} canonical "
+                    "fields mismatch"
+                )
+
+            expected_keys = [
+                (
+                    {
+                        "store_id": store_id,
+                        "period_month": (
+                            DEMO2_PERIOD_MONTH
+                        ),
+                    }
+                    if "period_month"
+                    in spec.key_fields
+                    else {
+                        "store_id": store_id
+                    }
+                )
+                for store_id in DEMO2_STORE_IDS
+            ]
+
+            actual_keys = [
+                item["row_key"]
+                for item in packet[
+                    "evidence_values"
+                ]
+            ]
+
+            if actual_keys != expected_keys:
+                fail(
+                    f"{factor_id} record "
+                    "keys mismatch"
+                )
+
+            if packet["snippets"]:
+                fail(
+                    f"{factor_id} record "
+                    "evidence must not use "
+                    "snippets"
+                )
+
+        return
 
     if case_id != "rac_store_a_attribution_001":
         if record_packets:
@@ -384,7 +487,7 @@ def main() -> None:
             case["case_id"],
             packets,
         )
-        validate_store_a_packets(
+        validate_record_packets(
             case["case_id"],
             packets,
         )

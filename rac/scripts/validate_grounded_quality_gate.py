@@ -11,6 +11,11 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from rac.src.grounded_pipeline import run_grounded_pipeline, save_grounded_outputs
+from rac.src.demo2_csv_grounding import (
+    FACTOR_RECORD_SPECS as DEMO2_FACTOR_RECORD_SPECS,
+    PERIOD_MONTH as DEMO2_PERIOD_MONTH,
+    STORE_IDS as DEMO2_STORE_IDS,
+)
 from rac.src.local_evidence_resolver import SOURCE_FACTOR_KEYWORDS
 from rac.src.store_a_csv_grounding import (
     FACTOR_FIELDS as STORE_A_FACTOR_FIELDS,
@@ -59,13 +64,6 @@ ALLOWED_GROUNDING_STATUSES = {
 }
 
 MIN_SNIPPET_CHARS = 8
-
-CROSS_STORE_REQUIRED_QUANTITATIVE_SOURCES = {
-    "order_volume": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-    "transaction_amount": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-    "sku_structure": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-    "repeated_reporting_windows": "retail_ops/outputs/repeated_window_panel_summary_output.csv"
-}
 
 CROSS_STORE_REQUIRED_BOUNDARY_SOURCES = {
     "competition": "retail_ops/COMPARABILITY_GATE_V0.md",
@@ -183,6 +181,179 @@ def validate_store_a_record_shape(
     return issues
 
 
+
+def validate_demo2_record_shape(
+    row: dict[str, Any],
+    *,
+    index: int,
+) -> list[str]:
+    issues = []
+    factor_id = str(row.get("factor_id", ""))
+    spec = DEMO2_FACTOR_RECORD_SPECS.get(
+        factor_id
+    )
+
+    if spec is None:
+        return [
+            f"row {index} unexpected Demo 2 "
+            f"record factor: {factor_id}"
+        ]
+
+    if (
+        row.get("source_path")
+        != spec.source_path
+    ):
+        issues.append(
+            f"row {index} unexpected "
+            "Demo 2 record source"
+        )
+
+    if (
+        row.get("grounding_role")
+        != spec.grounding_role
+    ):
+        issues.append(
+            f"row {index} unexpected "
+            "Demo 2 record role"
+        )
+
+    if (
+        row.get("line_range") != "n/a"
+        or str(row.get("snippet", "")).strip()
+    ):
+        issues.append(
+            f"row {index} Demo 2 record "
+            "claims text-line grounding"
+        )
+
+    expected_fields = list(spec.fields)
+    expected_keys = [
+        (
+            {
+                "store_id": store_id,
+                "period_month": (
+                    DEMO2_PERIOD_MONTH
+                ),
+            }
+            if "period_month"
+            in spec.key_fields
+            else {
+                "store_id": store_id
+            }
+        )
+        for store_id in DEMO2_STORE_IDS
+    ]
+
+    if (
+        row.get("evidence_fields")
+        != expected_fields
+    ):
+        issues.append(
+            f"row {index} Demo 2 "
+            "field contract mismatch"
+        )
+
+    values = row.get(
+        "evidence_values",
+        [],
+    )
+    actual_keys = [
+        item.get("row_key", {})
+        for item in values
+        if isinstance(item, dict)
+    ]
+    scope = row.get("record_scope", {})
+
+    if actual_keys != expected_keys:
+        issues.append(
+            f"row {index} Demo 2 "
+            "selected keys mismatch"
+        )
+
+    if (
+        scope.get("key_fields")
+        != list(spec.key_fields)
+        or scope.get("row_count")
+        != len(DEMO2_STORE_IDS)
+        or scope.get("row_keys")
+        != expected_keys
+    ):
+        issues.append(
+            f"row {index} Demo 2 "
+            "record scope mismatch"
+        )
+
+    source_path = ROOT / spec.source_path
+
+    with source_path.open(
+        "r",
+        encoding="utf-8-sig",
+        newline="",
+    ) as handle:
+        source_rows = list(
+            csv.DictReader(handle)
+        )
+
+    source_by_key = {
+        tuple(
+            source_row[field]
+            for field in spec.key_fields
+        ): source_row
+        for source_row in source_rows
+        if (
+            source_row.get("store_id")
+            in DEMO2_STORE_IDS
+        )
+        and (
+            "period_month"
+            not in spec.key_fields
+            or source_row.get("period_month")
+            == DEMO2_PERIOD_MONTH
+        )
+    }
+
+    for item in values:
+        row_key = item.get("row_key", {})
+        key = tuple(
+            str(row_key.get(field, ""))
+            for field in spec.key_fields
+        )
+        source_row = source_by_key.get(key)
+        selected_values = item.get(
+            "values",
+            {},
+        )
+
+        if source_row is None:
+            issues.append(
+                f"row {index} Demo 2 "
+                f"source key missing: {key!r}"
+            )
+            continue
+
+        if (
+            set(selected_values)
+            != set(spec.fields)
+        ):
+            issues.append(
+                f"row {index} Demo 2 "
+                "selected fields mismatch"
+            )
+            continue
+
+        for field in spec.fields:
+            if (
+                str(selected_values[field])
+                != str(source_row[field])
+            ):
+                issues.append(
+                    f"row {index} Demo 2 "
+                    "source-value mismatch for "
+                    f"{key!r}, {field}"
+                )
+
+    return issues
+
 def validate_store_a_grounding(
     case_id: str,
     state: dict[str, Any],
@@ -194,6 +365,8 @@ def validate_store_a_grounding(
         for row in rows
         if row.get("grounding_status")
         == "record_matched"
+        and row.get("source_path")
+        == STORE_A_SOURCE_PATH
     ]
 
     if case_id != "rac_store_a_attribution_001":
@@ -383,12 +556,20 @@ def validate_grounded_rows(rows: list[dict[str, Any]]) -> tuple[list[str], dict[
             issues.append(f"row {index} invalid grounding_status: {status}")
 
         if status == "record_matched":
-            issues.extend(
-                validate_store_a_record_shape(
-                    row,
-                    index=index,
+            if source_path == STORE_A_SOURCE_PATH:
+                issues.extend(
+                    validate_store_a_record_shape(
+                        row,
+                        index=index,
+                    )
                 )
-            )
+            else:
+                issues.extend(
+                    validate_demo2_record_shape(
+                        row,
+                        index=index,
+                    )
+                )
             continue
 
         if not re.match(r"^\d+-\d+$", line_range):
@@ -515,33 +696,75 @@ def validate_cross_store_grounding(state: dict[str, Any]) -> list[str]:
     summary = state.get("grounded_evidence", {}).get("summary", {})
     fallback_count = summary.get("fallback_count", 0)
 
-    if fallback_count > 1:
-        issues.append(f"cross-store fallback_count too high: {fallback_count}")
+    if fallback_count != 0:
+        issues.append(
+            "cross-store fallback_count "
+            f"must be zero: {fallback_count}"
+        )
 
-    for factor_id, expected_source in CROSS_STORE_REQUIRED_QUANTITATIVE_SOURCES.items():
+    required_routes = {
+        factor_id: (
+            spec.source_path,
+            spec.grounding_role,
+        )
+        for factor_id, spec
+        in DEMO2_FACTOR_RECORD_SPECS.items()
+    }
+
+    for factor_id, (
+        expected_source,
+        expected_role,
+    ) in required_routes.items():
         row = rows.get(factor_id)
 
         if not row:
-            issues.append(f"cross-store missing factor row: {factor_id}")
+            issues.append(
+                "cross-store missing factor row: "
+                f"{factor_id}"
+            )
             continue
 
-        if row.get("source_path") != expected_source:
+        if (
+            row.get("source_path")
+            != expected_source
+        ):
             issues.append(
-                f"cross-store factor {factor_id} expected source {expected_source}, "
-                f"got {row.get('source_path')}"
+                "cross-store factor "
+                f"{factor_id} expected source "
+                f"{expected_source}, got "
+                f"{row.get('source_path')}"
             )
 
-        if row.get("grounding_role") != "quantitative_evidence":
+        if (
+            row.get("grounding_role")
+            != expected_role
+        ):
             issues.append(
-                f"cross-store factor {factor_id} expected quantitative_evidence role, "
-                f"got {row.get('grounding_role')}"
+                "cross-store factor "
+                f"{factor_id} expected "
+                f"{expected_role} role, got "
+                f"{row.get('grounding_role')}"
             )
 
-        if row.get("grounding_status") != "keyword_matched":
+        if (
+            row.get("grounding_status")
+            != "record_matched"
+        ):
             issues.append(
-                f"cross-store factor {factor_id} expected keyword_matched status, "
-                f"got {row.get('grounding_status')}"
+                "cross-store factor "
+                f"{factor_id} expected "
+                "record_matched status, got "
+                f"{row.get('grounding_status')}"
             )
+
+    if (
+        summary.get("record_matched_count")
+        != len(DEMO2_FACTOR_RECORD_SPECS)
+    ):
+        issues.append(
+            "cross-store record summary "
+            "count mismatch"
+        )
 
     for factor_id, expected_source in CROSS_STORE_REQUIRED_BOUNDARY_SOURCES.items():
         row = rows.get(factor_id)
@@ -865,14 +1088,30 @@ def write_markdown_summary(results: list[dict[str, Any]], output_path: Path) -> 
     lines.append("")
     lines.append("## Cross-Store Grounding Requirement")
     lines.append("")
-    lines.append("For rac_cross_store_comparability_001, the report-contract quality gate requires:")
+    lines.append(
+        "For rac_cross_store_comparability_001, "
+        "the gate checks these record routes "
+        "and their selected CSV values:"
+    )
     lines.append("")
-    lines.append("- fallback_count <= 1")
-    lines.append("- order_volume -> retail_ops/outputs/demo2_cross_store_comparability_output.csv")
-    lines.append("- transaction_amount -> retail_ops/outputs/demo2_cross_store_comparability_output.csv")
-    lines.append("- sku_structure -> retail_ops/outputs/demo2_cross_store_comparability_output.csv")
-    lines.append("- competition -> retail_ops/COMPARABILITY_GATE_V0.md as boundary_evidence")
-    lines.append("- repeated_reporting_windows -> retail_ops/outputs/repeated_window_panel_summary_output.csv as quantitative_evidence")
+    lines.append("- fallback_count = 0")
+
+    for factor_id, spec in (
+        DEMO2_FACTOR_RECORD_SPECS.items()
+    ):
+        fields = ", ".join(spec.fields)
+        lines.append(
+            f"- `{factor_id}` -> "
+            f"`{spec.source_path}` as "
+            f"`{spec.grounding_role}`; "
+            f"fields: `{fields}`"
+        )
+
+    lines.append(
+        "- `competition` -> "
+        "`retail_ops/COMPARABILITY_GATE_V0.md` "
+        "as `boundary_evidence`"
+    )
     lines.append("")
     lines.append("## Report-Contract Issues")
     lines.append("")

@@ -78,45 +78,38 @@ Validate the grounded reports:
 Expected quality-gate result:
 
   [OK] RAC report-contract quality gate passed
-  [OK] Cases checked: 4
-  [OK] Total grounded packets: 30
-  [OK] Record matched packets: 5
-  [OK] Keyword matched packets: 22
-  [OK] Boundary matched packets: 3
-  [OK] Fallback packets: 0
-  [OK] Missing source files: 0
+
+Exact counts and per-case routes are generated in
+[`grounded_quality_summary.md`](outputs/grounded_quality_summary.md).
 
 ## Demo Cases
 
 | Case | Question | What It Demonstrates | Grounded Report |
 |---|---|---|---|
 | `rac_store_a_attribution_001` | Can Store A's March-to-April increases in transaction amount and transaction orders be attributed to search exposure alone? | Grounds search exposure, entry conversion, order conversion, promotion intensity, and transaction orders to the March-April Store A CSV records while rejecting single-cause attribution. | [Store A attribution report](outputs/grounded_rac_store_a_attribution_001.md) |
-| `rac_cross_store_comparability_001` | Are Stores B-F directly comparable in March 2026? | Routes available quantitative evidence to Demo 2 sources and unavailable pairwise requirements to explicit boundary evidence. | [Cross-store boundary report](outputs/grounded_rac_cross_store_comparability_001.md) |
+| `rac_cross_store_comparability_001` | Are Stores B-F directly comparable in March 2026? | Selects B-F record values for the declared factors and retains competition context as boundary evidence. | [Cross-store boundary report](outputs/grounded_rac_cross_store_comparability_001.md) |
 | `rac_promotion_strategy_001` | What should be checked before changing promotions for a store? | Routes available transaction, cost, and conversion evidence while retaining required SKU-level margin and competitor context as unresolved requirements. | [Promotion-strategy report](outputs/grounded_rac_promotion_strategy_001.md) |
 | `rac_system_design_001` | How should RAC connect to the existing memory layer? | Shows how typed memory records feed a factor-aware grounded review path. | [System-design report](outputs/grounded_rac_system_design_001.md) |
 
 ## Cross-Store Grounding Hardening
 
-The cross-store case uses factor-specific source requirements for quantitative, descriptive, and boundary evidence.
+For `rac_cross_store_comparability_001`, the current evidence routes are:
 
-Current result for rac_cross_store_comparability_001:
+- The declared record factors select B-F structured records and expose their
+  row keys, fields, and values.
+- March records cover the reporting period, store type, transaction orders,
+  transaction amount, activity evidence, `region_type`, and top-3 SKU
+  transaction-amount evidence.
+- The repeated-window route exposes the observed February-April transaction
+  amounts and order counts for each store.
+- Competition context remains `boundary_evidence`.
 
-- Total evidence packets: 9
-- Keyword matched packets: 8
-- Boundary matched packets: 1
-- Fallback packets: 0
-- Missing source files: 0
+The exact routes and selected fields are generated in
+[`grounded_quality_summary.md`](outputs/grounded_quality_summary.md), and the
+selected values are shown in the
+[cross-store report](outputs/grounded_rac_cross_store_comparability_001.md).
 
-Required source routing:
-
-| Factor | Required Source | Grounding Role |
-|---|---|---|
-| order_volume | `retail_ops/outputs/demo2_cross_store_comparability_output.csv` | quantitative_evidence |
-| transaction_amount | `retail_ops/outputs/demo2_cross_store_comparability_output.csv` | quantitative_evidence |
-| repeated_reporting_windows | `retail_ops/outputs/repeated_window_panel_summary_output.csv` | quantitative_evidence |
-| competition | `retail_ops/COMPARABILITY_GATE_V0.md` | boundary_evidence |
-
-The implemented scope is a factor-routing audit. Current B-F repeated-window panel evidence covers 2026-02 to 2026-04. Broader stability across additional stores, months, activity conditions, and market contexts remains required for a future pairwise comparability gate.
+This case checks whether each declared factor resolves to the expected local evidence. The B-F repeated-window panel covers 2026-02 to 2026-04. A future pairwise comparability gate would need evidence across additional stores, months, activity conditions, and market contexts.
 
 ## Recommended Review Order
 
@@ -133,9 +126,10 @@ For code review, inspect:
 
 1. [`mock_pipeline.py`](src/mock_pipeline.py)
 2. [`local_evidence_resolver.py`](src/local_evidence_resolver.py)
-3. [`store_a_csv_grounding.py`](src/store_a_csv_grounding.py)
-4. [`grounded_pipeline.py`](src/grounded_pipeline.py)
-5. [`validate_grounded_quality_gate.py`](scripts/validate_grounded_quality_gate.py)
+3. [`demo2_csv_grounding.py`](src/demo2_csv_grounding.py)
+4. [`store_a_csv_grounding.py`](src/store_a_csv_grounding.py)
+5. [`grounded_pipeline.py`](src/grounded_pipeline.py)
+6. [`validate_grounded_quality_gate.py`](scripts/validate_grounded_quality_gate.py)
 
 ## What The Grounded Reports Show
 

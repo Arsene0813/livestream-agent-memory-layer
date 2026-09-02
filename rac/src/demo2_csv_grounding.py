@@ -25,6 +25,16 @@ class RecordSpec(NamedTuple):
 
 
 FACTOR_RECORD_SPECS = {
+    "same_reporting_period": RecordSpec(
+        SNAPSHOT_SOURCE_PATH,
+        "context_evidence",
+        ("store_id", "period_month"),
+        (
+            "period_start",
+            "period_end",
+            "period_month",
+        ),
+    ),
     "store_type": RecordSpec(
         SNAPSHOT_SOURCE_PATH,
         "context_evidence",
@@ -53,6 +63,12 @@ FACTOR_RECORD_SPECS = {
             "activity_cost",
             "activity_cost_ratio_pct",
         ),
+    ),
+    "region_context": RecordSpec(
+        SNAPSHOT_SOURCE_PATH,
+        "context_evidence",
+        ("store_id", "period_month"),
+        ("region_type",),
     ),
     "sku_structure": RecordSpec(
         SNAPSHOT_SOURCE_PATH,

@@ -409,25 +409,25 @@ def generate_hypotheses(question_type: str) -> list[dict[str, Any]]:
 def critique(question_type: str) -> list[dict[str, str]]:
     findings = [
         {
-            "issue": "Observational evidence supports bounded association claims only.",
-            "severity": "high",
-            "recommendation": "Keep attribution language conditional and record unresolved alternatives."
-        },
-        {
             "issue": "Current evidence scope is limited to committed local project files.",
             "severity": "medium",
             "recommendation": "Keep source paths and unresolved external requirements explicit."
         }
     ]
 
-    if question_type == "comparability_judgment":
+    if question_type == "causal_diagnostic":
+        findings.insert(0, {
+            "issue": "Observational evidence supports bounded association claims only.",
+            "severity": "high",
+            "recommendation": "Keep attribution language conditional and record unresolved alternatives."
+        })
+    elif question_type == "comparability_judgment":
         findings.append({
             "issue": "Same-period diagnostic organization must not be described as a completed pairwise comparability gate.",
             "severity": "critical",
             "recommendation": "Separate same-period diagnostic review from pairwise comparability."
         })
-
-    if question_type == "strategic_recommendation":
+    elif question_type == "strategic_recommendation":
         findings.append({
             "issue": (
                 "SKU margin and competitor context remain "

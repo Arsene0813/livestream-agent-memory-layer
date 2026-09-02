@@ -69,7 +69,12 @@ def main() -> None:
                 "[OK] "
                 f"{result['case_id']} "
                 f"packets={summary['total_packets']} "
-                f"keyword_matched={summary['keyword_matched_count']} "
+                f"record_matched="
+                f"{summary['record_matched_count']} "
+                f"keyword_matched="
+                f"{summary['keyword_matched_count']} "
+                f"boundary_matched="
+                f"{summary['boundary_matched_count']} "
                 f"fallback={summary['fallback_count']} "
                 f"missing={summary['source_missing_count']}"
             )

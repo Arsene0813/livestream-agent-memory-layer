@@ -237,11 +237,13 @@ def format_record_scope(
             if row.get("store_id")
         }
     )
-    months = [
-        str(row["period_month"])
-        for row in row_keys
-        if row.get("period_month")
-    ]
+    months = sorted(
+        {
+            str(row["period_month"])
+            for row in row_keys
+            if row.get("period_month")
+        }
+    )
 
     parts = []
 
@@ -518,11 +520,6 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
         "|---|---|---|---|---|---|---|"
     )
 
-    report_evidence_type_overrides = {
-        "store_type": "context_evidence",
-        "sku_structure": "product_mix_evidence",
-    }
-
     report_evidence_fields = {
         "same_reporting_period": "period_start, period_end, period_month",
         "store_type": "store_type",
@@ -588,10 +585,9 @@ def write_grounded_final_report(state: dict[str, Any]) -> str:
 
     for row in rows:
         factor_id = row["factor_id"]
-        evidence_type = report_evidence_type_overrides.get(
-            factor_id,
-            row["grounding_role"],
-        )
+        evidence_type = row[
+            "grounding_role"
+        ]
         evidence_fields = (
             ", ".join(
                 row.get("evidence_fields", [])

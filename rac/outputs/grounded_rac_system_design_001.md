@@ -77,7 +77,6 @@ The `Scenario-Template Confidence` column records deterministic review labels as
 
 ## 6. Critic Findings
 
-- [high] Observational evidence supports bounded association claims only. Recommendation: Keep attribution language conditional and record unresolved alternatives.
 - [medium] Current evidence scope is limited to committed local project files. Recommendation: Keep source paths and unresolved external requirements explicit.
 
 ## 7. Claim and Definition Check

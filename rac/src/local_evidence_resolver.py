@@ -4,6 +4,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from rac.src.demo2_csv_grounding import (
+    resolve_demo2_record,
+    supports_demo2_record,
+)
 from rac.src.store_a_csv_grounding import (
     SOURCE_PATH as STORE_A_SOURCE_PATH,
     resolve_store_a_record,
@@ -83,9 +87,7 @@ FACTOR_KEYWORDS: dict[str, list[str]] = {
         "order_volume",
         "order volume",
         "transaction_orders",
-        "transaction_order",
-        "transaction_order_count",
-        "transaction_orders",
+        "transaction orders",
         "orders",
         "成交订单量",
     ],
@@ -360,6 +362,10 @@ STRATEGIC_SOURCE_OVERRIDES: dict[str, list[dict[str, str]]] = {
 COMPARABILITY_SOURCE_OVERRIDES: dict[str, list[dict[str, str]]] = {
     "same_reporting_period": [
         {
+            "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
+            "grounding_role": "context_evidence"
+        },
+        {
             "source_path": "retail_ops/data/demo2_source_notes.md",
             "grounding_role": "context_evidence"
         }
@@ -367,7 +373,7 @@ COMPARABILITY_SOURCE_OVERRIDES: dict[str, list[dict[str, str]]] = {
     "store_type": [
         {
             "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-            "grounding_role": "quantitative_evidence"
+            "grounding_role": "context_evidence"
         },
         {
             "source_path": "retail_ops/data/demo2_source_notes.md",
@@ -394,6 +400,10 @@ COMPARABILITY_SOURCE_OVERRIDES: dict[str, list[dict[str, str]]] = {
     ],
     "region_context": [
         {
+            "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
+            "grounding_role": "context_evidence"
+        },
+        {
             "source_path": "retail_ops/data/DATA_DICTIONARY.md",
             "grounding_role": "definition_evidence"
         },
@@ -411,7 +421,7 @@ COMPARABILITY_SOURCE_OVERRIDES: dict[str, list[dict[str, str]]] = {
     "sku_structure": [
         {
             "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-            "grounding_role": "quantitative_evidence"
+            "grounding_role": "product_mix_evidence"
         },
         {
             "source_path": "retail_ops/data/demo2_top_skus_by_sales_volume.csv",
@@ -725,6 +735,16 @@ def resolve_evidence_packet(
             source_path,
         ):
             resolved = resolve_store_a_record(
+                packet,
+                factor_id=factor_id,
+                root=root,
+            )
+        elif supports_demo2_record(
+            question_type,
+            factor_id,
+            source_path,
+        ):
+            resolved = resolve_demo2_record(
                 packet,
                 factor_id=factor_id,
                 root=root,

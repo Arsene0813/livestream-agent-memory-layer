@@ -362,18 +362,18 @@
         "question_type": "comparability_judgment",
         "total_packets": 9,
         "status_counts": {
-          "keyword_matched": 8,
+          "record_matched": 8,
           "boundary_matched": 1
         },
         "role_counts": {
-          "context_evidence": 1,
-          "quantitative_evidence": 6,
-          "definition_evidence": 1,
-          "boundary_evidence": 1
+          "context_evidence": 3,
+          "quantitative_evidence": 4,
+          "boundary_evidence": 1,
+          "product_mix_evidence": 1
         },
         "source_missing_count": 0,
-        "record_matched_count": 0,
-        "keyword_matched_count": 8,
+        "record_matched_count": 8,
+        "keyword_matched_count": 0,
         "boundary_matched_count": 1,
         "fallback_count": 0
       },
@@ -381,50 +381,101 @@
         {
           "factor_id": "same_reporting_period",
           "evidence_id": "evidence_same_reporting_period",
-          "source_type": "markdown",
-          "source_path": "retail_ops/data/demo2_source_notes.md",
+          "source_type": "csv",
+          "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
           "source_exists": true,
           "grounding_role": "context_evidence",
-          "keywords_used": [
-            "same reporting period",
-            "same period",
-            "period",
-            "reporting window",
-            "March 2026",
-            "2026-03",
-            "2026-03-01",
-            "2026-03-31",
-            "同一周期",
-            "统计周期"
+          "grounding_status": "record_matched",
+          "snippets": [],
+          "record_scope": {
+            "key_fields": [
+              "store_id",
+              "period_month"
+            ],
+            "row_count": 5,
+            "row_keys": [
+              {
+                "store_id": "B",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "C",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "D",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "E",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "F",
+                "period_month": "2026-03"
+              }
+            ]
+          },
+          "evidence_fields": [
+            "period_start",
+            "period_end",
+            "period_month"
           ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
+          "evidence_values": [
             {
-              "line_start": 6,
-              "line_end": 8,
-              "matched_terms": [
-                "reporting window"
-              ],
-              "text": "All included stores use the same reporting window:"
+              "row_key": {
+                "store_id": "B",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "period_start": "2026-03-01",
+                "period_end": "2026-03-31",
+                "period_month": "2026-03"
+              }
             },
             {
-              "line_start": 8,
-              "line_end": 10,
-              "matched_terms": [
-                "period",
-                "2026-03",
-                "2026-03-01"
-              ],
-              "text": "- `period_start`: `2026-03-01`\n- `period_end`: `2026-03-31`"
+              "row_key": {
+                "store_id": "C",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "period_start": "2026-03-01",
+                "period_end": "2026-03-31",
+                "period_month": "2026-03"
+              }
             },
             {
-              "line_start": 10,
-              "line_end": 12,
-              "matched_terms": [
-                "period",
-                "2026-03"
-              ],
-              "text": "- `period_end`: `2026-03-31`\n- `period_month`: `2026-03`"
+              "row_key": {
+                "store_id": "D",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "period_start": "2026-03-01",
+                "period_end": "2026-03-31",
+                "period_month": "2026-03"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "E",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "period_start": "2026-03-01",
+                "period_end": "2026-03-31",
+                "period_month": "2026-03"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "F",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "period_start": "2026-03-01",
+                "period_end": "2026-03-31",
+                "period_month": "2026-03"
+              }
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: same_reporting_period.",
@@ -433,54 +484,110 @@
             "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
+            "Deterministic B-F CSV record selection for the declared comparison scope.",
+            "Interpretation remains bounded by the source contract and reporting scope."
+          ],
+          "candidate_sources_checked": [
+            {
+              "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
+              "grounding_role": "context_evidence",
+              "grounding_status": "record_matched",
+              "source_exists": true
+            },
+            {
+              "source_path": "retail_ops/data/demo2_source_notes.md",
+              "grounding_role": "context_evidence",
+              "grounding_status": "keyword_matched",
+              "source_exists": true
+            }
           ]
         },
         {
           "factor_id": "store_type",
           "evidence_id": "evidence_store_type",
-          "source_type": "markdown",
+          "source_type": "csv",
           "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
           "source_exists": true,
-          "grounding_role": "quantitative_evidence",
-          "keywords_used": [
-            "store_type",
-            "store type",
-            "self-operated",
-            "partner",
-            "门店类型",
-            "自营",
-            "合作"
+          "grounding_role": "context_evidence",
+          "grounding_status": "record_matched",
+          "snippets": [],
+          "record_scope": {
+            "key_fields": [
+              "store_id",
+              "period_month"
+            ],
+            "row_count": 5,
+            "row_keys": [
+              {
+                "store_id": "B",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "C",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "D",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "E",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "F",
+                "period_month": "2026-03"
+              }
+            ]
+          },
+          "evidence_fields": [
+            "store_type"
           ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
+          "evidence_values": [
             {
-              "line_start": 1,
-              "line_end": 2,
-              "matched_terms": [
-                "store_type"
-              ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
+              "row_key": {
+                "store_id": "B",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "store_type": "self-operated"
+              }
             },
             {
-              "line_start": 2,
-              "line_end": 4,
-              "matched_terms": [
-                "store_type",
-                "self-operated"
-              ],
-              "text": "B,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits\nC,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,7064.09,175,5049.65,40.37,2982,15598,16.0,516,1481,17.3,169,188,32.75,7656.92,166,7554.39,98.22,2416,13.0,355,14.69,68.8,230,24.0,5,5187.3,124,490.21,463.21,27.0,9.45,70.86,529.6,11,11,1,2004.84,28.38,same_period_diagnostic_ready,moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_product_mix_limits\nD,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
+              "row_key": {
+                "store_id": "C",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "store_type": "self-operated"
+              }
             },
             {
-              "line_start": 4,
-              "line_end": 6,
-              "matched_terms": [
-                "store_type",
-                "partner"
-              ],
-              "text": "D,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits\nE,2026-03,2026-03-01,2026-03-31,Yantai,partner,5784.87,158,5337.95,36.61,3347,15667,14.0,408,1400,12.19,161,185,39.46,6828.37,159,6693.27,98.76,2784,13.0,355,12.75,87.01,306,16.0,3,5365.63,109,1576.26,1542.26,34.0,29.38,68.99,1105.05,25,29,1,726.25,12.55,same_period_diagnostic_ready,moderate_activity_involvement; compare_with_region_store_type_activity_product_mix_limits\nF,2026-03,2026-03-01,2026-03-31,Yantai,partner,9301.8,266,5937.09,34.97,3543,18142,13.0,541,1946,15.27,269,305,49.72,10498.2,267,10227.8,99.26,2699,13.0,481,17.82,88.91,481,13.0,8,8291.5,217,1008.3,975.3,33.0,12.16,81.58,987.89,30,33,1,1798.4,19.33,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
+              "row_key": {
+                "store_id": "D",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "store_type": "self-operated"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "E",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "store_type": "partner"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "F",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "store_type": "partner"
+              }
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: store_type.",
@@ -489,15 +596,14 @@
             "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
+            "Deterministic B-F CSV record selection for the declared comparison scope.",
+            "Interpretation remains bounded by the source contract and reporting scope."
           ],
           "candidate_sources_checked": [
             {
               "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-              "grounding_role": "quantitative_evidence",
-              "grounding_status": "keyword_matched",
+              "grounding_role": "context_evidence",
+              "grounding_status": "record_matched",
               "source_exists": true
             },
             {
@@ -511,32 +617,89 @@
         {
           "factor_id": "order_volume",
           "evidence_id": "evidence_order_volume",
-          "source_type": "markdown",
+          "source_type": "csv",
           "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
           "source_exists": true,
           "grounding_role": "quantitative_evidence",
-          "keywords_used": [
-            "order_volume",
-            "order volume",
-            "transaction_orders",
-            "transaction_order",
-            "transaction_order_count",
-            "transaction_orders",
-            "orders",
-            "成交订单量"
+          "grounding_status": "record_matched",
+          "snippets": [],
+          "record_scope": {
+            "key_fields": [
+              "store_id",
+              "period_month"
+            ],
+            "row_count": 5,
+            "row_keys": [
+              {
+                "store_id": "B",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "C",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "D",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "E",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "F",
+                "period_month": "2026-03"
+              }
+            ]
+          },
+          "evidence_fields": [
+            "transaction_orders"
           ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
+          "evidence_values": [
             {
-              "line_start": 1,
-              "line_end": 2,
-              "matched_terms": [
-                "transaction_orders",
-                "transaction_order",
-                "transaction_orders",
-                "orders"
-              ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
+              "row_key": {
+                "store_id": "B",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "transaction_orders": "299"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "C",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "transaction_orders": "175"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "D",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "transaction_orders": "404"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "E",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "transaction_orders": "158"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "F",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "transaction_orders": "266"
+              }
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: order_volume.",
@@ -545,36 +708,96 @@
             "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
+            "Deterministic B-F CSV record selection for the declared comparison scope.",
+            "Interpretation remains bounded by the source contract and reporting scope."
           ]
         },
         {
           "factor_id": "transaction_amount",
           "evidence_id": "evidence_transaction_amount",
-          "source_type": "markdown",
+          "source_type": "csv",
           "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
           "source_exists": true,
           "grounding_role": "quantitative_evidence",
-          "keywords_used": [
-            "transaction_amount",
-            "transaction amount",
-            "transaction",
-            "成交金额",
-            "成交",
-            "金额"
+          "grounding_status": "record_matched",
+          "snippets": [],
+          "record_scope": {
+            "key_fields": [
+              "store_id",
+              "period_month"
+            ],
+            "row_count": 5,
+            "row_keys": [
+              {
+                "store_id": "B",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "C",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "D",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "E",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "F",
+                "period_month": "2026-03"
+              }
+            ]
+          },
+          "evidence_fields": [
+            "transaction_amount"
           ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
+          "evidence_values": [
             {
-              "line_start": 1,
-              "line_end": 2,
-              "matched_terms": [
-                "transaction_amount",
-                "transaction"
-              ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
+              "row_key": {
+                "store_id": "B",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "transaction_amount": "11665.5"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "C",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "transaction_amount": "7064.09"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "D",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "transaction_amount": "18078.7"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "E",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "transaction_amount": "5784.87"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "F",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "transaction_amount": "9301.8"
+              }
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: transaction_amount.",
@@ -583,57 +806,114 @@
             "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
+            "Deterministic B-F CSV record selection for the declared comparison scope.",
+            "Interpretation remains bounded by the source contract and reporting scope."
           ]
         },
         {
           "factor_id": "activity_intensity",
           "evidence_id": "evidence_activity_intensity",
-          "source_type": "markdown",
+          "source_type": "csv",
           "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
           "source_exists": true,
           "grounding_role": "quantitative_evidence",
-          "keywords_used": [
-            "activity",
-            "activity_intensity",
+          "grounding_status": "record_matched",
+          "snippets": [],
+          "record_scope": {
+            "key_fields": [
+              "store_id",
+              "period_month"
+            ],
+            "row_count": 5,
+            "row_keys": [
+              {
+                "store_id": "B",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "C",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "D",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "E",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "F",
+                "period_month": "2026-03"
+              }
+            ]
+          },
+          "evidence_fields": [
+            "activity_orders",
             "activity_order_share_pct",
-            "activity_cost_ratio_pct",
-            "activity cost",
-            "activity orders",
-            "活动",
-            "活动成本",
-            "活动订单",
-            "活动营业总额"
+            "activity_cost",
+            "activity_cost_ratio_pct"
           ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
+          "evidence_values": [
             {
-              "line_start": 1,
-              "line_end": 2,
-              "matched_terms": [
-                "activity",
-                "activity_order_share_pct",
-                "activity_cost_ratio_pct"
-              ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
+              "row_key": {
+                "store_id": "B",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "activity_orders": "265",
+                "activity_order_share_pct": "88.63",
+                "activity_cost": "3361.3",
+                "activity_cost_ratio_pct": "24.12"
+              }
             },
             {
-              "line_start": 2,
-              "line_end": 4,
-              "matched_terms": [
-                "activity"
-              ],
-              "text": "B,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits\nC,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,7064.09,175,5049.65,40.37,2982,15598,16.0,516,1481,17.3,169,188,32.75,7656.92,166,7554.39,98.22,2416,13.0,355,14.69,68.8,230,24.0,5,5187.3,124,490.21,463.21,27.0,9.45,70.86,529.6,11,11,1,2004.84,28.38,same_period_diagnostic_ready,moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_product_mix_limits\nD,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
+              "row_key": {
+                "store_id": "C",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "activity_orders": "124",
+                "activity_order_share_pct": "70.86",
+                "activity_cost": "490.21",
+                "activity_cost_ratio_pct": "9.45"
+              }
             },
             {
-              "line_start": 4,
-              "line_end": 6,
-              "matched_terms": [
-                "activity"
-              ],
-              "text": "D,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits\nE,2026-03,2026-03-01,2026-03-31,Yantai,partner,5784.87,158,5337.95,36.61,3347,15667,14.0,408,1400,12.19,161,185,39.46,6828.37,159,6693.27,98.76,2784,13.0,355,12.75,87.01,306,16.0,3,5365.63,109,1576.26,1542.26,34.0,29.38,68.99,1105.05,25,29,1,726.25,12.55,same_period_diagnostic_ready,moderate_activity_involvement; compare_with_region_store_type_activity_product_mix_limits\nF,2026-03,2026-03-01,2026-03-31,Yantai,partner,9301.8,266,5937.09,34.97,3543,18142,13.0,541,1946,15.27,269,305,49.72,10498.2,267,10227.8,99.26,2699,13.0,481,17.82,88.91,481,13.0,8,8291.5,217,1008.3,975.3,33.0,12.16,81.58,987.89,30,33,1,1798.4,19.33,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
+              "row_key": {
+                "store_id": "D",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "activity_orders": "337",
+                "activity_order_share_pct": "83.42",
+                "activity_cost": "2776.4",
+                "activity_cost_ratio_pct": "14.92"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "E",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "activity_orders": "109",
+                "activity_order_share_pct": "68.99",
+                "activity_cost": "1576.26",
+                "activity_cost_ratio_pct": "29.38"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "F",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "activity_orders": "217",
+                "activity_order_share_pct": "81.58",
+                "activity_cost": "1008.3",
+                "activity_cost_ratio_pct": "12.16"
+              }
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: activity_intensity.",
@@ -642,30 +922,96 @@
             "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
+            "Deterministic B-F CSV record selection for the declared comparison scope.",
+            "Interpretation remains bounded by the source contract and reporting scope."
           ]
         },
         {
           "factor_id": "region_context",
           "evidence_id": "evidence_region_context",
-          "source_type": "markdown",
-          "source_path": "retail_ops/data/DATA_DICTIONARY.md",
+          "source_type": "csv",
+          "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
           "source_exists": true,
-          "grounding_role": "definition_evidence",
-          "keywords_used": [
-            "### `region_type`"
+          "grounding_role": "context_evidence",
+          "grounding_status": "record_matched",
+          "snippets": [],
+          "record_scope": {
+            "key_fields": [
+              "store_id",
+              "period_month"
+            ],
+            "row_count": 5,
+            "row_keys": [
+              {
+                "store_id": "B",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "C",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "D",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "E",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "F",
+                "period_month": "2026-03"
+              }
+            ]
+          },
+          "evidence_fields": [
+            "region_type"
           ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
+          "evidence_values": [
             {
-              "line_start": 74,
-              "line_end": 76,
-              "matched_terms": [
-                "### `region_type`"
-              ],
-              "text": "### `region_type`"
+              "row_key": {
+                "store_id": "B",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "region_type": "Qingdao"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "C",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "region_type": "Qingdao"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "D",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "region_type": "Yantai"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "E",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "region_type": "Yantai"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "F",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "region_type": "Yantai"
+              }
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: region_context.",
@@ -674,11 +1020,16 @@
             "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
+            "Deterministic B-F CSV record selection for the declared comparison scope.",
+            "Interpretation remains bounded by the source contract and reporting scope."
           ],
           "candidate_sources_checked": [
+            {
+              "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
+              "grounding_role": "context_evidence",
+              "grounding_status": "record_matched",
+              "source_exists": true
+            },
             {
               "source_path": "retail_ops/data/DATA_DICTIONARY.md",
               "grounding_role": "definition_evidence",
@@ -736,42 +1087,95 @@
         {
           "factor_id": "sku_structure",
           "evidence_id": "evidence_sku_structure",
-          "source_type": "markdown",
+          "source_type": "csv",
           "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
           "source_exists": true,
-          "grounding_role": "quantitative_evidence",
-          "keywords_used": [
-            "sku",
-            "top_sku",
-            "top3_sku",
-            "top sku",
-            "sku structure",
+          "grounding_role": "product_mix_evidence",
+          "grounding_status": "record_matched",
+          "snippets": [],
+          "record_scope": {
+            "key_fields": [
+              "store_id",
+              "period_month"
+            ],
+            "row_count": 5,
+            "row_keys": [
+              {
+                "store_id": "B",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "C",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "D",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "E",
+                "period_month": "2026-03"
+              },
+              {
+                "store_id": "F",
+                "period_month": "2026-03"
+              }
+            ]
+          },
+          "evidence_fields": [
             "top3_sku_transaction_amount",
-            "商品",
-            "产品",
-            "销量",
-            "销售额"
+            "top3_sku_transaction_amount_share_pct"
           ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
+          "evidence_values": [
             {
-              "line_start": 1,
-              "line_end": 2,
-              "matched_terms": [
-                "sku",
-                "top3_sku",
-                "top3_sku_transaction_amount"
-              ],
-              "text": "store_id,period_month,period_start,period_end,region_type,store_type,transaction_amount,transaction_orders,estimated_income_proxy,average_order_value,exposure_users,exposure_times,store_average_rank,entry_users,entry_times,entry_conversion_rate_pct,order_users,order_times,order_conversion_rate_pct,order_amount,payment_users,payment_amount,payment_conversion_rate_pct,search_exposure_users,search_average_rank,search_entry_users,search_entry_rate_pct,search_entry_share_pct,merchant_list_exposure_users,merchant_list_average_rank,merchant_list_entry_users,activity_original_transaction_amount,activity_orders,activity_cost,merchant_subsidy_amount,platform_subsidy_amount,activity_cost_ratio_pct,activity_order_share_pct,refund_amount,full_refund_orders,refund_orders_all_or_partial,business_district_rank,top3_sku_transaction_amount,top3_sku_transaction_amount_share_pct,comparison_scope_flag,comparison_limit_notes\nB,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
+              "row_key": {
+                "store_id": "B",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "top3_sku_transaction_amount": "1300.9",
+                "top3_sku_transaction_amount_share_pct": "11.15"
+              }
             },
             {
-              "line_start": 2,
-              "line_end": 4,
-              "matched_terms": [
-                "sku",
-                "top3_sku"
-              ],
-              "text": "B,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,11665.5,299,8078.26,39.02,5094,24196,15.0,770,2676,15.12,284,336,36.88,13514.7,280,12821.1,98.59,4390,15.0,683,15.56,88.7,400,15.0,7,13938.4,265,3361.3,3143.3,218.0,24.12,88.63,1254.9,23,24,3,1300.9,11.15,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits\nC,2026-03,2026-03-01,2026-03-31,Qingdao,self-operated,7064.09,175,5049.65,40.37,2982,15598,16.0,516,1481,17.3,169,188,32.75,7656.92,166,7554.39,98.22,2416,13.0,355,14.69,68.8,230,24.0,5,5187.3,124,490.21,463.21,27.0,9.45,70.86,529.6,11,11,1,2004.84,28.38,same_period_diagnostic_ready,moderate_activity_involvement; top3_sku_amount_concentration; compare_with_region_store_type_activity_product_mix_limits\nD,2026-03,2026-03-01,2026-03-31,Yantai,self-operated,18078.7,404,12590.34,44.75,6068,32638,8.0,842,3802,13.88,392,451,46.56,19996.7,385,19355.0,98.21,2663,13.0,738,27.71,87.65,2828,5.0,36,18605.4,337,2776.4,2732.4,44.0,14.92,83.42,1617.49,33,44,1,3055.78,16.9,same_period_diagnostic_ready,high_activity_involvement; compare_with_region_store_type_activity_product_mix_limits"
+              "row_key": {
+                "store_id": "C",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "top3_sku_transaction_amount": "2004.84",
+                "top3_sku_transaction_amount_share_pct": "28.38"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "D",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "top3_sku_transaction_amount": "3055.78",
+                "top3_sku_transaction_amount_share_pct": "16.9"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "E",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "top3_sku_transaction_amount": "726.25",
+                "top3_sku_transaction_amount_share_pct": "12.55"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "F",
+                "period_month": "2026-03"
+              },
+              "values": {
+                "top3_sku_transaction_amount": "1798.4",
+                "top3_sku_transaction_amount_share_pct": "19.33"
+              }
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: sku_structure.",
@@ -780,15 +1184,14 @@
             "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
+            "Deterministic B-F CSV record selection for the declared comparison scope.",
+            "Interpretation remains bounded by the source contract and reporting scope."
           ],
           "candidate_sources_checked": [
             {
               "source_path": "retail_ops/outputs/demo2_cross_store_comparability_output.csv",
-              "grounding_role": "quantitative_evidence",
-              "grounding_status": "keyword_matched",
+              "grounding_role": "product_mix_evidence",
+              "grounding_status": "record_matched",
               "source_exists": true
             },
             {
@@ -808,47 +1211,114 @@
         {
           "factor_id": "repeated_reporting_windows",
           "evidence_id": "evidence_repeated_reporting_windows",
-          "source_type": "markdown",
+          "source_type": "csv",
           "source_path": "retail_ops/outputs/repeated_window_panel_summary_output.csv",
           "source_exists": true,
           "grounding_role": "quantitative_evidence",
-          "keywords_used": [
-            "repeated",
-            "repeated reporting windows",
-            "multi-period",
-            "multiple periods",
-            "future work",
-            "before implementation",
-            "not implemented",
-            "多周期",
-            "重复周期",
-            "未来"
+          "grounding_status": "record_matched",
+          "snippets": [],
+          "record_scope": {
+            "key_fields": [
+              "store_id"
+            ],
+            "row_count": 5,
+            "row_keys": [
+              {
+                "store_id": "B"
+              },
+              {
+                "store_id": "C"
+              },
+              {
+                "store_id": "D"
+              },
+              {
+                "store_id": "E"
+              },
+              {
+                "store_id": "F"
+              }
+            ]
+          },
+          "evidence_fields": [
+            "observed_month_count",
+            "feb_transaction_amount",
+            "mar_transaction_amount",
+            "apr_transaction_amount",
+            "feb_transaction_orders",
+            "mar_transaction_orders",
+            "apr_transaction_orders"
           ],
-          "grounding_status": "keyword_matched",
-          "snippets": [
+          "evidence_values": [
             {
-              "line_start": 1,
-              "line_end": 2,
-              "matched_terms": [
-                "repeated"
-              ],
-              "text": "store_id,region_type,store_type,observed_month_count,feb_transaction_amount,mar_transaction_amount,apr_transaction_amount,transaction_amount_feb_to_apr_delta,transaction_amount_feb_to_apr_pct,feb_transaction_orders,mar_transaction_orders,apr_transaction_orders,transaction_orders_feb_to_apr_delta,transaction_orders_feb_to_apr_pct,feb_exposure_users,mar_exposure_users,apr_exposure_users,exposure_users_feb_to_apr_delta,exposure_users_feb_to_apr_pct,feb_entry_users,mar_entry_users,apr_entry_users,entry_users_feb_to_apr_delta,entry_users_feb_to_apr_pct,feb_entry_conversion_rate_pct,mar_entry_conversion_rate_pct,apr_entry_conversion_rate_pct,entry_conversion_rate_pct_feb_to_apr_delta,feb_order_conversion_rate_pct,mar_order_conversion_rate_pct,apr_order_conversion_rate_pct,order_conversion_rate_pct_feb_to_apr_delta,feb_payment_conversion_rate_pct,mar_payment_conversion_rate_pct,apr_payment_conversion_rate_pct,payment_conversion_rate_pct_feb_to_apr_delta,feb_search_exposure_users,mar_search_exposure_users,apr_search_exposure_users,search_exposure_users_feb_to_apr_delta,search_exposure_users_feb_to_apr_pct,feb_search_entry_users,mar_search_entry_users,apr_search_entry_users,search_entry_users_feb_to_apr_delta,search_entry_users_feb_to_apr_pct,feb_activity_orders,mar_activity_orders,apr_activity_orders,activity_orders_feb_to_apr_delta,feb_activity_cost_ratio_pct,mar_activity_cost_ratio_pct,apr_activity_cost_ratio_pct,activity_cost_ratio_pct_feb_to_apr_delta,repeated_window_summary_flag,summary_boundary_note\nB,Qingdao,self-operated,3,10468.0,11665.5,11496.8,1028.8,9.83,259.0,299.0,293.0,34.0,13.13,5338.0,5094.0,6009.0,671.0,12.57,793.0,770.0,886.0,93.0,11.73,14.86,15.12,14.74,-0.12,34.55,36.88,33.3,-1.25,97.81,98.59,98.98,1.17,3811.0,4390.0,5274.0,1463.0,38.39,666.0,683.0,765.0,99.0,14.86,218.0,265.0,247.0,29.0,21.98,24.12,24.11,2.13,summary_ready_for_descriptive_review,\"Descriptive repeated-window summary only; not a store ranking, pairwise comparability gate, operating recommendation, endpoint behavior, generated memory fact, or causal analysis.\""
+              "row_key": {
+                "store_id": "B"
+              },
+              "values": {
+                "observed_month_count": "3",
+                "feb_transaction_amount": "10468.0",
+                "mar_transaction_amount": "11665.5",
+                "apr_transaction_amount": "11496.8",
+                "feb_transaction_orders": "259.0",
+                "mar_transaction_orders": "299.0",
+                "apr_transaction_orders": "293.0"
+              }
             },
             {
-              "line_start": 2,
-              "line_end": 4,
-              "matched_terms": [
-                "repeated"
-              ],
-              "text": "B,Qingdao,self-operated,3,10468.0,11665.5,11496.8,1028.8,9.83,259.0,299.0,293.0,34.0,13.13,5338.0,5094.0,6009.0,671.0,12.57,793.0,770.0,886.0,93.0,11.73,14.86,15.12,14.74,-0.12,34.55,36.88,33.3,-1.25,97.81,98.59,98.98,1.17,3811.0,4390.0,5274.0,1463.0,38.39,666.0,683.0,765.0,99.0,14.86,218.0,265.0,247.0,29.0,21.98,24.12,24.11,2.13,summary_ready_for_descriptive_review,\"Descriptive repeated-window summary only; not a store ranking, pairwise comparability gate, operating recommendation, endpoint behavior, generated memory fact, or causal analysis.\"\nC,Qingdao,self-operated,3,9503.7,7064.09,6756.8,-2746.9,-28.9,253.0,175.0,178.0,-75.0,-29.64,3987.0,2982.0,3418.0,-569.0,-14.27,836.0,516.0,502.0,-334.0,-39.95,20.97,17.3,14.69,-6.28,32.18,32.75,34.66,2.48,98.51,98.22,99.43,0.92,2850.0,2416.0,2705.0,-145.0,-5.09,636.0,355.0,364.0,-272.0,-42.77,190.0,124.0,123.0,-67.0,14.49,9.45,11.97,-2.52,summary_ready_for_descriptive_review,\"Descriptive repeated-window summary only; not a store ranking, pairwise comparability gate, operating recommendation, endpoint behavior, generated memory fact, or causal analysis.\"\nD,Yantai,self-operated,3,20332.2,18078.7,14087.2,-6245.0,-30.71,466.0,404.0,308.0,-158.0,-33.91,6614.0,6068.0,5935.0,-679.0,-10.27,1070.0,842.0,807.0,-263.0,-24.58,16.18,13.88,13.6,-2.58,41.78,46.56,37.79,-3.99,98.43,98.21,99.34,0.91,2827.0,2663.0,2304.0,-523.0,-18.5,951.0,738.0,691.0,-260.0,-27.34,403.0,337.0,254.0,-149.0,17.22,14.92,16.55,-0.67,summary_ready_for_descriptive_review,\"Descriptive repeated-window summary only; not a store ranking, pairwise comparability gate, operating recommendation, endpoint behavior, generated memory fact, or causal analysis.\""
+              "row_key": {
+                "store_id": "C"
+              },
+              "values": {
+                "observed_month_count": "3",
+                "feb_transaction_amount": "9503.7",
+                "mar_transaction_amount": "7064.09",
+                "apr_transaction_amount": "6756.8",
+                "feb_transaction_orders": "253.0",
+                "mar_transaction_orders": "175.0",
+                "apr_transaction_orders": "178.0"
+              }
             },
             {
-              "line_start": 4,
-              "line_end": 6,
-              "matched_terms": [
-                "repeated"
-              ],
-              "text": "D,Yantai,self-operated,3,20332.2,18078.7,14087.2,-6245.0,-30.71,466.0,404.0,308.0,-158.0,-33.91,6614.0,6068.0,5935.0,-679.0,-10.27,1070.0,842.0,807.0,-263.0,-24.58,16.18,13.88,13.6,-2.58,41.78,46.56,37.79,-3.99,98.43,98.21,99.34,0.91,2827.0,2663.0,2304.0,-523.0,-18.5,951.0,738.0,691.0,-260.0,-27.34,403.0,337.0,254.0,-149.0,17.22,14.92,16.55,-0.67,summary_ready_for_descriptive_review,\"Descriptive repeated-window summary only; not a store ranking, pairwise comparability gate, operating recommendation, endpoint behavior, generated memory fact, or causal analysis.\"\nE,Yantai,partner,3,6794.9,5784.87,11264.72,4469.82,65.78,148.0,158.0,377.0,229.0,154.73,3015.0,3347.0,5649.0,2634.0,87.36,436.0,408.0,954.0,518.0,118.81,14.46,12.19,16.89,2.43,33.94,39.46,37.74,3.8,98.65,98.76,99.44,0.79,2484.0,2784.0,4799.0,2315.0,93.2,389.0,355.0,892.0,503.0,129.31,117.0,109.0,301.0,184.0,23.71,29.38,32.29,8.58,summary_ready_for_descriptive_review,\"Descriptive repeated-window summary only; not a store ranking, pairwise comparability gate, operating recommendation, endpoint behavior, generated memory fact, or causal analysis.\"\nF,Yantai,partner,3,12549.1,9301.8,14090.7,1541.6,12.28,307.0,266.0,424.0,117.0,38.11,3651.0,3543.0,5063.0,1412.0,38.67,628.0,541.0,897.0,269.0,42.83,17.2,15.27,17.72,0.52,49.68,49.72,48.38,-1.3,99.68,99.26,99.77,0.09,2502.0,2699.0,3877.0,1375.0,54.96,571.0,481.0,831.0,260.0,45.53,255.0,217.0,338.0,83.0,16.37,12.16,16.0,-0.37,summary_ready_for_descriptive_review,\"Descriptive repeated-window summary only; not a store ranking, pairwise comparability gate, operating recommendation, endpoint behavior, generated memory fact, or causal analysis.\""
+              "row_key": {
+                "store_id": "D"
+              },
+              "values": {
+                "observed_month_count": "3",
+                "feb_transaction_amount": "20332.2",
+                "mar_transaction_amount": "18078.7",
+                "apr_transaction_amount": "14087.2",
+                "feb_transaction_orders": "466.0",
+                "mar_transaction_orders": "404.0",
+                "apr_transaction_orders": "308.0"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "E"
+              },
+              "values": {
+                "observed_month_count": "3",
+                "feb_transaction_amount": "6794.9",
+                "mar_transaction_amount": "5784.87",
+                "apr_transaction_amount": "11264.72",
+                "feb_transaction_orders": "148.0",
+                "mar_transaction_orders": "158.0",
+                "apr_transaction_orders": "377.0"
+              }
+            },
+            {
+              "row_key": {
+                "store_id": "F"
+              },
+              "values": {
+                "observed_month_count": "3",
+                "feb_transaction_amount": "12549.1",
+                "mar_transaction_amount": "9301.8",
+                "apr_transaction_amount": "14090.7",
+                "feb_transaction_orders": "307.0",
+                "mar_transaction_orders": "266.0",
+                "apr_transaction_orders": "424.0"
+              }
             }
           ],
           "original_claim_supported": "Provides context needed to evaluate factor: repeated_reporting_windows.",
@@ -857,15 +1327,14 @@
             "Coverage is limited to the sources listed in this packet."
           ],
           "resolver_limitations": [
-            "Local text matching only.",
-            "No semantic embedding retrieval is used in this step.",
-            "No causality is inferred from matched snippets."
+            "Deterministic B-F CSV record selection for the declared comparison scope.",
+            "Interpretation remains bounded by the source contract and reporting scope."
           ],
           "candidate_sources_checked": [
             {
               "source_path": "retail_ops/outputs/repeated_window_panel_summary_output.csv",
               "grounding_role": "quantitative_evidence",
-              "grounding_status": "keyword_matched",
+              "grounding_status": "record_matched",
               "source_exists": true
             },
             {
@@ -928,8 +1397,8 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 618,
-              "line_end": 620,
+              "line_start": 659,
+              "line_end": 661,
               "matched_terms": [
                 "### `activity_orders`"
               ],
@@ -960,8 +1429,8 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 624,
-              "line_end": 626,
+              "line_start": 665,
+              "line_end": 667,
               "matched_terms": [
                 "### `activity_cost`"
               ],
@@ -992,8 +1461,8 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 630,
-              "line_end": 632,
+              "line_start": 671,
+              "line_end": 673,
               "matched_terms": [
                 "### `merchant_subsidy_amount`"
               ],
@@ -1024,8 +1493,8 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 636,
-              "line_end": 638,
+              "line_start": 677,
+              "line_end": 679,
               "matched_terms": [
                 "### `platform_subsidy_amount`"
               ],
@@ -1056,8 +1525,8 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 482,
-              "line_end": 484,
+              "line_start": 523,
+              "line_end": 525,
               "matched_terms": [
                 "### `order_conversion_rate_pct`"
               ],
@@ -1088,8 +1557,8 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 534,
-              "line_end": 536,
+              "line_start": 575,
+              "line_end": 577,
               "matched_terms": [
                 "### `payment_conversion_rate_pct`"
               ],
@@ -1393,24 +1862,24 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 135,
-              "line_end": 137,
+              "line_start": 138,
+              "line_end": 140,
               "matched_terms": [
                 "belief"
               ],
               "text": "evidence_packets\nbelief_records\nretrieval_trace"
             },
             {
-              "line_start": 152,
-              "line_end": 154,
+              "line_start": 155,
+              "line_end": 157,
               "matched_terms": [
                 "confidence"
               ],
               "text": "hypotheses\nconfidence\nlimitations"
             },
             {
-              "line_start": 190,
-              "line_end": 192,
+              "line_start": 193,
+              "line_end": 195,
               "matched_terms": [
                 "confidence"
               ],
@@ -1444,24 +1913,24 @@
           "grounding_status": "keyword_matched",
           "snippets": [
             {
-              "line_start": 152,
-              "line_end": 154,
+              "line_start": 155,
+              "line_end": 157,
               "matched_terms": [
                 "confidence"
               ],
               "text": "hypotheses\nconfidence\nlimitations"
             },
             {
-              "line_start": 190,
-              "line_end": 192,
+              "line_start": 193,
+              "line_end": 195,
               "matched_terms": [
                 "confidence"
               ],
               "text": "does not measure evidence strength, conclusion correctness, business impact,\ndecision quality, or model confidence. It is not used to select or rank the\nfinal judgment."
             },
             {
-              "line_start": 193,
-              "line_end": 195,
+              "line_start": 196,
+              "line_end": 198,
               "matched_terms": [
                 "confidence"
               ],
