@@ -23,10 +23,6 @@ from typing import Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
 
-APPLICABILITY_CHECKER_PATH = (
-    "eval/check_retrieval_result_applicability.py"
-)
-
 THRESHOLD_SUMMARY_PATH = (
     "retail_ops/outputs/retrieval_threshold_summary.md"
 )
@@ -50,15 +46,17 @@ SHARED_RETRIEVAL_SCOPE_PATHS = (
 
 THRESHOLD_EXPERIMENT_SCOPE_PATHS = (
     *SHARED_RETRIEVAL_SCOPE_PATHS,
-    APPLICABILITY_CHECKER_PATH,
     "eval/analyze_retail_embedding_score_distribution.py",
 )
 
+# Keep only score-affecting code and corpus inputs in these
+# hashes. This checker is validation machinery, not a retrieval
+# input. The robustness experiment's reference threshold is
+# verified separately against THRESHOLD_SUMMARY_PATH below, so
+# unrelated edits to that generated Markdown do not stale a run.
 ROBUSTNESS_EXPERIMENT_SCOPE_PATHS = (
     *SHARED_RETRIEVAL_SCOPE_PATHS,
-    APPLICABILITY_CHECKER_PATH,
     "eval/analyze_retail_query_robustness.py",
-    THRESHOLD_SUMMARY_PATH,
 )
 
 

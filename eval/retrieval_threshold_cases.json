@@ -123,9 +123,9 @@
     "expected_terms": []
   },
   {
-    "case_id": "negative_repeat_purchase_rate",
+    "case_id": "negative_stockout_rate",
     "case_type": "negative_unsupported",
-    "query": "Which Demo 2 store has the strongest repeat purchase rate?",
+    "query": "Which Demo 2 store had the highest stockout rate in March 2026?",
     "expected_entity": null,
     "expected_slot": null,
     "expected_period_terms": [],
@@ -239,14 +239,14 @@
     ]
   },
   {
-    "case_id": "hard_negative_estimated_income_profit",
+    "case_id": "hard_negative_order_conversion_causality",
     "case_type": "hard_negative_boundary",
-    "query": "Can estimated_income_proxy be treated as audited profit?",
+    "query": "Does a higher order_conversion_rate_pct prove that an activity caused stronger transaction performance?",
     "expected_entity": null,
-    "expected_slot": null,
+    "expected_slot": "transaction_conversion_profile",
     "expected_period_terms": [],
     "expected_terms": [
-      "estimated_income_proxy"
+      "order_conversion_rate_pct"
     ]
   },
   {
@@ -278,16 +278,18 @@
     ]
   },
   {
-    "case_id": "mismatch_store_d_february_refund",
+    "case_id": "mismatch_store_d_february_activity",
     "case_type": "entity_period_mismatch",
-    "query": "Does the current evidence support a claim about Store D's refund_amount in February 2026?",
+    "query": "What was Store D's activity_cost_ratio_pct in February 2026?",
     "expected_entity": "store_D",
-    "expected_slot": "",
+    "expected_slot": "activity_lever_profile",
     "expected_period_terms": [
       "2026-02",
       "February 2026"
     ],
-    "expected_terms": []
+    "expected_terms": [
+      "activity_cost_ratio_pct"
+    ]
   },
   {
     "case_id": "mismatch_store_a_store_d_promotion_transfer",
