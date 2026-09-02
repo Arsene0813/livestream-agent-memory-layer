@@ -16,15 +16,15 @@ It is a diagnostic evaluation for the current file-backed retail decision-suppor
 - Retrieval units: 307
 
 - Unit definition: one generated memory fact or one chunked field-contract/source-note segment; this is not a store count or a count of independent business observations.
-- Corpus SHA-256: `d11e5c2eb1ff26461056cc2412b8e827e31ec57d2b378e799b998cc3de33b19c`
+- Corpus SHA-256: `3e42fa1cc2457385a4cebba21bd2bbc1b92f9397cd4b6749161da70ad715a278`
 - Corpus builder: `eval/retail_retrieval_corpus.py::load_retail_retrieval_documents`
-- Run commit: `1c542a7fd2bea59da232a0873584db21a861aff1`
-- Experiment scope SHA-256: `b47dee68bcb61051317215f5f698bc3a79e0d49759453ded4f977d39189a8ece`
+- Run commit: `aa47fa938b7fe48ae090950f35de57c4527988c4`
+- Experiment scope SHA-256: `2cafa72199b3c71b147258b9c71887c2ac59c12977051ea2da4e48d2fbe1060b`
 - Applicability note: the scope hash identifies the clean experiment-relevant code and input snapshot. The run commit is retained for navigation. Later unrelated commits do not invalidate the result. Run `python3 eval/check_retrieval_result_applicability.py` to check the current scope.
 - Embedding model: `bge-m3`
-- Reference threshold: `0.5805`
+- Reference threshold: `0.5802`
 - Reference threshold source: `retail_ops/outputs/retrieval_threshold_summary.md`
-- Reference threshold mode: `cli_override`
+- Reference threshold mode: `summary_source`
 
 ## Variant Types
 
@@ -47,9 +47,9 @@ For each non-negative case, `expected_hit_at_5` is true only when at least one t
 | case_type | variant_count | expected_hit_at_5_count | expected_hit_at_5_rate | above_reference_threshold_count | above_reference_threshold_rate | top1_changed_non_original_count | top1_changed_non_original_rate |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | ambiguous_comparison | 16 | 13 | 81.25% | 3 | 18.75% | 4 | 33.33% |
-| entity_period_mismatch | 18 | 3 | 16.67% | 13 | 72.22% | 3 | 21.43% |
-| hard_negative_boundary | 33 | 24 | 72.73% | 23 | 69.7% | 9 | 34.62% |
-| negative_unsupported | 30 | 0 | 0.0% | 1 | 3.33% | 5 | 20.83% |
+| entity_period_mismatch | 17 | 3 | 17.65% | 16 | 94.12% | 3 | 23.08% |
+| hard_negative_boundary | 34 | 20 | 58.82% | 24 | 70.59% | 11 | 40.74% |
+| negative_unsupported | 30 | 0 | 0.0% | 1 | 3.33% | 8 | 33.33% |
 | positive_supported | 34 | 30 | 88.24% | 34 | 100.0% | 0 | 0.0% |
 
 ## Threshold Sweep
@@ -59,9 +59,9 @@ This sweep is not an optimization procedure. It shows how many query variants re
 | threshold | variants_above_threshold | variants_above_threshold_rate |
 | --- | --- | --- |
 | 0.5 | 115 | 87.79% |
-| 0.55 | 91 | 69.47% |
-| 0.6 | 59 | 45.04% |
-| 0.65 | 36 | 27.48% |
+| 0.55 | 92 | 70.23% |
+| 0.6 | 64 | 48.85% |
+| 0.65 | 37 | 28.24% |
 | 0.7 | 14 | 10.69% |
 
 The full threshold sweep by case type is stored in:
