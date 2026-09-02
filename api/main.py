@@ -2407,13 +2407,19 @@ async def chat_retail_ops_demo2_kb(req: RetailOpsDemo2KbReq):
             "facts": [],
         }
 
-    facts = load_demo2_retail_facts()
     slots = infer_retail_slots(req.message)
+    is_cross_store = is_demo2_cross_store_query(req.message)
 
-    if not slots:
-        slots = ["single_metric_attribution_guard"]
+    if not slots and not is_cross_store:
+        return {
+            "supported": False,
+            "answer": "No supported Demo 2 retail memory fact was found for this question.",
+            "facts": [],
+        }
 
-    if is_demo2_cross_store_query(req.message):
+    facts = load_demo2_retail_facts()
+
+    if is_cross_store:
         selected_facts = [
             fact
             for fact in facts

@@ -164,6 +164,22 @@ async def run_checks() -> int:
         require_demo2_endpoint_metadata(name, result)
         require_slot(name, result, "activity_lever_profile")
 
+
+    async def case_unmatched_evidence_refusal() -> None:
+        name = "Unmatched evidence-class refusal"
+        result = await ask(
+            message="What was Store B's employee headcount in March 2026?",
+            entity_id="store_B",
+        )
+        require_refusal(name, result)
+        require_contains(
+            name,
+            result,
+            [
+                "No supported Demo 2 retail memory fact",
+            ],
+        )
+
     async def case_strategy_transfer_refusal() -> None:
         name = "Pairwise strategy-transfer refusal"
         result = await ask(
@@ -249,6 +265,10 @@ async def run_checks() -> int:
     await run_case(
         "Store B activity endpoint behavior",
         case_store_b_activity_boundary,
+    )
+    await run_case(
+        "Unmatched evidence-class refusal",
+        case_unmatched_evidence_refusal,
     )
     await run_case(
         "Pairwise strategy-transfer refusal",

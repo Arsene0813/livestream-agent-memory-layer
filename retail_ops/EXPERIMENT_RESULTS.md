@@ -199,10 +199,10 @@ Implemented Demo 2 evidence slots:
 |---|---|
 | Question | Does the implemented `/chat_retail_ops_demo2_kb` endpoint preserve the same evidence boundaries when answering from file-backed Demo 2 memory facts? |
 | Input | `/chat_retail_ops_demo2_kb`; `api/main.py`; `retail_ops/outputs/generated_demo2_retail_memory_facts.json`. |
-| Transformation | Endpoint-level evaluation checks supported Store B-F questions, unsupported all-48-store questions, best-store ranking requests, final operating-recommendation requests, and out-of-Demo-2 entity questions. |
+| Transformation | Endpoint-level evaluation checks supported Store B-F questions, questions without a matched evidence slot, unsupported all-48-store questions, best-store ranking requests, final operating-recommendation requests, and out-of-Demo-2 entity questions. |
 | Output | `eval/retail_decision_support_eval_results/eval_retail_demo2_endpoint_behavior_result.txt`. |
-| Expected behavior | Supported Store B-F questions return file-backed Demo 2 facts; cross-store B-F questions stay at same-period diagnostic scope; unsupported scope or final-decision requests are refused or qualified. |
-| Current result | Seven of seven repository-defined endpoint scenarios passed the current boundary checks. |
+| Expected behavior | Store B-F questions with a matched evidence slot return file-backed facts; recognized cross-store questions stay at same-period diagnostic scope; questions without either match return `supported: false`. |
+| Current result | The current repository-defined endpoint scenarios pass, including the unmatched evidence-class case that returns `supported: false`. |
 | Checked by | `python3 eval/eval_retail_demo2_endpoint_behavior.py` |
 
 ## Experiment 5: Retrieval Threshold Inspection
