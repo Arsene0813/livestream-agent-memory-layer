@@ -10,14 +10,13 @@ This project addresses a real Meituan instant-retail operating problem.
 
 The Meituan merchant backend provides detailed single-store metrics. As store count increased, the analytical task became organizing store-period records across reporting windows, activity conditions, product structures, store types, and local operating contexts for consistent review.
 
-For standardized instant-retail products, store competition is organized around one operating chain:
+For the selected standardized instant-retail products, operating review follows one connected path:
 
 ```text
 being seen -> being entered -> being ordered -> being selected again / maintaining share
 ```
 
 Promotion, subsidy, pricing, SKU arrangement, ranking position, and fulfillment stability are operating levers inside this chain. Their meaning depends on the observed store-period context, local competition, activity involvement, activity intensity, product mix, and reporting-window alignment.
-
 
 The project organizes multi-store operating evidence so that each supported interpretation can be traced to defined fields, reporting periods, and source records as the business expands.
 

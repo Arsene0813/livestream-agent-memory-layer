@@ -41,7 +41,7 @@ After this first pass, use:
 
 ## Business Decision Problem
 
-For standardized products such as contact lenses, care solutions, and related eye-care items, store performance develops through a connected operating path:
+For standardized products such as contact lenses, care solutions, and related eye-care items, operating review follows one connected path:
 
 ```text
 being seen
