@@ -34,9 +34,8 @@ The main result is traceability. Selected source values can be followed into
 derived outputs, generated facts, retrieval packets, and answer boundaries.
 
 The experiments support descriptions of the observed store-period evidence
-and documented calculations. They do not turn short-window backend data into
-causal estimates, pairwise store decisions, retention measures, market-share
-movement, or explanations of unavailable business context.
+and documented calculations. Each result is interpreted within its recorded
+entity, period, metric, and comparison scope.
 
 ## Evidence Types
 

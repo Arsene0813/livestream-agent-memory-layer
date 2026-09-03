@@ -82,9 +82,10 @@ def resolve_store_a_record(
                 "selection only."
             ),
             (
-                "Selected values do not establish "
-                "causality, profitability, ROI, "
-                "retention, or market-share change."
+                "Selected values describe the "
+                "observed records; they do not "
+                "establish a single cause for the "
+                "March-to-April changes."
             ),
         ],
     }
