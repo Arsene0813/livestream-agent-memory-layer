@@ -22,7 +22,7 @@ Meituan's merchant backend provides detailed store-level metrics.
 
 With many stores, the analytical task becomes organizing store-period records under consistent reporting windows, field definitions, and operating context.
 
-In this project, instant-retail competition is understood through this operating chain:
+This demo follows the project's operating review path:
 
 ```text
 being seen -> being entered -> being ordered -> being selected again / maintaining share

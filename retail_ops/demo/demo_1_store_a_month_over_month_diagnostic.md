@@ -10,7 +10,7 @@ The month labels use natural calendar-month windows: `2026-02` means `2026-02-01
 
 ## Business Context
 
-In this project, Meituan instant-retail stores are understood through a chain of operating conditions:
+This demo follows the project's operating review path:
 
 ```text
 being seen -> being entered -> being ordered -> being selected again / maintaining share
