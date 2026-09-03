@@ -1,4 +1,4 @@
-# Lifecycle-Aware AI Memory Layer for Retail Decision Support
+# Meituan Instant-Retail Decision Support Prototype
 
 Repository: `livestream-agent-memory-layer`
 
@@ -42,11 +42,11 @@ SQL organizes the selected store-period records. Generated facts retain the enti
 
 ## Current Implemented Work
 
-The current retail decision-support path has three implemented evidence layers: Demo 1 for Store A month-over-month diagnosis, Demo 2 for selected Stores B-F under one March 2026 reporting window, and the repeated-window B-F panel across 2026-02, 2026-03, and 2026-04.
+The current retail work includes three analytical views: Demo 1 for Store A month-over-month diagnosis, Demo 2 for selected Stores B-F under one March 2026 reporting window, and the repeated-window B-F panel across 2026-02, 2026-03, and 2026-04.
 
 The operating problem came from a 48-store business. The evidence committed to this repository covers six anonymized stores: Store A and selected Stores B-F under the reporting windows listed below. The 48-store figure describes the operating context; the committed analytical evidence covers the selected six stores.
 
-Demo 2 keeps the `cross_store_comparability` file-path term for reference stability and provides the March 2026 B-F diagnostic under the shared field contract. `retail_ops/COMPARABILITY_GATE_V0.md` specifies the evidence requirements for a future question-specific pairwise comparability gate.
+Demo 2 provides the March 2026 B-F diagnostic under the shared field contract. Requirements for a future question-specific pairwise comparability gate are recorded in `retail_ops/COMPARABILITY_GATE_V0.md`.
 
 | Area | Current implementation | Current role |
 | --- | --- | --- |
@@ -188,9 +188,10 @@ The current results are:
 | Demo 2 threshold sensitivity | Baseline notes reproduce for all 5 rows. Raising the current thresholds by 5 percentage points changes Stores C-F; lowering them by 5 percentage points changes no rows. | The sample shows how the current diagnostic notes respond to nearby threshold settings. |
 | Retrieval wording stress | The applicable run covers supported, unsupported, hard-negative, entity-period-mismatch, and ambiguous queries over the current evidence corpus. | Exact counts, scores, and the exploratory threshold are recorded in the generated retrieval summaries and checked by `eval/check_retrieval_result_applicability.py`. |
 | Repeated-window B-F panel | Stores B-F each retain February-April 2026 coverage across 11 selected metrics. | The panel supports descriptive review while preserving the March observation between the February and April endpoints. |
+| RAC grounded review | Fixed review cases produce source-linked reports from structured records, local text evidence, and explicit boundary evidence. | Current case counts, routes, and report-contract checks are recorded in `rac/outputs/grounded_quality_summary.md`. |
 
-These descriptive analyses, retrieval stress tests, and contract checks
-are reported separately with their own procedures and outputs.
+These descriptive analyses, retrieval stress tests, grounded reviews, and
+contract checks are reported separately with their own procedures and outputs.
 Difficult retrieval cases remain visible because they show why similarity
 is only one evidence-routing signal.
 
@@ -218,6 +219,9 @@ python3 eval/eval_future_comparability_gate_contract.py
 python3 scripts/validate_demo2_retail_endpoint_boundary.py
 python3 scripts/validate_markdown_readability.py
 python3 retail_ops/scripts/validate_csv_physical_rows.py
+python3 rac/scripts/validate_local_evidence_resolver.py
+python3 rac/scripts/validate_grounded_pipeline.py
+python3 rac/scripts/validate_grounded_quality_gate.py
 ```
 
 The endpoint behavior eval imports `api.main`, so run it inside the project virtual environment after dependencies are installed.

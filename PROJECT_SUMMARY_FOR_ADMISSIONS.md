@@ -111,6 +111,7 @@ The current results are:
 | Demo 2 threshold sensitivity | Baseline notes reproduce for all 5 rows. Raising the current thresholds by 5 percentage points changes Stores C-F; lowering them by 5 percentage points changes no rows. | The sample shows how the current diagnostic notes respond to nearby threshold settings. |
 | Retrieval wording stress | The applicable run covers supported, unsupported, hard-negative, entity-period-mismatch, and ambiguous queries over the current evidence corpus. | Exact counts, scores, and the exploratory threshold are recorded in the generated retrieval summaries and checked by `eval/check_retrieval_result_applicability.py`. |
 | Repeated-window B-F panel | Stores B-F each retain February-April 2026 coverage across 11 selected metrics. | The panel supports descriptive review while preserving the March observation between the February and April endpoints. |
+| RAC grounded review | Fixed review cases produce source-linked reports from structured records, local text evidence, and explicit boundary evidence. | Current case counts, routes, and report-contract checks are recorded in `rac/outputs/grounded_quality_summary.md`. |
 
 These analyses are reported separately with their procedures and
 outputs. The retrieval results are used to inspect routing behavior under
