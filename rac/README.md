@@ -72,7 +72,7 @@ evaluation.
 
 ## Current Implementation
 
-The implemented RAC scaffold includes:
+The current RAC path includes:
 
 - a shared review-state contract;
 - deterministic question analysis;
@@ -220,7 +220,7 @@ question-specific context required for comparison.
 
 | Layer | Run command | Validation command | Main output |
 |---|---|---|---|
-| Deterministic review scaffold | `python3 rac/scripts/run_mock_pipeline.py --all-eval` | `python3 rac/scripts/validate_mock_pipeline.py` | Mock review-state and report outputs in `rac/outputs/` |
+| Deterministic review path | `python3 rac/scripts/run_mock_pipeline.py --all-eval` | `python3 rac/scripts/validate_mock_pipeline.py` | Generated review-state and report outputs in `rac/outputs/` |
 | Local evidence resolver | `python3 rac/scripts/run_local_evidence_resolver.py --all-eval` | `python3 rac/scripts/validate_local_evidence_resolver.py` | Source-grounded evidence packets |
 | Grounded deterministic pipeline | `python3 rac/scripts/run_grounded_pipeline.py --all-eval` | `python3 rac/scripts/validate_grounded_pipeline.py` | `rac/outputs/grounded_*.json` and `rac/outputs/grounded_*.md` |
 | Report-contract quality gate | Generated with the grounded pipeline | `python3 rac/scripts/validate_grounded_quality_gate.py` | `grounded_quality_summary.json` and `grounded_quality_summary.md` |

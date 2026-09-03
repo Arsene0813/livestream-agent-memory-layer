@@ -91,7 +91,7 @@ Exact counts and per-case routes are generated in
 | `rac_promotion_strategy_001` | What should be checked before changing promotions for a store? | Routes available transaction, cost, and conversion evidence while retaining required SKU-level margin and competitor context as unresolved requirements. | [Promotion-strategy report](outputs/grounded_rac_promotion_strategy_001.md) |
 | `rac_system_design_001` | How should RAC connect to the existing memory layer? | Shows how typed memory records feed a factor-aware grounded review path. | [System-design report](outputs/grounded_rac_system_design_001.md) |
 
-## Cross-Store Grounding Hardening
+## Cross-Store Record Grounding
 
 For `rac_cross_store_comparability_001`, the current evidence routes are:
 
