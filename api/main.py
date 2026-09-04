@@ -2371,9 +2371,9 @@ def normalize_demo2_retail_entity_id(entity_id: str | None) -> str:
 def is_demo2_cross_store_query(message: str) -> bool:
     q = (message or "").lower()
 
-    return any(
-        term in q
-        for term in [
+    return _contains_retail_term(
+        q,
+        [
             "cross-store",
             "cross store",
             "compare stores",
@@ -2386,7 +2386,7 @@ def is_demo2_cross_store_query(message: str) -> bool:
             "跨店",
             "对比门店",
             "比较门店",
-        ]
+        ],
     )
 
 
@@ -2394,12 +2394,22 @@ def is_unsupported_demo2_retail_scope(message: str, entity_id: str | None) -> st
     q = (message or "").lower()
     eid = normalize_demo2_retail_entity_id(entity_id)
 
-    if any(term in q for term in ["48 stores", "all 48", "all stores", "全部门店", "所有门店", "48家"]):
+    if _contains_retail_term(
+        q,
+        [
+            "48 stores",
+            "all 48",
+            "all stores",
+            "全部门店",
+            "所有门店",
+            "48家",
+        ],
+    ):
         return "Demo 2 currently supports only the anonymized B-F same-period diagnostic sample, not all 48 stores."
 
-    if any(
-        term in q
-        for term in [
+    if _contains_retail_term(
+        q,
+        [
             "strategy transfer",
             "transfer strategy",
             "transfer promotion",
@@ -2418,16 +2428,16 @@ def is_unsupported_demo2_retail_scope(message: str, entity_id: str | None) -> st
             "照搬策略",
             "活动策略能不能迁移",
             "活动策略是否可以迁移",
-        ]
+        ],
     ):
         return (
             "Demo 2 supports diagnostic evidence and comparison limits, "
             "not pairwise strategy-transfer approval or final operating recommendations."
         )
 
-    if any(
-        term in q
-        for term in [
+    if _contains_retail_term(
+        q,
+        [
             "best store",
             "worst store",
             "which store is best",
@@ -2442,7 +2452,7 @@ def is_unsupported_demo2_retail_scope(message: str, entity_id: str | None) -> st
             "应该补贴",
             "加补贴",
             "经营建议",
-        ]
+        ],
     ):
         return "Demo 2 supports cautious diagnostic comparison, not best-store ranking or final operating recommendations."
 

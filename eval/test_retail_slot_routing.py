@@ -2,7 +2,11 @@ from __future__ import annotations
 
 import unittest
 
-from api.main import infer_retail_slots
+from api.main import (
+    infer_retail_slots,
+    is_demo2_cross_store_query,
+    is_unsupported_demo2_retail_scope,
+)
 
 
 class RetailSlotRoutingTests(unittest.TestCase):
@@ -84,6 +88,42 @@ class RetailSlotRoutingTests(unittest.TestCase):
                     infer_retail_slots(message),
                     expected,
                 )
+
+
+    def test_demo2_cross_store_term_boundaries(self) -> None:
+        cases = [
+            ("Compare Store B and Store C.", True),
+            ("Compare Stores B-F.", True),
+            ("Review this sub-field definition.", False),
+            ("Compare storefront layouts.", False),
+        ]
+
+        for message, expected in cases:
+            with self.subTest(message=message):
+                self.assertEqual(
+                    is_demo2_cross_store_query(message),
+                    expected,
+                )
+
+    def test_demo2_unsupported_scope_term_boundaries(self) -> None:
+        cases = [
+            ("Summarize all stores.", True),
+            ("Summarize small stores.", False),
+            ("Which is the best store?", True),
+            ("Review the best storefront layout.", False),
+        ]
+
+        for message, expected_unsupported in cases:
+            with self.subTest(message=message):
+                result = is_unsupported_demo2_retail_scope(
+                    message,
+                    "store_b",
+                )
+
+                if expected_unsupported:
+                    self.assertIsNotNone(result)
+                else:
+                    self.assertIsNone(result)
 
 
 if __name__ == "__main__":
