@@ -6,6 +6,7 @@ from api.main import (
     infer_retail_slots,
     is_demo2_cross_store_query,
     is_unsupported_demo2_retail_scope,
+    is_unsupported_retail_scope,
 )
 
 
@@ -118,6 +119,30 @@ class RetailSlotRoutingTests(unittest.TestCase):
                 result = is_unsupported_demo2_retail_scope(
                     message,
                     "store_b",
+                )
+
+                if expected_unsupported:
+                    self.assertIsNotNone(result)
+                else:
+                    self.assertIsNone(result)
+
+
+    def test_demo1_scope_boundaries_and_cause_forms(self) -> None:
+        cases = [
+            ("Review Store B metrics.", True),
+            ("Review store billing metrics.", False),
+            ("Summarize all stores.", True),
+            ("Summarize small stores.", False),
+            ("Exposure caused the growth.", True),
+            ("Did exposure cause the growth?", True),
+            ("Was growth caused by search alone?", False),
+        ]
+
+        for message, expected_unsupported in cases:
+            with self.subTest(message=message):
+                result = is_unsupported_retail_scope(
+                    message,
+                    "store_a",
                 )
 
                 if expected_unsupported:

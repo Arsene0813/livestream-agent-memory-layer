@@ -2208,13 +2208,16 @@ def infer_retail_slots(message: str) -> list[str]:
     return deduped
 
 
-def is_unsupported_retail_scope(message: str, entity_id: str | None) -> str | None:
+def is_unsupported_retail_scope(
+    message: str,
+    entity_id: str | None,
+) -> str | None:
     q = (message or "").lower()
     eid = normalize_retail_entity_id(entity_id)
 
-    if any(
-        x in q
-        for x in [
+    if _contains_retail_term(
+        q,
+        [
             "store b",
             "store c",
             "store d",
@@ -2230,25 +2233,89 @@ def is_unsupported_retail_scope(message: str, entity_id: str | None) -> str | No
             "d店",
             "e店",
             "f店",
-        ]
+        ],
     ):
-        return "The current retail demo only supports Store A facts."
+        return (
+            "The current retail demo only supports "
+            "Store A facts."
+        )
 
-    if any(x in q for x in ["48 stores", "all stores", "cross-store", "compare stores", "across stores", "全部门店", "跨店", "所有门店"]):
-        return "The Demo 1 Store A endpoint supports only Store A month-over-month retail facts. Use /chat_retail_ops_demo2_kb for the implemented Demo 2 same-period B-F diagnostic. Pairwise comparability gating and full 48-store automation are not implemented."
+    if _contains_retail_term(
+        q,
+        [
+            "48 stores",
+            "all stores",
+            "cross-store",
+            "compare stores",
+            "across stores",
+            "全部门店",
+            "跨店",
+            "所有门店",
+        ],
+    ):
+        return (
+            "The Demo 1 Store A endpoint supports only "
+            "Store A month-over-month retail facts. "
+            "Use /chat_retail_ops_demo2_kb for the "
+            "implemented Demo 2 same-period B-F diagnostic. "
+            "Pairwise comparability gating and full 48-store "
+            "automation are not implemented."
+        )
 
-    causal_terms = ["caused", "causal", "causation", "because of", "attribute to", "attributed to", "归因", "证明", "导致"]
-    attribution_warning_terms = ["should", "should not", "alone", "only", "whether", "是否", "能否", "该不该", "是不是", "单独", "仅仅", "只"]
-    padded_q = f" {q} "
+    causal_terms = [
+        "cause",
+        "causes",
+        "caused",
+        "causing",
+        "causal",
+        "causation",
+        "because of",
+        "attribute to",
+        "attributed to",
+        "归因",
+        "证明",
+        "导致",
+    ]
+    attribution_warning_terms = [
+        "should",
+        "should not",
+        "alone",
+        "only",
+        "whether",
+        "是否",
+        "能否",
+        "该不该",
+        "是不是",
+        "单独",
+        "仅仅",
+        "只",
+    ]
 
-    is_causal_query = any(term in padded_q for term in causal_terms)
-    is_attribution_warning_query = any(term in padded_q for term in attribution_warning_terms)
+    is_causal_query = _contains_retail_term(
+        q,
+        causal_terms,
+    )
+    is_attribution_warning_query = (
+        _contains_retail_term(
+            q,
+            attribution_warning_terms,
+        )
+    )
 
-    if is_causal_query and not is_attribution_warning_query:
-        return "The current retail demo supports cautious interpretation, not causal attribution."
+    if (
+        is_causal_query
+        and not is_attribution_warning_query
+    ):
+        return (
+            "The current retail demo supports cautious "
+            "interpretation, not causal attribution."
+        )
 
     if eid not in {"", "store_a"}:
-        return "The current retail demo only supports Store A facts."
+        return (
+            "The current retail demo only supports "
+            "Store A facts."
+        )
 
     return None
 
