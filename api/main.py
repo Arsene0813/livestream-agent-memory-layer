@@ -2435,8 +2435,78 @@ def normalize_demo2_retail_entity_id(entity_id: str | None) -> str:
     return raw
 
 
+def extract_demo2_retail_entity_ids(
+    message: str,
+) -> list[str]:
+    q = (message or "").lower()
+    suffixes = []
+
+    def add_suffix(suffix: str) -> None:
+        if suffix not in suffixes:
+            suffixes.append(suffix)
+
+    if _contains_retail_term(
+        q,
+        [
+            "stores b-f",
+            "stores b to f",
+            "b-f",
+        ],
+    ):
+        for suffix in ("b", "c", "d", "e", "f"):
+            add_suffix(suffix)
+
+    for match in re.finditer(
+        (
+            r"(?<![a-z0-9])"
+            r"stores?[_ ]([a-f])"
+            r"(?![a-z0-9])"
+        ),
+        q,
+    ):
+        add_suffix(match.group(1))
+
+    plural_group = re.search(
+        (
+            r"(?<![a-z0-9])stores\s+"
+            r"([a-f](?:\s*"
+            r"(?:,\s*(?:and\s+)?|and\s+)"
+            r"(?:store\s+)?[a-f])*)"
+        ),
+        q,
+    )
+
+    if plural_group:
+        for suffix in re.findall(
+            (
+                r"(?<![a-z0-9])"
+                r"([a-f])"
+                r"(?![a-z0-9])"
+            ),
+            plural_group.group(1),
+        ):
+            add_suffix(suffix)
+
+    for suffix in ("a", "b", "c", "d", "e", "f"):
+        if _contains_retail_term(
+            q,
+            [f"{suffix}店"],
+        ):
+            add_suffix(suffix)
+
+    return [
+        f"store_{suffix}"
+        for suffix in suffixes
+    ]
+
+
 def is_demo2_cross_store_query(message: str) -> bool:
     q = (message or "").lower()
+
+    if len(
+        extract_demo2_retail_entity_ids(message)
+    ) >= 2:
+        return True
 
     return _contains_retail_term(
         q,
@@ -2444,7 +2514,6 @@ def is_demo2_cross_store_query(message: str) -> bool:
             "cross-store",
             "cross store",
             "compare stores",
-            "compare store",
             "across stores",
             "stores b-f",
             "stores b to f",
@@ -2460,6 +2529,38 @@ def is_demo2_cross_store_query(message: str) -> bool:
 def is_unsupported_demo2_retail_scope(message: str, entity_id: str | None) -> str | None:
     q = (message or "").lower()
     eid = normalize_demo2_retail_entity_id(entity_id)
+    message_entity_ids = (
+        extract_demo2_retail_entity_ids(message)
+    )
+    supported_entity_ids = {
+        "store_b",
+        "store_c",
+        "store_d",
+        "store_e",
+        "store_f",
+    }
+
+    if any(
+        message_entity_id
+        not in supported_entity_ids
+        for message_entity_id
+        in message_entity_ids
+    ):
+        return (
+            "Demo 2 currently supports Store B, "
+            "Store C, Store D, Store E, and "
+            "Store F facts."
+        )
+
+    if (
+        eid in supported_entity_ids
+        and message_entity_ids
+        and eid not in message_entity_ids
+    ):
+        return (
+            "The store named in the message "
+            "does not match the supplied entity_id."
+        )
 
     if _contains_retail_term(
         q,
@@ -2582,10 +2683,52 @@ async def chat_retail_ops_demo2_kb(req: RetailOpsDemo2KbReq):
     facts = load_demo2_retail_facts()
 
     if is_cross_store:
+        message_entity_ids = (
+            extract_demo2_retail_entity_ids(
+                req.message
+            )
+        )
+        target_entity_ids = {
+            entity_id
+            for entity_id in message_entity_ids
+            if entity_id
+            in {
+                "store_b",
+                "store_c",
+                "store_d",
+                "store_e",
+                "store_f",
+            }
+        }
+
+        if not target_entity_ids:
+            target_entity_ids = {
+                "store_b",
+                "store_c",
+                "store_d",
+                "store_e",
+                "store_f",
+            }
+
+        requested_slots = [
+            slot
+            for slot in slots
+            if slot
+            != "single_metric_attribution_guard"
+        ]
+        selected_slots = set(
+            requested_slots
+            or ["single_metric_attribution_guard"]
+        )
+
         selected_facts = [
             fact
             for fact in facts
-            if fact.get("slot") == "single_metric_attribution_guard"
+            if (
+                fact.get("entity_id", "").lower()
+                in target_entity_ids
+            )
+            and fact.get("slot") in selected_slots
         ]
     else:
         entity_id_norm = normalize_demo2_retail_entity_id(req.entity_id)

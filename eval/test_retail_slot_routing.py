@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import asyncio
 import unittest
 
 from api.main import (
+    RetailOpsDemo2KbReq,
+    chat_retail_ops_demo2_kb,
     infer_retail_slots,
     is_demo2_cross_store_query,
     is_unsupported_demo2_retail_scope,
@@ -149,6 +152,110 @@ class RetailSlotRoutingTests(unittest.TestCase):
                     self.assertIsNotNone(result)
                 else:
                     self.assertIsNone(result)
+
+
+    def test_single_store_compare_is_not_cross_store(self) -> None:
+        self.assertFalse(
+            is_demo2_cross_store_query(
+                "Compare Store B activity with "
+                "its March baseline."
+            )
+        )
+
+    def test_demo2_message_entity_conflict_is_refused(self) -> None:
+        messages = [
+            (
+                "What was Store C's transaction "
+                "amount in March 2026?"
+            ),
+            (
+                "What was Store A's transaction "
+                "amount in March 2026?"
+            ),
+        ]
+
+        for message in messages:
+            with self.subTest(message=message):
+                result = asyncio.run(
+                    chat_retail_ops_demo2_kb(
+                        RetailOpsDemo2KbReq(
+                            message=message,
+                            entity_id="store_b",
+                        )
+                    )
+                )
+
+                self.assertFalse(result["supported"])
+                self.assertEqual(result["facts"], [])
+
+    def test_cross_store_selection_uses_requested_entities(self) -> None:
+        result = asyncio.run(
+            chat_retail_ops_demo2_kb(
+                RetailOpsDemo2KbReq(
+                    message=(
+                        "Compare Store B and Store C "
+                        "transaction amounts."
+                    ),
+                    entity_id=None,
+                )
+            )
+        )
+
+        self.assertTrue(result["supported"])
+        self.assertEqual(
+            [
+                fact["slot"]
+                for fact in result["facts"]
+            ],
+            [
+                "transaction_conversion_profile",
+                "transaction_conversion_profile",
+            ],
+        )
+
+        answer = result["answer"]
+
+        self.assertIn("Store B", answer)
+        self.assertIn("Store C", answer)
+        self.assertNotIn("Store D", answer)
+        self.assertNotIn("Store E", answer)
+        self.assertNotIn("Store F", answer)
+
+
+    def test_plural_cross_store_selection_uses_named_entities(
+        self,
+    ) -> None:
+        result = asyncio.run(
+            chat_retail_ops_demo2_kb(
+                RetailOpsDemo2KbReq(
+                    message=(
+                        "Compare Stores B and C "
+                        "transaction amounts."
+                    ),
+                    entity_id=None,
+                )
+            )
+        )
+
+        self.assertTrue(result["supported"])
+        self.assertEqual(
+            [
+                fact["slot"]
+                for fact in result["facts"]
+            ],
+            [
+                "transaction_conversion_profile",
+                "transaction_conversion_profile",
+            ],
+        )
+
+        answer = result["answer"]
+
+        self.assertIn("Store B", answer)
+        self.assertIn("Store C", answer)
+        self.assertNotIn("Store D", answer)
+        self.assertNotIn("Store E", answer)
+        self.assertNotIn("Store F", answer)
 
 
 if __name__ == "__main__":
