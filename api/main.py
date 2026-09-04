@@ -2748,7 +2748,29 @@ async def chat_retail_ops_demo2_kb(req: RetailOpsDemo2KbReq):
         }
 
     limit = req.top_k or 5
-    points = demo2_retail_facts_to_points(selected_facts[:limit])
+
+    if (
+        is_cross_store
+        and len(selected_facts) > limit
+    ):
+        required_count = len(selected_facts)
+
+        return {
+            "supported": False,
+            "answer": (
+                "The requested cross-store evidence "
+                f"requires {required_count} facts, but "
+                f"top_k={limit} would truncate the "
+                "declared store and factor scope. "
+                "Increase top_k to at least "
+                f"{required_count}."
+            ),
+            "facts": [],
+        }
+
+    points = demo2_retail_facts_to_points(
+        selected_facts[:limit]
+    )
 
     result = retail_answer_from_points(points)
 

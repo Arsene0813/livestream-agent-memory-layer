@@ -258,5 +258,48 @@ class RetailSlotRoutingTests(unittest.TestCase):
         self.assertNotIn("Store F", answer)
 
 
+    def test_cross_store_top_k_does_not_return_partial_scope(
+        self,
+    ) -> None:
+        cases = [
+            (
+                (
+                    "Are Stores B-F directly comparable "
+                    "in March 2026?"
+                ),
+                1,
+            ),
+            (
+                (
+                    "Compare Stores B-F transaction "
+                    "amounts and activity."
+                ),
+                5,
+            ),
+        ]
+
+        for message, top_k in cases:
+            with self.subTest(
+                message=message,
+                top_k=top_k,
+            ):
+                result = asyncio.run(
+                    chat_retail_ops_demo2_kb(
+                        RetailOpsDemo2KbReq(
+                            message=message,
+                            entity_id=None,
+                            top_k=top_k,
+                        )
+                    )
+                )
+
+                self.assertFalse(result["supported"])
+                self.assertEqual(result["facts"], [])
+                self.assertIn(
+                    "top_k",
+                    result["answer"],
+                )
+
+
 if __name__ == "__main__":
     unittest.main()
