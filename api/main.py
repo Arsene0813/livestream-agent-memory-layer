@@ -2092,29 +2092,114 @@ def normalize_retail_entity_id(entity_id: str | None) -> str:
     return (entity_id or "store_A").strip().lower().replace(" ", "_")
 
 
+def _contains_retail_term(
+    query: str,
+    terms: list[str],
+) -> bool:
+    return any(
+        re.search(
+            rf"(?<![a-z0-9]){re.escape(term)}(?![a-z0-9])",
+            query,
+        )
+        for term in terms
+    )
+
+
 def infer_retail_slots(message: str) -> list[str]:
     q = (message or "").lower()
     slots: list[str] = []
 
-    if any(x in q for x in ["visibility", "visibility entry", "entry", "search", "ranking", "rank", "曝光", "搜索", "排名", "入店"]):
-        slots.extend(["visibility_entry_profile", "single_metric_attribution_guard"])
+    if _contains_retail_term(
+        q,
+        [
+            "visibility",
+            "entry",
+            "search",
+            "ranking",
+            "rank",
+            "exposure",
+            "曝光",
+            "搜索",
+            "排名",
+            "入店",
+        ],
+    ):
+        slots.extend([
+            "visibility_entry_profile",
+            "single_metric_attribution_guard",
+        ])
 
-    if any(x in q for x in ["promotion", "activity", "promo", "saturated", "活动", "促销", "补贴"]):
+    if _contains_retail_term(
+        q,
+        [
+            "promotion",
+            "activity",
+            "promo",
+            "saturated",
+            "活动",
+            "促销",
+            "补贴",
+        ],
+    ):
         slots.append("activity_lever_profile")
 
+    if _contains_retail_term(
+        q,
+        [
+            "conversion",
+            "aov",
+            "average order",
+            "transaction",
+            "order",
+            "orders",
+            "ordered",
+            "payment",
+            "转化",
+            "客单价",
+            "成交",
+            "订单",
+            "支付",
+        ],
+    ):
+        slots.extend([
+            "transaction_conversion_profile",
+            "single_metric_attribution_guard",
+        ])
 
-    if any(x in q for x in ["conversion", "aov", "average order", "growth", "recovery", "转化", "客单价", "增长", "恢复"]):
+    if _contains_retail_term(
+        q,
+        [
+            "growth",
+            "grew",
+            "recover",
+            "recovered",
+            "recovery",
+            "增长",
+            "恢复",
+        ],
+    ):
         slots.extend([
             "transaction_conversion_profile",
             "single_metric_attribution_guard",
             "activity_lever_profile",
         ])
 
-    if any(x in q for x in ["sku", "product mix", "category", "商品", "品类", "产品结构"]):
+    if _contains_retail_term(
+        q,
+        [
+            "sku",
+            "product mix",
+            "category",
+            "商品",
+            "品类",
+            "产品结构",
+        ],
+    ):
         slots.append("top3_sku_product_mix_note")
 
     deduped = []
     seen = set()
+
     for slot in slots:
         if slot not in seen:
             deduped.append(slot)
