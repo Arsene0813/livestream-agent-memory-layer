@@ -2385,9 +2385,43 @@ def retail_answer_from_points(points: list[dict]) -> dict:
             answer_parts.append(f"- {value}")
 
         facts.append({
+            "value": value,
+            "entity_id": payload.get("entity_id"),
+            "period_start": payload.get(
+                "period_start"
+            ),
+            "period_end": payload.get(
+                "period_end"
+            ),
+            "period_label": payload.get(
+                "period_label"
+            ),
+            "period_granularity": payload.get(
+                "period_granularity"
+            ),
             "slot": slot,
             "confidence": confidence,
+            "source_fields": (
+                payload.get("source_fields")
+                or []
+            ),
+            "observed_values": (
+                payload.get("observed_values")
+                or {}
+            ),
+            "calculation": payload.get(
+                "calculation"
+            ),
             "source_path": source_path,
+            "supporting_source_paths": (
+                payload.get(
+                    "supporting_source_paths"
+                )
+                or []
+            ),
+            "lineage_path": payload.get(
+                "lineage_path"
+            ),
             "limitations": limitations,
             "score": p.get("score"),
         })
