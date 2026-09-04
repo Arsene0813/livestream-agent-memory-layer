@@ -2105,6 +2105,74 @@ def _contains_retail_term(
     )
 
 
+RETAIL_MONTH_NAMES = (
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december",
+)
+
+
+def extract_retail_period_references(
+    message: str,
+) -> tuple[set[str], set[str]]:
+    q = (message or "").lower()
+    years = set(
+        re.findall(
+            r"(?<!\d)(20\d{2})(?!\d)",
+            q,
+        )
+    )
+    period_months = set()
+
+    for year, month in re.findall(
+        (
+            r"(?<!\d)(20\d{2})"
+            r"[-/](\d{1,2})(?!\d)"
+        ),
+        q,
+    ):
+        period_months.add(
+            f"{year}-{int(month):02d}"
+        )
+
+    for year, month in re.findall(
+        r"(20\d{2})年(\d{1,2})月",
+        q,
+    ):
+        period_months.add(
+            f"{year}-{int(month):02d}"
+        )
+
+    month_pattern = "|".join(
+        RETAIL_MONTH_NAMES
+    )
+
+    for month_name, year in re.findall(
+        rf"\b({month_pattern})\s+(20\d{{2}})\b",
+        q,
+    ):
+        month_number = (
+            RETAIL_MONTH_NAMES.index(
+                month_name
+            )
+            + 1
+        )
+        period_months.add(
+            f"{year}-{month_number:02d}"
+        )
+
+    return years, period_months
+
+
 def infer_retail_slots(message: str) -> list[str]:
     q = (message or "").lower()
     slots: list[str] = []
@@ -2214,6 +2282,23 @@ def is_unsupported_retail_scope(
 ) -> str | None:
     q = (message or "").lower()
     eid = normalize_retail_entity_id(entity_id)
+    years, period_months = (
+        extract_retail_period_references(message)
+    )
+
+    if (
+        years - {"2026"}
+        or period_months
+        - {
+            "2026-02",
+            "2026-03",
+            "2026-04",
+        }
+    ):
+        return (
+            "Demo 1 supports Store A evidence "
+            "from February through April 2026."
+        )
 
     if _contains_retail_term(
         q,
@@ -2563,6 +2648,19 @@ def is_demo2_cross_store_query(message: str) -> bool:
 def is_unsupported_demo2_retail_scope(message: str, entity_id: str | None) -> str | None:
     q = (message or "").lower()
     eid = normalize_demo2_retail_entity_id(entity_id)
+    years, period_months = (
+        extract_retail_period_references(message)
+    )
+
+    if (
+        years - {"2026"}
+        or period_months - {"2026-03"}
+    ):
+        return (
+            "Demo 2 supports the March 2026 "
+            "B-F diagnostic evidence."
+        )
+
     message_entity_ids = (
         extract_demo2_retail_entity_ids(message)
     )
