@@ -2828,6 +2828,16 @@ async def chat_retail_ops_kb(req: RetailOpsKbReq):
     entity_id_norm = normalize_retail_entity_id(req.entity_id)
     slots = infer_retail_slots(req.message)
 
+    if not slots:
+        return {
+            "supported": False,
+            "answer": (
+                "No supported retail evidence class "
+                "was found for this question."
+            ),
+            "facts": [],
+        }
+
     slot_points = []
     for slot in slots:
         slot_points.extend(

@@ -2,10 +2,13 @@ from __future__ import annotations
 
 import asyncio
 import unittest
+from unittest.mock import AsyncMock, patch
 
 from api.main import (
     RetailOpsDemo2KbReq,
+    RetailOpsKbReq,
     chat_retail_ops_demo2_kb,
+    chat_retail_ops_kb,
     infer_retail_slots,
     is_demo2_cross_store_query,
     is_unsupported_demo2_retail_scope,
@@ -299,6 +302,52 @@ class RetailSlotRoutingTests(unittest.TestCase):
                     "top_k",
                     result["answer"],
                 )
+
+
+    def test_demo1_unmatched_class_skips_vector_fallback(
+        self,
+    ) -> None:
+        high_score_point = {
+            "score": 0.99,
+            "payload": {
+                "value": "Unrelated vector result.",
+                "entity_id": "store_A",
+                "slot": "visibility_entry_profile",
+                "source_path": "unrelated.md",
+            },
+        }
+
+        scroll_mock = AsyncMock(return_value=[])
+        vector_mock = AsyncMock(
+            return_value=[high_score_point]
+        )
+
+        with (
+            patch(
+                "api.main.qdrant_scroll_retail_slot",
+                new=scroll_mock,
+            ),
+            patch(
+                "api.main.qdrant_query_retail",
+                new=vector_mock,
+            ),
+        ):
+            result = asyncio.run(
+                chat_retail_ops_kb(
+                    RetailOpsKbReq(
+                        message=(
+                            "Summarize the research "
+                            "design for Store A."
+                        ),
+                        entity_id="store_a",
+                    )
+                )
+            )
+
+        self.assertFalse(result["supported"])
+        self.assertEqual(result["facts"], [])
+        scroll_mock.assert_not_awaited()
+        vector_mock.assert_not_awaited()
 
 
 if __name__ == "__main__":
