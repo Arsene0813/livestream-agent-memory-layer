@@ -149,6 +149,13 @@ Current source files include:
 
 ### Implemented SQL Files
 
+`retail_ops/sql_runtime.py` loads the registered canonical CSVs, checks numeric types,
+reporting windows and logical keys, then runs the selected SQL in memory. All four
+queries use its `retail_value` function. Missing values remain null; incomplete
+Top 3 evidence does not produce a partial concentration total. The original Demo 1
+exporter and repeated-window summary scripts use this runtime as well. Details are
+in `retail_ops/sql/README.md`.
+
 - `retail_ops/sql/01_store_a_month_over_month_diagnostic.sql`
 - `retail_ops/sql/02_demo2_cross_store_comparability.sql`
 

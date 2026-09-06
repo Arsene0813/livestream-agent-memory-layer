@@ -5,13 +5,14 @@ from __future__ import annotations
 
 import csv
 import re
-import sqlite3
 import sys
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from retail_ops.sql_runtime import execute_sqlite
 
 SOURCE = ROOT / "retail_ops/data/store_period_panel_metrics.csv"
 SQL = ROOT / "retail_ops/sql/04_repeated_window_panel_summary.sql"
@@ -149,57 +150,13 @@ def execute_sql(
         if not line.lstrip().startswith(".")
     ).strip()
 
-    connection = sqlite3.connect(":memory:")
-
-    try:
-        definitions = ", ".join(
-            f'"{field}" TEXT'
-            for field in source_fields
-        )
-
-        connection.execute(
-            f"CREATE TABLE store_period_panel_metrics ({definitions})"
-        )
-
-        field_list = ", ".join(
-            f'"{field}"'
-            for field in source_fields
-        )
-
-        placeholders = ", ".join(
-            "?"
-            for _ in source_fields
-        )
-
-        connection.executemany(
-            (
-                "INSERT INTO store_period_panel_metrics "
-                f"({field_list}) VALUES ({placeholders})"
-            ),
-            [
-                [row.get(field, "") for field in source_fields]
-                for row in source_rows
-            ],
-        )
-
-        cursor = connection.execute(executable_sql)
-
-        output_fields = [
-            item[0]
-            for item in cursor.description or []
-        ]
-
-        output_rows = [
-            {
-                field: "" if value is None else str(value)
-                for field, value in zip(output_fields, raw_row)
-            }
-            for raw_row in cursor.fetchall()
-        ]
-
-    finally:
-        connection.close()
-
+    output_fields, raw_rows = execute_sqlite(
+        {"store_period_panel_metrics": (source_fields, source_rows)}, executable_sql
+    )
+    output_rows = [
+        {field: "" if value is None else str(value) for field, value in zip(output_fields, row)}
+        for row in raw_rows
+    ]
     return output_fields, output_rows
 
 

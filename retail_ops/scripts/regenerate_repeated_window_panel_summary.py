@@ -4,12 +4,13 @@
 from __future__ import annotations
 
 import csv
-import sqlite3
 import sys
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from retail_ops.sql_runtime import execute_sqlite
 
 SOURCE_PATH = (
     ROOT
@@ -114,56 +115,9 @@ def execute_summary(
     source_rows: list[dict[str, str]],
     executable_sql: str,
 ) -> tuple[list[str], list[tuple[object, ...]]]:
-    connection = sqlite3.connect(":memory:")
-
-    try:
-        column_definition = ", ".join(
-            f'"{field}" TEXT'
-            for field in source_fields
-        )
-
-        connection.execute(
-            "CREATE TABLE store_period_panel_metrics "
-            f"({column_definition})"
-        )
-
-        column_names = ", ".join(
-            f'"{field}"'
-            for field in source_fields
-        )
-
-        placeholders = ", ".join(
-            "?"
-            for _ in source_fields
-        )
-
-        connection.executemany(
-            (
-                "INSERT INTO store_period_panel_metrics "
-                f"({column_names}) VALUES ({placeholders})"
-            ),
-            [
-                [
-                    row.get(field, "")
-                    for field in source_fields
-                ]
-                for row in source_rows
-            ],
-        )
-
-        cursor = connection.execute(executable_sql)
-
-        output_fields = [
-            description[0]
-            for description in cursor.description or []
-        ]
-
-        output_rows = cursor.fetchall()
-
-    finally:
-        connection.close()
-
-    return output_fields, output_rows
+    return execute_sqlite(
+        {"store_period_panel_metrics": (source_fields, source_rows)}, executable_sql
+    )
 
 
 def validate_output(

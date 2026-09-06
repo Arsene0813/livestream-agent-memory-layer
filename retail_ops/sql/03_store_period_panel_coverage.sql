@@ -1,3 +1,4 @@
+-- Execute through retail_ops.sql_runtime to register canonical numeric validation.
 -- Repeated-window panel extension coverage inspection.
 --
 -- Purpose:
@@ -61,13 +62,27 @@ coverage AS (
         MAX(p.period_month) AS last_observed_month,
         m.observed_months,
 
-        ROUND(AVG(CAST(transaction_amount AS REAL)), 2) AS avg_transaction_amount,
-        ROUND(AVG(CAST(transaction_orders AS REAL)), 2) AS avg_transaction_orders,
-        ROUND(AVG(CAST(exposure_users AS REAL)), 2) AS avg_exposure_users,
-        ROUND(AVG(CAST(entry_users AS REAL)), 2) AS avg_entry_users,
-        ROUND(AVG(CAST(order_conversion_rate_pct AS REAL)), 2) AS avg_order_conversion_rate_pct,
-        ROUND(AVG(CAST(payment_conversion_rate_pct AS REAL)), 2) AS avg_payment_conversion_rate_pct,
-        ROUND(AVG(CAST(activity_cost_ratio_pct AS REAL)), 2) AS avg_activity_cost_ratio_pct,
+        CASE WHEN COUNT(retail_value('transaction_amount', transaction_amount)) = COUNT(*)
+             THEN ROUND(AVG(CAST(retail_value('transaction_amount', transaction_amount) AS REAL)), 2)
+        END AS avg_transaction_amount,
+        CASE WHEN COUNT(retail_value('transaction_orders', transaction_orders)) = COUNT(*)
+             THEN ROUND(AVG(CAST(retail_value('transaction_orders', transaction_orders) AS REAL)), 2)
+        END AS avg_transaction_orders,
+        CASE WHEN COUNT(retail_value('exposure_users', exposure_users)) = COUNT(*)
+             THEN ROUND(AVG(CAST(retail_value('exposure_users', exposure_users) AS REAL)), 2)
+        END AS avg_exposure_users,
+        CASE WHEN COUNT(retail_value('entry_users', entry_users)) = COUNT(*)
+             THEN ROUND(AVG(CAST(retail_value('entry_users', entry_users) AS REAL)), 2)
+        END AS avg_entry_users,
+        CASE WHEN COUNT(retail_value('order_conversion_rate_pct', order_conversion_rate_pct)) = COUNT(*)
+             THEN ROUND(AVG(CAST(retail_value('order_conversion_rate_pct', order_conversion_rate_pct) AS REAL)), 2)
+        END AS avg_order_conversion_rate_pct,
+        CASE WHEN COUNT(retail_value('payment_conversion_rate_pct', payment_conversion_rate_pct)) = COUNT(*)
+             THEN ROUND(AVG(CAST(retail_value('payment_conversion_rate_pct', payment_conversion_rate_pct) AS REAL)), 2)
+        END AS avg_payment_conversion_rate_pct,
+        CASE WHEN COUNT(retail_value('activity_cost_ratio_pct', activity_cost_ratio_pct)) = COUNT(*)
+             THEN ROUND(AVG(CAST(retail_value('activity_cost_ratio_pct', activity_cost_ratio_pct) AS REAL)), 2)
+        END AS avg_activity_cost_ratio_pct,
 
         CASE
             WHEN COUNT(DISTINCT p.period_month) = 3

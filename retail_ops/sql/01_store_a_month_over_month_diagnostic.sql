@@ -1,3 +1,4 @@
+-- Execute through retail_ops.sql_runtime to register canonical numeric validation.
 -- Demo 1: Store A month-over-month diagnostic
 --
 -- Purpose:
@@ -12,13 +13,17 @@ WITH top3_sku_amount AS (
     SELECT
         store_id,
         period_month,
-        ROUND(SUM(TRY_CAST(sku_transaction_amount AS DOUBLE)), 2) AS top3_sku_transaction_amount
-    FROM read_csv_auto(
-        'retail_ops/data/store_a_top_skus.csv',
-        header = true
-    )
-    WHERE TRY_CAST(sku_rank AS INTEGER) <= 3
-    GROUP BY store_id, period_month
+        period_start,
+        period_end,
+        CASE
+            WHEN COUNT(*) = 3
+             AND COUNT(DISTINCT CAST(retail_value('sku_rank', sku_rank) AS INTEGER)) = 3
+             AND COUNT(retail_value('sku_transaction_amount', sku_transaction_amount)) = 3
+            THEN ROUND(SUM(CAST(retail_value('sku_transaction_amount', sku_transaction_amount) AS DOUBLE)), 2)
+        END AS top3_sku_transaction_amount
+    FROM store_a_top_skus
+    WHERE CAST(retail_value('sku_rank', sku_rank) AS INTEGER) BETWEEN 1 AND 3
+    GROUP BY store_id, period_month, period_start, period_end
 ),
 
 store_monthly_metrics AS (
@@ -30,51 +35,50 @@ store_monthly_metrics AS (
         m.region_type,
         m.store_type,
 
-        TRY_CAST(m.transaction_amount AS DOUBLE) AS transaction_amount,
-        TRY_CAST(m.transaction_orders AS BIGINT) AS transaction_orders,
-        TRY_CAST(m.estimated_income_proxy AS DOUBLE) AS estimated_income_proxy,
-        TRY_CAST(m.average_order_value AS DOUBLE) AS average_order_value,
+        TRY_CAST(retail_value('transaction_amount', m.transaction_amount) AS DOUBLE) AS transaction_amount,
+        TRY_CAST(retail_value('transaction_orders', m.transaction_orders) AS BIGINT) AS transaction_orders,
+        TRY_CAST(retail_value('estimated_income_proxy', m.estimated_income_proxy) AS DOUBLE) AS estimated_income_proxy,
+        TRY_CAST(retail_value('average_order_value', m.average_order_value) AS DOUBLE) AS average_order_value,
 
-        TRY_CAST(m.exposure_users AS BIGINT) AS exposure_users,
-        TRY_CAST(m.exposure_times AS BIGINT) AS exposure_times,
-        TRY_CAST(m.store_average_rank AS DOUBLE) AS store_average_rank,
+        TRY_CAST(retail_value('exposure_users', m.exposure_users) AS BIGINT) AS exposure_users,
+        TRY_CAST(retail_value('exposure_times', m.exposure_times) AS BIGINT) AS exposure_times,
+        TRY_CAST(retail_value('store_average_rank', m.store_average_rank) AS DOUBLE) AS store_average_rank,
 
-        TRY_CAST(m.entry_conversion_rate_pct AS DOUBLE) AS entry_conversion_rate_pct,
-        TRY_CAST(m.entry_users AS BIGINT) AS entry_users,
-        TRY_CAST(m.entry_times AS BIGINT) AS entry_times,
+        TRY_CAST(retail_value('entry_conversion_rate_pct', m.entry_conversion_rate_pct) AS DOUBLE) AS entry_conversion_rate_pct,
+        TRY_CAST(retail_value('entry_users', m.entry_users) AS BIGINT) AS entry_users,
+        TRY_CAST(retail_value('entry_times', m.entry_times) AS BIGINT) AS entry_times,
 
-        TRY_CAST(m.order_users AS BIGINT) AS order_users,
-        TRY_CAST(m.order_times AS BIGINT) AS order_times,
-        TRY_CAST(m.order_conversion_rate_pct AS DOUBLE) AS order_conversion_rate_pct,
-        TRY_CAST(m.order_amount AS DOUBLE) AS order_amount,
+        TRY_CAST(retail_value('order_users', m.order_users) AS BIGINT) AS order_users,
+        TRY_CAST(retail_value('order_times', m.order_times) AS BIGINT) AS order_times,
+        TRY_CAST(retail_value('order_conversion_rate_pct', m.order_conversion_rate_pct) AS DOUBLE) AS order_conversion_rate_pct,
+        TRY_CAST(retail_value('order_amount', m.order_amount) AS DOUBLE) AS order_amount,
 
-        TRY_CAST(m.payment_users AS BIGINT) AS payment_users,
-        TRY_CAST(m.payment_amount AS DOUBLE) AS payment_amount,
-        TRY_CAST(m.payment_conversion_rate_pct AS DOUBLE) AS payment_conversion_rate_pct,
+        TRY_CAST(retail_value('payment_users', m.payment_users) AS BIGINT) AS payment_users,
+        TRY_CAST(retail_value('payment_amount', m.payment_amount) AS DOUBLE) AS payment_amount,
+        TRY_CAST(retail_value('payment_conversion_rate_pct', m.payment_conversion_rate_pct) AS DOUBLE) AS payment_conversion_rate_pct,
 
-        TRY_CAST(m.search_exposure_users AS BIGINT) AS search_exposure_users,
-        TRY_CAST(m.search_average_rank AS DOUBLE) AS search_average_rank,
-        TRY_CAST(m.search_entry_users AS BIGINT) AS search_entry_users,
+        TRY_CAST(retail_value('search_exposure_users', m.search_exposure_users) AS BIGINT) AS search_exposure_users,
+        TRY_CAST(retail_value('search_average_rank', m.search_average_rank) AS DOUBLE) AS search_average_rank,
+        TRY_CAST(retail_value('search_entry_users', m.search_entry_users) AS BIGINT) AS search_entry_users,
 
-        TRY_CAST(m.activity_original_transaction_amount AS DOUBLE) AS activity_original_transaction_amount,
-        TRY_CAST(m.activity_orders AS BIGINT) AS activity_orders,
-        TRY_CAST(m.activity_cost AS DOUBLE) AS activity_cost,
-        TRY_CAST(m.merchant_subsidy_amount AS DOUBLE) AS merchant_subsidy_amount,
-        TRY_CAST(m.platform_subsidy_amount AS DOUBLE) AS platform_subsidy_amount,
-        TRY_CAST(m.activity_cost_ratio_pct AS DOUBLE) AS activity_cost_ratio_pct,
+        TRY_CAST(retail_value('activity_original_transaction_amount', m.activity_original_transaction_amount) AS DOUBLE) AS activity_original_transaction_amount,
+        TRY_CAST(retail_value('activity_orders', m.activity_orders) AS BIGINT) AS activity_orders,
+        TRY_CAST(retail_value('activity_cost', m.activity_cost) AS DOUBLE) AS activity_cost,
+        TRY_CAST(retail_value('merchant_subsidy_amount', m.merchant_subsidy_amount) AS DOUBLE) AS merchant_subsidy_amount,
+        TRY_CAST(retail_value('platform_subsidy_amount', m.platform_subsidy_amount) AS DOUBLE) AS platform_subsidy_amount,
+        TRY_CAST(retail_value('activity_cost_ratio_pct', m.activity_cost_ratio_pct) AS DOUBLE) AS activity_cost_ratio_pct,
 
-        TRY_CAST(m.refund_amount AS DOUBLE) AS refund_amount,
-        TRY_CAST(m.full_refund_orders AS BIGINT) AS full_refund_orders,
-        TRY_CAST(m.refund_orders_all_or_partial AS BIGINT) AS refund_orders_all_or_partial,
+        TRY_CAST(retail_value('refund_amount', m.refund_amount) AS DOUBLE) AS refund_amount,
+        TRY_CAST(retail_value('full_refund_orders', m.full_refund_orders) AS BIGINT) AS full_refund_orders,
+        TRY_CAST(retail_value('refund_orders_all_or_partial', m.refund_orders_all_or_partial) AS BIGINT) AS refund_orders_all_or_partial,
 
         t.top3_sku_transaction_amount
-    FROM read_csv_auto(
-        'retail_ops/data/store_a_monthly_metrics.csv',
-        header = true
-    ) AS m
+    FROM store_a_monthly_metrics AS m
     LEFT JOIN top3_sku_amount AS t
         ON m.store_id = t.store_id
        AND m.period_month = t.period_month
+       AND m.period_start = t.period_start
+       AND m.period_end = t.period_end
 ),
 
 with_previous AS (
@@ -237,6 +241,12 @@ final_output AS (
         search_average_rank - prev_search_average_rank AS search_average_rank_change,
 
         CASE
+            WHEN period_start = latest_period_start
+             AND (transaction_amount IS NULL OR prev_transaction_amount IS NULL
+               OR transaction_orders IS NULL OR prev_transaction_orders IS NULL
+               OR order_conversion_rate_pct IS NULL OR prev_order_conversion_rate_pct IS NULL
+               OR average_order_value IS NULL OR prev_average_order_value IS NULL)
+            THEN NULL
             WHEN period_start = latest_period_start
              AND transaction_amount > prev_transaction_amount
              AND transaction_orders > prev_transaction_orders

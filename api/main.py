@@ -7,6 +7,18 @@ import uuid
 import json
 import asyncio
 import re
+if __package__:
+    from .retail_entity_scope import (
+        extract_retail_entity_ids,
+        resolve_retail_entity_id,
+        retail_fact_matches_entities,
+    )
+else:
+    from retail_entity_scope import (
+        extract_retail_entity_ids,
+        resolve_retail_entity_id,
+        retail_fact_matches_entities,
+    )
 
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://ollama:11434")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5:14b")
@@ -2121,6 +2133,54 @@ RETAIL_MONTH_NAMES = (
 )
 
 
+
+
+def retail_question_has_unsupported_date_window(message: str) -> bool:
+    from calendar import monthrange
+    from datetime import date
+
+    q = (message or "").lower()
+    if re.search(
+        r"\b(?:daily|hourly|weekly|per\s+(?:day|hour|week)|by\s+(?:day|hour|week))\b"
+        r"|按日|按天|逐日|逐天|每日|每天|按小时|每小时|逐小时|按周|每周|逐周",
+        q,
+    ):
+        return True
+
+    # Complete calendar-month windows can be written with exact boundaries.
+    pattern = r"(?<!\d)\d{4}[-/]\d{1,2}[-/]\d{1,2}(?!\d)"
+    dates = list(re.finditer(pattern, q))
+    if len(dates) % 2:
+        return True
+    for left, right in zip(dates[::2], dates[1::2]):
+        if re.match(r"(?:t\d|\s+\d{1,2}:)", q[right.end():]):
+            return True
+        if not re.fullmatch(
+            r"\s*(?:to|through|-|–|—|~|～|至|到)\s*",
+            q[left.end():right.start()],
+        ):
+            return True
+        try:
+            first = date(*map(int, re.split(r"[-/]", left.group())))
+            last = date(*map(int, re.split(r"[-/]", right.group())))
+        except ValueError:
+            return True
+        if first > last or first.day != 1:
+            return True
+        if last.day != monthrange(last.year, last.month)[1]:
+            return True
+
+    remainder = re.sub(pattern, " ", q)
+    month_names = "|".join(RETAIL_MONTH_NAMES)
+    return bool(re.search(
+        r"(?<!\d)\d{1,2}[-/]\d{1,2}[-/]\d{4}(?!\d)"
+        r"|(?:\d{1,2}|[一二三四五六七八九十]{1,3})月\s*"
+        r"(?:\d{1,2}|[一二三四五六七八九十]{1,3})(?:日|号)"
+        rf"|\b(?:{month_names})\s+\d{{1,2}}(?:st|nd|rd|th)?\b"
+        rf"|\b\d{{1,2}}(?:st|nd|rd|th)?\s+(?:{month_names})\b",
+        remainder,
+    ))
+
 def extract_retail_period_references(
     message: str,
 ) -> tuple[set[str], set[str]]:
@@ -2280,6 +2340,8 @@ def is_unsupported_retail_scope(
     message: str,
     entity_id: str | None,
 ) -> str | None:
+    if retail_question_has_unsupported_date_window(message):
+        return "Current evidence covers calendar-month windows. Specify YYYY-MM or a complete window, such as 2026-03-01 to 2026-03-31."
     q = (message or "").lower()
     eid = normalize_retail_entity_id(entity_id)
     years, period_months = (
@@ -2300,30 +2362,8 @@ def is_unsupported_retail_scope(
             "from February through April 2026."
         )
 
-    if _contains_retail_term(
-        q,
-        [
-            "store b",
-            "store c",
-            "store d",
-            "store e",
-            "store f",
-            "store_b",
-            "store_c",
-            "store_d",
-            "store_e",
-            "store_f",
-            "b店",
-            "c店",
-            "d店",
-            "e店",
-            "f店",
-        ],
-    ):
-        return (
-            "The current retail demo only supports "
-            "Store A facts."
-        )
+    if any(entity != "store_a" for entity in extract_retail_entity_ids(message)):
+        return "The current retail demo only supports Store A facts."
 
     if _contains_retail_term(
         q,
@@ -2454,7 +2494,24 @@ async def qdrant_query_retail(message: str, entity_id_norm: str, limit: int = 5)
         return r.json().get("result", [])
 
 
-def retail_answer_from_points(points: list[dict]) -> dict:
+def retail_answer_from_points(points: list[dict], *, entity_ids: set[str]) -> dict:
+    if any(
+        not isinstance(point, dict)
+        or not retail_fact_matches_entities(point.get("payload"), entity_ids)
+        for point in points
+    ):
+        return {
+            "supported": False,
+            "answer": "The retrieved facts do not match the requested retail store scope.",
+            "facts": [],
+        }
+    returned_entities = {point["payload"]["entity_id"].lower() for point in points}
+    if returned_entities != entity_ids:
+        return {
+            "supported": False,
+            "answer": "The retrieved facts do not cover every requested store.",
+            "facts": [],
+        }
     facts = []
     answer_parts = []
 
@@ -2554,69 +2611,8 @@ def normalize_demo2_retail_entity_id(entity_id: str | None) -> str:
     return raw
 
 
-def extract_demo2_retail_entity_ids(
-    message: str,
-) -> list[str]:
-    q = (message or "").lower()
-    suffixes = []
-
-    def add_suffix(suffix: str) -> None:
-        if suffix not in suffixes:
-            suffixes.append(suffix)
-
-    if _contains_retail_term(
-        q,
-        [
-            "stores b-f",
-            "stores b to f",
-            "b-f",
-        ],
-    ):
-        for suffix in ("b", "c", "d", "e", "f"):
-            add_suffix(suffix)
-
-    for match in re.finditer(
-        (
-            r"(?<![a-z0-9])"
-            r"stores?[_ ]([a-f])"
-            r"(?![a-z0-9])"
-        ),
-        q,
-    ):
-        add_suffix(match.group(1))
-
-    plural_group = re.search(
-        (
-            r"(?<![a-z0-9])stores\s+"
-            r"([a-f](?:\s*"
-            r"(?:,\s*(?:and\s+)?|and\s+)"
-            r"(?:store\s+)?[a-f])*)"
-        ),
-        q,
-    )
-
-    if plural_group:
-        for suffix in re.findall(
-            (
-                r"(?<![a-z0-9])"
-                r"([a-f])"
-                r"(?![a-z0-9])"
-            ),
-            plural_group.group(1),
-        ):
-            add_suffix(suffix)
-
-    for suffix in ("a", "b", "c", "d", "e", "f"):
-        if _contains_retail_term(
-            q,
-            [f"{suffix}店"],
-        ):
-            add_suffix(suffix)
-
-    return [
-        f"store_{suffix}"
-        for suffix in suffixes
-    ]
+def extract_demo2_retail_entity_ids(message: str) -> list[str]:
+    return extract_retail_entity_ids(message)
 
 
 def is_demo2_cross_store_query(message: str) -> bool:
@@ -2646,8 +2642,10 @@ def is_demo2_cross_store_query(message: str) -> bool:
 
 
 def is_unsupported_demo2_retail_scope(message: str, entity_id: str | None) -> str | None:
+    if retail_question_has_unsupported_date_window(message):
+        return "Current evidence covers calendar-month windows. Specify YYYY-MM or a complete window, such as 2026-03-01 to 2026-03-31."
     q = (message or "").lower()
-    eid = normalize_demo2_retail_entity_id(entity_id)
+    eid = resolve_retail_entity_id(message, entity_id)
     years, period_months = (
         extract_retail_period_references(message)
     )
@@ -2671,6 +2669,9 @@ def is_unsupported_demo2_retail_scope(message: str, entity_id: str | None) -> st
         "store_e",
         "store_f",
     }
+
+    if eid and eid not in supported_entity_ids:
+        return "The supplied entity_id is outside the Demo 2 B-F dataset."
 
     if any(
         message_entity_id
@@ -2757,6 +2758,8 @@ def is_unsupported_demo2_retail_scope(message: str, entity_id: str | None) -> st
         return "Demo 2 supports cautious diagnostic comparison, not best-store ranking or final operating recommendations."
 
     if is_demo2_cross_store_query(message):
+        if eid and not message_entity_ids:
+            return "Name the stores to compare when supplying entity_id."
         return None
 
     if eid not in {"store_b", "store_c", "store_d", "store_e", "store_f"}:
@@ -2856,19 +2859,24 @@ async def chat_retail_ops_demo2_kb(req: RetailOpsDemo2KbReq):
         selected_facts = [
             fact
             for fact in facts
-            if (
+            if isinstance(fact, dict)
+            and isinstance(fact.get("entity_id"), str)
+            and (
                 fact.get("entity_id", "").lower()
                 in target_entity_ids
             )
             and fact.get("slot") in selected_slots
         ]
     else:
-        entity_id_norm = normalize_demo2_retail_entity_id(req.entity_id)
+        entity_id_norm = resolve_retail_entity_id(req.message, req.entity_id)
+        target_entity_ids = {entity_id_norm}
 
         selected_facts = [
             fact
             for fact in facts
-            if fact.get("entity_id", "").lower() == entity_id_norm
+            if isinstance(fact, dict)
+            and isinstance(fact.get("entity_id"), str)
+            and fact["entity_id"].lower() == entity_id_norm
             and fact.get("slot") in slots
         ]
 
@@ -2904,7 +2912,7 @@ async def chat_retail_ops_demo2_kb(req: RetailOpsDemo2KbReq):
         selected_facts[:limit]
     )
 
-    result = retail_answer_from_points(points)
+    result = retail_answer_from_points(points, entity_ids=target_entity_ids)
 
     result["demo_scope"] = "demo2_same_period_b_f_diagnostic"
     result["retrieval_mode"] = "not_used"
@@ -2947,7 +2955,7 @@ async def chat_retail_ops_kb(req: RetailOpsKbReq):
         )
 
     if slot_points:
-        return retail_answer_from_points(slot_points[: req.top_k or 5])
+        return retail_answer_from_points(slot_points[: req.top_k or 5], entity_ids={entity_id_norm})
 
     vector_points = await qdrant_query_retail(
         message=req.message,
@@ -2970,4 +2978,4 @@ async def chat_retail_ops_kb(req: RetailOpsKbReq):
             "facts": [],
         }
 
-    return retail_answer_from_points(vector_points)
+    return retail_answer_from_points(vector_points, entity_ids={entity_id_norm})

@@ -4,16 +4,17 @@ from __future__ import annotations
 
 import csv
 import math
-import os
+import sys
 from datetime import date, datetime
 from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
-import duckdb
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(REPO_ROOT))
+from retail_ops.sql_runtime import execute_duckdb, read_source
 
 SQL_PATH = (
     REPO_ROOT
@@ -81,20 +82,10 @@ def load_query() -> str:
 
 
 def export_csv() -> None:
-    os.chdir(REPO_ROOT)
-
     sql = load_query()
-    connection = duckdb.connect(database=":memory:")
-
-    try:
-        cursor = connection.execute(sql)
-        columns = [
-            description[0]
-            for description in cursor.description
-        ]
-        rows = cursor.fetchall()
-    finally:
-        connection.close()
+    sources = {name: read_source(REPO_ROOT, name)
+               for name in ("store_a_monthly_metrics", "store_a_top_skus")}
+    columns, rows = execute_duckdb(sources, sql)
 
     if len(columns) != len(set(columns)):
         raise ValueError(

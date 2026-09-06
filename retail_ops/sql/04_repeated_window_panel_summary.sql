@@ -1,3 +1,4 @@
+-- Execute through retail_ops.sql_runtime to register canonical numeric validation.
 -- Repeated-window panel summary.
 -- Purpose: expose February, March, and April values for selected Stores B-F metrics while retaining February-to-April endpoint changes.
 -- Scope: descriptive review only; not a pairwise comparability gate, ranking model,
@@ -11,25 +12,29 @@ WITH typed_panel AS (
         period_month,
         region_type,
         store_type,
-        CAST(NULLIF(transaction_amount, '') AS REAL) AS transaction_amount,
-        CAST(NULLIF(transaction_orders, '') AS REAL) AS transaction_orders,
-        CAST(NULLIF(exposure_users, '') AS REAL) AS exposure_users,
-        CAST(NULLIF(entry_users, '') AS REAL) AS entry_users,
-        CAST(NULLIF(entry_conversion_rate_pct, '') AS REAL) AS entry_conversion_rate_pct,
-        CAST(NULLIF(order_conversion_rate_pct, '') AS REAL) AS order_conversion_rate_pct,
-        CAST(NULLIF(payment_conversion_rate_pct, '') AS REAL) AS payment_conversion_rate_pct,
-        CAST(NULLIF(search_exposure_users, '') AS REAL) AS search_exposure_users,
-        CAST(NULLIF(search_entry_users, '') AS REAL) AS search_entry_users,
-        CAST(NULLIF(activity_orders, '') AS REAL) AS activity_orders,
-        CAST(NULLIF(activity_cost_ratio_pct, '') AS REAL) AS activity_cost_ratio_pct
+        CAST(retail_value('transaction_amount', transaction_amount) AS REAL) AS transaction_amount,
+        CAST(retail_value('transaction_orders', transaction_orders) AS REAL) AS transaction_orders,
+        CAST(retail_value('exposure_users', exposure_users) AS REAL) AS exposure_users,
+        CAST(retail_value('entry_users', entry_users) AS REAL) AS entry_users,
+        CAST(retail_value('entry_conversion_rate_pct', entry_conversion_rate_pct) AS REAL) AS entry_conversion_rate_pct,
+        CAST(retail_value('order_conversion_rate_pct', order_conversion_rate_pct) AS REAL) AS order_conversion_rate_pct,
+        CAST(retail_value('payment_conversion_rate_pct', payment_conversion_rate_pct) AS REAL) AS payment_conversion_rate_pct,
+        CAST(retail_value('search_exposure_users', search_exposure_users) AS REAL) AS search_exposure_users,
+        CAST(retail_value('search_entry_users', search_entry_users) AS REAL) AS search_entry_users,
+        CAST(retail_value('activity_orders', activity_orders) AS REAL) AS activity_orders,
+        CAST(retail_value('activity_cost_ratio_pct', activity_cost_ratio_pct) AS REAL) AS activity_cost_ratio_pct
     FROM store_period_panel_metrics
 ),
 monthly_pivot AS (
     SELECT
         store_id,
-        MAX(region_type) AS region_type,
-        MAX(store_type) AS store_type,
+        CASE WHEN COUNT(region_type) = COUNT(*) AND COUNT(DISTINCT region_type) = 1
+             THEN MAX(region_type) END AS region_type,
+        CASE WHEN COUNT(store_type) = COUNT(*) AND COUNT(DISTINCT store_type) = 1
+             THEN MAX(store_type) END AS store_type,
         COUNT(DISTINCT period_month) AS observed_month_count,
+        MIN(period_month) AS first_observed_month,
+        MAX(period_month) AS last_observed_month,
 
         MAX(CASE WHEN period_month = '2026-02' THEN transaction_amount END) AS feb_transaction_amount,
         MAX(CASE WHEN period_month = '2026-03' THEN transaction_amount END) AS mar_transaction_amount,
@@ -173,7 +178,10 @@ summary AS (
         ROUND(apr_activity_cost_ratio_pct - feb_activity_cost_ratio_pct, 2) AS activity_cost_ratio_pct_feb_to_apr_delta,
 
         CASE
-            WHEN observed_month_count = 3 THEN 'summary_ready_for_descriptive_review'
+            WHEN observed_month_count = 3
+             AND first_observed_month = '2026-02'
+             AND last_observed_month = '2026-04'
+            THEN 'summary_ready_for_descriptive_review'
             ELSE 'insufficient_repeated_window_coverage'
         END AS repeated_window_summary_flag,
 

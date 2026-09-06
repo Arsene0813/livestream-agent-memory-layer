@@ -79,6 +79,17 @@ Technical references:
 | `outputs/retrieval_score_distribution.csv` | Retrieval score inspection output. |
 | `outputs/retrieval_query_robustness.csv` | Query robustness inspection output. |
 
+## SQL Execution
+
+Run registered queries from the repository root with the project virtual environment:
+
+```bash
+.venv/bin/python3 -m retail_ops.sql_runtime --query 02_demo2_cross_store_comparability.sql --summary
+```
+
+The runner checks canonical fields, reporting windows and duplicate keys before calculation.
+Missing values stay null. Numeric and aggregation rules are documented in [SQL input checks](sql/README.md).
+
 ## Local Checks
 
 | Check | Command |

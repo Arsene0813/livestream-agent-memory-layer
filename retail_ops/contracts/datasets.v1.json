@@ -1,0 +1,96 @@
+{
+  "contract_version": "1",
+  "datasets": [
+    {
+      "dataset_id": "store_a_monthly_metrics",
+      "source_path": "retail_ops/data/store_a_monthly_metrics.csv",
+      "source_system": "meituan_merchant_backend",
+      "source_name": "store_a_monthly_metrics",
+      "grain": "store_period",
+      "snapshot_semantics": "cumulative_period_snapshot",
+      "key_fields": ["store_id", "period_start", "period_end"],
+      "dimension_fields": ["region_type", "store_type"],
+      "ranking_basis": null,
+      "overlap_group": "store_period_metrics",
+      "overlap_policy": "keep_versions_do_not_sum"
+    },
+    {
+      "dataset_id": "demo2_store_period_metrics",
+      "source_path": "retail_ops/data/demo2_store_period_metrics.csv",
+      "source_system": "meituan_merchant_backend",
+      "source_name": "demo2_store_period_metrics",
+      "grain": "store_period",
+      "snapshot_semantics": "cumulative_period_snapshot",
+      "key_fields": ["store_id", "period_start", "period_end"],
+      "dimension_fields": ["region_type", "store_type"],
+      "ranking_basis": null,
+      "overlap_group": "store_period_metrics",
+      "overlap_policy": "keep_versions_do_not_sum"
+    },
+    {
+      "dataset_id": "store_period_panel_metrics",
+      "source_path": "retail_ops/data/store_period_panel_metrics.csv",
+      "source_system": "meituan_merchant_backend",
+      "source_name": "store_period_panel_metrics",
+      "grain": "store_period",
+      "snapshot_semantics": "cumulative_period_snapshot",
+      "key_fields": ["store_id", "period_start", "period_end"],
+      "dimension_fields": ["region_type", "store_type"],
+      "ranking_basis": null,
+      "overlap_group": "store_period_metrics",
+      "overlap_policy": "keep_versions_do_not_sum"
+    },
+    {
+      "dataset_id": "store_a_top_skus",
+      "source_path": "retail_ops/data/store_a_top_skus.csv",
+      "source_system": "meituan_merchant_backend",
+      "source_name": "store_a_top_skus",
+      "grain": "store_sku_period",
+      "snapshot_semantics": "cumulative_period_snapshot",
+      "key_fields": ["store_id", "period_start", "period_end", "sku_rank"],
+      "dimension_fields": [],
+      "ranking_basis": "not_recorded_in_current_fixture",
+      "overlap_group": "store_sku_period_metrics",
+      "overlap_policy": "keep_versions_do_not_sum"
+    },
+    {
+      "dataset_id": "demo2_top_skus_by_transaction_amount",
+      "source_path": "retail_ops/data/demo2_top_skus_by_transaction_amount.csv",
+      "source_system": "meituan_merchant_backend",
+      "source_name": "demo2_top_skus_by_transaction_amount",
+      "grain": "store_sku_period",
+      "snapshot_semantics": "cumulative_period_snapshot",
+      "key_fields": ["store_id", "period_start", "period_end", "sku_rank"],
+      "dimension_fields": [],
+      "ranking_basis": "transaction_amount",
+      "overlap_group": "store_sku_period_metrics",
+      "overlap_policy": "keep_versions_do_not_sum"
+    },
+    {
+      "dataset_id": "demo2_top_skus_by_sales_volume",
+      "source_path": "retail_ops/data/demo2_top_skus_by_sales_volume.csv",
+      "source_system": "meituan_merchant_backend",
+      "source_name": "demo2_top_skus_by_sales_volume",
+      "grain": "store_sku_period",
+      "snapshot_semantics": "cumulative_period_snapshot",
+      "key_fields": ["store_id", "period_start", "period_end", "sku_rank"],
+      "dimension_fields": [],
+      "ranking_basis": "sales_volume",
+      "overlap_group": "store_sku_period_metrics",
+      "overlap_policy": "keep_versions_do_not_sum"
+    },
+    {
+      "dataset_id": "demo2_top_search_terms",
+      "source_path": "retail_ops/data/demo2_top_search_terms.csv",
+      "source_system": "meituan_merchant_backend",
+      "source_name": "demo2_top_search_terms",
+      "grain": "store_search_term_period",
+      "snapshot_semantics": "cumulative_period_snapshot",
+      "key_fields": ["store_id", "period_start", "period_end", "search_term_rank"],
+      "dimension_fields": [],
+      "ranking_basis": null,
+      "overlap_group": "store_search_term_period_metrics",
+      "overlap_policy": "keep_versions_do_not_sum"
+    }
+  ]
+}
